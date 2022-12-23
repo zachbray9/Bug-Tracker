@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\LoginBackgroundImage.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Images\LoginBackgroundImage.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
 

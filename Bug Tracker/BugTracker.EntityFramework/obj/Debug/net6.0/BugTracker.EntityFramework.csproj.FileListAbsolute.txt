@@ -1,0 +1,17 @@
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.EntityFramework.deps.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.EntityFramework.runtimeconfig.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.EntityFramework.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.EntityFramework.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.Domain.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\bin\Debug\net6.0\BugTracker.Domain.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.csproj.AssemblyReference.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.AssemblyInfoInputs.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.AssemblyInfo.cs
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.csproj.CoreCompileInputs.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.csproj.CopyComplete
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\refint\BugTracker.EntityFramework.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\BugTracker.EntityFramework.genruntimeconfig.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.EntityFramework\obj\Debug\net6.0\ref\BugTracker.EntityFramework.dll

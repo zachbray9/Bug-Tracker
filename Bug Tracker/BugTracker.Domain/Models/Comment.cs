@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Domain.Models
 {
-    public class Comment
+    public class Comment : DomainObject
     {
-        public int Id { get; set; }
         public string Text { get; set; } = null!;
 
         [ForeignKey(nameof(AuthorId))]

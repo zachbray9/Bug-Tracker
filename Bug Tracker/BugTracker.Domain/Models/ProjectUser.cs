@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Domain.Models
 {
-    public  class ProjectUser
+    public  class ProjectUser : DomainObject
     {
-        public int Id { get; set; }
-
         [ForeignKey(nameof(ProjectId))]
         public Project Project { get; set; } = null!;
         public int ProjectId { get; set; }

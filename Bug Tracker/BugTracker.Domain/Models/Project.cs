@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Domain.Models
 {
-    public class Project
+    public class Project : DomainObject
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public ICollection<ProjectUser> ProjectUsers { get; set; } = null!;

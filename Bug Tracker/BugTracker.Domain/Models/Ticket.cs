@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace BugTracker.Domain.Models
 {
-    public class Ticket
+    public class Ticket : DomainObject
     {
-        public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
 

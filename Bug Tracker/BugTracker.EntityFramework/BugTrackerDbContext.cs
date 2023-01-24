@@ -17,6 +17,8 @@ namespace BugTracker.EntityFramework
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public BugTrackerDbContext(DbContextOptions options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Comment>()
@@ -38,13 +40,6 @@ namespace BugTracker.EntityFramework
                 .HasOne(t => t.Project)
                 .WithMany(p => p.Tickets)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BugTrackerDB;Trusted_Connection=true");
-
-            base.OnConfiguring(optionsBuilder);
         }
 
     }

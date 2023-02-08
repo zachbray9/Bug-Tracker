@@ -17,4 +17,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BugTracker.Domain\BugTracker.Domain.csproj" />
+    <ProjectReference Include="..\BugTracker.EntityFramework\BugTracker.EntityFramework.csproj" />
+  </ItemGroup>
+
 </Project>

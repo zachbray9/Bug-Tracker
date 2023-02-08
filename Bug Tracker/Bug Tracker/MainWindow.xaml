@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bug_Tracker" xmlns:views="clr-namespace:Bug_Tracker.Views" xmlns:viewModels="clr-namespace:Bug_Tracker.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized" ResizeMode="CanResize" MinHeight="565" MinWidth="800" ScrollViewer.CanContentScroll="True">
+        Title="Bug Tracker" Height="500" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized" ResizeMode="CanResize" MinHeight="565" MinWidth="800" ScrollViewer.CanContentScroll="True">
     <ContentControl Content="{Binding CurrentViewModel}">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginPageViewModel}">
                 <views:LoginPageView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CreateAccountPageViewModel}">
+                <views:CreateAccountView/>
             </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>

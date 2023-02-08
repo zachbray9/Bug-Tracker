@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\App.xaml
-2-2114919510
+3582498378
 11386669462
-11850959608
-194-1797456590
-MainWindow.xaml;Views\LoginPageView.xaml;
+17-1817513865
+224-2111334469
+MainWindow.xaml;Views\CreateAccountView.xaml;Views\LoginPageView.xaml;
 
-False
+True
 

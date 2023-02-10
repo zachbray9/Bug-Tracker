@@ -29,17 +29,17 @@
                 <Label Grid.Row="1" Content="Create an account to view and manage your projects." HorizontalAlignment="Center" FontSize="12" FontFamily="DM Sans"/>
 
                 <StackPanel Grid.Row="2">
-                    <Label  Content="Email" HorizontalAlignment="Left" FontSize="12" Margin="50, 10, 0, 0"/>
+                    <Label  Content="Email" HorizontalAlignment="Left" FontSize="12" Margin="50, 10, 50, 0"/>
                     <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3">
-                    <Label Content="Username" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 0, 0"/>
+                    <Label Content="Username" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 50, 0"/>
                     <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="4">
-                    <Label Content="Password" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 0, 0"/>
+                    <Label Content="Password" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 50, 0"/>
                     <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
@@ -48,7 +48,10 @@
                     <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
-                <Button Grid.Row="6" x:Name="createAccountButton" Content="Create Account" Height="35" Width="500" HorizontalAlignment="Center" Background="DodgerBlue" Foreground="White" Margin="50, 20, 50, 20"/>
+                <StackPanel Grid.Row="6">
+                    <TextBlock x:Name="createAccountErrorTextBox" Text="" FontSize="12" FontFamily="DM Sans" TextWrapping="Wrap" Foreground="Red" Margin="50, 0, 50, 10"/>
+                    <Button x:Name="createAccountButton" Content="Create Account" Height="35" Width="500" HorizontalAlignment="Center" Background="DodgerBlue" Foreground="White" Margin="50, 0, 50, 20"/>
+                </StackPanel>
 
                 <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">
                     <TextBlock Text="Already have an account? "/>

@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "cmM72rKs5tFQS5/BIVT4IyS+zNSlDfdBLJ/W2AGFrgwSL33tvjZi5NU+d94KvTh7OKg1eWXykwj/uGpwirn4Qg==",
+  "dgSpecHash": "FlQ2mNWo2HCsqrVN4fYAeufoChGhQzx/+10tu01Ilse+h8P2Ec140wNZ6OTLMeMR1rwYxb4F8HoXNL/DneCG3A==",
   "success": true,
   "projectFilePath": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Domain\\BugTracker.Domain.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Identity.Core 2.2.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Identity.Core",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

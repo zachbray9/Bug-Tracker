@@ -7,3 +7,5 @@ using System.Reflection.Metadata;
 
 IDataService<User> userService = new GenericDataService<User>(new BugTrackerDbContextFactory());
 
+userService.Create(new User { Username = "testUsername", Email = "test@gmail.com", PasswordHash = "testPassword" }).Wait();
+

@@ -13,7 +13,8 @@ namespace Bug_Tracker.Commands
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return true;
         }
 
         public abstract void Execute(object parameter);

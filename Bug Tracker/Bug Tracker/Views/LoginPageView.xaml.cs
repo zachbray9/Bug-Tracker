@@ -20,9 +20,27 @@ namespace Bug_Tracker.Views
     /// </summary>
     public partial class LoginPageView : UserControl
     {
+        public static readonly DependencyProperty LoginCommandProperty = DependencyProperty.Register("LoginCommand", typeof(ICommand), typeof(LoginPageView), new PropertyMetadata(null));
+
+        public ICommand LoginCommand
+        {
+            get{ return (ICommand)GetValue(LoginCommandProperty); }
+            set{ SetValue(LoginCommandProperty, value);  }
+        }
+
         public LoginPageView()
         {
             InitializeComponent();
+        }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            if(LoginCommand != null)
+            {
+                string password = passwordTextbox.Password;
+                LoginCommand.Execute(password);
+            }
         }
     }
 }

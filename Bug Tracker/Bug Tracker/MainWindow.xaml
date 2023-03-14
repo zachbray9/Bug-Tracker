@@ -9,7 +9,7 @@
     <ContentControl Content="{Binding CurrentViewModel}">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginPageViewModel}">
-                <views:LoginPageView/>
+                <views:LoginPageView LoginCommand="{Binding AttemptLoginCommand}"/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:CreateAccountPageViewModel}">
                 <views:CreateAccountView/>

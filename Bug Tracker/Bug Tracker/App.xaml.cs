@@ -18,7 +18,7 @@ namespace Bug_Tracker
         protected override void OnStartup(StartupEventArgs e)
         {
             NavigationStore NavigationStore = new NavigationStore();
-            NavigationStore.CurrentViewModel = new CreateAccountPageViewModel();
+            NavigationStore.CurrentViewModel = new LoginPageViewModel();
 
             MainWindow = new MainWindow
             {

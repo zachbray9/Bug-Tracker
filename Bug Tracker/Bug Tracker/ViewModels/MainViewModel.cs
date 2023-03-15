@@ -1,4 +1,5 @@
-﻿using Bug_Tracker.Stores;
+﻿using Bug_Tracker.State.Navigators;
+using Bug_Tracker.ViewModels.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,13 @@ namespace Bug_Tracker.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly NavigationStore NavigationStore;
-        public ViewModelBase CurrentViewModel => NavigationStore.CurrentViewModel;
+        public INavigator Navigator;
 
-        public MainViewModel(NavigationStore navigationStore)
+        public MainViewModel(INavigator navigator)
         {
-            NavigationStore = navigationStore;
-            NavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            Navigator = navigator;
+            Navigator.UpdateCurrentViewModelCommand.Execute(ViewType.LoginPage);
         }
 
-        private void OnCurrentViewModelChanged()
-        {
-            OnPropertyChanged(nameof(CurrentViewModel));
-        }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bug_Tracker" xmlns:views="clr-namespace:Bug_Tracker.Views" xmlns:viewModels="clr-namespace:Bug_Tracker.ViewModels"
         mc:Ignorable="d"
         Title="Bug Tracker" Height="500" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized" ResizeMode="CanResize" MinHeight="565" MinWidth="800" ScrollViewer.CanContentScroll="True">
-    <ContentControl Content="{Binding CurrentViewModel}">
+    <ContentControl Content="{Binding Navigator.CurrentViewModel}">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginPageViewModel}">
                 <views:LoginPageView LoginCommand="{Binding AttemptLoginCommand}"/>

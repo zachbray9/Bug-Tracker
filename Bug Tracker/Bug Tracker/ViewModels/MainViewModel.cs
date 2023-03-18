@@ -10,7 +10,7 @@ namespace Bug_Tracker.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public INavigator Navigator;
+        public INavigator Navigator { get; set; }
 
         public MainViewModel(INavigator navigator)
         {

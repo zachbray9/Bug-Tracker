@@ -29,7 +29,7 @@ namespace Bug_Tracker
         {
             IServiceProvider serviceProvider = CreateServiceProvider();
 
-            MainWindow window = serviceProvider.GetRequiredService<MainWindow>();
+            Window window = serviceProvider.GetRequiredService<MainWindow>();
             window.Show();
 
             base.OnStartup(e);

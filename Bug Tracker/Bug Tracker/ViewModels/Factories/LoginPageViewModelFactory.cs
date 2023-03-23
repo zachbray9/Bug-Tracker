@@ -11,15 +11,17 @@ namespace Bug_Tracker.ViewModels.Factories
     public class LoginPageViewModelFactory : IViewModelFactory<LoginPageViewModel>
     {
         private readonly IAuthenticator Authenticator;
+        private readonly IRenavigator Renavigator;
 
-        public LoginPageViewModelFactory(IAuthenticator authenticator)
+        public LoginPageViewModelFactory(IAuthenticator authenticator, IRenavigator renavigator)
         {
             Authenticator = authenticator;
+            Renavigator = renavigator;
         }
 
         public LoginPageViewModel CreateViewModel()
         {
-            return new LoginPageViewModel(Authenticator);
+            return new LoginPageViewModel(Authenticator, Renavigator);
         }
     }
 }

@@ -48,7 +48,15 @@ namespace Bug_Tracker
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
-            services.AddSingleton<IViewModelFactory<LoginPageViewModel>, LoginPageViewModelFactory>();
+
+
+
+            services.AddSingleton<IViewModelFactory<LoginPageViewModel>>((services) =>
+                new LoginPageViewModelFactory(services.GetRequiredService<IAuthenticator>(),
+                new Renavigator<CreateAccountPageViewModel>(services.GetRequiredService<INavigator>(), services.GetRequiredService<IViewModelFactory<CreateAccountPageViewModel>>())));   //need to change CreateAccountPageViewModel to correct viewmodel
+
+
+
             services.AddSingleton<IViewModelFactory<CreateAccountPageViewModel>, CreateAccountPageViewModelFactory>();
 
             services.AddScoped<INavigator, Navigator>();

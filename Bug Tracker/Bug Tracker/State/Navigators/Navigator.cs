@@ -27,13 +27,6 @@ namespace Bug_Tracker.State.Navigators
             }
         }
 
-        public Navigator(IViewModelAbstractFactory viewModelAbstractFactory)
-        {
-            UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(this, viewModelAbstractFactory);
-        }
-
-        public ICommand UpdateCurrentViewModelCommand { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)

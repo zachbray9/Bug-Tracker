@@ -16,14 +16,15 @@ namespace Bug_Tracker.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        //need to setup dependency injection, otherwise this will always be null and login will not work
         private readonly IAuthenticator Authenticator;
+        private readonly IRenavigator Renavigator;
 
-        public LoginPageViewModel(IAuthenticator authenticator)
+        public LoginPageViewModel(IAuthenticator authenticator, IRenavigator renavigator)
         {
             Authenticator = authenticator;
+            Renavigator = renavigator;
 
-            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator);
+            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Renavigator);
             RecoverPasswordCommand = new RecoverPasswordCommand();
             CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand();

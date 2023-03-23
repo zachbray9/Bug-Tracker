@@ -17,6 +17,5 @@ namespace Bug_Tracker.State.Navigators
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
-        ICommand UpdateCurrentViewModelCommand { get; }
     }
 }

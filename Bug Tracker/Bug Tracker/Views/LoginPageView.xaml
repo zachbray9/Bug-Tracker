@@ -78,9 +78,9 @@
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
                         <TextBlock Text="Sign in as a " Foreground="DimGray"/>
-                        <TextBlock Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" Cursor="Hand">
+                        <TextBlock  Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" Cursor="Hand">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding UpdateCurrentViewModelCommand}" MouseAction="LeftClick" CommandParameter="ViewType.CreateAccountPage"/>
+                                <MouseBinding Command="{Binding NavigateCommand}" MouseAction="LeftClick" CommandParameter="CreateAccountPage"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>

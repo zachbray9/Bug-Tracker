@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker.Commands;
+using Bug_Tracker.Commands.Navigation_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
@@ -17,19 +18,18 @@ namespace Bug_Tracker.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
-        //private readonly IRenavigator Renavigator;
         private readonly INavigator Navigator;
 
-        public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator/*IRenavigator renavigator*/)
+        public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator)
         {
             Authenticator = authenticator;
-            //Renavigator = renavigator;
             Navigator = navigator;
 
-            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator/*Renavigator*/);
-            RecoverPasswordCommand = new RecoverPasswordCommand();
-            CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
+            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator);
+            //RecoverPasswordCommand = new RecoverPasswordCommand();
+            //CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand();
+            NavigateCommand = new NavigateCommand(Navigator);
         }
 
         private string username;
@@ -61,8 +61,9 @@ namespace Bug_Tracker.ViewModels
         }
 
         public ICommand AttemptLoginCommand { get; }
-        public ICommand RecoverPasswordCommand { get; }
-        public ICommand CreateAccountCommand { get; }
+        //public ICommand RecoverPasswordCommand { get; }
+        //public ICommand CreateAccountCommand { get; }
         public ICommand LoginAsDemoUserCommand { get; }
+        public ICommand NavigateCommand { get; }
     }
 }

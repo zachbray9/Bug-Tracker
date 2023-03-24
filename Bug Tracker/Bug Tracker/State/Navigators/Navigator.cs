@@ -39,6 +39,7 @@ namespace Bug_Tracker.State.Navigators
             CurrentViewModel = ViewModelAbstractFactory.CreateViewModel(viewType);
         }
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)

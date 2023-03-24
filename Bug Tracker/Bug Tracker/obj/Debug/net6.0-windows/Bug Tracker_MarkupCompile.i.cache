@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\App.xaml
 3582498378
 11386669462
-23-836681755
+24-385400430
 22598186830
 MainWindow.xaml;Views\CreateAccountView.xaml;Views\LoginPageView.xaml;
 
-False
+True
 

@@ -17,14 +17,16 @@ namespace Bug_Tracker.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
-        private readonly IRenavigator Renavigator;
+        //private readonly IRenavigator Renavigator;
+        private readonly INavigator Navigator;
 
-        public LoginPageViewModel(IAuthenticator authenticator, IRenavigator renavigator)
+        public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator/*IRenavigator renavigator*/)
         {
             Authenticator = authenticator;
-            Renavigator = renavigator;
+            //Renavigator = renavigator;
+            Navigator = navigator;
 
-            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Renavigator);
+            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator/*Renavigator*/);
             RecoverPasswordCommand = new RecoverPasswordCommand();
             CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand();

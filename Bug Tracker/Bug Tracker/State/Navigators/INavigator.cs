@@ -17,5 +17,6 @@ namespace Bug_Tracker.State.Navigators
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
+        void Navigate(ViewType viewType);
     }
 }

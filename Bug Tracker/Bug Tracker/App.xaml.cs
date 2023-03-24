@@ -17,6 +17,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using static Bug_Tracker.ViewModels.ViewModelBase;
 
 namespace Bug_Tracker
 {
@@ -51,13 +52,19 @@ namespace Bug_Tracker
 
 
 
-            services.AddSingleton<IViewModelFactory<LoginPageViewModel>>((services) =>
-                new LoginPageViewModelFactory(services.GetRequiredService<IAuthenticator>(),
-                new Renavigator<CreateAccountPageViewModel>(services.GetRequiredService<INavigator>(), services.GetRequiredService<IViewModelFactory<CreateAccountPageViewModel>>())));   //need to change CreateAccountPageViewModel to correct viewmodel
+            services.AddSingleton<CreateViewModel<LoginPageViewModel>>(services =>
+            {
+                return () => new LoginPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
+            }
+                );
 
+            services.AddSingleton<CreateViewModel<CreateAccountPageViewModel>>(services =>
+            {
+                return () => new CreateAccountPageViewModel();
+            }
+            );
 
-
-            services.AddSingleton<IViewModelFactory<CreateAccountPageViewModel>, CreateAccountPageViewModelFactory>();
+            
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<IAuthenticator, Authenticator>();

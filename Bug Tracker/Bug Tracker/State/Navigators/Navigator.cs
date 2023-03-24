@@ -13,6 +13,8 @@ namespace Bug_Tracker.State.Navigators
 {
     public class Navigator : INavigator, INotifyPropertyChanged
     {
+        private readonly IViewModelAbstractFactory ViewModelAbstractFactory;
+
         private ViewModelBase currentViewModel;
         public ViewModelBase CurrentViewModel
         {
@@ -25,6 +27,16 @@ namespace Bug_Tracker.State.Navigators
                 currentViewModel = value;
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
+        }
+
+        public Navigator(IViewModelAbstractFactory viewModelAbstractFactory)
+        {
+            ViewModelAbstractFactory= viewModelAbstractFactory;
+        }
+
+        public void Navigate(ViewType viewType)
+        {
+            CurrentViewModel = ViewModelAbstractFactory.CreateViewModel(viewType);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

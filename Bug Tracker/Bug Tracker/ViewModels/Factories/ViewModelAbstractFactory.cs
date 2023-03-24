@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Bug_Tracker.ViewModels.ViewModelBase;
 
 namespace Bug_Tracker.ViewModels.Factories
 {
     public class ViewModelAbstractFactory : IViewModelAbstractFactory
     {
-        private readonly IViewModelFactory<LoginPageViewModel> LoginPageViewModelFactory;
-        private readonly IViewModelFactory<CreateAccountPageViewModel> CreateAccountPageViewModelFactory;
+        private readonly CreateViewModel<LoginPageViewModel> CreateLoginPageViewModel;
+        private readonly CreateViewModel<CreateAccountPageViewModel> CreateCreateAccountPageViewModel;
 
-        public ViewModelAbstractFactory(IViewModelFactory<LoginPageViewModel> loginPageViewModelFactory, IViewModelFactory<CreateAccountPageViewModel> createAccountPageViewModelFactory)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel)
         {
-            LoginPageViewModelFactory= loginPageViewModelFactory;
-            CreateAccountPageViewModelFactory = createAccountPageViewModelFactory;
+            CreateLoginPageViewModel = createLoginPageViewModel;
+            CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
@@ -23,11 +24,11 @@ namespace Bug_Tracker.ViewModels.Factories
             switch (viewType)
             {
                 case ViewType.LoginPage:
-                    return LoginPageViewModelFactory.CreateViewModel();
+                    return CreateLoginPageViewModel();
                 case ViewType.CreateAccountPage:
-                    return CreateAccountPageViewModelFactory.CreateViewModel();
+                    return CreateCreateAccountPageViewModel();
                 default:
-                    throw new ArgumentException("The view type does not have a ViewModel.", "viewType"); hello
+                    throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }
         }
     }

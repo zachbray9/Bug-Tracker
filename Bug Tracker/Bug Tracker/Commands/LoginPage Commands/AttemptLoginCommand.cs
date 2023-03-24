@@ -16,13 +16,13 @@ namespace Bug_Tracker.Commands
     {
         private readonly LoginPageViewModel LoginPageViewModel;
         private readonly IAuthenticator Authenticator;
-        private readonly IRenavigator Renavigator;
+        private readonly INavigator Navigator;
 
-        public AttemptLoginCommand(LoginPageViewModel loginPageViewModel, IAuthenticator authenticator, IRenavigator renavigator)
+        public AttemptLoginCommand(LoginPageViewModel loginPageViewModel, IAuthenticator authenticator, INavigator navigator)
         {
             LoginPageViewModel = loginPageViewModel;
             Authenticator = authenticator;
-            Renavigator = renavigator;
+            Navigator= navigator;
         }
 
         public async override void Execute(object parameter)
@@ -30,7 +30,7 @@ namespace Bug_Tracker.Commands
             bool success = await Authenticator.Login(LoginPageViewModel.Username, parameter.ToString());
             if (success) 
             {
-                Renavigator.Renavigate();
+                Navigator.Navigate(ViewType.CreateAccountPage);
             }
         }
     }

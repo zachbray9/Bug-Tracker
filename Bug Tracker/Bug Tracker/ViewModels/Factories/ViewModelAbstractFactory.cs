@@ -27,7 +27,7 @@ namespace Bug_Tracker.ViewModels.Factories
                 case ViewType.CreateAccountPage:
                     return CreateAccountPageViewModelFactory.CreateViewModel();
                 default:
-                    throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
+                    throw new ArgumentException("The view type does not have a ViewModel.", "viewType"); hello
             }
         }
     }

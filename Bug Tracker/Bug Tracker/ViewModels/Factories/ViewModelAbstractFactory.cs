@@ -10,6 +10,7 @@ namespace Bug_Tracker.ViewModels.Factories
 {
     public class ViewModelAbstractFactory : IViewModelAbstractFactory
     {
+        //these are delegates (on the viewmodelbase class) that are basically just functions
         private readonly CreateViewModel<LoginPageViewModel> CreateLoginPageViewModel;
         private readonly CreateViewModel<CreateAccountPageViewModel> CreateCreateAccountPageViewModel;
 

@@ -64,7 +64,13 @@ namespace Bug_Tracker
             }
             );
 
-            
+            services.AddSingleton<CreateViewModel<HomePageViewModel>>(services =>
+            {
+                return () => new HomePageViewModel();
+            }
+            );
+
+
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<IAuthenticator, Authenticator>();

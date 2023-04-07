@@ -13,11 +13,13 @@ namespace Bug_Tracker.ViewModels.Factories
         //these are delegates (on the viewmodelbase class) that are basically just functions
         private readonly CreateViewModel<LoginPageViewModel> CreateLoginPageViewModel;
         private readonly CreateViewModel<CreateAccountPageViewModel> CreateCreateAccountPageViewModel;
+        private readonly CreateViewModel<HomePageViewModel> CreateHomePageViewModel;
 
-        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel)
         {
             CreateLoginPageViewModel = createLoginPageViewModel;
             CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
+            CreateHomePageViewModel = createHomePageViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
@@ -28,6 +30,8 @@ namespace Bug_Tracker.ViewModels.Factories
                     return CreateLoginPageViewModel();
                 case ViewType.CreateAccountPage:
                     return CreateCreateAccountPageViewModel();
+                case ViewType.HomePage:
+                    return CreateHomePageViewModel();
                 default:
                     throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }

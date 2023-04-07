@@ -12,6 +12,7 @@ namespace Bug_Tracker.State.Navigators
     {
         LoginPage,
         CreateAccountPage,
+        HomePage
     }
 
     public interface INavigator

@@ -35,6 +35,9 @@ namespace Bug_Tracker.Commands.Navigation_Commands
                 case "CreateAccountPage":
                     Navigator.Navigate(ViewType.CreateAccountPage);
                     break;
+                case "HomePage":
+                    Navigator.Navigate(ViewType.HomePage);
+                    break;
                 default:
                     MessageBox.Show("The ViewType you put in the command parameters does not exist", "Invalid ViewType", MessageBoxButton.OK, MessageBoxImage.Error);
                     break;

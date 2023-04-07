@@ -30,7 +30,7 @@ namespace Bug_Tracker.Commands
             bool success = await Authenticator.Login(LoginPageViewModel.Username, parameter.ToString());
             if (success) 
             {
-                Navigator.Navigate(ViewType.CreateAccountPage);
+                Navigator.Navigate(ViewType.HomePage);
             }
         }
     }

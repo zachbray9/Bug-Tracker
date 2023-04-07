@@ -5,6 +5,7 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerD
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\BugTrackerDbTester.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Microsoft.AspNet.Identity.Core.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
@@ -65,4 +66,3 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerD
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\obj\Debug\net6.0\BugTrackerDbTester.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\obj\Debug\net6.0\BugTrackerDbTester.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\obj\Debug\net6.0\ref\BugTrackerDbTester.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTrackerDbTester\bin\Debug\net6.0\Microsoft.AspNet.Identity.Core.dll

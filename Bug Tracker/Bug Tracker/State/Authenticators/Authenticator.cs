@@ -4,6 +4,7 @@ using BugTracker.Domain.Services.AuthenticationServices;
 using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,29 @@ using System.Windows;
 
 namespace Bug_Tracker.State.Authenticators
 {
-    public class Authenticator : IAuthenticator
+    public class Authenticator : IAuthenticator, INotifyPropertyChanged
     {
         private readonly IAuthenticationService AuthenticationService;
-        public User CurrentUser { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private User currentUser;
+        public User CurrentUser
+        {
+            get
+            {
+                return currentUser;
+            }
+
+            private set
+            {
+                currentUser = value;
+                OnPropertyChanged(nameof(currentUser));
+                OnPropertyChanged(nameof(IsLoggedIn));
+            }
+        }
         public bool IsLoggedIn => CurrentUser != null;
+
 
         public Authenticator(IAuthenticationService authenticationService)
         {
@@ -47,6 +66,11 @@ namespace Bug_Tracker.State.Authenticators
         public async Task<RegistrationResult> CreateAccount(string username, string email, string password, string confirmpassword)
         {
             return await AuthenticationService.CreateAccount(username, email, password, confirmpassword);
+        }
+
+        void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

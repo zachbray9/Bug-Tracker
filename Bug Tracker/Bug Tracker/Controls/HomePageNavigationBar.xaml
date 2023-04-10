@@ -18,7 +18,7 @@
         <StackPanel Grid.Row="1">
 
             <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
-            <RadioButton Content="Home" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
+            <RadioButton Content="Home" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
             <RadioButton Content="Projects" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
             <RadioButton Content="Tickets" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
 

@@ -66,7 +66,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<HomePageViewModel>>(services =>
             {
-                return () => new HomePageViewModel();
+                return () => new HomePageViewModel(services.GetRequiredService<IAuthenticator>());
             }
             );
 

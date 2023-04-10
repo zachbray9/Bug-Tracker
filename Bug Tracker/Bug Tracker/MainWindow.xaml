@@ -23,7 +23,7 @@
                 </Style>
             </Grid.Style>
             
-            <controls:HomePageNavigationBar DataContext="{Binding Navigator}"/>
+            <controls:HomePageNavigationBar/>
         </Grid>
 
         <ContentControl Grid.Column="1" Content="{Binding Navigator.CurrentViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">

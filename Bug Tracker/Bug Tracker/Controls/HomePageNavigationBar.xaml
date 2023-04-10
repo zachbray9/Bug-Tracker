@@ -13,14 +13,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Bug Tracker" HorizontalAlignment="Left" FontSize="20" Margin="40, 20, 40, 40"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1">
+            <TextBlock Grid.Column="0" Text="&#x1F577;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Margin="10"/>
 
-            <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
-            <RadioButton Content="Home" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
-            <RadioButton Content="Projects" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
-            <RadioButton Content="Tickets" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBlock Text="Welcome," HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 20, 0"/>
+                <TextBlock Text="{Binding Authenticator.CurrentUser.Username}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Thin" Margin="0, 0, 20, 0"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="0, 20, 0, 0">
+
+            <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
+            <RadioButton Content="Home" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
+            <RadioButton Content="Projects" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
+            <RadioButton Content="Tickets" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
 
         </StackPanel>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using BugTracker.Domain.Models;
+﻿using Bug_Tracker.State.Authenticators;
+using BugTracker.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,16 @@ namespace Bug_Tracker.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
-        private User User { get; set; }
+        private readonly IAuthenticator Authenticator;
+
+        public User User 
+        {
+            get => Authenticator.CurrentUser;
+        }
+
+        public HomePageViewModel(IAuthenticator authenticator)
+        {
+            Authenticator = authenticator;
+        }
     }
 }

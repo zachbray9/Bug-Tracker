@@ -32,6 +32,8 @@ namespace Bug_Tracker.State.Navigators
         public Navigator(IViewModelAbstractFactory viewModelAbstractFactory)
         {
             ViewModelAbstractFactory= viewModelAbstractFactory;
+
+            NavigateCommand = new NavigateCommand(this);
         }
 
         public void Navigate(ViewType viewType)
@@ -39,6 +41,7 @@ namespace Bug_Tracker.State.Navigators
             CurrentViewModel = ViewModelAbstractFactory.CreateViewModel(viewType);
         }
 
+        public ICommand NavigateCommand { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -51,7 +51,7 @@ namespace Bug_Tracker
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
 
 
-
+            //Registering all of the viewmodels for dependency injection//
             services.AddSingleton<CreateViewModel<LoginPageViewModel>>(services =>
             {
                 return () => new LoginPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
@@ -67,6 +67,24 @@ namespace Bug_Tracker
             services.AddSingleton<CreateViewModel<HomePageViewModel>>(services =>
             {
                 return () => new HomePageViewModel();
+            }
+            );
+
+            services.AddSingleton<CreateViewModel<AccountPageViewModel>>(services =>
+            {
+                return () => new AccountPageViewModel();
+            }
+            );
+
+            services.AddSingleton<CreateViewModel<ProjectsPageViewModel>>(services =>
+            {
+                return () => new ProjectsPageViewModel();
+            }
+            );
+
+            services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
+            {
+                return () => new TicketsPageViewModel();
             }
             );
 

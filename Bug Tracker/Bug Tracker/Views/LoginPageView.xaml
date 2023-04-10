@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Views"
+             xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -80,7 +81,7 @@
                         <TextBlock Text="Sign in as a " Foreground="DimGray"/>
                         <TextBlock  Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" Cursor="Hand">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding NavigateCommand}" MouseAction="LeftClick" CommandParameter="CreateAccountPage"/>
+                                <MouseBinding Command="{Binding Navigator.NavigateCommand}" MouseAction="LeftClick" CommandParameter="{x:Static nav:ViewType.CreateAccountPage}"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>

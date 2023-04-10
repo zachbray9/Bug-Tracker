@@ -18,7 +18,7 @@ namespace Bug_Tracker.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
-        private readonly INavigator Navigator;
+        public INavigator Navigator { get; private set; }
 
         public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator)
         {
@@ -29,7 +29,6 @@ namespace Bug_Tracker.ViewModels
             //RecoverPasswordCommand = new RecoverPasswordCommand();
             //CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand();
-            NavigateCommand = new NavigateCommand(Navigator);
         }
 
         private string username;
@@ -64,6 +63,5 @@ namespace Bug_Tracker.ViewModels
         //public ICommand RecoverPasswordCommand { get; }
         //public ICommand CreateAccountCommand { get; }
         public ICommand LoginAsDemoUserCommand { get; }
-        public ICommand NavigateCommand { get; }
     }
 }

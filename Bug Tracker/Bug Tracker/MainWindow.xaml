@@ -23,7 +23,7 @@
                 </Style>
             </Grid.Style>
             
-            <controls:HomePageNavigationBar/>
+            <controls:HomePageNavigationBar DataContext="{Binding Navigator}"/>
         </Grid>
 
         <ContentControl Grid.Column="1" Content="{Binding Navigator.CurrentViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
@@ -36,6 +36,15 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
                     <views:HomePageView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AccountPageViewModel}">
+                    <views:AccountPageView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:ProjectsPageViewModel}">
+                    <views:ProjectsPageView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:TicketsPageViewModel}">
+                    <views:TicketsPageView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

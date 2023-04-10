@@ -14,12 +14,18 @@ namespace Bug_Tracker.ViewModels.Factories
         private readonly CreateViewModel<LoginPageViewModel> CreateLoginPageViewModel;
         private readonly CreateViewModel<CreateAccountPageViewModel> CreateCreateAccountPageViewModel;
         private readonly CreateViewModel<HomePageViewModel> CreateHomePageViewModel;
+        private readonly CreateViewModel<AccountPageViewModel> CreateAccountPageViewModel;
+        private readonly CreateViewModel<ProjectsPageViewModel> CreateProjectsPageViewModel;
+        private readonly CreateViewModel<TicketsPageViewModel> CreateTicketsPageViewModel;
 
-        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel)
         {
             CreateLoginPageViewModel = createLoginPageViewModel;
             CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
             CreateHomePageViewModel = createHomePageViewModel;
+            CreateAccountPageViewModel = createAccountPageViewModel;
+            CreateProjectsPageViewModel = createProjectsPageViewModel;
+            CreateTicketsPageViewModel = createTicketsPageViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
@@ -32,6 +38,12 @@ namespace Bug_Tracker.ViewModels.Factories
                     return CreateCreateAccountPageViewModel();
                 case ViewType.HomePage:
                     return CreateHomePageViewModel();
+                case ViewType.AccountPage:
+                    return CreateAccountPageViewModel();
+                case ViewType.ProjectsPage:
+                    return CreateProjectsPageViewModel();
+                case ViewType.TicketsPage:
+                    return CreateTicketsPageViewModel();
                 default:
                     throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }

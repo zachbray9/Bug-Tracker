@@ -26,24 +26,8 @@ namespace Bug_Tracker.Commands.Navigation_Commands
 
         public void Execute(object parameter)
         {
-            //need to add as you create more views
-            switch(parameter)
-            {
-                case "LoginPage":
-                    Navigator.Navigate(ViewType.LoginPage);
-                    break;
-                case "CreateAccountPage":
-                    Navigator.Navigate(ViewType.CreateAccountPage);
-                    break;
-                case "HomePage":
-                    Navigator.Navigate(ViewType.HomePage);
-                    break;
-                default:
-                    MessageBox.Show("The ViewType you put in the command parameters does not exist", "Invalid ViewType", MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
-            }
-            
-           
+            ViewType viewType = (ViewType)parameter;
+            Navigator.Navigate(viewType);
         }
     }
 }

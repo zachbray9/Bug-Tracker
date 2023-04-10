@@ -12,12 +12,16 @@ namespace Bug_Tracker.State.Navigators
     {
         LoginPage,
         CreateAccountPage,
-        HomePage
+        HomePage,
+        AccountPage,
+        ProjectsPage,
+        TicketsPage
     }
 
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
         void Navigate(ViewType viewType);
+        ICommand NavigateCommand { get; }
     }
 }

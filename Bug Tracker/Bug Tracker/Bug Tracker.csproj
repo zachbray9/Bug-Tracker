@@ -8,6 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Inter-Black.ttf" />
+    <None Remove="Assets\Fonts\Inter-Bold.ttf" />
+    <None Remove="Assets\Fonts\Inter-ExtraBold.ttf" />
+    <None Remove="Assets\Fonts\Inter-ExtraLight.ttf" />
+    <None Remove="Assets\Fonts\Inter-Light.ttf" />
+    <None Remove="Assets\Fonts\Inter-Medium.ttf" />
+    <None Remove="Assets\Fonts\Inter-Regular.ttf" />
+    <None Remove="Assets\Fonts\Inter-SemiBold.ttf" />
+    <None Remove="Assets\Fonts\Inter-Thin.ttf" />
     <None Remove="Assets\Images\LoginBackgroundImage.jpeg" />
   </ItemGroup>
 
@@ -20,6 +29,36 @@
   <ItemGroup>
     <ProjectReference Include="..\BugTracker.Domain\BugTracker.Domain.csproj" />
     <ProjectReference Include="..\BugTracker.EntityFramework\BugTracker.EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\Inter-Black.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-Bold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-ExtraBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-ExtraLight.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-SemiBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Inter-Thin.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

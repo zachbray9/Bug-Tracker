@@ -84,7 +84,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
             {
-                return () => new TicketsPageViewModel();
+                return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>());
             }
             );
 

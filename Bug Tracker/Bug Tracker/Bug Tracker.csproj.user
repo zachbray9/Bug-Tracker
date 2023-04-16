@@ -36,6 +36,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\General.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\NavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>

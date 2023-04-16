@@ -18,11 +18,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Grid x:Name="GridMain">
-                        <Border x:Name="MainBorder" Background="{TemplateBinding Background}">
+                        <Border x:Name="MainBorder" Background="{TemplateBinding Background}" CornerRadius="6">
                             <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}"/>
                         </Border>
                     </Grid>
-
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -33,9 +32,6 @@
                             <Setter TargetName="MainBorder" Property="Background" Value="gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-
-
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

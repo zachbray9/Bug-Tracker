@@ -3,14 +3,20 @@
 
     <Style x:Key="TicketsPageComboBox" TargetType="ComboBox">
         <Setter Property="IsEditable" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        
 
-        <Setter Property="Template">
+        <!--<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
-                    <Border CornerRadius="6"/>
+                    
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
+
+
 
 </ResourceDictionary>

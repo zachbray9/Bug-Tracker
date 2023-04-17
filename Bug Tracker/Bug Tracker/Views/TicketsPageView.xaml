@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             
-            <ComboBox Grid.Column="0" Margin="20, 10, 0, 10"/>
+            <ComboBox Grid.Column="0" Style="{StaticResource TicketsPageComboBox}" Margin="20, 10, 0, 10"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -35,16 +35,40 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="BUG" Opacity=".4" Margin="20, 0, 0, 0"/>
-            <Label Grid.Column="3" Content="PROJECT" Opacity=".4"/>
-            <Label Grid.Column="4" Content="CREATED" Opacity=".4"/>
-            <Label Grid.Column="5" Content="STATUS" Opacity=".4"/>
-            <Label Grid.Column="6" Content="ASSIGNEE" Opacity=".4"/>
-            <Label Grid.Column="7" Content="SEVERITY" Opacity=".4"/>
+            <Label Grid.Column="0" Content="BUG" Opacity=".4" FontFamily="Arial" Margin="20, 0, 0, 0"/>
+            <Label Grid.Column="3" Content="PROJECT" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="4" Content="CREATED" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="5" Content="STATUS" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="6" Content="ASSIGNEE" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="7" Content="SEVERITY" FontFamily="Arial" Opacity=".4"/>
         </Grid>
 
         <Separator Grid.Row="2"/>
 
-        <ListBox Grid.Row="3" BorderBrush="Transparent"/>
+        <ListBox Grid.Row="3" ItemsSource="{Binding Tickets}" BorderBrush="Transparent">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Tickets.Title}"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Tickets.Project.Title}"/>
+                        <TextBlock Grid.Column="4" Text="{Binding Tickets.DataCreated}"/>
+                        <TextBlock Grid.Column="5" Text="{Binding Tickets.Status}"/>
+                        <TextBlock Grid.Column="6" Text="{Binding Tickets.Author.Username}"/>
+                        <TextBlock Grid.Column="7" Text="{Binding Tickets.Priority}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

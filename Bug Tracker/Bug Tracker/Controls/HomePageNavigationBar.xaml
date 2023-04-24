@@ -7,33 +7,41 @@
              xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="AliceBlue" HorizontalAlignment="left">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid Background="White" HorizontalAlignment="left">
+        <Border BorderBrush="LightGray" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="&#x1F577;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Margin="10"/>
+                    <TextBlock Grid.Column="0" Text="&#x1F577;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Margin="10"/>
 
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <TextBlock Text="Welcome," HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 20, 0"/>
-                <TextBlock Text="{Binding Authenticator.CurrentUser.Username}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Light" Margin="0, 0, 20, 0"/>
-            </StackPanel>
-        </Grid>
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <TextBlock Text="Welcome," HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 20, 0"/>
+                        <TextBlock Text="{Binding Authenticator.CurrentUser.Username}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Light" Margin="0, 0, 20, 0"/>
+                    </StackPanel>
+                </Grid>
 
-        <StackPanel Grid.Row="1" Margin="0, 20, 0, 0">
+                <Separator Grid.Row="1" Foreground="LightGray" Margin="5, 10, 5, 0"/>
 
-            <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
-            <RadioButton Content="Home" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
-            <RadioButton Content="Projects" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
-            <RadioButton Content="My Tickets" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
+                <StackPanel Grid.Row="2" Margin="0, 20, 0, 0">
 
-        </StackPanel>
+                    <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
+                    <RadioButton Content="Home" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>
+                    <RadioButton Content="Projects" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
+                    <RadioButton Content="My Tickets" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
+
+                </StackPanel>
+
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

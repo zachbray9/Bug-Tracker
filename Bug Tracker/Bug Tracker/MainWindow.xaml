@@ -22,7 +22,7 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            
+
             <controls:HomePageNavigationBar/>
         </Grid>
 

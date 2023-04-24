@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             
-            <ComboBox Grid.Column="0" Style="{StaticResource TicketsPageComboBox}" Margin="20, 10, 0, 10"/>
+            <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Margin="20, 10, 0, 10"/>
         </Grid>
 
         <Grid Grid.Row="1">

@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker.State.Authenticators;
+using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using System;
 using System.Collections;
@@ -20,6 +21,8 @@ namespace Bug_Tracker.ViewModels
             Authenticator = authenticator;
             Tickets = new ObservableCollection<Ticket>();
 
+            
+
             ResetTickets();
         }
 
@@ -27,10 +30,13 @@ namespace Bug_Tracker.ViewModels
         {
             if (Authenticator.CurrentUser.ProjectUsers != null)
             {
+
                 var tickets = from projectUser in Authenticator.CurrentUser.ProjectUsers
                               from Ticket in projectUser.Tickets
                               orderby Ticket?.DateSubmitted descending
                               select Ticket;
+
+                Tickets = new ObservableCollection<Ticket>(tickets);
             }
         }
 

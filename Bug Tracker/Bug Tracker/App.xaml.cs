@@ -8,6 +8,7 @@ using BugTracker.Domain.Services.AuthenticationServices;
 using BugTracker.EntityFramework;
 using BugTracker.EntityFramework.Services;
 using Microsoft.AspNet.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -42,8 +43,13 @@ namespace Bug_Tracker
 
 
             services.AddSingleton<BugTrackerDbContextFactory>();
+
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
             services.AddSingleton<IDataService<User>, UserDataService>();
+
+            services.AddSingleton<IDataService<Project>, GenericDataService<Project>>();
+            services.AddSingleton<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
+
             services.AddSingleton<IUserService, UserDataService>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -78,13 +84,19 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<ProjectsPageViewModel>>(services =>
             {
-                return () => new ProjectsPageViewModel();
+                return () => new ProjectsPageViewModel(services.GetRequiredService<BugTrackerDbContextFactory>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
             }
             );
 
             services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
             {
                 return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>());
+            }
+            );
+
+            services.AddSingleton<CreateViewModel<CreateNewProjectPageViewModel>>(services =>
+            {
+                return () => new CreateNewProjectPageViewModel(services.GetRequiredService<BugTrackerDbContextFactory>(), services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
             }
             );
 

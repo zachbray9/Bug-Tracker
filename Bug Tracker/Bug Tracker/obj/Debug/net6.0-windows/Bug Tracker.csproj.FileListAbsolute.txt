@@ -5,6 +5,7 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\MainWindow.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\AccountPageView.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\CreateAccountView.g.cs
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\CreateNewProjectPageView.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\HomePageView.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\LoginPageView.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\ProjectsPageView.g.cs
@@ -14,6 +15,18 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker_MarkupCompile.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker_MarkupCompile.lref
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\App.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Controls\HomePageNavigationBar.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\AccountPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\CreateAccountView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\CreateNewProjectPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\HomePageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\LoginPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\ProjectsPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\TicketsPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\refint\Bug Tracker.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Bug Tracker.exe
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Assets\Images\LoginBackgroundImage.jpeg
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Bug Tracker.deps.json
@@ -61,23 +74,12 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\BugTracker.EntityFramework.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\BugTracker.Domain.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\BugTracker.EntityFramework.pdb
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\App.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Controls\HomePageNavigationBar.baml
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\MainWindow.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\AccountPageView.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\CreateAccountView.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\HomePageView.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\LoginPageView.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\ProjectsPageView.baml
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\TicketsPageView.baml
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.g.resources
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.AssemblyInfoInputs.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.AssemblyInfo.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.csproj.CoreCompileInputs.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.csproj.CopyComplete
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\refint\Bug Tracker.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\ref\Bug Tracker.dll

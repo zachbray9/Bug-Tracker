@@ -17,8 +17,9 @@ namespace Bug_Tracker.ViewModels.Factories
         private readonly CreateViewModel<AccountPageViewModel> CreateAccountPageViewModel;
         private readonly CreateViewModel<ProjectsPageViewModel> CreateProjectsPageViewModel;
         private readonly CreateViewModel<TicketsPageViewModel> CreateTicketsPageViewModel;
+        private readonly CreateViewModel<CreateNewProjectPageViewModel> CreateCreateNewProjectPageViewModel;
 
-        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel, CreateViewModel<CreateNewProjectPageViewModel> createCreateNewProjectPageViewModel)
         {
             CreateLoginPageViewModel = createLoginPageViewModel;
             CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
@@ -26,6 +27,7 @@ namespace Bug_Tracker.ViewModels.Factories
             CreateAccountPageViewModel = createAccountPageViewModel;
             CreateProjectsPageViewModel = createProjectsPageViewModel;
             CreateTicketsPageViewModel = createTicketsPageViewModel;
+            CreateCreateNewProjectPageViewModel = createCreateNewProjectPageViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
@@ -44,6 +46,8 @@ namespace Bug_Tracker.ViewModels.Factories
                     return CreateProjectsPageViewModel();
                 case ViewType.TicketsPage:
                     return CreateTicketsPageViewModel();
+                case ViewType.CreateNewProjectPage:
+                    return CreateCreateNewProjectPageViewModel();
                 default:
                     throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }

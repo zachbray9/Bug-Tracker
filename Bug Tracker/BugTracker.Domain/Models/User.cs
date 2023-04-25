@@ -14,6 +14,11 @@ namespace BugTracker.Domain.Models
         public ICollection<ProjectUser> ProjectUsers { get; set; } = null!;
         public DateTime DateJoined { get; set; }
 
+        public User()
+        {
+            ProjectUsers = new List<ProjectUser>();
+        }
+
         public override string ToString()
         {
             return Username;

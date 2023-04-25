@@ -35,12 +35,12 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="BUG" Opacity=".4" FontFamily="Arial" Margin="20, 0, 0, 0"/>
-            <Label Grid.Column="3" Content="PROJECT" FontFamily="Arial" Opacity=".4"/>
-            <Label Grid.Column="4" Content="CREATED" FontFamily="Arial" Opacity=".4"/>
-            <Label Grid.Column="5" Content="STATUS" FontFamily="Arial" Opacity=".4"/>
-            <Label Grid.Column="6" Content="ASSIGNEE" FontFamily="Arial" Opacity=".4"/>
-            <Label Grid.Column="7" Content="SEVERITY" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="0" Content="Bug" Opacity=".4" FontFamily="Arial" Margin="20, 0, 0, 0"/>
+            <Label Grid.Column="3" Content="Project" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="4" Content="Created" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="5" Content="Status" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="6" Content="Assignee" FontFamily="Arial" Opacity=".4"/>
+            <Label Grid.Column="7" Content="Severity" FontFamily="Arial" Opacity=".4"/>
         </Grid>
 
         <Separator Grid.Row="2"/>

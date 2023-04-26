@@ -30,13 +30,7 @@ namespace Bug_Tracker.ViewModels
         {
             if (Authenticator.CurrentUser.ProjectUsers != null)
             {
-
-                var tickets = from projectUser in Authenticator.CurrentUser.ProjectUsers
-                              from Ticket in projectUser.Tickets
-                              orderby Ticket?.DateSubmitted descending
-                              select Ticket;
-
-                Tickets = new ObservableCollection<Ticket>(tickets);
+                //add tickets of currentUser into observable collection
             }
         }
 

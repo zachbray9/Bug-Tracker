@@ -9,19 +9,31 @@ using System.Threading.Tasks;
 using Bug_Tracker.State.Navigators;
 using Microsoft.EntityFrameworkCore.Internal;
 using BugTracker.EntityFramework;
+using System.ComponentModel;
+using BugTracker.Domain.Services;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Bug_Tracker.ViewModels
 {
     public class ProjectsPageViewModel : ViewModelBase
     {
-        private readonly BugTrackerDbContextFactory DbContextFactory;
+        private readonly IDataService<Project> ProjectDataService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
-        public ObservableCollection<Project> Projects { get; set; }
-
-        public ProjectsPageViewModel(BugTrackerDbContextFactory dbContextFactory, IAuthenticator authenticator, INavigator navigator)
+        private ObservableCollection<Project> projects;
+        public ObservableCollection<Project> Projects
         {
-            DbContextFactory= dbContextFactory;
+            get { return projects;}
+            set 
+            { 
+                projects = value; 
+                OnPropertyChanged(nameof(projects));
+            }
+        }
+
+        public ProjectsPageViewModel(IDataService<Project> projectDataService, IAuthenticator authenticator, INavigator navigator)
+        {
+            ProjectDataService= projectDataService;
             Authenticator = authenticator;
             Navigator = navigator;
             Projects = new ObservableCollection<Project>();
@@ -29,26 +41,14 @@ namespace Bug_Tracker.ViewModels
             UpdateProjects();
         }
 
-        private void UpdateProjects()
+        private async void UpdateProjects()
         {
-        
-                using(var db = DbContextFactory.CreateDbContext())
-                {
-                    //var projects = from project in db.Projects
-                    //               from projectUser in db.ProjectUsers
-                    //               where Authenticator.CurrentUser.ProjectUsers.Any(projectUser => projectUser.ProjectId == project.Id)
-                    //               orderby project.DateStarted descending
-                    //               select project;
-
-                    //Projects = new ObservableCollection<Project>(projects);
-
                     foreach(ProjectUser projectUser in Authenticator.CurrentUser.ProjectUsers)
                     {
-                        Projects.Add(projectUser.Project);
-                    }
-                }
-
-            
+                        Project project = await ProjectDataService.Get(projectUser.ProjectId);
+                        projects.Add(project);
+                    }        
         }
+
     }
 }

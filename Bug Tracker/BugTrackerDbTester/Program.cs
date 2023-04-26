@@ -18,6 +18,6 @@ IDataService<ProjectUser> projectUserDataService = new GenericDataService<Projec
 IAuthenticationService authenticationService = new AuthenticationService(userDataService, passwordHasher);
 
 //put code below
-await projectUserDataService.Delete(4);
-await projectDataService.Delete(4);
+//await projectUserDataService.Delete(4);
+//await projectDataService.Delete(4);
 //await ticketDataService.Create(new Ticket { AuthorId = 1, ProjectId = 1, DateSubmitted = DateTime.Now, Description = "This is a test ticket created for testing purposes.", Priority = Priority.Low, Status = Status.Open, Title = "Test Ticket", TicketType = TicketType.BugsOrErrors});

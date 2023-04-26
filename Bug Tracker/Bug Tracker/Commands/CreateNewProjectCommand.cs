@@ -51,6 +51,7 @@ namespace Bug_Tracker.Commands
                 MessageBox.Show("You need to add a project description.", "Missing Project Description", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
             Project project = await ProjectDataService.Create(new Project { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
             ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CreateNewProjectPageViewModel.Authenticator.CurrentUser.Id});
 
@@ -62,8 +63,6 @@ namespace Bug_Tracker.Commands
                 }
 
                 CreateNewProjectPageViewModel.Authenticator.CurrentUser.ProjectUsers.Add(projectUser);
-                //the line in question
-                db.Entry(CreateNewProjectPageViewModel.Authenticator.CurrentUser).Collection(x => x.ProjectUsers).IsModified = true;
                 await db.SaveChangesAsync();
             }
 

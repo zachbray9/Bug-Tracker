@@ -56,7 +56,8 @@ namespace BugTracker.EntityFramework.Services
         {
             using (BugTrackerDbContext context = ContextFactory.CreateDbContext())
             {
-                User? entity = await context.Set<User>().FirstOrDefaultAsync((e) => e.Id == id);
+                //testing eager loading by adding the .Include() method
+                User? entity = await context.Set<User>().Include(u => u.ProjectUsers).FirstOrDefaultAsync((e) => e.Id == id);
                 return entity;
             }
         }
@@ -65,7 +66,8 @@ namespace BugTracker.EntityFramework.Services
         {
             using (BugTrackerDbContext context = ContextFactory.CreateDbContext())
             {
-                User? entity = await context.Set<User>().FirstOrDefaultAsync((e) => e.Username == username);
+                //testing eager loading by adding the .Include() method
+                User? entity = await context.Set<User>().Include(u => u.ProjectUsers).FirstOrDefaultAsync((e) => e.Username == username);
                 return entity;
             }
         }
@@ -74,7 +76,8 @@ namespace BugTracker.EntityFramework.Services
         {
             using (BugTrackerDbContext context = ContextFactory.CreateDbContext())
             {
-                User? entity = await context.Set<User>().FirstOrDefaultAsync((e) => e.Email == email);
+                //testing eager loading by adding the .Include method
+                User? entity = await context.Set<User>().Include(u => u.ProjectUsers).FirstOrDefaultAsync((e) => e.Email == email);
                 return entity;
             }
         }

@@ -66,7 +66,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<CreateAccountPageViewModel>>(services =>
             {
-                return () => new CreateAccountPageViewModel();
+                return () => new CreateAccountPageViewModel(services.GetRequiredService<INavigator>(), services.GetRequiredService<IAuthenticator>());
             }
             );
 

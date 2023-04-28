@@ -20,7 +20,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             PasswordHasher = passwordHasher;
         }
 
-        public async Task<RegistrationResult> CreateAccount(string email, string username, string password, string confirmPassword)
+        public async Task<RegistrationResult> CreateAccount(string email, string firstName, string lastName, string password, string confirmPassword)
         {
             RegistrationResult result = RegistrationResult.Success;
 
@@ -37,13 +37,6 @@ namespace BugTracker.Domain.Services.AuthenticationServices
                 result = RegistrationResult.EmailAlreadyExists;
             }
 
-            //if theh username already exists for the account that is being created
-            User userByUsername = await UserService.GetByUsername(username);
-            if (userByUsername != null)
-            {
-                result = RegistrationResult.UsernameAlreadyExists;
-            }
-
             //if there are no errors then create the account
             if(result== RegistrationResult.Success) 
             {
@@ -52,7 +45,8 @@ namespace BugTracker.Domain.Services.AuthenticationServices
                 User user = new User()
                 {
                     Email = email,
-                    Username = username,
+                    FirstName = firstName,
+                    LastName = lastName,
                     PasswordHash = hashedPassword,
                     DateJoined = DateTime.Now
                 };
@@ -64,20 +58,20 @@ namespace BugTracker.Domain.Services.AuthenticationServices
 
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<User> Login(string email, string password)
         {
-            User storedUser = await UserService.GetByUsername(username);
+            User storedUser = await UserService.GetByEmail(email);
 
             if (storedUser == null)
             {
-                throw new UserNotFoundException(username);
+                throw new UserNotFoundException(email);
             }
 
             PasswordVerificationResult passwordResult = PasswordHasher.VerifyHashedPassword(storedUser.PasswordHash, password);
 
             if(passwordResult != PasswordVerificationResult.Success)
             {
-                throw new InvalidPasswordException(username, password);
+                throw new InvalidPasswordException(email, password);
             }
 
             return storedUser;

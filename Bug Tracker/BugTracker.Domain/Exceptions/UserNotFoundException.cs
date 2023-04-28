@@ -10,20 +10,20 @@ namespace BugTracker.Domain.Exceptions
 {
     public class UserNotFoundException : Exception
     {
-        public string Username;
-        public UserNotFoundException(string username)
+        public string Email;
+        public UserNotFoundException(string email)
         {
-            Username = username;
+            Email = email;
         }
 
-        public UserNotFoundException(string? message, string username) : base(message)
+        public UserNotFoundException(string? message, string email) : base(message)
         {
-            Username = username;
+            Email = email;
         }
 
-        public UserNotFoundException(string? message, Exception? innerException, string username) : base(message, innerException)
+        public UserNotFoundException(string? message, Exception? innerException, string email) : base(message, innerException)
         {
-            Username = username;
+            Email = email;
         }
 
     }

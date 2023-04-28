@@ -31,51 +31,51 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
         public async Task Login_WithCorrectPasswordForExistingUser_ReturnsUserforCorrectUsername()
         {
             //arrange
-            string expectedUsername = "testUsername";
+            string expectedEmail = "test@gmail.com";
             string password = "testPassword";
-            mockUserService.Setup(s => s.GetByUsername(expectedUsername)).ReturnsAsync(new User() { Username = expectedUsername});
+            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new User() { Email = expectedEmail});
             mockPasswordHasher.Setup(s => s.VerifyHashedPassword(It.IsAny<string>(), password)).Returns(PasswordVerificationResult.Success);
 
             //act
-            User user =  await authenticationService.Login(expectedUsername, password);
+            User user =  await authenticationService.Login(expectedEmail, password);
 
             //assert
-            string actualUsername = user.Username;
-            Assert.AreEqual(expectedUsername, actualUsername);
+            string actualEmail = user.Email;
+            Assert.AreEqual(expectedEmail, actualEmail);
         }
 
         [Test]
-        public void Login_WithIncorrectPasswordForExistingUsername_ThrowsInvalidExceptionForUsername()
+        public void Login_WithIncorrectPasswordForExistingEmail_ThrowsInvalidExceptionForUsername()
         {
             //arrange
-            string expectedUsername = "testUsername";
+            string expectedEmail = "test@gmail.com";
             string password = "testPassword";
             //string incorrectPassword = "asdfasdfasdf";
-            mockUserService.Setup(s => s.GetByUsername(expectedUsername)).ReturnsAsync(new User() { Username = expectedUsername });
+            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new User() { Email = expectedEmail });
             mockPasswordHasher.Setup(s => s.VerifyHashedPassword(It.IsAny<string>(), password)).Returns(PasswordVerificationResult.Failed);
 
             //act
-            InvalidPasswordException exception = Assert.ThrowsAsync<InvalidPasswordException>(() => authenticationService.Login(expectedUsername, password));
+            InvalidPasswordException exception = Assert.ThrowsAsync<InvalidPasswordException>(() => authenticationService.Login(expectedEmail, password));
 
             //assert
-            string actualUsername = exception.Username;
-            Assert.AreEqual(expectedUsername, actualUsername);
+            string actualEmail = exception.Email;
+            Assert.AreEqual(expectedEmail, actualEmail);
         }
 
         [Test]
-        public void Login_WithNonExistingUsername_ThrowsInvalidExceptionForUsername()
+        public void Login_WithNonExistingEmail_ThrowsInvalidExceptionForUsername()
         {
             //arrange
-            string expectedUsername = "testUsername";
+            string expectedEmail = "test@gmail.com";
             string password = "testPassword";
             mockPasswordHasher.Setup(s => s.VerifyHashedPassword(It.IsAny<string>(), password)).Returns(PasswordVerificationResult.Failed);
 
             //act
-            UserNotFoundException exception = Assert.ThrowsAsync<UserNotFoundException>(() => authenticationService.Login(expectedUsername, password));
+            UserNotFoundException exception = Assert.ThrowsAsync<UserNotFoundException>(() => authenticationService.Login(expectedEmail, password));
 
             //assert
-            string actualUsername = exception.Username;
-            Assert.AreEqual(expectedUsername, actualUsername);
+            string actualEmail = exception.Email;
+            Assert.AreEqual(expectedEmail, actualEmail);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             string confirmPassword = "incorrectTestPassword";
             RegistrationResult expectedResult = RegistrationResult.PasswordsDoNotMatch;
 
-            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), password, confirmPassword);
+            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), password, confirmPassword);
 
             Assert.AreEqual(result, expectedResult);
         }
@@ -97,30 +97,18 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             RegistrationResult expectedResult = RegistrationResult.EmailAlreadyExists;
 
             mockUserService.Setup(s => s.GetByEmail(email)).ReturnsAsync(new User());
-            RegistrationResult result =  await authenticationService.CreateAccount(email, It.IsAny<string>(), "test", "test");
+            RegistrationResult result =  await authenticationService.CreateAccount(email, It.IsAny<string>(), It.IsAny<string>(), "test", "test");
 
             Assert.AreEqual(result, expectedResult);
         }
 
         [Test]
-        public async Task CreateAccount_UsernameAlreadyExists_ReturnsUsernameAlreadyExistsRegistrationResult()
-        {
-            string username = "testUsername";
-            RegistrationResult expectedResult = RegistrationResult.UsernameAlreadyExists;
-
-            mockUserService.Setup(s => s.GetByUsername(username)).ReturnsAsync(new User());
-            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), username, "test", "test");
-
-            Assert.AreEqual(result, expectedResult);
-        }
-
-        [Test]
-        public async Task CreateAccount_WithNonExistingUsernameAndMatchingPasswords_ReturnsSuccessRegistrationResult()
+        public async Task CreateAccount_WithNonExistingEmailAndMatchingPasswords_ReturnsSuccessRegistrationResult()
         {
             RegistrationResult expectedResult = RegistrationResult.Success;
 
             //mockUserService.Setup(s => s.GetByUsername(username)).ReturnsAsync(new User());
-            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), "test", "test");
+            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), "test", "test");
 
             Assert.AreEqual(result, expectedResult);
         }

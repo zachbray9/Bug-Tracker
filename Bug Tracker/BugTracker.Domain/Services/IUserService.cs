@@ -11,12 +11,10 @@ namespace BugTracker.Domain.Services
     {
         Success,
         PasswordsDoNotMatch,
-        EmailAlreadyExists,
-        UsernameAlreadyExists
+        EmailAlreadyExists
     }
     public interface IUserService : IDataService<User>
     {
-        Task<User> GetByUsername(string username);
         Task<User> GetByEmail(string email);
     }
 }

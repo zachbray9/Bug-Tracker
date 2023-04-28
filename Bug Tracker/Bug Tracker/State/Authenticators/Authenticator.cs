@@ -41,13 +41,13 @@ namespace Bug_Tracker.State.Authenticators
             AuthenticationService = authenticationService;
         }
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<bool> Login(string email, string password)
         {
             bool success = true;
 
             try
             {
-                CurrentUser = await AuthenticationService.Login(username, password);
+                CurrentUser = await AuthenticationService.Login(email, password);
             }
             catch (Exception ex)
             {
@@ -63,9 +63,9 @@ namespace Bug_Tracker.State.Authenticators
             CurrentUser = null;
         }
 
-        public async Task<RegistrationResult> CreateAccount(string username, string email, string password, string confirmpassword)
+        public async Task<RegistrationResult> CreateAccount(string email, string firstName, string lastName, string password, string confirmPassword)
         {
-            return await AuthenticationService.CreateAccount(username, email, password, confirmpassword);
+            return await AuthenticationService.CreateAccount(email, firstName, lastName, password, confirmPassword);
         }
 
         void OnPropertyChanged(string propertyName)

@@ -9,7 +9,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
 {
     public interface IAuthenticationService
     {
-        Task<RegistrationResult> CreateAccount(string email, string username, string password, string confirmPassword);
-        Task<User> Login(string username, string password);
+        Task<RegistrationResult> CreateAccount(string email, string firstName, string lastName, string password, string confirmPassword);
+        Task<User> Login(string email, string password);
     }
 }

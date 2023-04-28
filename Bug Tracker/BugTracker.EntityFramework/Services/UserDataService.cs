@@ -62,15 +62,6 @@ namespace BugTracker.EntityFramework.Services
             }
         }
 
-        public async Task<User> GetByUsername(string username)
-        {
-            using (BugTrackerDbContext context = ContextFactory.CreateDbContext())
-            {
-                //testing eager loading by adding the .Include() method
-                User? entity = await context.Set<User>().Include(u => u.ProjectUsers).FirstOrDefaultAsync((e) => e.Username == username);
-                return entity;
-            }
-        }
 
         public async Task<User> GetByEmail(string email)
         {

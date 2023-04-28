@@ -13,8 +13,8 @@ namespace Bug_Tracker.State.Authenticators
         User CurrentUser { get; }
         bool IsLoggedIn { get; }
 
-        Task<RegistrationResult> CreateAccount(string username, string email, string password, string confirmpassword);
-        Task<bool> Login(string username, string password);
+        Task<RegistrationResult> CreateAccount(string email, string firstName, string lastName, string password, string confirmpassword);
+        Task<bool> Login(string email, string password);
         void Logout();
 
     }

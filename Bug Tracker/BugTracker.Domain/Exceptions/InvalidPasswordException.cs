@@ -8,24 +8,24 @@ namespace BugTracker.Domain.Exceptions
 {
     public class InvalidPasswordException : Exception
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
 
-        public InvalidPasswordException(string username, string password)
+        public InvalidPasswordException(string email, string password)
         {
-            Username= username;
+            Email  = email;
             Password= password;
         }
 
-        public InvalidPasswordException(string message, string username, string password) : base (message) 
+        public InvalidPasswordException(string message, string email, string password) : base (message) 
         {
-            Username = username;
+            Email = email;
             Password = password;
         }
 
-        public InvalidPasswordException(string message, Exception innerException, string username, string password) : base(message, innerException)
+        public InvalidPasswordException(string message, Exception innerException, string email, string password) : base(message, innerException)
         {
-            Username = username;
+            Email = email;
             Password = password;
         }
 

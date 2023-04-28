@@ -26,31 +26,38 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Create Account" HorizontalAlignment="Center" FontSize="24" Margin="0, 20, 0, 0"/>
-                <Label Grid.Row="1" Content="Create an account to view and manage your projects." HorizontalAlignment="Center" FontSize="12" FontFamily="DM Sans"/>
+                <Label Grid.Row="0" Content="Create Account" HorizontalAlignment="Center" FontSize="24" FontFamily="Arial"  Margin="0, 20, 0, 0"/>
+                <Label Grid.Row="1" Content="Create an account to view and manage your projects." HorizontalAlignment="Center" FontSize="12" FontFamily="Arial"/>
 
-                <StackPanel Grid.Row="2">
-                    <Label  Content="Email" HorizontalAlignment="Left" FontSize="12" Margin="50, 10, 50, 0"/>
-                    <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <StackPanel>
+                        <Label Content="First Name" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 10, 50, 0"/>
+                        <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 25, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
+                    </StackPanel>
+                    
+                    <StackPanel>
+                        <Label  Content="Last Name" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="25, 10, 50, 0"/>
+                        <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25, 0, 50, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3">
-                    <Label Content="Username" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 50, 0"/>
-                    <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <Label Content="Email" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 50, 0"/>
+                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="4">
-                    <Label Content="Password" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 50, 0"/>
-                    <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <Label Content="Password" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 50, 0"/>
+                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="5">
-                    <Label Content="Confirm Password" HorizontalAlignment="Left" FontSize="12" Margin="50, 0, 0, 0"/>
-                    <TextBox FontSize="14" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <Label Content="Confirm Password" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 0, 0"/>
+                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="6">
-                    <TextBlock x:Name="createAccountErrorTextBox" Text="" FontSize="12" FontFamily="DM Sans" TextWrapping="Wrap" Foreground="Red" Margin="50, 0, 50, 10"/>
+                    <TextBlock x:Name="createAccountErrorTextBox" Text="" FontSize="12" FontFamily="Arial" TextWrapping="Wrap" Foreground="Red" Margin="50, 0, 50, 10"/>
                     <Button x:Name="createAccountButton" Style="{StaticResource GenericButton}" Content="Create Account" HorizontalAlignment="Center" Background="#7b68ee" Foreground="White" Margin="50, 0, 50, 20"/>
                 </StackPanel>
 

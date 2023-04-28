@@ -24,6 +24,12 @@ namespace BugTracker.Domain.Services.AuthenticationServices
         {
             RegistrationResult result = RegistrationResult.Success;
 
+            //if any of the input fields are null
+            if(email == null || firstName == null || lastName == null || password == null)
+            {
+                result = RegistrationResult.InputFieldIsNull;
+            }
+
             //if the passwords do not match
             if (password != confirmPassword)
             {
@@ -40,7 +46,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             //if there are no errors then create the account
             if(result== RegistrationResult.Success) 
             {
-            string hashedPassword = PasswordHasher.HashPassword(password);
+                string hashedPassword = PasswordHasher.HashPassword(password);
 
                 User user = new User()
                 {

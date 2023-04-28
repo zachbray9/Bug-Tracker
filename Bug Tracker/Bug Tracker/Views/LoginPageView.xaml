@@ -43,8 +43,8 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0">
-                        <Label Content="Username" FontSize="14" FontFamily="Arial" Margin="50, 10, 0, 0"/>
-                        <TextBox x:Name="usernameTextbox" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsTabStop="True" TabIndex="0" FontSize="14" FontFamily="Arial" TextAlignment="Left" VerticalContentAlignment="Center" Padding="15, 0, 15, 0" Margin="50, 0, 50, 0" Height="35" VerticalAlignment="Bottom"/>
+                        <Label Content="Email" FontSize="14" FontFamily="Arial" Margin="50, 10, 0, 0"/>
+                        <TextBox x:Name="emailTextbox" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" IsTabStop="True" TabIndex="0" FontSize="14" FontFamily="Arial" TextAlignment="Left" VerticalContentAlignment="Center" Padding="15, 0, 15, 0" Margin="50, 0, 50, 0" Height="35" VerticalAlignment="Bottom"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1">
@@ -56,7 +56,7 @@
 
                 <StackPanel Grid.Row="2">
                     <!--this is the textblock that you change the text for if there is a login error-->
-                    <TextBlock x:Name="loginErrorTextBlock" Text="" FontSize="14" FontFamily="Arial" TextWrapping="Wrap" Foreground="Red" Margin="50, 10, 50, 10"/>
+                    <TextBlock x:Name="loginErrorTextBlock" Text="{Binding LoginErrorText}" FontSize="14" FontFamily="Arial" TextWrapping="Wrap" Foreground="Red" Margin="50, 10, 50, 20"/>
                     <Button x:Name="loginButton" Style="{StaticResource GenericButton}" Content="Sign In" Click="loginButton_Click" IsDefault="True" IsTabStop="True" TabIndex="2" Height="35" VerticalAlignment="Top" Margin="50, 0, 50, 20" Background="#7b68ee" Foreground="White"/>
                 </StackPanel>
 
@@ -74,14 +74,18 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
                         <TextBlock Text="Create an account? " Foreground="DimGray" FontFamily="Arial"/>
-                        <TextBlock Text="Sign Up" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial"  Cursor="Hand"/>
+                        <TextBlock Text="Sign Up" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial"  Cursor="Hand">
+                            <TextBlock.InputBindings>
+                                <MouseBinding Command="{Binding Navigator.NavigateCommand}" MouseAction="LeftClick" CommandParameter="{x:Static nav:ViewType.CreateAccountPage}"/>
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
                         <TextBlock Text="Sign in as a " Foreground="DimGray" FontFamily="Arial"/>
                         <TextBlock  Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial" Cursor="Hand">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding Navigator.NavigateCommand}" MouseAction="LeftClick" CommandParameter="{x:Static nav:ViewType.CreateAccountPage}"/>
+                                <MouseBinding Command="" MouseAction="LeftClick" CommandParameter="{x:Static nav:ViewType.CreateAccountPage}"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>

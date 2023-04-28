@@ -52,7 +52,6 @@ namespace Bug_Tracker.State.Authenticators
             catch (Exception ex)
             {
                 success = false;
-                MessageBox.Show(ex.Message);
             }
 
             return success;

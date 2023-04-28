@@ -11,7 +11,8 @@ namespace BugTracker.Domain.Services
     {
         Success,
         PasswordsDoNotMatch,
-        EmailAlreadyExists
+        EmailAlreadyExists,
+        InputFieldIsNull
     }
     public interface IUserService : IDataService<User>
     {

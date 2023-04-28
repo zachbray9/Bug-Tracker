@@ -27,10 +27,14 @@ namespace Bug_Tracker.Commands
 
         public async override void Execute(object parameter)
         {
-            bool success = await Authenticator.Login(LoginPageViewModel.Username, parameter.ToString());
+            bool success = await Authenticator.Login(LoginPageViewModel.Email, parameter.ToString());
             if (success) 
             {
                 Navigator.Navigate(ViewType.HomePage);
+            }
+            else
+            {
+                LoginPageViewModel.LoginErrorText = "Your email and/or password is incorrect.";
             }
         }
     }

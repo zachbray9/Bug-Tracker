@@ -29,19 +29,21 @@ namespace Bug_Tracker.ViewModels
             //RecoverPasswordCommand = new RecoverPasswordCommand();
             //CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand();
+
+            loginErrorText = string.Empty;
         }
 
-        private string username;
-        public string Username
+        private string email;
+        public string Email
         {
             get 
             {
-                return username;
+                return email;
             }
             set
             {
-                username = value;
-                OnPropertyChanged(nameof(Username));
+                email = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
 
@@ -56,6 +58,17 @@ namespace Bug_Tracker.ViewModels
             {
                 password = value;
                 OnPropertyChanged(nameof(Password));
+            }
+        }
+
+        private string loginErrorText;
+        public string LoginErrorText
+        {
+            get { return loginErrorText; }
+            set
+            {
+                loginErrorText = value;
+                OnPropertyChanged(nameof(LoginErrorText));
             }
         }
 

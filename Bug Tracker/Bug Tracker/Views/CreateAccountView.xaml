@@ -32,33 +32,33 @@
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                     <StackPanel>
                         <Label Content="First Name" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 10, 50, 0"/>
-                        <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 25, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
+                        <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 25, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
                     </StackPanel>
                     
                     <StackPanel>
                         <Label  Content="Last Name" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="25, 10, 50, 0"/>
-                        <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25, 0, 50, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
+                        <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25, 0, 50, 0" Padding="15, 0, 15, 0" Height="35" Width="175"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3">
                     <Label Content="Email" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 50, 0"/>
-                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="4">
                     <Label Content="Password" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 50, 0"/>
-                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <TextBox Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="5">
                     <Label Content="Confirm Password" HorizontalAlignment="Left" FontSize="12" FontFamily="Arial" Margin="50, 0, 0, 0"/>
-                    <TextBox FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
+                    <TextBox Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Arial" TextAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50, 0, 50, 0" Padding="15, 0, 15, 0" Height="35"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="6">
-                    <TextBlock x:Name="createAccountErrorTextBox" Text="" FontSize="12" FontFamily="Arial" TextWrapping="Wrap" Foreground="Red" Margin="50, 0, 50, 10"/>
-                    <Button x:Name="createAccountButton" Style="{StaticResource GenericButton}" Content="Create Account" HorizontalAlignment="Center" Background="#7b68ee" Foreground="White" Margin="50, 0, 50, 20"/>
+                    <TextBlock x:Name="createAccountErrorTextBox" Text="{Binding CreateAccountErrorText}" FontSize="12" FontFamily="Arial" TextWrapping="Wrap" Foreground="Red" Margin="50, 0, 50, 10"/>
+                    <Button x:Name="createAccountButton" Style="{StaticResource GenericButton}" Content="Create Account" Command="{Binding CreateAccountCommand}" HorizontalAlignment="Center" Background="#7b68ee" Foreground="White" Margin="50, 0, 50, 20"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 20">

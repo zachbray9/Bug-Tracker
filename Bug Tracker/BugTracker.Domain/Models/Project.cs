@@ -14,5 +14,11 @@ namespace BugTracker.Domain.Models
         public ICollection<ProjectUser> ProjectUsers { get; set; } = null!;
         public ICollection<Ticket> Tickets { get; set; } = null!;
         public DateTime DateStarted { get; set; }
+
+        public Project()
+        {
+            ProjectUsers= new List<ProjectUser>();
+            Tickets= new List<Ticket>();
+        }
     }
 }

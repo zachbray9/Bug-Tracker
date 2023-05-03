@@ -18,8 +18,9 @@ namespace Bug_Tracker.ViewModels.Factories
         private readonly CreateViewModel<ProjectsPageViewModel> CreateProjectsPageViewModel;
         private readonly CreateViewModel<TicketsPageViewModel> CreateTicketsPageViewModel;
         private readonly CreateViewModel<CreateNewProjectPageViewModel> CreateCreateNewProjectPageViewModel;
+        private readonly CreateViewModel<ProjectDetailsPageViewModel> CreateProjectDetailsPageViewModel;
 
-        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel, CreateViewModel<CreateNewProjectPageViewModel> createCreateNewProjectPageViewModel)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel, CreateViewModel<CreateNewProjectPageViewModel> createCreateNewProjectPageViewModel, CreateViewModel<ProjectDetailsPageViewModel> createProjectDetailsPageViewModel)
         {
             CreateLoginPageViewModel = createLoginPageViewModel;
             CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
@@ -28,6 +29,7 @@ namespace Bug_Tracker.ViewModels.Factories
             CreateProjectsPageViewModel = createProjectsPageViewModel;
             CreateTicketsPageViewModel = createTicketsPageViewModel;
             CreateCreateNewProjectPageViewModel = createCreateNewProjectPageViewModel;
+            CreateProjectDetailsPageViewModel = createProjectDetailsPageViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
@@ -48,6 +50,8 @@ namespace Bug_Tracker.ViewModels.Factories
                     return CreateTicketsPageViewModel();
                 case ViewType.CreateNewProjectPage:
                     return CreateCreateNewProjectPageViewModel();
+                case ViewType.ProjectDetailsPage:
+                    return CreateProjectDetailsPageViewModel();
                 default:
                     throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }

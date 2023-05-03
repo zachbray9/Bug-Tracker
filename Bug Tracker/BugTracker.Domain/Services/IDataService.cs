@@ -14,8 +14,8 @@ namespace BugTracker.Domain.Services
 
         Task<T> Create(T entity);
 
-        Task<T> Update(int Id, T entity);
+        Task<T> Update(int id, T entity);
 
-        Task<bool> Delete(int Id);
+        Task<bool> Delete(int id);
     }
 }

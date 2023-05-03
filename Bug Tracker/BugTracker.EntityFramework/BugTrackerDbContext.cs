@@ -21,6 +21,7 @@ namespace BugTracker.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Author)
                 .WithMany(a => a.Comments)

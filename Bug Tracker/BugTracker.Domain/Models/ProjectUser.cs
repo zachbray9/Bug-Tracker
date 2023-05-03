@@ -22,5 +22,11 @@ namespace BugTracker.Domain.Models
         public ICollection<Ticket> Tickets { get; set; } = null!;
         public ICollection<Comment> Comments { get; set; } = null!;
         public ProjectRole Role { get; set; }
+
+        public ProjectUser()
+        {
+            Tickets = new List<Ticket>();
+            Comments = new List<Comment>();
+        }
     }
 }

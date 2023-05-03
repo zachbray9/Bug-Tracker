@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="Bug_Tracker.Views.ProjectDetailsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bug_Tracker.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0" Padding="20, 0, 0, 0" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Details for " FontFamily="Arial" FontSize="16" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding ProjectContainer.CurrentProject.Name}" FontFamily="Arial" FontSize="16" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Separator Grid.Row="1"/>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Project Name" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" Opacity=".4" Margin="40, 0, 0, 15"/>
+                    <TextBlock Text="{Binding ProjectContainer.CurrentProject.Name}" FontFamily="Arial" FontSize="14" VerticalAlignment="Center" Margin="45, 0, 0, 0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Project Description" VerticalAlignment="Center" FontFamily="Arial" FontSize="12" Opacity=".4" Margin="20, 0, 0, 15"/>
+                    <TextBlock Text="{Binding ProjectContainer.CurrentProject.Description}" FontFamily="Arial" FontSize="14" VerticalAlignment="Center" Margin="25, 0, 0, 0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Separator Grid.Row="1"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                    <Border Grid.Row="0" Margin="0, 20, 0, 0">
+                        <StackPanel>
+                            <TextBlock Text="Project Personnel" FontFamily="Arial" FontSize="16" Margin="20, 5, 0, 5" VerticalAlignment="Center"/>
+                            <TextBlock Text="Current Users On This Project" FontFamily="arial" FontSize="12" Margin="25, 0, 0, 5" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Row="1" Margin="20, 20, 0, 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Name"/>
+                        <TextBlock Grid.Column="1" Text="Email"/>
+                        <TextBlock Grid.Column="2" Text="Role"/>
+                    </Grid>
+
+                    <ListBox Grid.Row="2" BorderBrush="Transparent" ItemsSource="{Binding ProjectUsers}" IsHitTestVisible="True">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding User.FirstName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="20, 10, 5, 10"/>
+                                        <TextBlock Text="{Binding User.LastName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0, 10, 0, 10"/>
+                                    </StackPanel>
+                                        
+                                    <TextBlock Grid.Column="1" Text="{Binding User.Email}" Margin="15, 10, 10, 10"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Role}" Margin="10"/>
+
+                            </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+            </Grid>
+
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0.4, 0, 0, 0">
+                <Grid Grid.Column="1">
+                    <StackPanel>
+                        <Border Margin="0, 20, 0, 0">
+                            <StackPanel>
+                                <TextBlock Text="Tickets" FontFamily="Arial" FontSize="16" Margin="20, 5, 0, 5" VerticalAlignment="Center"/>
+                                <TextBlock Text="Tickets That Have Been Submitted For Bugs On This Project" FontFamily="arial" FontSize="12" Margin="25, 0, 0, 5" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

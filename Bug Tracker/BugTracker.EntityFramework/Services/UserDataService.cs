@@ -46,7 +46,7 @@ namespace BugTracker.EntityFramework.Services
         {
             using (BugTrackerDbContext context = ContextFactory.CreateDbContext())
             {
-                IEnumerable<User> entities = await context.Set<User>().ToListAsync();
+                IEnumerable<User> entities = await context.Set<User>().Include(u => u.ProjectUsers).ToListAsync();
 
                 return entities;
             }

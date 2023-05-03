@@ -16,7 +16,8 @@ namespace Bug_Tracker.State.Navigators
         AccountPage,
         ProjectsPage,
         TicketsPage,
-        CreateNewProjectPage
+        CreateNewProjectPage,
+        ProjectDetailsPage
     }
 
     public interface INavigator

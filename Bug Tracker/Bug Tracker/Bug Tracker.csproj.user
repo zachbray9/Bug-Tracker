@@ -25,6 +25,9 @@
     <Compile Update="Views\LoginPageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ProjectDetailsPageView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProjectsPageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -58,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LoginPageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProjectDetailsPageView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProjectsPageView.xaml">

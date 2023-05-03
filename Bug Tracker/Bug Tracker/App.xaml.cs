@@ -1,4 +1,6 @@
-﻿using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using Bug_Tracker.ViewModels.Factories;
@@ -51,6 +53,7 @@ namespace Bug_Tracker
             services.AddSingleton<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
 
             services.AddSingleton<IUserService, UserDataService>();
+            services.AddSingleton<IProjectService, ProjectDataService>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
@@ -84,7 +87,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<ProjectsPageViewModel>>(services =>
             {
-                return () => new ProjectsPageViewModel(services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
+                return () => new ProjectsPageViewModel(services.GetRequiredService<IProjectService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
             }
             );
 
@@ -100,11 +103,18 @@ namespace Bug_Tracker
             }
             );
 
+            services.AddSingleton<CreateViewModel<ProjectDetailsPageViewModel>>(services =>
+            {
+                return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+            }
+            );
 
 
-            services.AddScoped<INavigator, Navigator>();
-            services.AddScoped<IAuthenticator, Authenticator>();
-            services.AddScoped<MainViewModel>();
+
+            services.AddSingleton<INavigator, Navigator>();
+            services.AddSingleton<IAuthenticator, Authenticator>();
+            services.AddSingleton<IProjectContainer, ProjectContainer>();
+            services.AddSingleton<MainViewModel>();
 
             services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
 

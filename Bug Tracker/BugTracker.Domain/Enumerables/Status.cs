@@ -8,7 +8,8 @@ namespace BugTracker.Domain.Enumerables
 {
     public enum Status
     {
-        Open,
-        Closed
+        ToDo,
+        InProgress,
+        Done
     }
 }

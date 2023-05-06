@@ -52,32 +52,64 @@
             </StackPanel>
         </Grid>
 
-        <!--Grid for Task Board Listboxes-->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.Column="0" Margin="40, 10" Background="WhiteSmoke">
+        <!--StackPanel for Task Board Listboxes-->
+        <StackPanel Grid.Row="2" Margin="40, 40" Orientation="Horizontal">
+            <!--To Do panel-->
+            <Border Margin="0, 10" Background="WhiteSmoke" MinHeight="225" Width="275" Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="To Do"/>
+                    <TextBlock Grid.Row="0" Text="To Do" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+                    
+                    <ListBox Grid.Row="1" BorderBrush="Transparent" Background="Transparent">
+                        
+                    </ListBox>
+
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task"/>
                 </Grid>
             </Border>
 
-            <Border Grid.Column="1">
-                
+            <!--In Progress Panel-->
+            <Border Margin="20, 10" Background="WhiteSmoke" MinHeight="225" Width="275"  Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="In Progress" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+
+                    <ListBox Grid.Row="1" BorderBrush="Transparent" Background="Transparent">
+
+                    </ListBox>
+
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" />
+                </Grid>
             </Border>
 
-            <Border Grid.Column="2">
-                
+            <!--Done Panel-->
+            <Border Margin="0, 10" Background="WhiteSmoke" MinHeight="225" Width="275"  Padding="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Done" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+
+                    <ListBox Grid.Row="1" BorderBrush="Transparent" Background="Transparent">
+
+                    </ListBox>
+
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task"/>
+                </Grid>
             </Border>
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

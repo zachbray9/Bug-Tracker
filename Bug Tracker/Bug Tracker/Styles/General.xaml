@@ -41,6 +41,11 @@
         </Setter>
     </Style>
 
+    <Style x:Key="TaskBoardButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
 
     
 </ResourceDictionary>

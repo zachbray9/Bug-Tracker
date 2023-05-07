@@ -1,4 +1,5 @@
-﻿using Bug_Tracker.State;
+﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
@@ -6,6 +7,7 @@ using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Bug_Tracker.ViewModels
@@ -20,6 +23,8 @@ namespace Bug_Tracker.ViewModels
     public class ProjectDetailsPageViewModel : ViewModelBase
     {
         private readonly IUserService UserDataService;
+        private readonly IProjectUserService ProjectUserService;
+        private readonly ITicketService TicketService;
         private readonly IAuthenticator Authenticator;
         private readonly INavigator Navigator;
         public IProjectContainer ProjectContainer { get; }
@@ -91,9 +96,11 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserService userDataService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectDetailsPageViewModel(IUserService userDataService, IProjectUserService projectUserService, ITicketService ticketService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             UserDataService= userDataService;
+            ProjectUserService= projectUserService;
+            TicketService= ticketService;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -102,6 +109,9 @@ namespace Bug_Tracker.ViewModels
             ToDoTickets = new ObservableCollection<Ticket>();
             InProgressTickets = new ObservableCollection<Ticket>();
             DoneTickets = new ObservableCollection<Ticket>();
+
+            CreateNewTicketCommand = new CreateNewTicketCommand(TicketService, UserDataService, ProjectUserService, this);
+
             UpdateProjectUsers();
             UpdateTickets();
         }
@@ -115,7 +125,7 @@ namespace Bug_Tracker.ViewModels
                 }               
         }
 
-        private async void UpdateTickets()
+        private void UpdateTickets()
         {
             foreach(Ticket ticket in CurrentProject.Tickets)
             {
@@ -127,5 +137,7 @@ namespace Bug_Tracker.ViewModels
                     DoneTickets.Add(ticket);
             }
         }
+
+        public ICommand CreateNewTicketCommand { get; }
     }
 }

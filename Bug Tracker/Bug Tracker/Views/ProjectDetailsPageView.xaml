@@ -37,7 +37,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <ComboBox Grid.Column="0" Height="40" IsEditable="True" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40, 0"/>
+            <ComboBox Grid.Column="0" Height="40" IsEditable="True" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40, 0, 20, 0"/>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0, 5">
                 <ItemsControl ItemsSource="{Binding ProjectUsers}">

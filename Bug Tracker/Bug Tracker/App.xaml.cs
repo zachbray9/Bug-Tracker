@@ -54,6 +54,8 @@ namespace Bug_Tracker
 
             services.AddSingleton<IUserService, UserDataService>();
             services.AddSingleton<IProjectService, ProjectDataService>();
+            services.AddSingleton<IProjectUserService, ProjectUserDataService>();
+            services.AddSingleton<ITicketService, TicketDataService>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
@@ -105,7 +107,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<ProjectDetailsPageViewModel>>(services =>
             {
-                return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+                return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IProjectUserService>(), services.GetRequiredService<ITicketService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
             }
             );
 

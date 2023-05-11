@@ -1,10 +1,12 @@
 ﻿
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\App.xaml;;
+FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Controls\CreateTicketWindow.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Controls\HomePageNavigationBar.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\MainWindow.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\AccountPageView.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\CreateAccountView.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\CreateNewProjectPageView.xaml;;
+FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\CreateTicketView.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\HomePageView.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\LoginPageView.xaml;;
 FC:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\Views\ProjectDetailsPageView.xaml;;

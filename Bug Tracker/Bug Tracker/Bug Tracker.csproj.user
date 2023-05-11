@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\CreateTicketWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\HomePageNavigationBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,6 +20,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CreateNewProjectPageView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CreateTicketView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomePageView.xaml.cs">
@@ -36,6 +42,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\CreateTicketWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\HomePageNavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -55,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CreateNewProjectPageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CreateTicketView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomePageView.xaml">

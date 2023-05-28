@@ -111,6 +111,12 @@ namespace Bug_Tracker
             }
             );
 
+            services.AddSingleton<CreateViewModel<CreateTicketViewModel>>(services =>
+            {
+                return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
+            }
+            );
+
 
 
             services.AddSingleton<INavigator, Navigator>();

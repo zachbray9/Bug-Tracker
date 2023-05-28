@@ -52,6 +52,9 @@
                 <DataTemplate DataType="{x:Type viewModels:ProjectDetailsPageViewModel}">
                     <views:ProjectDetailsPageView/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:CreateTicketViewModel}">
+                    <views:CreateTicketView/>
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

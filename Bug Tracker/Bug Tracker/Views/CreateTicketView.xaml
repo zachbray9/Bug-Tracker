@@ -31,7 +31,7 @@
             <StackPanel Grid.Column="1" Margin="40">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Status" FontFamily="Arial" FontSize="18" FontWeight="SemiBold"/>
-                    <ComboBox Margin="20, 0" Width="100"/>
+                    <ComboBox Margin="20, 0" Width="100" ItemsSource="{Binding StatusOptions}"/>
                 </StackPanel>
 
                 <Border BorderBrush="Gray" BorderThickness="0.6" Height="245" Margin="0, 5, 0, 0" Padding="20">
@@ -50,7 +50,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Border Grid.Column="0" Background="DarkOliveGreen" CornerRadius="500" Padding="7, 8">
-                                    <TextBlock Text="{Binding User.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
+                                    <TextBlock Text="{Binding CurrentUser.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
                                 </Border>
 
                                 <TextBlock Grid.Column="1" Text="User Name" FontFamily="Arial" VerticalAlignment="Center" Margin="10, 0"/>

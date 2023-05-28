@@ -1,4 +1,6 @@
-﻿using Bug_Tracker.ViewModels;
+﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Navigators;
+using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -12,26 +14,23 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
     public class CreateNewTicketCommand : CommandBase
     {
-        private readonly ITicketService TicketService;
-        private readonly IUserService UserService;
-        private readonly IProjectUserService ProjectUserService;
-        private readonly ProjectDetailsPageViewModel ProjectDetailsPageViewModel;
+        private readonly INavigator Navigator;
+        private readonly IProjectContainer ProjectContainer;
 
-        private User CurrentUser { get => ProjectDetailsPageViewModel.CurrentUser; }
-        private Project CurrentProject { get => ProjectDetailsPageViewModel.CurrentProject; }
+        private Project CurrentProject { get => ProjectContainer.CurrentProject; }
+        private Ticket CurrentTicket { get => ProjectContainer.CurrentTicket; set { ProjectContainer.CurrentTicket = value; } }
 
-        public CreateNewTicketCommand(ITicketService ticketService, IUserService userService, IProjectUserService projectUserService, ProjectDetailsPageViewModel projectDetailsPageViewModel)
+        public CreateNewTicketCommand(INavigator navigator, IProjectContainer projectContainer)
         {
-            TicketService = ticketService;
-            UserService = userService;
-            ProjectUserService = projectUserService;
-            ProjectDetailsPageViewModel = projectDetailsPageViewModel;
+            Navigator = navigator;
+            ProjectContainer = projectContainer;
         }
 
-        public async override void Execute(object parameter)
+        public override void Execute(object parameter)
         {
-            ProjectUser projectUser = await ProjectUserService.Get(CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.ProjectId == CurrentProject.Id).Id);
-            await TicketService.Create(new Ticket { Title = "", Description = "", Project = CurrentProject, ProjectId = CurrentProject.Id, Author = projectUser, AuthorId = projectUser.Id, Status = Status.ToDo, Priority = Priority.Low, DateSubmitted = DateTime.Now });
+            Status status = (Status)parameter;
+            CurrentTicket = new Ticket { Title=string.Empty, Description = string.Empty, Status = status };
+            Navigator.Navigate(ViewType.CreateTicketPage);
         }
     }
 }

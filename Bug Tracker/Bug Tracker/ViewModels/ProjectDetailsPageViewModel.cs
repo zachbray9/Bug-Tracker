@@ -110,7 +110,8 @@ namespace Bug_Tracker.ViewModels
             InProgressTickets = new ObservableCollection<Ticket>();
             DoneTickets = new ObservableCollection<Ticket>();
 
-            CreateNewTicketCommand = new CreateNewTicketCommand(TicketService, UserDataService, ProjectUserService, this);
+            CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(TicketService, UserDataService, ProjectUserService, this);
 
             UpdateProjectUsers();
             UpdateTickets();
@@ -139,5 +140,6 @@ namespace Bug_Tracker.ViewModels
         }
 
         public ICommand CreateNewTicketCommand { get; }
+        public ICommand AddNewTicketToDbCommand { get; }
     }
 }

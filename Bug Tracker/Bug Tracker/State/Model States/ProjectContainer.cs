@@ -10,5 +10,6 @@ namespace Bug_Tracker.State.Model_States
     public class ProjectContainer : IProjectContainer
     {
         public Project CurrentProject { get; set; }
+        public Ticket CurrentTicket { get; set; }
     }
 }

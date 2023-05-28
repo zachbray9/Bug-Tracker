@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Views"
+             xmlns:enum="clr-namespace:BugTracker.Domain.Enumerables;assembly=BugTracker.Domain"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Grid.IsSharedSizeScope="True" Background="White" >
@@ -69,7 +70,7 @@
 
                     </ListBox>
 
-                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task"/>
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.ToDo}"/>
                 </Grid>
             </Border>
 
@@ -88,7 +89,7 @@
 
                     </ListBox>
 
-                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" />
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.InProgress}"/>
                 </Grid>
             </Border>
 
@@ -107,7 +108,7 @@
 
                     </ListBox>
 
-                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task"/>
+                    <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.Done}"/>
                 </Grid>
             </Border>
         </StackPanel>

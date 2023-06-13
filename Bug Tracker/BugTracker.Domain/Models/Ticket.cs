@@ -13,11 +13,11 @@ namespace BugTracker.Domain.Models
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
 
-        [ForeignKey(nameof(ProjectId))]
+        //[ForeignKey(nameof(ProjectId))]
         public Project Project { get; set; } = null!;
         public int ProjectId { get; set; }
 
-        [ForeignKey(nameof(AuthorId))]
+        //[ForeignKey(nameof(AuthorId))]
         public ProjectUser Author { get; set; } = null!;
         public int AuthorId { get; set; }
 

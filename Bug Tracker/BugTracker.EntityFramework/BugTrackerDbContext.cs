@@ -21,6 +21,8 @@ namespace BugTracker.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProjectUser>()
+                .HasKey(pu => pu.Id);
 
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Author)
@@ -31,6 +33,9 @@ namespace BugTracker.EntityFramework
                 .HasOne(c => c.Ticket)
                 .WithMany(t => t.Comments)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Ticket>()
+                .HasKey(t => t.Id);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Author)

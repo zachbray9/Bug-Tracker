@@ -1,4 +1,7 @@
-﻿using Bug_Tracker.ViewModels;
+﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Navigators;
+using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -12,26 +15,31 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
     public class AddNewTicketToDbCommand : CommandBase
     {
+        private readonly User CurrentUser;
+        public INavigator Navigator{ get; }
+        private readonly IProjectContainer ProjectContainer;
         private readonly ITicketService TicketService;
-        private readonly IUserService UserService;
         private readonly IProjectUserService ProjectUserService;
-        private readonly ProjectDetailsPageViewModel ProjectDetailsPageViewModel;
+        private readonly CreateTicketViewModel CreateTicketViewModel;
 
-        private User CurrentUser { get => ProjectDetailsPageViewModel.CurrentUser; }
-        private Project CurrentProject { get => ProjectDetailsPageViewModel.CurrentProject; }
+        private Project CurrentProject { get => ProjectContainer.CurrentProject; }
+        private Ticket CurrentTicket { get => ProjectContainer.CurrentTicket; }
 
-        public AddNewTicketToDbCommand(ITicketService ticketService, IUserService userService, IProjectUserService projectUserService, ProjectDetailsPageViewModel projectDetailsPageViewModel)
+        public AddNewTicketToDbCommand(User currentUser, INavigator navigator, IProjectContainer projectContainer, ITicketService ticketService, IProjectUserService projectUserService, CreateTicketViewModel createTicketViewModel)
         {
+            CurrentUser = currentUser;
+            Navigator = navigator;
+            ProjectContainer = projectContainer;
             TicketService = ticketService;
-            UserService = userService;
             ProjectUserService = projectUserService;
-            ProjectDetailsPageViewModel = projectDetailsPageViewModel;
+            CreateTicketViewModel = createTicketViewModel;
         }
 
         public async override void Execute(object parameter)
         {
             ProjectUser projectUser = await ProjectUserService.Get(CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.ProjectId == CurrentProject.Id).Id);
-            await TicketService.Create(new Ticket { Title = "", Description = "", Project = CurrentProject, ProjectId = CurrentProject.Id, Author = projectUser, AuthorId = projectUser.Id, Status = Status.ToDo, Priority = Priority.Low, DateSubmitted = DateTime.Now });
+            ProjectContainer.CurrentTicket = await TicketService.Create(new Ticket { Title = CreateTicketViewModel.TicketTitle, Description = CreateTicketViewModel.TicketDescription, Project = CurrentProject, ProjectId = CurrentProject.Id, Author = projectUser, AuthorId = projectUser.Id, Status = CurrentTicket.Status, Priority = Priority.Low, DateSubmitted = DateTime.Now });
+            Navigator.Navigate(ViewType.ProjectDetailsPage);
         }
     }
 }

@@ -113,7 +113,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<CreateTicketViewModel>>(services =>
             {
-                return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
+                return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketService>(), services.GetRequiredService<IProjectUserService>());
             }
             );
 

@@ -9,5 +9,6 @@ namespace BugTracker.Domain.Services
 {
     public interface IProjectUserService : IDataService<ProjectUser>
     {
+        Task<ProjectUser> GetByFindMethod(int id);
     }
 }

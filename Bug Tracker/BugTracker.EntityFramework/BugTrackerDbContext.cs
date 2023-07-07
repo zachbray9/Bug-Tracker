@@ -17,22 +17,37 @@ namespace BugTracker.EntityFramework
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        public BugTrackerDbContext(DbContextOptions options) : base(options) { }
+        public BugTrackerDbContext(DbContextOptions options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.ProjectUsers)
+                .WithOne(pu => pu.User);
+
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.ProjectUsers)
+                .WithOne(pu => pu.Project);
+
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Tickets)
+                .WithOne(t => t.Project);
+
             modelBuilder.Entity<ProjectUser>()
                 .HasKey(pu => pu.Id);
 
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Author)
-                .WithMany(a => a.Comments)
+            modelBuilder.Entity<ProjectUser>()
+                .HasOne(pu => pu.Project)
+                .WithMany(p => p.ProjectUsers)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Ticket)
-                .WithMany(t => t.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ProjectUser>()
+                .HasMany(pu => pu.Tickets)
+                .WithOne(t => t.Author);
+
+            modelBuilder.Entity<ProjectUser>()
+                .HasMany(pu => pu.Comments)
+                .WithOne(t => t.Author);
 
             modelBuilder.Entity<Ticket>()
                 .HasKey(t => t.Id);
@@ -46,7 +61,16 @@ namespace BugTracker.EntityFramework
                 .HasOne(t => t.Project)
                 .WithMany(p => p.Tickets)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
 
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Author)
+                .WithMany(a => a.Comments)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Ticket)
+                .WithMany(t => t.Comments)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace BugTracker.EntityFramework
         {
             var options = new DbContextOptionsBuilder<BugTrackerDbContext>();
             options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BugTrackerDB;Trusted_Connection=true");
+            options.EnableSensitiveDataLogging(true);
 
             return new BugTrackerDbContext(options.Options);
         }

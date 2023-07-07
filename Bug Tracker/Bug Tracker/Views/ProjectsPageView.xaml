@@ -45,7 +45,7 @@
 
         <Separator Grid.Row="2"/>
 
-        <ListBox Grid.Row="3" BorderBrush="Transparent" ItemsSource="{Binding Projects}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="3" BorderBrush="Transparent" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

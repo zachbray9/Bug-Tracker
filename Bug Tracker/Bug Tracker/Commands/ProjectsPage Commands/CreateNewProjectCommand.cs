@@ -23,6 +23,7 @@ namespace Bug_Tracker.Commands
         private readonly IDataService<ProjectUser> ProjectUserDataService;
         private readonly INavigator Navigator;
         private readonly CreateNewProjectPageViewModel CreateNewProjectPageViewModel;
+        private User CurrentUser => CreateNewProjectPageViewModel.Authenticator.CurrentUser;
 
         public CreateNewProjectCommand(BugTrackerDbContextFactory dbContextFactory, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, INavigator navigator, CreateNewProjectPageViewModel createNewProjectPageViewModel)
         {
@@ -53,17 +54,18 @@ namespace Bug_Tracker.Commands
             }
 
             Project project = await ProjectDataService.Create(new Project { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
-            ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CreateNewProjectPageViewModel.Authenticator.CurrentUser.Id});
+            ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CurrentUser.Id});
 
-            using(var db = DbContextFactory.CreateDbContext())
+            using (var db = DbContextFactory.CreateDbContext())
             {
-                if (CreateNewProjectPageViewModel.Authenticator.CurrentUser.ProjectUsers == null)
+
+                if (CurrentUser.ProjectUsers == null)
                 {
-                    CreateNewProjectPageViewModel.Authenticator.CurrentUser.ProjectUsers = new List<ProjectUser>();
+                    CurrentUser.ProjectUsers = new List<ProjectUser>();
                 }
 
-                CreateNewProjectPageViewModel.Authenticator.CurrentUser.ProjectUsers.Add(projectUser);
-                await db.SaveChangesAsync();
+                CurrentUser.ProjectUsers.Add(projectUser);
+                db.SaveChanges();
             }
 
             Navigator.Navigate(ViewType.ProjectsPage);

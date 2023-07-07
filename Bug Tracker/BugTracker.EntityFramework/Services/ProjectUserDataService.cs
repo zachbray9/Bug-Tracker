@@ -73,5 +73,14 @@ namespace BugTracker.EntityFramework.Services
                 return entity;
             }
         }
+
+        public async Task<ProjectUser> GetByFindMethod(int id)
+        {
+            using(BugTrackerDbContext context = ContextFactory.CreateDbContext())
+            {
+                ProjectUser? entity = await context.Set<ProjectUser>().FindAsync(id);
+                return entity;       
+            }
+        }
     }
 }

@@ -5,6 +5,8 @@ using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
+using BugTracker.EntityFramework;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +19,7 @@ namespace Bug_Tracker.ViewModels
 {
     public class CreateTicketViewModel : ViewModelBase
     {
+        private BugTrackerDbContextFactory DbContextFactory;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
@@ -30,8 +33,9 @@ namespace Bug_Tracker.ViewModels
         public User CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketService ticketService, IProjectUserService projectUserService)
+        public CreateTicketViewModel(BugTrackerDbContextFactory dbContextFactory, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketService ticketService, IProjectUserService projectUserService)
         {
+            DbContextFactory = dbContextFactory;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -45,7 +49,7 @@ namespace Bug_Tracker.ViewModels
                 { Status.Done, "Done"}
             };
 
-            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketService, ProjectUserService, this);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(DbContextFactory, CurrentUser, Navigator, ProjectContainer, TicketService, ProjectUserService, this);
         }
 
         private string ticketTitle;

@@ -23,7 +23,6 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
-        private readonly IDataService<ProjectUser> ProjectUserService;
         private readonly IDataService<Ticket> TicketService;
 
 
@@ -33,15 +32,13 @@ namespace Bug_Tracker.ViewModels
         public User CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(BugTrackerDbContext dbContext, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService)
+        public CreateTicketViewModel(BugTrackerDbContext dbContext, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService)
         {
-            //DbContextFactory = dbContextFactory;
             DbContext = dbContext; 
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
             TicketService = ticketService;
-            ProjectUserService = projectUserService;
 
             StatusOptionsDictionary = new Dictionary<Status, string>()
             {
@@ -50,7 +47,7 @@ namespace Bug_Tracker.ViewModels
                 { Status.Done, "Done"}
             };
 
-            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, ProjectUserService, TicketService, this);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketService, this);
         }
 
         private string ticketTitle;

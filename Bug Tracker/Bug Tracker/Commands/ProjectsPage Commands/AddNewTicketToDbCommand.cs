@@ -20,19 +20,17 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         private readonly User CurrentUser;
         public INavigator Navigator{ get; }
         private readonly IProjectContainer ProjectContainer;
-        private readonly IDataService<ProjectUser> ProjectUserService;
         private readonly IDataService<Ticket> TicketService;
         private readonly CreateTicketViewModel CreateTicketViewModel;
 
         private Project CurrentProject { get => ProjectContainer.CurrentProject; }
         private Ticket CurrentTicket { get => ProjectContainer.CurrentTicket; }
 
-        public AddNewTicketToDbCommand(User currentUser, INavigator navigator, IProjectContainer projectContainer, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, CreateTicketViewModel createTicketViewModel)
+        public AddNewTicketToDbCommand(User currentUser, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService, CreateTicketViewModel createTicketViewModel)
         {
             CurrentUser = currentUser;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            ProjectUserService = projectUserService;
             TicketService = ticketService;
             CreateTicketViewModel = createTicketViewModel;
         }

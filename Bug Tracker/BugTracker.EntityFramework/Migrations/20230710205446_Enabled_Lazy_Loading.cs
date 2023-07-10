@@ -5,24 +5,18 @@
 namespace BugTracker.EntityFramework.Migrations
 {
     /// <inheritdoc />
-    public partial class passwordhash : Migration
+    public partial class Enabled_Lazy_Loading : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Password",
-                table: "Users",
-                newName: "PasswordHash");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "PasswordHash",
-                table: "Users",
-                newName: "Password");
+
         }
     }
 }

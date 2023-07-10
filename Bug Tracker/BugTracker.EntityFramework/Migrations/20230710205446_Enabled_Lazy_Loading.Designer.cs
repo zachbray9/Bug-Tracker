@@ -12,15 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.EntityFramework.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    [Migration("20230124071413_initial")]
-    partial class initial
+    [Migration("20230710205446_Enabled_Lazy_Loading")]
+    partial class Enabled_Lazy_Loading
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -163,11 +166,15 @@ namespace BugTracker.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -200,7 +207,7 @@ namespace BugTracker.EntityFramework.Migrations
                     b.HasOne("BugTracker.Domain.Models.Project", "Project")
                         .WithMany("ProjectUsers")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugTracker.Domain.Models.User", "User")

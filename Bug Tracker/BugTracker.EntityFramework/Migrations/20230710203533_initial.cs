@@ -33,8 +33,9 @@ namespace BugTracker.EntityFramework.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateJoined = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -60,7 +61,7 @@ namespace BugTracker.EntityFramework.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProjectUsers_Users_UserId",
                         column: x => x.UserId,

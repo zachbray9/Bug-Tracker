@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.EntityFramework.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    [Migration("20230428042723_Changed_Username_to_First_and_Last_Names")]
-    partial class ChangedUsernametoFirstandLastNames
+    [Migration("20230710203533_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,7 +204,7 @@ namespace BugTracker.EntityFramework.Migrations
                     b.HasOne("BugTracker.Domain.Models.Project", "Project")
                         .WithMany("ProjectUsers")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BugTracker.Domain.Models.User", "User")

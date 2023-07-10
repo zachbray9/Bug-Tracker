@@ -11,12 +11,10 @@ namespace BugTracker.Domain.Models
     {
         public string Text { get; set; } = null!;
 
-        [ForeignKey(nameof(AuthorId))]
-        public ProjectUser Author { get; set; } = null!;
+        public virtual ProjectUser Author { get; set; } = null!;
         public int AuthorId { get; set; }
 
-        [ForeignKey(nameof(TicketId))]
-        public Ticket Ticket { get; set; } = null!;
+        public virtual Ticket Ticket { get; set; } = null!;
         public int TicketId { get; set; }
 
         public DateTime DateSubmitted { get; set; }

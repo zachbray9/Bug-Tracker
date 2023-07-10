@@ -15,7 +15,7 @@ namespace BugTracker.Domain.Models
         [NotMapped]
         public string Initials { get => $"{FirstName?.FirstOrDefault()}{LastName?.FirstOrDefault()}".ToUpper(); }
         public string PasswordHash { get; set; } = null!;
-        public ICollection<ProjectUser> ProjectUsers { get; set; } = null!;
+        public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = null!;
         public DateTime DateJoined { get; set; }
 
         public User()

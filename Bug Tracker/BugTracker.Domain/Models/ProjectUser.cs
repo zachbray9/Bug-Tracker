@@ -11,16 +11,14 @@ namespace BugTracker.Domain.Models
 {
     public  class ProjectUser : DomainObject
     {
-        [ForeignKey(nameof(ProjectId))]
-        public Project Project { get; set; } = null!;
+        public virtual Project Project { get; set; } = null!;
         public int ProjectId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public User User { get; set; } = null!; 
+        public virtual User User { get; set; } = null!; 
         public int UserId { get; set; }
 
-        public ICollection<Ticket> Tickets { get; set; } = null!;
-        public ICollection<Comment> Comments { get; set; } = null!;
+        public virtual ICollection<Ticket> Tickets { get; set; } = null!;
+        public virtual ICollection<Comment> Comments { get; set; } = null!;
         public ProjectRole Role { get; set; }
 
         public ProjectUser()

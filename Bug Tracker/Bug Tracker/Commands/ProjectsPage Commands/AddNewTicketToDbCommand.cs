@@ -41,26 +41,16 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
         public async override void Execute(object parameter)
         {
-            ProjectUser projectUser = await ProjectUserService.Get(CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.ProjectId == CurrentProject.Id).Id);
+            //ProjectUser projectUser = await ProjectUserService.Get(CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.ProjectId == CurrentProject.Id).Id);
+            ProjectUser projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.User.Id == CurrentUser.Id);
 
-            using(var db = DbContextFactory.CreateDbContext())
-            {
-                int projectUserId = projectUser.Id;
-                ProjectUser existingProjectUser = db.Set<ProjectUser>().Find(projectUserId);
+            
+                
 
-                if (existingProjectUser != null) 
-                {
-                    var entry = db.Entry(existingProjectUser);
-                    entry.State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-
-                    ProjectContainer.CurrentTicket = await TicketService.Create(new Ticket { Title = CreateTicketViewModel.TicketTitle, Description = CreateTicketViewModel.TicketDescription, Project = CurrentProject, ProjectId = CurrentProject.Id, Author = existingProjectUser, AuthorId = existingProjectUser.Id, Status = CurrentTicket.Status, Priority = Priority.Low, DateSubmitted = DateTime.Now });
-                    Navigator.Navigate(ViewType.ProjectDetailsPage);
-                }
-                else
-                {
-                    Console.WriteLine("Project User is null, so he's not being tracked.");
-                }
-            }
+             ProjectContainer.CurrentTicket = await TicketService.Create(new Ticket { Title = CreateTicketViewModel.TicketTitle, Description = CreateTicketViewModel.TicketDescription, Project = CurrentProject, ProjectId = CurrentProject.Id, Author = projectUser, AuthorId = projectUser.Id, Status = CurrentTicket.Status, Priority = Priority.Low, DateSubmitted = DateTime.Now });
+             Navigator.Navigate(ViewType.ProjectDetailsPage);
+                
+           
 
             //ProjectContainer.CurrentTicket = await TicketService.Create(new Ticket { Title = CreateTicketViewModel.TicketTitle, Description = CreateTicketViewModel.TicketDescription, Project = CurrentProject, ProjectId = CurrentProject.Id, Author = projectUser, AuthorId = projectUser.Id, Status = CurrentTicket.Status, Priority = Priority.Low, DateSubmitted = DateTime.Now });
             //Navigator.Navigate(ViewType.ProjectDetailsPage);

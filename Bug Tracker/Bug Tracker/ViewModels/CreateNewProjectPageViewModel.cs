@@ -15,7 +15,7 @@ namespace Bug_Tracker.ViewModels
 {
     public class CreateNewProjectPageViewModel : ViewModelBase
     {
-        private readonly BugTrackerDbContextFactory DbContextFactory;
+        private readonly BugTrackerDbContext DbContext;
         private readonly IDataService<Project> ProjectDataService; 
         private readonly IDataService<ProjectUser> ProjectUserDataService;
         public IAuthenticator Authenticator { get; }
@@ -42,15 +42,15 @@ namespace Bug_Tracker.ViewModels
             set { dateCreated = value; }
         }
 
-        public CreateNewProjectPageViewModel(BugTrackerDbContextFactory dbContextFactory, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, IAuthenticator authenticator, INavigator navigator)
+        public CreateNewProjectPageViewModel(BugTrackerDbContext dbContext, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, IAuthenticator authenticator, INavigator navigator)
         {
-            DbContextFactory= dbContextFactory;
+            DbContext = dbContext; 
             ProjectDataService = projectDataService;
             ProjectUserDataService = projectUserDataService;
             Authenticator = authenticator;
             Navigator = navigator;
 
-            CreateNewProjectCommand = new CreateNewProjectCommand(DbContextFactory, ProjectDataService, ProjectUserDataService, Navigator, this);
+            CreateNewProjectCommand = new CreateNewProjectCommand(DbContext, ProjectDataService, ProjectUserDataService, Navigator, this);
         }
 
         public ICommand CreateNewProjectCommand { get; }

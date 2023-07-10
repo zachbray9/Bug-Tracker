@@ -19,12 +19,12 @@ namespace Bug_Tracker.ViewModels
 {
     public class CreateTicketViewModel : ViewModelBase
     {
-        private BugTrackerDbContextFactory DbContextFactory;
+        private readonly BugTrackerDbContext DbContext;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
-        private readonly ITicketService TicketService;
-        private readonly IProjectUserService ProjectUserService;
+        private readonly IDataService<ProjectUser> ProjectUserService;
+        private readonly IDataService<Ticket> TicketService;
 
 
         public ObservableCollection<string> StatusOptions { get; set; }
@@ -33,9 +33,10 @@ namespace Bug_Tracker.ViewModels
         public User CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(BugTrackerDbContextFactory dbContextFactory, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketService ticketService, IProjectUserService projectUserService)
+        public CreateTicketViewModel(BugTrackerDbContext dbContext, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService)
         {
-            DbContextFactory = dbContextFactory;
+            //DbContextFactory = dbContextFactory;
+            DbContext = dbContext; 
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -49,7 +50,7 @@ namespace Bug_Tracker.ViewModels
                 { Status.Done, "Done"}
             };
 
-            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(DbContextFactory, CurrentUser, Navigator, ProjectContainer, TicketService, ProjectUserService, this);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, ProjectUserService, TicketService, this);
         }
 
         private string ticketTitle;

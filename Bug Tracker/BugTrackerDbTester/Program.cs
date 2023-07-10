@@ -9,13 +9,24 @@ using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
+//BugTrackerDbContextFactory bugTrackerDbContextFactory = new BugTrackerDbContextFactory();
+//IPasswordHasher passwordHasher= new PasswordHasher();
+//IUserService userDataService = new UserDataService(new BugTrackerDbContextFactory());
+//IDataService<Project> projectDataService = new GenericDataService<Project>(new BugTrackerDbContextFactory());
+//IDataService<Ticket> ticketDataService = new GenericDataService<Ticket>(new BugTrackerDbContextFactory());
+//IDataService<ProjectUser> projectUserDataService = new GenericDataService<ProjectUser>(new BugTrackerDbContextFactory());
+
 BugTrackerDbContextFactory bugTrackerDbContextFactory = new BugTrackerDbContextFactory();
-IPasswordHasher passwordHasher= new PasswordHasher();
-IUserService userDataService = new UserDataService(new BugTrackerDbContextFactory());
-IDataService<Project> projectDataService = new GenericDataService<Project>(new BugTrackerDbContextFactory());
-IDataService<Ticket> ticketDataService = new GenericDataService<Ticket>(new BugTrackerDbContextFactory());
-IDataService<ProjectUser> projectUserDataService = new GenericDataService<ProjectUser>(new BugTrackerDbContextFactory());
+BugTrackerDbContext DbContext = bugTrackerDbContextFactory.CreateDbContext();
+IPasswordHasher passwordHasher = new PasswordHasher();
+IUserService userDataService = new UserDataService(DbContext);
+IDataService<Project> projectDataService = new GenericDataService<Project>(DbContext);
+IDataService<Ticket> ticketDataService = new GenericDataService<Ticket>(DbContext);
+IDataService<ProjectUser> projectUserDataService = new GenericDataService<ProjectUser>(DbContext);
 
 IAuthenticationService authenticationService = new AuthenticationService(userDataService, passwordHasher);
 
 //put code below
+await projectUserDataService.Delete(1);
+await projectDataService.Delete(1);
+await userDataService.Delete(1);

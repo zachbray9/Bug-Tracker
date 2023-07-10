@@ -18,16 +18,16 @@ namespace Bug_Tracker.Commands
     public class CreateNewProjectCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private readonly BugTrackerDbContextFactory DbContextFactory;
+        private readonly BugTrackerDbContext DbContext;
         private readonly IDataService<Project> ProjectDataService;
         private readonly IDataService<ProjectUser> ProjectUserDataService;
         private readonly INavigator Navigator;
         private readonly CreateNewProjectPageViewModel CreateNewProjectPageViewModel;
         private User CurrentUser => CreateNewProjectPageViewModel.Authenticator.CurrentUser;
 
-        public CreateNewProjectCommand(BugTrackerDbContextFactory dbContextFactory, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, INavigator navigator, CreateNewProjectPageViewModel createNewProjectPageViewModel)
+        public CreateNewProjectCommand(BugTrackerDbContext dbContext, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, INavigator navigator, CreateNewProjectPageViewModel createNewProjectPageViewModel)
         {
-            DbContextFactory = dbContextFactory;
+            DbContext = dbContext;
             ProjectDataService = projectDataService;
             ProjectUserDataService = projectUserDataService;
             Navigator = navigator;
@@ -56,17 +56,16 @@ namespace Bug_Tracker.Commands
             Project project = await ProjectDataService.Create(new Project { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
             ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CurrentUser.Id});
 
-            using (var db = DbContextFactory.CreateDbContext())
-            {
+            
 
-                if (CurrentUser.ProjectUsers == null)
-                {
-                    CurrentUser.ProjectUsers = new List<ProjectUser>();
-                }
+            if (CurrentUser.ProjectUsers == null)
+            {
+                CurrentUser.ProjectUsers = new List<ProjectUser>();
+            }
 
                 CurrentUser.ProjectUsers.Add(projectUser);
-                db.SaveChanges();
-            }
+                DbContext.SaveChanges();
+            
 
             Navigator.Navigate(ViewType.ProjectsPage);
         }

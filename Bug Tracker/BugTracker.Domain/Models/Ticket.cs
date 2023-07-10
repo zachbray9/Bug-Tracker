@@ -24,5 +24,10 @@ namespace BugTracker.Domain.Models
         public Priority Priority { get; set; }
         public TicketType TicketType { get; set; }
         public DateTime DateSubmitted { get; set; }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 }

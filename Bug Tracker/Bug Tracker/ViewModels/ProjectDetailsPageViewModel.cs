@@ -23,8 +23,8 @@ namespace Bug_Tracker.ViewModels
     public class ProjectDetailsPageViewModel : ViewModelBase
     {
         private readonly IUserService UserDataService;
-        private readonly IProjectUserService ProjectUserService;
-        private readonly ITicketService TicketService;
+        private readonly IDataService<ProjectUser> ProjectUserService;
+        private readonly IDataService<Ticket> TicketService;
         private readonly IAuthenticator Authenticator;
         private readonly INavigator Navigator;
         public IProjectContainer ProjectContainer { get; }
@@ -96,7 +96,7 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserService userDataService, IProjectUserService projectUserService, ITicketService ticketService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             UserDataService= userDataService;
             ProjectUserService= projectUserService;

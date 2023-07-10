@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -43,20 +44,22 @@ namespace Bug_Tracker
         {
             IServiceCollection services = new ServiceCollection();
 
-
-            services.AddSingleton<BugTrackerDbContextFactory>();
+            //Registering the DbContext and its options
+            services.AddDbContext<BugTrackerDbContext>(options =>
+                {
+                    options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BugTrackerDB;Trusted_Connection=true");
+                    options.EnableSensitiveDataLogging(true);
+                    options.UseLazyLoadingProxies();
+                }, ServiceLifetime.Scoped);
 
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
-            services.AddSingleton<IDataService<User>, UserDataService>();
+            services.AddSingleton<IUserService, UserDataService>();
 
             services.AddSingleton<IDataService<Project>, GenericDataService<Project>>();
             services.AddSingleton<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
-
-            services.AddSingleton<IUserService, UserDataService>();
-            services.AddSingleton<IProjectService, ProjectDataService>();
-            services.AddSingleton<IProjectUserService, ProjectUserDataService>();
-            services.AddSingleton<ITicketService, TicketDataService>();
-
+            services.AddSingleton<IDataService<Ticket>, GenericDataService<Ticket>>();
+            services.AddSingleton<IDataService<Comment>, GenericDataService<Comment>>();
+            
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
@@ -89,7 +92,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<ProjectsPageViewModel>>(services =>
             {
-                return () => new ProjectsPageViewModel(services.GetRequiredService<IProjectService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+                return () => new ProjectsPageViewModel(services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
             }
             );
 
@@ -101,19 +104,19 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<CreateNewProjectPageViewModel>>(services =>
             {
-                return () => new CreateNewProjectPageViewModel(services.GetRequiredService<BugTrackerDbContextFactory>(), services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
+                return () => new CreateNewProjectPageViewModel(services.GetRequiredService<BugTrackerDbContext>(), services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
             }
             );
 
             services.AddSingleton<CreateViewModel<ProjectDetailsPageViewModel>>(services =>
             {
-                return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IProjectUserService>(), services.GetRequiredService<ITicketService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+                return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
             }
             );
 
             services.AddSingleton<CreateViewModel<CreateTicketViewModel>>(services =>
             {
-                return () => new CreateTicketViewModel(services.GetRequiredService<BugTrackerDbContextFactory>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketService>(), services.GetRequiredService<IProjectUserService>());
+                return () => new CreateTicketViewModel(services.GetRequiredService<BugTrackerDbContext>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IDataService<Ticket>>());
             }
             );
 

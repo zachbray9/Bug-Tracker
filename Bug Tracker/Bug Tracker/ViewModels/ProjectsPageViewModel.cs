@@ -20,7 +20,7 @@ namespace Bug_Tracker.ViewModels
 {
     public class ProjectsPageViewModel : ViewModelBase
     {
-        private readonly IProjectService ProjectDataService;
+        private readonly IDataService<Project> ProjectDataService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
@@ -35,7 +35,7 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectsPageViewModel(IProjectService projectDataService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectsPageViewModel(IDataService<Project> projectDataService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             ProjectDataService = projectDataService;
             Authenticator = authenticator;

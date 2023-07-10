@@ -11,7 +11,7 @@ namespace BugTracker.EntityFramework
 {
     public class BugTrackerDbContextFactory : IDesignTimeDbContextFactory<BugTrackerDbContext>
     {
-
+        //This class is now only used for the BugTrackerDbTester Project
         public BugTrackerDbContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<BugTrackerDbContext>();

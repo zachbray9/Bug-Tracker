@@ -42,7 +42,7 @@ namespace Bug_Tracker.Commands
                 bool success = await Authenticator.Login(Email, Password);
                 if(success)
                 {
-                    Navigator.Navigate(ViewType.HomePage);
+                    Navigator.Navigate(ViewType.ProjectsPage);
                 }
                 else
                 {

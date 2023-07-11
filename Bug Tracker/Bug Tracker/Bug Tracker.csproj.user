@@ -7,10 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Controls\CreateTicketWindow.xaml.cs">
+    <Compile Update="Controls\HomePageNavigationBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\HomePageNavigationBar.xaml.cs">
+    <Compile Update="Controls\HomePageTopNavigationBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\AccountPageView.xaml.cs">
@@ -42,10 +42,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\CreateTicketWindow.xaml">
+    <Page Update="Controls\HomePageNavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\HomePageNavigationBar.xaml">
+    <Page Update="Controls\HomePageTopNavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

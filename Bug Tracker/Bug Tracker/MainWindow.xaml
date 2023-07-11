@@ -26,36 +26,58 @@
             <controls:HomePageNavigationBar/>
         </Grid>
 
-        <ContentControl Grid.Column="1" Content="{Binding Navigator.CurrentViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModels:LoginPageViewModel}">
-                    <views:LoginPageView LoginCommand="{Binding AttemptLoginCommand}"/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:CreateAccountPageViewModel}">
-                    <views:CreateAccountView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
-                    <views:HomePageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:AccountPageViewModel}">
-                    <views:AccountPageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:ProjectsPageViewModel}">
-                    <views:ProjectsPageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:TicketsPageViewModel}">
-                    <views:TicketsPageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:CreateNewProjectPageViewModel}">
-                    <views:CreateNewProjectPageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:ProjectDetailsPageViewModel}">
-                    <views:ProjectDetailsPageView/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:CreateTicketViewModel}">
-                    <views:CreateTicketView/>
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Authenticator.IsLoggedIn}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <controls:HomePageTopNavigationBar/>
+            </Grid>
+
+            <ContentControl Grid.Row="1" Content="{Binding Navigator.CurrentViewModel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewModels:LoginPageViewModel}">
+                        <views:LoginPageView LoginCommand="{Binding AttemptLoginCommand}"/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:CreateAccountPageViewModel}">
+                        <views:CreateAccountView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
+                        <views:HomePageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:AccountPageViewModel}">
+                        <views:AccountPageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:ProjectsPageViewModel}">
+                        <views:ProjectsPageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:TicketsPageViewModel}">
+                        <views:TicketsPageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:CreateNewProjectPageViewModel}">
+                        <views:CreateNewProjectPageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:ProjectDetailsPageViewModel}">
+                        <views:ProjectDetailsPageView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewModels:CreateTicketViewModel}">
+                        <views:CreateTicketView/>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
+
     </Grid>
 </Window>

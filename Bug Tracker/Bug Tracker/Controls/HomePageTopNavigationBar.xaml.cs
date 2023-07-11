@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Bug_Tracker.Controls
 {
     /// <summary>
-    /// Interaction logic for CreateTicketWindow.xaml
+    /// Interaction logic for HomePageTopNavigationBar.xaml
     /// </summary>
-    public partial class CreateTicketWindow : Window
+    public partial class HomePageTopNavigationBar : UserControl
     {
-        public CreateTicketWindow()
+        public HomePageTopNavigationBar()
         {
             InitializeComponent();
         }

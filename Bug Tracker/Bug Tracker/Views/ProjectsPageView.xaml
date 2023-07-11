@@ -12,10 +12,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="20">
+        <TextBlock Grid.Row="0" Text="Projects" FontFamily="Arial" Opacity="0.5" FontSize="16" Margin="40, 40, 40, 10"/>
+
+        <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -28,7 +31,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2" Margin="40, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -43,9 +46,9 @@
             <TextBlock Grid.Column="5" Text="" FontFamily="Arial" Opacity="0.4"/>
         </Grid>
 
-        <Separator Grid.Row="2"/>
+        <Separator Grid.Row="3"/>
 
-        <ListBox Grid.Row="3" BorderBrush="Transparent" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="4" BorderBrush="Transparent" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" Margin="40, 0, 40, 40">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

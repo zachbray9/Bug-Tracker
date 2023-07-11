@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Windows.Input;
 using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -51,6 +52,12 @@ namespace Bug_Tracker.ViewModels
         {
             foreach (ProjectUser projectUser in Authenticator.CurrentUser.ProjectUsers)
             {
+                //checks if project already exists to prevent duplicates
+                bool projectAlreadyExists = projects.Any(p => p.Id == projectUser.ProjectId);
+                if (projectAlreadyExists)
+                    continue;
+                
+
                 Project project = await ProjectDataService.Get(projectUser.ProjectId);
                 projects.Add(project);
             }

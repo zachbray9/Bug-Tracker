@@ -19,7 +19,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Project> ProjectDataService; 
         private readonly IDataService<ProjectUser> ProjectUserDataService;
         public IAuthenticator Authenticator { get; }
-        private readonly INavigator Navigator;
+        public INavigator Navigator { get; }
 
         private string projectName;
         public string ProjectName

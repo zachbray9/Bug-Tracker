@@ -66,8 +66,8 @@
 
                     <TextBlock Grid.Row="0" Text="To Do" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
 
-                    <ListBox Grid.Row="1" ItemsSource="{Binding ToDoTickets}"  BorderBrush="Transparent" Background="Transparent">
-
+                    <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding ToDoTickets}"  BorderBrush="Transparent" Background="Transparent">
+                        
                     </ListBox>
 
                     <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.ToDo}"/>
@@ -85,7 +85,7 @@
 
                     <TextBlock Grid.Row="0" Text="In Progress" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
 
-                    <ListBox Grid.Row="1" ItemsSource="{Binding InProgressTickets}"  BorderBrush="Transparent" Background="Transparent">
+                    <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding InProgressTickets}"  BorderBrush="Transparent" Background="Transparent">
 
                     </ListBox>
 
@@ -104,7 +104,7 @@
 
                     <TextBlock Grid.Row="0" Text="Done" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
 
-                    <ListBox Grid.Row="1" ItemsSource="{Binding DoneTickets}"  BorderBrush="Transparent" Background="Transparent">
+                    <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding DoneTickets}"  BorderBrush="Transparent" Background="Transparent">
 
                     </ListBox>
 

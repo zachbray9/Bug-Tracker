@@ -26,7 +26,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<ProjectUser> ProjectUserService;
         private readonly IDataService<Ticket> TicketService;
         private readonly IAuthenticator Authenticator;
-        private readonly INavigator Navigator;
+        public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
 
         public User CurrentUser { get => Authenticator.CurrentUser; }

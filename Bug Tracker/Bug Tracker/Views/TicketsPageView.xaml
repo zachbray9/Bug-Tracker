@@ -11,19 +11,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <TextBlock Grid.Row="0" Text="Tickets" FontFamily="Arial" FontSize="16" Opacity="0.5" Margin="40, 40, 40, 10"/>
+
+        <Grid Grid.Row="1" Margin="40, 10, 40, 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="7*"/>
             </Grid.ColumnDefinitions>
             
-            <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Margin="20, 10, 0, 10"/>
+            <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Margin="0, 10, 0, 10"/>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2" Margin="40, 10, 40, 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -43,9 +46,9 @@
             <Label Grid.Column="7" Content="Severity" FontFamily="Arial" Opacity=".4"/>
         </Grid>
 
-        <Separator Grid.Row="2"/>
+        <Separator Grid.Row="3" Margin="40, 0, 40, 0"/>
 
-        <ListBox Grid.Row="3" ItemsSource="{Binding Tickets}" BorderBrush="Transparent">
+        <ListBox Grid.Row="4" ItemsSource="{Binding Tickets}" BorderBrush="Transparent" Margin="40, 10, 40, 40">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

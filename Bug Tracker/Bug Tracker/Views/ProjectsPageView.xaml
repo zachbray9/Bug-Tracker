@@ -18,7 +18,7 @@
 
         <TextBlock Grid.Row="0" Text="Projects" FontFamily="Arial" Opacity="0.5" FontSize="16" Margin="40, 40, 40, 10"/>
 
-        <Grid Grid.Row="1" Margin="20">
+        <Grid Grid.Row="1" Margin="20, 20, 20, 30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -46,7 +46,7 @@
             <TextBlock Grid.Column="5" Text="" FontFamily="Arial" Opacity="0.4"/>
         </Grid>
 
-        <Separator Grid.Row="3"/>
+        <Separator Grid.Row="3" Margin="40, 10, 40, 0"/>
 
         <ListBox Grid.Row="4" BorderBrush="Transparent" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" Margin="40, 0, 40, 40">
             <ListBox.ItemTemplate>

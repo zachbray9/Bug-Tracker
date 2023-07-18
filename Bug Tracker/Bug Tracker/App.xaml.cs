@@ -120,6 +120,12 @@ namespace Bug_Tracker
             }
             );
 
+            services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
+            {
+                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IProjectContainer>());
+            }
+            );
+
 
 
             services.AddSingleton<INavigator, Navigator>();

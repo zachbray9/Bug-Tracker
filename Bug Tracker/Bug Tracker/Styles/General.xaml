@@ -90,7 +90,7 @@
 
                         <TextBlock Grid.Column="1" Text="View Details" TextDecorations="Underline" Cursor="Hand" HorizontalAlignment="Right">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding DataContext.Navigator.NavigateCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{x:Static nav:ViewType.CreateNewProjectPage}" MouseAction="LeftClick"/>
+                                <MouseBinding Command="{Binding DataContext.ViewTicketDetailsCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </Grid>
@@ -98,6 +98,13 @@
             </Setter.Value>
             
         </Setter>
+    </Style>
+
+    <Style x:Key="FocusChangeableTextBox" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="24"/>
+
+        
     </Style>
 
 

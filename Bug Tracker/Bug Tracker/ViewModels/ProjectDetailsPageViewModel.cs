@@ -111,6 +111,7 @@ namespace Bug_Tracker.ViewModels
             DoneTickets = new ObservableCollection<Ticket>();
 
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
 
             UpdateProjectUsers();
             UpdateTickets();
@@ -139,5 +140,6 @@ namespace Bug_Tracker.ViewModels
         }
 
         public ICommand CreateNewTicketCommand { get; }
+        public ICommand ViewTicketDetailsCommand { get; }
     }
 }

@@ -122,7 +122,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
             {
-                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IProjectContainer>());
+                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>());
             }
             );
 

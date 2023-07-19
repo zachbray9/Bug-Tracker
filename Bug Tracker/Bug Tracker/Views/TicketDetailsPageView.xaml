@@ -15,13 +15,13 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="40, 40, 40, 10">
             <TextBlock Text="Tickets  /  " FontFamily="Arial" FontSize="16" Opacity="0.5"/>
-            <TextBlock Text="{Binding ProjectContainer.CurrentTicket.Title}" FontFamily="Arial" FontSize="16" Opacity="0.5"/>
+            <TextBlock Text="{Binding TicketTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" FontSize="16" Opacity="0.5"/>
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="40, 10, 40, 40">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -33,7 +33,7 @@
 
                 <StackPanel Grid.Row="0">
                     <TextBlock Text="Title" Margin="0, 0, 0, 10"/>
-                    <TextBox Style="{StaticResource FocusChangeableTextBox}" Text=""/>
+                    <TextBox Style="{StaticResource FocusChangeableTextBox}" Text="{Binding TicketTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
                 </StackPanel>
             </Grid>
 

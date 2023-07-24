@@ -88,7 +88,7 @@
                         
                         <TextBlock Grid.Column="0" Text="{Binding Title}" HorizontalAlignment="Left"/>
 
-                        <TextBlock Grid.Column="1" Text="View Details" TextDecorations="Underline" Cursor="Hand" HorizontalAlignment="Right">
+                        <TextBlock Grid.Column="1" Text="View Details" TextDecorations="Underline" Cursor="Hand" HorizontalAlignment="Right" Margin="5, 0, 0, 0">
                             <TextBlock.InputBindings>
                                 <MouseBinding Command="{Binding DataContext.ViewTicketDetailsCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
                             </TextBlock.InputBindings>

@@ -26,15 +26,13 @@
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="Title" Margin="0, 0, 0, 10"/>
-                    <TextBox Style="{StaticResource FocusChangeableTextBox}" Text="{Binding TicketTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
-                </StackPanel>
+                
+                <!--Title Textbox-->
+                <TextBox Grid.Row="0" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding TicketTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" MaxHeight="100" TextWrapping="Wrap"/>
             </Grid>
 
             <Grid Grid.Column="1">

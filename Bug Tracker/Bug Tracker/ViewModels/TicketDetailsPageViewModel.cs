@@ -20,23 +20,21 @@ namespace Bug_Tracker.ViewModels
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
 
         //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
-        private DispatcherTimer DebounceTimer { get; }
+        private DispatcherTimer DebounceTimer;
 
-        public TicketDetailsPageViewModel(IProjectContainer projectContainer, IDataService<Ticket> ticketDataService)
+        public TicketDetailsPageViewModel(IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, DispatcherTimer debounceTimer)
         {
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
+            DebounceTimer = debounceTimer;
 
-            DebounceTimer = new DispatcherTimer()
-            {
-                Interval = TimeSpan.FromMilliseconds(500),
-                IsEnabled = false  
-            };
+            DebounceTimer.Interval = TimeSpan.FromMilliseconds(500);
+            DebounceTimer.IsEnabled = false;
 
             DebounceTimer.Tick += DebounceTimer_Tick;
 
-            TicketTitle = CurrentTicket.Title;
-            TicketDescription = CurrentTicket.Description;
+            ticketTitle = CurrentTicket.Title;
+            ticketDescription = CurrentTicket.Description;
 
         }
 

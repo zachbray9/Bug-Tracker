@@ -21,6 +21,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using static Bug_Tracker.ViewModels.ViewModelBase;
 
 namespace Bug_Tracker
@@ -61,7 +62,7 @@ namespace Bug_Tracker
             services.AddSingleton<IDataService<Comment>, GenericDataService<Comment>>();
             
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
-
+            services.AddSingleton<DispatcherTimer>();
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
 
 
@@ -122,7 +123,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
             {
-                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>());
+                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<DispatcherTimer>());
             }
             );
 

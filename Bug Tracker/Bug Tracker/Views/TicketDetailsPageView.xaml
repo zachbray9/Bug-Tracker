@@ -33,6 +33,15 @@
                 
                 <!--Title Textbox-->
                 <TextBox Grid.Row="0" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding TicketTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" MaxHeight="100" TextWrapping="Wrap"/>
+
+                <StackPanel Grid.Row="1" Margin="0, 20, 0, 20">
+                    <TextBlock Text="Description" FontFamily="Arial" FontSize="16" Margin="5, 0, 0, 10"/>
+                    <TextBox Style="{StaticResource FocusChangeableTextBox}" Text="{Binding TicketDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="2500" MaxHeight="220" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2">
+                    
+                </StackPanel>
             </Grid>
 
             <Grid Grid.Column="1">

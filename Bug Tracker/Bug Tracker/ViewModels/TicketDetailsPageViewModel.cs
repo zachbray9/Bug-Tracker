@@ -68,8 +68,15 @@ namespace Bug_Tracker.ViewModels
             CurrentTicket.Title = TicketTitle;
             CurrentTicket.Description = TicketDescription;
 
-            await TicketDataService.Update(CurrentTicket.Id, CurrentTicket);
-            System.Diagnostics.Debug.WriteLine("Changes have been saved");
+            try
+            {
+                await TicketDataService.Update(CurrentTicket.Id, CurrentTicket);
+                System.Diagnostics.Debug.WriteLine("Changes have been saved");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error: {ex}");
+            }
         }
 
         private void StartDebounceTimer()

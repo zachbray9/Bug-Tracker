@@ -1,4 +1,6 @@
-﻿using Bug_Tracker.State;
+﻿using Bug_Tracker.Commands.TicketDetailsPageCommands;
+using Bug_Tracker.State;
+using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -18,11 +20,11 @@ namespace Bug_Tracker.ViewModels
 {
     public class TicketDetailsPageViewModel : ViewModelBase, IDisposable
     {
+        private readonly IAuthenticator Authenticator;
         public IProjectContainer ProjectContainer { get; }
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
-        public ObservableCollection<Comment> Comments { get; }
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
         public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
 
@@ -30,8 +32,9 @@ namespace Bug_Tracker.ViewModels
         //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
         private DispatcherTimer DebounceTimer;
 
-        public TicketDetailsPageViewModel(IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer)
         {
+            Authenticator = authenticator;
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
             CommentDataService = commentDataService;
@@ -45,7 +48,9 @@ namespace Bug_Tracker.ViewModels
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
 
-            
+            Comments = new ObservableCollection<Comment>(CurrentTicket.Comments);
+
+            AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketDataService, CommentDataService, this);
 
         }
 
@@ -70,6 +75,17 @@ namespace Bug_Tracker.ViewModels
                 ticketDescription = value;
                 OnPropertyChanged(nameof(TicketDescription));
                 StartDebounceTimer();
+            }
+        }
+
+        private ObservableCollection<Comment> comments;
+        public ObservableCollection<Comment> Comments 
+        {
+            get { return comments; }
+            set
+            {
+                comments = value;
+                OnPropertyChanged(nameof(Comments));
             }
         }
 
@@ -122,5 +138,7 @@ namespace Bug_Tracker.ViewModels
         {
             DebounceTimer.Tick -= DebounceTimer_Tick;
         }
+
+        public ICommand AddCommentToDbCommand { get; }
     }
 }

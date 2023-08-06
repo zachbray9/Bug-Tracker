@@ -2,12 +2,16 @@
 using Bug_Tracker.State.Model_States;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Bug_Tracker.ViewModels
@@ -16,16 +20,21 @@ namespace Bug_Tracker.ViewModels
     {
         public IProjectContainer ProjectContainer { get; }
         private readonly IDataService<Ticket> TicketDataService;
+        private readonly IDataService<Comment> CommentDataService;
 
+        public ObservableCollection<Comment> Comments { get; }
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
+        public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
+
 
         //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
         private DispatcherTimer DebounceTimer;
 
-        public TicketDetailsPageViewModel(IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, DispatcherTimer debounceTimer)
+        public TicketDetailsPageViewModel(IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer)
         {
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
+            CommentDataService = commentDataService;
             DebounceTimer = debounceTimer;
 
             DebounceTimer.Interval = TimeSpan.FromMilliseconds(500);
@@ -35,6 +44,8 @@ namespace Bug_Tracker.ViewModels
 
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
+
+            
 
         }
 
@@ -59,6 +70,18 @@ namespace Bug_Tracker.ViewModels
                 ticketDescription = value;
                 OnPropertyChanged(nameof(TicketDescription));
                 StartDebounceTimer();
+            }
+        }
+
+        private string commentTextBoxText;
+        public string CommentTextBoxText
+        {
+            get { return commentTextBoxText; }
+            set
+            {
+                commentTextBoxText = value;
+                OnPropertyChanged(nameof(CommentTextBoxText));
+                OnPropertyChanged(nameof(DoesCommentTextBoxContainText));
             }
         }
 

@@ -47,25 +47,61 @@
                     </Grid.RowDefinitions>
                     
                     <TextBlock Grid.Row="0" Text="Comments" FontSize="12" FontFamily="Arial" Margin="0, 0, 0, 5"/>
-                    <TextBox Grid.Row="1" Style="{StaticResource TextBoxWithWatermark}"/>
-                    <ListBox Grid.Row="2" Margin="0, 10, 0, 0">
+                    
+                    <!--Comment Textbox and save button-->
+                    <StackPanel Grid.Row="1" Orientation="Vertical">
+                        <TextBox Style="{StaticResource TextBoxWithWatermark}" Text="{Binding CommentTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0, 0, 0, 5"/>
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DoesCommentTextBoxContainText}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            
+                            <Button Style="{StaticResource GenericButton}" Command="{Binding}" Content="Save" Foreground="White" Background="#7b68ee" Width="45" Height="25" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <ListBox Grid.Row="2" Margin="0, 10, 0, 0" BorderBrush="Transparent">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
+                                    <!--Rows for Author name, comment, and delete button-->
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                    <!--Grid for top row (Author initial banner, author name, and date comment was created)-->
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Row="0"/>
-                                    <TextBlock Grid.Row="1"/>
-                                    <TextBlock Grid.Row="2"/>
+                                        <Border Grid.Column="0" Width="40" Height="40" CornerRadius="20">
+                                            <TextBlock Text="{Binding Author.User.Initials}" FontSize="16" FontFamily="Arial"/>
+                                        </Border>
+
+                                        <TextBlock Grid.Column="1" Text="{Binding Author.User.FullName}" FontSize="16" FontWeight="SemiBold" FontFamily="Arial"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding DateSubmitted}"/>
+                                    </Grid>
+
+                                    <!--Actual comment text-->
+                                    <TextBlock Grid.Row="1" Text="{Binding Text}" FontSize="16" FontFamily="Arial"/>
+                                    
+                                    <!--Delete Button (Need to change the command)-->
+                                    <TextBlock Grid.Row="2" TextDecorations="Underline" Cursor="Hand" FontFamily="Arial" FontSize="16" Foreground="#242526">
+                                        <TextBlock.InputBindings>
+                                            <MouseBinding Command="{Binding DataContext.ViewProjectDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
+                                        </TextBlock.InputBindings>
+                                    </TextBlock>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

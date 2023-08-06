@@ -13,6 +13,8 @@ namespace BugTracker.Domain.Models
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         [NotMapped]
+        public string FullName { get => $"{FirstName} {LastName}"; }
+        [NotMapped]
         public string Initials { get => $"{FirstName?.FirstOrDefault()}{LastName?.FirstOrDefault()}".ToUpper(); }
         public string PasswordHash { get; set; } = null!;
         public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = null!;

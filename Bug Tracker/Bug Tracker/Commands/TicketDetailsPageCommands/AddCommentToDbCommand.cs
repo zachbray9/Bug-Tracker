@@ -42,7 +42,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             await CommentDataService.Create(newComment);
             CurrentTicket.Comments.Add(newComment);
             await TicketDataService.Update(CurrentTicket.Id, CurrentTicket);
-            ViewModel.Comments = new ObservableCollection<Comment>(CurrentTicket.Comments);
+            ViewModel.Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
             ViewModel.CommentTextBoxText = String.Empty;
         }
     }

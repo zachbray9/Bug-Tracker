@@ -48,10 +48,15 @@ namespace Bug_Tracker.ViewModels
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
 
-            Comments = new ObservableCollection<Comment>(CurrentTicket.Comments);
+            Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+
+            foreach (var comment in Comments)
+            {
+                comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
+            }
 
             AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketDataService, CommentDataService, this);
-
+            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketDataService, CommentDataService, this);   
         }
 
         private string ticketTitle;
@@ -86,6 +91,17 @@ namespace Bug_Tracker.ViewModels
             {
                 comments = value;
                 OnPropertyChanged(nameof(Comments));
+            }
+        }
+
+        private string commentDateCreatedDifference;
+        public string CommentDateCreatedDifference
+        {
+            get { return commentDateCreatedDifference; }
+            set 
+            { 
+                commentDateCreatedDifference = value;
+                OnPropertyChanged(nameof(CommentDateCreatedDifference));
             }
         }
 
@@ -126,6 +142,7 @@ namespace Bug_Tracker.ViewModels
             }
 
             DebounceTimer.Start();
+            CommentDateCreatedDifference = CalculateTimeDifference(CurrentTicket.DateSubmitted, DateTime.Now);
         }
 
         private async void DebounceTimer_Tick(object sender, EventArgs e)
@@ -134,11 +151,35 @@ namespace Bug_Tracker.ViewModels
             await SaveChangesAsync();
         }
 
+        private string CalculateTimeDifference(DateTime DateCommentWasCreated, DateTime CurrentDate)
+        {
+            TimeSpan timeDifference = CurrentDate - DateCommentWasCreated;
+            
+            if(timeDifference.TotalMinutes < 1) 
+            {
+                return "Just now";
+            }
+            if(timeDifference.TotalMinutes < 60)
+            {
+                return $"{(int)timeDifference.TotalMinutes} minute{((int)timeDifference.TotalMinutes == 1 ? "" : "s")} ago";
+            }
+            else if (timeDifference.TotalHours < 24)
+            {
+                return $"{(int)timeDifference.TotalHours} hour{((int)timeDifference.TotalHours == 1 ? "" : "s")} ago";
+            }
+            else
+            {
+                return $"{(int)timeDifference.TotalDays} day{((int)timeDifference.TotalDays == 1 ? "" : "s")} ago";
+            }
+          
+        }
+
         public void Dispose()
         {
             DebounceTimer.Tick -= DebounceTimer_Tick;
         }
 
         public ICommand AddCommentToDbCommand { get; }
+        public ICommand DeleteCommentFromDbCommand { get; }
     }
 }

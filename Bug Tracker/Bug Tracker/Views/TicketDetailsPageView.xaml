@@ -66,7 +66,7 @@
                         </Grid>
                     </StackPanel>
                     
-                    <ListBox Grid.Row="2" ItemsSource="{Binding Comments}" Margin="0, 30, 0, 0" BorderBrush="Transparent">
+                    <ListBox Grid.Row="2" ItemsSource="{Binding Comments}" Margin="0, 30, 0, 0" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -108,17 +108,17 @@
                                             <TextBlock Text="{Binding Author.User.Initials}" Foreground="White" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock Grid.Column="1" Text="{Binding Author.User.FullName}" FontSize="16" FontWeight="SemiBold" FontFamily="Arial" Margin="0, 0, 10, 0"/>
-                                        <TextBlock Grid.Column="2" Text="{Binding DateSubmitted}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Author.User.FullName}" FontSize="16" FontWeight="Bold" FontFamily="Arial" Margin="0, 0, 20, 0"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding TimeDifference}" FontFamily="Arial" FontSize="14" Foreground="#565656"/>
                                     </Grid>
 
                                     <!--Actual comment text-->
-                                    <TextBlock Grid.Row="1" Text="{Binding Text}" FontSize="16" FontFamily="Arial" Margin="50, 5, 0, 20"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding Text}" FontSize="16" FontFamily="Arial" TextWrapping="Wrap" Margin="50, 5, 0, 20"/>
 
                                     <!--Delete Button (Need to change the command)-->
-                                    <TextBlock Grid.Row="2" Text="Delete" TextDecorations="Underline" Cursor="Hand" FontFamily="Arial" FontSize="16" Foreground="#242526" Margin="50, 0, 0, 0">
+                                    <TextBlock Grid.Row="2" Text="Delete" TextDecorations="Underline" Cursor="Hand" FontFamily="Arial" FontSize="12" Foreground="#242526" Margin="50, 0, 0, 0">
                                         <TextBlock.InputBindings>
-                                            <MouseBinding Command="{Binding DataContext.ViewProjectDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
+                                            <MouseBinding Command="{Binding DataContext.DeleteCommentFromDbCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
                                         </TextBlock.InputBindings>
                                     </TextBlock>
                                 </Grid>

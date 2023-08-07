@@ -18,5 +18,7 @@ namespace BugTracker.Domain.Models
         public int TicketId { get; set; }
 
         public DateTime DateSubmitted { get; set; }
+        [NotMapped]
+        public string? TimeDifference { get; set; }
     }
 }

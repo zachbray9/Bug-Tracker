@@ -114,6 +114,17 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        private ProjectUser assignee;
+        public ProjectUser Assignee
+        {
+            get { return assignee; }
+            set
+            {
+                assignee = value;
+                OnPropertyChanged(nameof(Assignee));
+            }
+        }
+
         private string ConvertStatusEnumToString(Status status)
         {
             if(StatusOptionsDictionary.TryGetValue(status, out var value))

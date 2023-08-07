@@ -31,10 +31,12 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 
         public async override void Execute(object parameter)
         {
+            ProjectUser projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
+
             Comment newComment = new Comment
             {
                 Text = ViewModel.CommentTextBoxText,
-                AuthorId = CurrentUser.Id,
+                AuthorId = projectUser.Id,
                 TicketId = CurrentTicket.Id,
                 DateSubmitted = DateTime.Now,
             };

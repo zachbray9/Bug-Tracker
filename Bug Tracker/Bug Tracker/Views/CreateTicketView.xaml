@@ -40,7 +40,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Assignee" FontFamily="Arial" FontSize="14"/>
-                            <ComboBox ItemsSource="{Binding ProjectUsers}" Width="175" Margin="20, 0"/>
+                            <ComboBox ItemsSource="{Binding ProjectUsers}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="175" Margin="20, 0"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0, 40">

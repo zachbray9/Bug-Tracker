@@ -48,7 +48,14 @@ namespace Bug_Tracker.ViewModels
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
 
-            Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+            if(CurrentTicket.Comments != null) 
+            {
+                Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+            }
+            else
+            {
+                Comments = new ObservableCollection<Comment>();
+            }
 
             foreach (var comment in Comments)
             {
@@ -90,6 +97,12 @@ namespace Bug_Tracker.ViewModels
             set
             {
                 comments = value;
+
+                //updates the CommentDateCreatedDifference every time the collection is set so it updates when a new comment is added or deleted.
+                foreach (var comment in Comments)
+                {
+                    comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
+                }
                 OnPropertyChanged(nameof(Comments));
             }
         }

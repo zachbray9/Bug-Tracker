@@ -19,6 +19,9 @@ namespace BugTracker.Domain.Models
         public virtual ProjectUser Author { get; set; } = null!;
         public int AuthorId { get; set; }
 
+        public virtual ProjectUser? Assignee { get; set; }
+        public int? AssigneeId { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; } = null!;
         public Status Status { get; set; }
         public Priority Priority { get; set; }

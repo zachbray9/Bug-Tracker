@@ -23,15 +23,18 @@ namespace BugTracker.EntityFramework
         {
             modelBuilder.Entity<User>()
                 .HasMany(u => u.ProjectUsers)
-                .WithOne(pu => pu.User);
+                .WithOne(pu => pu.User)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.ProjectUsers)
-                .WithOne(pu => pu.Project);
+                .WithOne(pu => pu.Project)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Tickets)
-                .WithOne(t => t.Project);
+                .WithOne(t => t.Project)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ProjectUser>()
                 .HasKey(pu => pu.Id);
@@ -42,20 +45,36 @@ namespace BugTracker.EntityFramework
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ProjectUser>()
-                .HasMany(pu => pu.Tickets)
-                .WithOne(t => t.Author);
+                .HasMany(pu => pu.AuthoredTickets)
+                .WithOne(t => t.Author)
+                .HasForeignKey(t => t.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProjectUser>()
+                .HasMany(pu => pu.AssignedTickets)
+                .WithOne(t => t.Assignee)
+                .HasForeignKey(t => t.AssigneeId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<ProjectUser>()
                 .HasMany(pu => pu.Comments)
-                .WithOne(t => t.Author);
+                .WithOne(t => t.Author)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Ticket>()
                 .HasKey(t => t.Id);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Author)
-                .WithMany(a => a.Tickets)
+                .WithMany(a => a.AuthoredTickets)
+                .HasForeignKey(t => t.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Assignee)
+                .WithMany(a => a.AssignedTickets)
+                .HasForeignKey(t => t.AssigneeId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Project)
@@ -70,7 +89,7 @@ namespace BugTracker.EntityFramework
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Ticket)
                 .WithMany(t => t.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -17,13 +17,15 @@ namespace BugTracker.Domain.Models
         public virtual User User { get; set; } = null!; 
         public int UserId { get; set; }
 
-        public virtual ICollection<Ticket> Tickets { get; set; } = null!;
+        public virtual ICollection<Ticket> AuthoredTickets { get; set; } = null!;
+        public virtual ICollection<Ticket> AssignedTickets { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; } = null!;
         public ProjectRole Role { get; set; }
 
         public ProjectUser()
         {
-            Tickets = new List<Ticket>();
+            AuthoredTickets = new List<Ticket>();
+            AssignedTickets = new List<Ticket>();
             Comments = new List<Comment>();
         }
 

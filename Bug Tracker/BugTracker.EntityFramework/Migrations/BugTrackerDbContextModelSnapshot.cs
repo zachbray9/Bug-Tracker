@@ -113,6 +113,9 @@ namespace BugTracker.EntityFramework.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AssigneeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
@@ -140,6 +143,8 @@ namespace BugTracker.EntityFramework.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("AuthorId");
 
@@ -191,7 +196,7 @@ namespace BugTracker.EntityFramework.Migrations
                     b.HasOne("BugTracker.Domain.Models.Ticket", "Ticket")
                         .WithMany("Comments")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -220,8 +225,13 @@ namespace BugTracker.EntityFramework.Migrations
 
             modelBuilder.Entity("BugTracker.Domain.Models.Ticket", b =>
                 {
+                    b.HasOne("BugTracker.Domain.Models.ProjectUser", "Assignee")
+                        .WithMany("AssignedTickets")
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("BugTracker.Domain.Models.ProjectUser", "Author")
-                        .WithMany("Tickets")
+                        .WithMany("AuthoredTickets")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -231,6 +241,8 @@ namespace BugTracker.EntityFramework.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Assignee");
 
                     b.Navigation("Author");
 
@@ -246,9 +258,11 @@ namespace BugTracker.EntityFramework.Migrations
 
             modelBuilder.Entity("BugTracker.Domain.Models.ProjectUser", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("AssignedTickets");
 
-                    b.Navigation("Tickets");
+                    b.Navigation("AuthoredTickets");
+
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.Ticket", b =>

@@ -23,10 +23,12 @@ IUserService userDataService = new UserDataService(DbContext);
 IDataService<Project> projectDataService = new GenericDataService<Project>(DbContext);
 IDataService<Ticket> ticketDataService = new GenericDataService<Ticket>(DbContext);
 IDataService<ProjectUser> projectUserDataService = new GenericDataService<ProjectUser>(DbContext);
+IDataService<Comment> commentDataService = new GenericDataService<Comment>(DbContext);
 
 IAuthenticationService authenticationService = new AuthenticationService(userDataService, passwordHasher);
 
 //put code below
-await projectUserDataService.Delete(1);
-await projectDataService.Delete(1);
-await userDataService.Delete(1);
+await projectDataService.Delete(2);
+await projectDataService.Delete(3);
+await projectDataService.Delete(4);
+await projectDataService.Delete(5);

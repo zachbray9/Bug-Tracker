@@ -19,7 +19,6 @@ namespace Bug_Tracker.ViewModels
 {
     public class CreateTicketViewModel : ViewModelBase
     {
-        private readonly BugTrackerDbContext DbContext;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
@@ -32,9 +31,8 @@ namespace Bug_Tracker.ViewModels
         public User CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(BugTrackerDbContext dbContext, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService)
+        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService)
         {
-            DbContext = dbContext; 
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -46,6 +44,15 @@ namespace Bug_Tracker.ViewModels
                 { Status.InProgress, "In Progress"},
                 { Status.Done, "Done"}
             };
+
+            if(ProjectContainer.CurrentProject.ProjectUsers != null)
+            {
+                ProjectUsers = new ObservableCollection<ProjectUser>(ProjectContainer.CurrentProject.ProjectUsers);
+            }
+            else
+            {
+                ProjectUsers = new ObservableCollection<ProjectUser>();
+            }
 
             AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketService, this);
         }
@@ -93,6 +100,17 @@ namespace Bug_Tracker.ViewModels
                     ProjectContainer.CurrentTicket.Status = StatusOptionsDictionary.FirstOrDefault(x => x.Value == value).Key;
                     OnPropertyChanged(nameof(TicketStatus));
                 }
+            }
+        }
+
+        private ObservableCollection<ProjectUser> projectUsers;
+        public ObservableCollection<ProjectUser> ProjectUsers
+        {
+            get { return projectUsers; }
+            set
+            {
+                projectUsers = value;
+                OnPropertyChanged(nameof(ProjectUsers));
             }
         }
 

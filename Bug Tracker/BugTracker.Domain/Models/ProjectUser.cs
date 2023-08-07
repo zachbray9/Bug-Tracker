@@ -26,5 +26,10 @@ namespace BugTracker.Domain.Models
             Tickets = new List<Ticket>();
             Comments = new List<Comment>();
         }
+
+        public override string ToString()
+        {
+            return User.FullName;
+        }
     }
 }

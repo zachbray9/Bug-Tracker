@@ -13,11 +13,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="40, 40, 40, 10">
-            <TextBlock Text="Tickets  /  " FontFamily="Arial" FontSize="16" Opacity="0.5"/>
-            <TextBlock Text="{Binding TicketTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" FontSize="16" Opacity="0.5"/>
-        </StackPanel>
-
+        <TextBlock Grid.Row="0" Text="Ticket  /  Details" FontFamily="Arial" FontSize="16" Opacity="0.5" Margin="40, 40, 40, 0"/>
+            
         <Grid Grid.Row="1" Margin="40, 10, 40, 40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>

@@ -24,10 +24,10 @@
 
             <StackPanel Grid.Column="0" Margin="40">
                 <TextBlock Text="Title" FontFamily="Arial" FontSize="18" FontWeight="SemiBold" Margin="0, 0, 0, 5"/>
-                <TextBox FontSize="14" Text="{Binding TicketTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" VerticalContentAlignment="Center" Height="30"/>
+                <TextBox FontSize="16" Text="{Binding TicketTitle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" VerticalContentAlignment="Center" MinHeight="30" MaxLength="500" TextWrapping="Wrap"/>
 
                 <TextBlock Text="Description" FontFamily="Arial" FontSize="18" FontWeight="SemiBold" Margin="0, 40, 0, 5"/>
-                <TextBox FontSize="14" Text="{Binding TicketDescription, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" TextWrapping="Wrap" Height="150"/>
+                <TextBox FontSize="16" Text="{Binding TicketDescription, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontFamily="Arial" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" TextWrapping="Wrap" MinHeight="150" MaxLength="2500"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="40">
@@ -40,7 +40,7 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Assignee" FontFamily="Arial" FontSize="14"/>
-                            <ComboBox Width="175" Margin="20, 0"/>
+                            <ComboBox ItemsSource="{Binding ProjectUsers}" Width="175" Margin="20, 0"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0, 40">

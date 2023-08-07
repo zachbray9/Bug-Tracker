@@ -18,10 +18,10 @@
 
         <StackPanel Grid.Row="1" Margin="40">
             <Label Content="Project Name" FontFamily="Arial" FontSize="18" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  FontSize="14" FontFamily="Arial" VerticalContentAlignment="Center" Height="30" Margin="0,0, 0, 10"/>
+            <TextBox Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  FontSize="16" FontFamily="Arial" VerticalContentAlignment="Center" MinHeight="30" TextWrapping="Wrap" MaxLength="500" Margin="0,0, 0, 10"/>
             
             <Label Content="Description" FontFamily="Arial" FontSize="18" FontWeight="SemiBold"/>
-            <TextBox Text="{Binding ProjectDescription, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="14" FontFamily="Arial" Height="100" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" TextWrapping="Wrap"/>
+            <TextBox Text="{Binding ProjectDescription, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="16" FontFamily="Arial" MinHeight="100" TextWrapping="Wrap" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" MaxLength="2500"/>
             
         </StackPanel>
 

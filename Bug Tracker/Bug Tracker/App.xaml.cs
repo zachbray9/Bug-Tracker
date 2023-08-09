@@ -1,6 +1,7 @@
 ﻿using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
+using Bug_Tracker.State.Model_States.TicketStatus;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using Bug_Tracker.ViewModels.Factories;
@@ -63,6 +64,7 @@ namespace Bug_Tracker
             
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<DispatcherTimer>();
+            services.AddSingleton<StatusOptionsRetriever>();
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
 
 
@@ -117,7 +119,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<CreateTicketViewModel>>(services =>
             {
-                return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>());
+                return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<StatusOptionsRetriever>());
             }
             );
 

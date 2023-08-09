@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\App.xaml
 151004272588
 11386669462
-51951995809
+52-1698635642
 2271326779633
 Controls\HomePageNavigationBar.xaml;Controls\HomePageTopNavigationBar.xaml;MainWindow.xaml;Styles\General.xaml;Styles\NavigationBar.xaml;Views\AccountPageView.xaml;Views\CreateAccountView.xaml;Views\CreateNewProjectPageView.xaml;Views\CreateTicketView.xaml;Views\HomePageView.xaml;Views\LoginPageView.xaml;Views\ProjectDetailsPageView.xaml;Views\ProjectsPageView.xaml;Views\TicketDetailsPageView.xaml;Views\TicketsPageView.xaml;
 
-True
+False
 

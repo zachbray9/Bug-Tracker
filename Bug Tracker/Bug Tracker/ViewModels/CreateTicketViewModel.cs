@@ -1,6 +1,7 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States.TicketStatus;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
@@ -23,27 +24,19 @@ namespace Bug_Tracker.ViewModels
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
         private readonly IDataService<Ticket> TicketService;
-
-
-        public ObservableCollection<string> StatusOptions { get; set; }
-        public Dictionary<Status, string> StatusOptionsDictionary { get; set; }
+        private readonly StatusOptionsRetriever StatusOptionsRetriever;
+        public Dictionary<Status, string> StatusOptionsDictionary { get => StatusOptionsRetriever.StatusOptionsDictionary; }
 
         public User CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService)
+        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
             TicketService = ticketService;
-
-            StatusOptionsDictionary = new Dictionary<Status, string>()
-            {
-                { Status.ToDo, "To Do" },
-                { Status.InProgress, "In Progress"},
-                { Status.Done, "Done"}
-            };
+            StatusOptionsRetriever = statusOptionsRetriever;
 
             if(ProjectContainer.CurrentProject.ProjectUsers != null)
             {
@@ -90,7 +83,7 @@ namespace Bug_Tracker.ViewModels
         {
             get 
             {
-                return ConvertStatusEnumToString(ProjectContainer.CurrentTicket.Status);
+                return StatusOptionsRetriever.ConvertStatusEnumToString(ProjectContainer.CurrentTicket.Status);
             }
             set
             {
@@ -123,16 +116,6 @@ namespace Bug_Tracker.ViewModels
                 assignee = value;
                 OnPropertyChanged(nameof(Assignee));
             }
-        }
-
-        private string ConvertStatusEnumToString(Status status)
-        {
-            if(StatusOptionsDictionary.TryGetValue(status, out var value))
-            {
-                return value.ToString();
-            }
-
-            return String.Empty;
         }
 
         public ICommand AddNewTicketToDbCommand { get; }

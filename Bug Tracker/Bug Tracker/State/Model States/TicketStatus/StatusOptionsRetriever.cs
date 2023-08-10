@@ -30,5 +30,11 @@ namespace Bug_Tracker.State.Model_States.TicketStatus
 
             return String.Empty;
         }
+
+        public Status ConvertStatusStringToEnum(string statusString)
+        {
+            Status status = StatusOptionsDictionary.FirstOrDefault(d => d.Value == statusString).Key;
+            return status;
+        }
     }
 }

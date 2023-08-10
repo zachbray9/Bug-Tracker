@@ -2,6 +2,7 @@
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
+using Bug_Tracker.State.Model_States.TicketStatus;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using Microsoft.IdentityModel.Tokens;
@@ -25,21 +26,25 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
+        //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
+        private DispatcherTimer DebounceTimer;
+
+        public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
+
         public Project CurrentProject => ProjectContainer.CurrentProject;
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
         public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
 
 
-        //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
-        private DispatcherTimer DebounceTimer;
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
             CommentDataService = commentDataService;
             DebounceTimer = debounceTimer;
+            StatusOptionsRetriever = statusOptionsRetriever;
 
             DebounceTimer.Interval = TimeSpan.FromMilliseconds(500);
             DebounceTimer.IsEnabled = false;
@@ -48,6 +53,7 @@ namespace Bug_Tracker.ViewModels
 
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
+            ticketStatus = StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status);
             assignee = CurrentTicket.Assignee;
             reporter = CurrentTicket.Author;
 
@@ -145,6 +151,18 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        private string ticketStatus;
+        public string TicketStatus
+        {
+            get { return ticketStatus; }
+            set 
+            {
+                ticketStatus = value;
+                OnPropertyChanged(nameof(TicketStatus));
+                StartDebounceTimer();
+            }
+        }
+
         private ObservableCollection<ProjectUser> projectUsers;
         public ObservableCollection<ProjectUser> ProjectUsers
         {
@@ -186,6 +204,7 @@ namespace Bug_Tracker.ViewModels
             CurrentTicket.Description = TicketDescription;
             CurrentTicket.Assignee = Assignee;
             CurrentTicket.Author = Reporter;
+            CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(TicketStatus);
 
             try
             {

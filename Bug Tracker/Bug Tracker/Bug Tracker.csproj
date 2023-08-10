@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BugTracker.Domain\BugTracker.Domain.csproj" />
     <ProjectReference Include="..\BugTracker.EntityFramework\BugTracker.EntityFramework.csproj" />
   </ItemGroup>

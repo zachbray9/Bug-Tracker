@@ -94,3 +94,4 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Controls\HomePageTopNavigationBar.baml
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\TicketDetailsPageView.g.cs
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Views\TicketDetailsPageView.baml
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\FontAwesome.WPF.dll

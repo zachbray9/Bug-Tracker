@@ -154,12 +154,14 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="4*"/>
                                 </Grid.ColumnDefinitions>
-
+                                
+                                <!--Assignee combo box-->
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Assignee" FontFamily="Arial" FontSize="14" Margin="15, 15, 0, 50"/>
-                                <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Margin="0, 15, 15, 10"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee}" VerticalAlignment="Top" Margin="0, 15, 15, 10"/>
 
+                                <!--Reporter combo box-->
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Reporter" FontFamily="Arial" FontSize="14" Margin="15, 0, 0, 15"/>
-                                <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0, 0, 15, 15"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter}" VerticalAlignment="Top" Margin="0, 0, 15, 15"/>
                             </Grid>
 
                         </Grid>

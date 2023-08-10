@@ -25,6 +25,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
+        public Project CurrentProject => ProjectContainer.CurrentProject;
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
         public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
 
@@ -47,7 +48,10 @@ namespace Bug_Tracker.ViewModels
 
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
+            assignee = CurrentTicket.Assignee;
+            reporter = CurrentTicket.Author;
 
+            //checks if ticket has any comments and if so, fills the collection with tickets. Otherwise initializes empty collection
             if(CurrentTicket.Comments != null) 
             {
                 Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
@@ -57,6 +61,17 @@ namespace Bug_Tracker.ViewModels
                 Comments = new ObservableCollection<Comment>();
             }
 
+            //checks if the current project has any project users (which it always should) and if so, fills the collection with the project users. Otherwise initializes an empty list.
+            if(CurrentProject.ProjectUsers != null) 
+            {
+                ProjectUsers = new ObservableCollection<ProjectUser>(CurrentProject.ProjectUsers);
+            }
+            else
+            {
+                ProjectUsers = new ObservableCollection<ProjectUser>();
+            }
+
+            //Calculates the time difference for each comment so that it can display how long ago it was posted.
             foreach (var comment in Comments)
             {
                 comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
@@ -130,11 +145,47 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        private ObservableCollection<ProjectUser> projectUsers;
+        public ObservableCollection<ProjectUser> ProjectUsers
+        {
+            get { return projectUsers; }
+            set
+            {
+                projectUsers = value;
+                OnPropertyChanged(nameof(ProjectUsers));
+            }
+        }
+
+        private ProjectUser assignee;
+        public ProjectUser Assignee
+        {
+            get { return assignee; }
+            set
+            {
+                assignee = value;
+                OnPropertyChanged(nameof(Assignee));
+                StartDebounceTimer();
+            }
+        }
+
+        private ProjectUser reporter;
+        public ProjectUser Reporter
+        {
+            get { return reporter; }
+            set 
+            {
+                reporter = value;
+                OnPropertyChanged(nameof(Reporter));
+                StartDebounceTimer();
+            }
+        }
 
         private async Task SaveChangesAsync()
         {
             CurrentTicket.Title = TicketTitle;
             CurrentTicket.Description = TicketDescription;
+            CurrentTicket.Assignee = Assignee;
+            CurrentTicket.Author = Reporter;
 
             try
             {

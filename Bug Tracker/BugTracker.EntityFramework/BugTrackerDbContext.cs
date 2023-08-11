@@ -74,11 +74,16 @@ namespace BugTracker.EntityFramework
                 .HasOne(t => t.Assignee)
                 .WithMany(a => a.AssignedTickets)
                 .HasForeignKey(t => t.AssigneeId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Project)
                 .WithMany(p => p.Tickets)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ticket>()
+                .HasMany(t => t.Comments)
+                .WithOne(c => c.Ticket)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Comment>()

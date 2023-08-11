@@ -25,6 +25,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IUserService UserDataService;
         private readonly IDataService<ProjectUser> ProjectUserService;
         private readonly IDataService<Ticket> TicketService;
+        private readonly IDataService<Comment> CommentService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
@@ -96,11 +97,12 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IDataService<Comment> commentService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             UserDataService= userDataService;
             ProjectUserService= projectUserService;
             TicketService= ticketService;
+            CommentService= commentService;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -112,6 +114,7 @@ namespace Bug_Tracker.ViewModels
 
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
+            DeleteTicketCommand = new DeleteTicketCommand(TicketService, CommentService, this);
 
             UpdateProjectUsers();
             UpdateTickets();
@@ -126,8 +129,12 @@ namespace Bug_Tracker.ViewModels
                 }               
         }
 
-        private void UpdateTickets()
+        public void UpdateTickets()
         {
+            ToDoTickets.Clear();
+            InProgressTickets.Clear();
+            DoneTickets.Clear();
+
             foreach(Ticket ticket in CurrentProject.Tickets)
             {
                 if (ticket.Status == Status.ToDo)
@@ -141,5 +148,6 @@ namespace Bug_Tracker.ViewModels
 
         public ICommand CreateNewTicketCommand { get; }
         public ICommand ViewTicketDetailsCommand { get; }
+        public ICommand DeleteTicketCommand { get; }
     }
 }

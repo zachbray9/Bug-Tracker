@@ -228,7 +228,7 @@ namespace BugTracker.EntityFramework.Migrations
                     b.HasOne("BugTracker.Domain.Models.ProjectUser", "Assignee")
                         .WithMany("AssignedTickets")
                         .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BugTracker.Domain.Models.ProjectUser", "Author")
                         .WithMany("AuthoredTickets")
@@ -239,7 +239,7 @@ namespace BugTracker.EntityFramework.Migrations
                     b.HasOne("BugTracker.Domain.Models.Project", "Project")
                         .WithMany("Tickets")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Assignee");

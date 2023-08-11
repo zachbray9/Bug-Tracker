@@ -122,8 +122,8 @@
                                     </TextBlock.InputBindings>
                                 </TextBlock>
 
-                                <Button Grid.Column="1" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
-                                    <fa:ImageAwesome Icon="Trash" Foreground="Gray"/>
+                                <Button Grid.Column="1" Command="{Binding DataContext.DeleteTicketCommand, RelativeSource={RelativeSource AncestorType=ListBox, AncestorLevel=1}}" CommandParameter="{Binding}" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
+                                    <fa:ImageAwesome Icon="Trash" Foreground="#d3d3d3"/>
                                 </Button>
                             </Grid>
                             

@@ -123,7 +123,7 @@
                                 </TextBlock>
 
                                 <Button Grid.Column="1" Command="{Binding DataContext.DeleteTicketCommand, RelativeSource={RelativeSource AncestorType=ListBox, AncestorLevel=1}}" CommandParameter="{Binding}" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
-                                    <fa:ImageAwesome Icon="Trash" Foreground="#d3d3d3"/>
+                                    <fa:ImageAwesome Icon="Trash" Foreground="#ebecf0"/>
                                 </Button>
                             </Grid>
                             

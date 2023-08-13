@@ -1,6 +1,7 @@
 ﻿using Bug_Tracker.State.Authenticators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace Bug_Tracker.ViewModels
     public class TicketsPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
-        public ObservableCollection<Ticket> Tickets { get; set; }
+
+        private User CurrentUser { get => Authenticator.CurrentUser; }
 
         public TicketsPageViewModel(IAuthenticator authenticator)
         {
@@ -26,11 +28,42 @@ namespace Bug_Tracker.ViewModels
             ResetTickets();
         }
 
+        private ObservableCollection<Ticket> tickets;
+        public ObservableCollection<Ticket> Tickets
+        {
+            get { return tickets; }
+            set
+            {
+                tickets = value;
+                OnPropertyChanged(nameof(Tickets));
+            }
+        }
+
         private void ResetTickets()
         {
-            if (Authenticator.CurrentUser.ProjectUsers != null)
+            Tickets.Clear();
+
+            if (CurrentUser.ProjectUsers != null)
             {
-                //add tickets of currentUser into observable collection
+                //Adds all authored and assigned tickets into a list (will contain duplicates if any ticket is authored and assigned by the current user)
+                List<Ticket> allTicketsWithDuplicates = new List<Ticket>();
+                foreach(ProjectUser projectUser in CurrentUser.ProjectUsers)
+                {
+                    allTicketsWithDuplicates.AddRange(projectUser.AuthoredTickets);
+                    allTicketsWithDuplicates.AddRange(projectUser.AssignedTickets);
+                }
+
+                //Creates a new list and checks if the new list already contains each ticket. If it doesn't contain the ticket, then the ticket is added.
+                List<Ticket> allTicketsWithoutDuplicates = new List<Ticket>();
+                foreach(Ticket ticket in allTicketsWithDuplicates)
+                {
+                    if(!allTicketsWithoutDuplicates.Contains(ticket))
+                    {
+                        allTicketsWithoutDuplicates.Add(ticket);
+                    }
+                }
+
+                Tickets = new ObservableCollection<Ticket>(allTicketsWithoutDuplicates);
             }
         }
 

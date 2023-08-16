@@ -1,9 +1,9 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
-using Bug_Tracker.State.Model_States.TicketStatus;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
+using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using BugTracker.EntityFramework;

@@ -1,4 +1,5 @@
 ﻿using BugTracker.Domain.Enumerables;
+using BugTracker.Domain.Enumerables.EnumConverters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +28,17 @@ namespace BugTracker.Domain.Models
         public Priority Priority { get; set; }
         public TicketType TicketType { get; set; }
         public DateTime DateSubmitted { get; set; }
+
+        [NotMapped]
+        private readonly StatusOptionsRetriever StatusOptionsRetriever;
+
+        public Ticket()
+        {
+            StatusOptionsRetriever= new StatusOptionsRetriever();
+        }
+
+        [NotMapped]
+        public string StatusString { get => StatusOptionsRetriever.ConvertStatusEnumToString(Status); }
 
         public override string ToString()
         {

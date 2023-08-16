@@ -3,6 +3,7 @@ using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
+using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -21,14 +22,16 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
+        private readonly StatusOptionsRetriever StatusOptionsRetriever;
 
         private User CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            StatusOptionsRetriever = statusOptionsRetriever;
             Tickets = new ObservableCollection<Ticket>();
 
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
@@ -46,6 +49,11 @@ namespace Bug_Tracker.ViewModels
                 OnPropertyChanged(nameof(Tickets));
             }
         }
+
+        //public string TicketStatus
+        //{
+        //    get { StatusOptionsRetriever.ConvertStatusEnumToString(); }
+        //}
 
         private void ResetTickets()
         {

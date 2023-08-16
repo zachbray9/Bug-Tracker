@@ -72,7 +72,7 @@
                         <TextBlock Grid.Column="0" Text="{Binding Title}" TextWrapping="Wrap" Margin="15, 0, 0, 0"/>
                         <TextBlock Grid.Column="3" Text="{Binding Project.Name}" Margin="10, 0, 0, 0"/>
                         <TextBlock Grid.Column="4" Text="{Binding DateSubmitted}" Margin="15, 0, 0, 0"/>
-                        <TextBlock Grid.Column="5" Text="{Binding Status}" Margin="15, 0, 0, 0"/>
+                        <TextBlock Grid.Column="5" Text="{Binding StatusString}" Margin="15, 0, 0, 0"/>
                         <TextBlock Grid.Column="6" Text="{Binding Assignee.User.FullName}" Margin="15, 0, 0, 0"/>
                         <TextBlock Grid.Column="7" Text="View Details" TextDecorations="Underline" Cursor="Hand" HorizontalAlignment="Right">
                             <TextBlock.InputBindings>

@@ -2,7 +2,7 @@
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
-using Bug_Tracker.State.Model_States.TicketStatus;
+using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using Microsoft.IdentityModel.Tokens;

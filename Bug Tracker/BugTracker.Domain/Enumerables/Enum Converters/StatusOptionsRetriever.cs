@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bug_Tracker.State.Model_States.TicketStatus
+namespace BugTracker.Domain.Enumerables.EnumConverters
 {
     public class StatusOptionsRetriever
     {

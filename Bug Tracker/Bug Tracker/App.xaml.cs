@@ -1,10 +1,10 @@
 ﻿using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
-using Bug_Tracker.State.Model_States.TicketStatus;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using Bug_Tracker.ViewModels.Factories;
+using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using BugTracker.Domain.Services.AuthenticationServices;
@@ -101,7 +101,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
             {
-                return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+                return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<StatusOptionsRetriever>());
             }
             );
 

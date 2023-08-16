@@ -1,4 +1,7 @@
-﻿using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using Bug_Tracker.State;
+using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
@@ -9,21 +12,26 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
 {
     public class TicketsPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
+        private readonly INavigator Navigator;
+        private readonly IProjectContainer ProjectContainer;
 
         private User CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             Authenticator = authenticator;
+            Navigator = navigator;
+            ProjectContainer = projectContainer;
             Tickets = new ObservableCollection<Ticket>();
 
-            
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
 
             ResetTickets();
         }
@@ -67,6 +75,6 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-  
+        public ICommand ViewTicketDetailsCommand { get; }
     }
 }

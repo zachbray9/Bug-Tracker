@@ -25,6 +25,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             Ticket ticket = (Ticket)parameter;
             if(ticket != null)
             {
+                ProjectContainer.CurrentProject = ticket.Project;
                 ProjectContainer.CurrentTicket = ticket;
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }

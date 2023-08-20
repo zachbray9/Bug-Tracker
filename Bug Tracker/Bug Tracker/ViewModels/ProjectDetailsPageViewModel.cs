@@ -118,6 +118,7 @@ namespace Bug_Tracker.ViewModels
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
             DeleteTicketCommand = new DeleteTicketCommand(TicketService, CommentService, this);
+            OpenAddUserPopupCommand = new OpenAddUserPopupCommand(AddUserViewModel);
 
             UpdateProjectUsers();
             UpdateTickets();
@@ -152,5 +153,6 @@ namespace Bug_Tracker.ViewModels
         public ICommand CreateNewTicketCommand { get; }
         public ICommand ViewTicketDetailsCommand { get; }
         public ICommand DeleteTicketCommand { get; }
+        public ICommand OpenAddUserPopupCommand { get; }
     }
 }

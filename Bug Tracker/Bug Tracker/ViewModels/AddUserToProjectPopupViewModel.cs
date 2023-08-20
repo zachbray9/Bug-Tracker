@@ -1,4 +1,5 @@
-﻿using BugTracker.Domain.Models;
+﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,31 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
 {
     public class AddUserToProjectPopupViewModel : ViewModelBase
     {
         private readonly IUserService UserDataService;
-        public bool IsPopupOpen { get; set; } = false;
+
+        private bool isPopupOpen;
+        public bool IsPopupOpen
+        {
+            get { return isPopupOpen; }
+            set
+            {
+                isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
+            }
+        }
+
 
         public AddUserToProjectPopupViewModel(IUserService userDataService)
         {
             UserDataService = userDataService;
+
+            CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
         }
 
         private string searchQuery;
@@ -27,6 +42,7 @@ namespace Bug_Tracker.ViewModels
             {
                 searchQuery = value;
                 UpdateSearchResults();
+                OnPropertyChanged(nameof(SearchQuery));
             }
         }
 
@@ -48,5 +64,7 @@ namespace Bug_Tracker.ViewModels
             }
 
         }
+
+        public ICommand CloseAddUserPopupCommand { get; }
     }
 }

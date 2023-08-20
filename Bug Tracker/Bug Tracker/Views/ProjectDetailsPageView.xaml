@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Popup IsOpen="{Binding IsPopupOpen}" StaysOpen="True" DataContext="{Binding AddUserViewModel}" Placement="Center">
+            <Popup IsOpen="{Binding IsPopupOpen, UpdateSourceTrigger=PropertyChanged}" StaysOpen="True" DataContext="{Binding AddUserViewModel}" Placement="Center" VerticalOffset="-200" Width="400" Height="425">
                 <local:AddUserToProjectPopupView/>
             </Popup>
 
@@ -60,7 +60,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <Button Style="{StaticResource AddUserButton}" Margin="10, 0"/>
+                    <Button Style="{StaticResource AddUserButton}" Command="{Binding OpenAddUserPopupCommand}" Margin="10, 0"/>
 
                 </StackPanel>
             </Grid>
@@ -126,7 +126,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="Overlay" Background="#80000009" Visibility="{Binding AddUserViewModel.IsPopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid x:Name="Overlay" Background="#80000009" Visibility="{Binding AddUserViewModel.IsPopupOpen, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
 
         </Grid>
     </Grid>

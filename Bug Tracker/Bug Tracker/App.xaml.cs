@@ -129,6 +129,11 @@ namespace Bug_Tracker
             }
             );
 
+            services.AddSingleton<CreateViewModel<AddUserToProjectPopupViewModel>>(services =>
+            {
+                return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IDataService<User>>());
+            });
+
 
 
             services.AddSingleton<INavigator, Navigator>();

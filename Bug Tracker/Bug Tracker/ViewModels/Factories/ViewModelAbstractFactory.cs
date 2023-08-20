@@ -21,8 +21,9 @@ namespace Bug_Tracker.ViewModels.Factories
         private readonly CreateViewModel<ProjectDetailsPageViewModel> CreateProjectDetailsPageViewModel;
         private readonly CreateViewModel<CreateTicketViewModel> CreateCreateTicketViewModel;
         private readonly CreateViewModel<TicketDetailsPageViewModel> CreateTicketDetailsPageViewModel;
+        private readonly CreateViewModel<AddUserToProjectPopupViewModel> CreateAddUserToProjectPopupViewModel;
 
-        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel, CreateViewModel<CreateNewProjectPageViewModel> createCreateNewProjectPageViewModel, CreateViewModel<ProjectDetailsPageViewModel> createProjectDetailsPageViewModel, CreateViewModel<CreateTicketViewModel> createCreateTicketViewModel, CreateViewModel<TicketDetailsPageViewModel> createTicketDetailsPageViewModel)
+        public ViewModelAbstractFactory(CreateViewModel<LoginPageViewModel> createLoginPageViewModel, CreateViewModel<CreateAccountPageViewModel> createCreateAccountPageViewModel, CreateViewModel<HomePageViewModel> createHomePageViewModel, CreateViewModel<AccountPageViewModel> createAccountPageViewModel, CreateViewModel<ProjectsPageViewModel> createProjectsPageViewModel, CreateViewModel<TicketsPageViewModel> createTicketsPageViewModel, CreateViewModel<CreateNewProjectPageViewModel> createCreateNewProjectPageViewModel, CreateViewModel<ProjectDetailsPageViewModel> createProjectDetailsPageViewModel, CreateViewModel<CreateTicketViewModel> createCreateTicketViewModel, CreateViewModel<TicketDetailsPageViewModel> createTicketDetailsPageViewModel, CreateViewModel<AddUserToProjectPopupViewModel> createAddUserToProjectPopupViewModel)
         {
             CreateLoginPageViewModel = createLoginPageViewModel;
             CreateCreateAccountPageViewModel = createCreateAccountPageViewModel;
@@ -34,6 +35,7 @@ namespace Bug_Tracker.ViewModels.Factories
             CreateProjectDetailsPageViewModel = createProjectDetailsPageViewModel;
             CreateCreateTicketViewModel = createCreateTicketViewModel;
             CreateTicketDetailsPageViewModel = createTicketDetailsPageViewModel;
+            CreateAddUserToProjectPopupViewModel = createAddUserToProjectPopupViewModel;
         }
         public ViewModelBase CreateViewModel(ViewType viewType)
         {

@@ -16,6 +16,9 @@
     <Compile Update="Views\AccountPageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddUserToProjectPopupView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CreateAccountView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AccountPageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddUserToProjectPopupView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CreateAccountView.xaml">

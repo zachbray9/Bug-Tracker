@@ -11,9 +11,10 @@ namespace Bug_Tracker.ViewModels
 {
     public class AddUserToProjectPopupViewModel : ViewModelBase
     {
-        private readonly IDataService<User> UserDataService;
+        private readonly IUserService UserDataService;
+        public bool IsPopupOpen { get; set; } = false;
 
-        public AddUserToProjectPopupViewModel(IDataService<User> userDataService)
+        public AddUserToProjectPopupViewModel(IUserService userDataService)
         {
             UserDataService = userDataService;
         }

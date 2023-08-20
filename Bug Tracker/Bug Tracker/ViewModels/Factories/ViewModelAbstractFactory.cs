@@ -62,6 +62,8 @@ namespace Bug_Tracker.ViewModels.Factories
                     return CreateCreateTicketViewModel();
                 case ViewType.TicketDetailsPage:
                     return CreateTicketDetailsPageViewModel();
+                case ViewType.AddUserToProjectPopup:
+                    return CreateAddUserToProjectPopupViewModel();
                 default:
                     throw new ArgumentException("The view type does not have a ViewModel.", "viewType");
             }

@@ -2,6 +2,7 @@
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
+using Bug_Tracker.ViewModels.Factories;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -29,6 +30,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
+        public AddUserToProjectPopupViewModel AddUserViewModel { get; }
 
         public User CurrentUser { get => Authenticator.CurrentUser; }
         public Project CurrentProject { get => ProjectContainer.CurrentProject; }
@@ -97,15 +99,16 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IDataService<Comment> commentService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IDataService<Comment> commentService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelFactory)
         {
-            UserDataService= userDataService;
-            ProjectUserService= projectUserService;
-            TicketService= ticketService;
-            CommentService= commentService;
+            UserDataService = userDataService;
+            ProjectUserService = projectUserService;
+            TicketService = ticketService;
+            CommentService = commentService;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            AddUserViewModel = (AddUserToProjectPopupViewModel)viewModelFactory.CreateViewModel(ViewType.AddUserToProjectPopup);
 
             ProjectUsers = new ObservableCollection<ProjectUser>();
             ToDoTickets = new ObservableCollection<Ticket>();

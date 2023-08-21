@@ -16,12 +16,10 @@ namespace Bug_Tracker.Utility_Classes.Converters
             bool isEmail = (bool)value;
             if (isEmail)
             {
-                //return new ImageAwesome { Icon = FontAwesomeIcon.Envelope };
                 return FontAwesomeIcon.EnvelopeOutline;
             }
             else
             {
-                //return new ImageAwesome { Icon = FontAwesomeIcon.User };
                 return FontAwesomeIcon.UserOutline;
             }
         }

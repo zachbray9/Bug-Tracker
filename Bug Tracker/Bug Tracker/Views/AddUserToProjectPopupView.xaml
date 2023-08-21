@@ -24,20 +24,22 @@
 
             <TextBlock Text="Name or email" FontFamily="Arial" Opacity="0.6" Margin="0, 20, 0, 5"/>
             <StackPanel>
-                <TextBox Style="{StaticResource FocusChangeableTextBox}" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" FontSize="14" BorderBrush="gray" BorderThickness="0.2" MinHeight="40" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="SearchTextBox" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" FontSize="14" BorderBrush="gray" BorderThickness="0.2" MinHeight="40" VerticalContentAlignment="Center"/>
 
-                <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedUser}" Visibility="{Binding IsSearchQueryPopulated, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="25">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Background="Green" Width="30" Height="30" CornerRadius="15" Margin="5, 5, 10, 5">
-                                    <fa:ImageAwesome Icon="{Binding IsEmail, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EmailToIconConverter}}" Foreground="White" Width="18" Height="18" SnapsToDevicePixels="False"/>
-                                </Border>
-                                <TextBlock Text="{Binding Text}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Popup IsOpen="{Binding IsSearchResultsPopupOpen, UpdateSourceTrigger=PropertyChanged}" PlacementTarget="{Binding ElementName=SearchTextBox}" StaysOpen="False" Width="320">
+                    <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedUser}" VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="25" MaxHeight="300">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="Green" Width="30" Height="30" CornerRadius="15" Margin="5, 5, 10, 5">
+                                        <fa:ImageAwesome Icon="{Binding IsEmail, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EmailToIconConverter}}" Foreground="White" Width="18" Height="18" SnapsToDevicePixels="False"/>
+                                    </Border>
+                                    <TextBlock Text="{Binding Text}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Popup>
             </StackPanel>
 
             <TextBlock Text="Role" FontFamily="Arial" Opacity="0.6" Margin="0, 20, 0, 5"/>

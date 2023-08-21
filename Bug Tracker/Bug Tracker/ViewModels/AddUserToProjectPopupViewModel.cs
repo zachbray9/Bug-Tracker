@@ -43,6 +43,7 @@ namespace Bug_Tracker.ViewModels
             set
             {
                 searchQuery = value;
+                IsSearchResultsPopupOpen = IsSearchQueryPopulated;
                 UpdateSearchResults();
                 OnPropertyChanged(nameof(IsSearchQueryPopulated));
                 OnPropertyChanged(nameof(SearchQuery));
@@ -54,9 +55,22 @@ namespace Bug_Tracker.ViewModels
             get
             {
                 if (String.IsNullOrEmpty(SearchQuery))
+                {
                     return false;
+                }
 
                 return true;
+            }
+        }
+
+        private bool isSearchResultsPopupOpen;
+        public bool IsSearchResultsPopupOpen
+        {
+            get { return isSearchResultsPopupOpen; }
+            set
+            {
+                isSearchResultsPopupOpen = value;
+                OnPropertyChanged(nameof(IsSearchResultsPopupOpen));
             }
         }
 
@@ -68,9 +82,16 @@ namespace Bug_Tracker.ViewModels
             get { return selectedUser; }
             set
             {
-                selectedUser = value;
-                searchQuery = value?.Text;
-                OnPropertyChanged(nameof(SelectedUser));
+                if(selectedUser != value)
+                {
+                    selectedUser = value;
+                    if(value != null)
+                    {
+                        SearchQuery = value.Text;
+                    }
+                    IsSearchResultsPopupOpen = false;
+                    OnPropertyChanged(nameof(SelectedUser));
+                }
             }
         }
 

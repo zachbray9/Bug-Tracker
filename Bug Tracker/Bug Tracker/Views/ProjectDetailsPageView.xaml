@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Popup IsOpen="{Binding IsPopupOpen, UpdateSourceTrigger=PropertyChanged}" StaysOpen="True" DataContext="{Binding AddUserViewModel}" Placement="Center" VerticalOffset="-200" Width="400" Height="425">
+            <Popup IsOpen="{Binding IsPopupOpen, UpdateSourceTrigger=PropertyChanged}" StaysOpen="False" DataContext="{Binding AddUserViewModel}" Placement="Center" VerticalOffset="-200" Width="400" Height="425">
                 <local:AddUserToProjectPopupView/>
             </Popup>
 

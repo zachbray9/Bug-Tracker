@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Bug_Tracker.Views"
+             xmlns:local="clr-namespace:Bug_Tracker.Views" 
+             xmlns:utility="clr-namespace:Bug_Tracker.Utility_Classes.Converters"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <utility:EmailToIconConverter x:Key="EmailToIconConverter"/>
+    </UserControl.Resources>
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,13 +26,18 @@
             <StackPanel>
                 <TextBox Style="{StaticResource FocusChangeableTextBox}" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" FontSize="14" BorderBrush="gray" BorderThickness="0.2" MinHeight="40" VerticalContentAlignment="Center"/>
 
-                <ItemsControl ItemsSource="{Binding SearchResults,UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.ItemTemplate>
+                <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedUser}" Visibility="{Binding IsSearchQueryPopulated, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Top" HorizontalAlignment="Stretch" MinHeight="25">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding FullName}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="Green" Width="30" Height="30" CornerRadius="15" Margin="5, 5, 10, 5">
+                                    <fa:ImageAwesome Icon="{Binding IsEmail, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EmailToIconConverter}}" Foreground="White" Width="18" Height="18" SnapsToDevicePixels="False"/>
+                                </Border>
+                                <TextBlock Text="{Binding Text}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
+                            </StackPanel>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
 
             <TextBlock Text="Role" FontFamily="Arial" Opacity="0.6" Margin="0, 20, 0, 5"/>

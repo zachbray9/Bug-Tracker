@@ -66,7 +66,10 @@ namespace BugTracker.EntityFramework.Services
                 return entity;
         }
 
-
-
+        public async Task<User> GetByFullName(string name)
+        {
+            User? entity = await context.Set<User>().FirstOrDefaultAsync((e) => e.FullName == name);
+            return entity;
+        }
     }
 }

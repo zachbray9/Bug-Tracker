@@ -17,5 +17,6 @@ namespace BugTracker.Domain.Services
     public interface IUserService : IDataService<User>
     {
         Task<User> GetByEmail(string email);
+        Task<User> GetByFullName(string name);
     }
 }

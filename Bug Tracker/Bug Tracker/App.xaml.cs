@@ -115,7 +115,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<AddUserToProjectPopupViewModel>>(services =>
             {
-                return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<ProjectRoleOptionsRetriever>());
+                return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ProjectRoleOptionsRetriever>());
             }
             );
 

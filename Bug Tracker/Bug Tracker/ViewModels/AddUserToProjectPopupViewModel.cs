@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using Bug_Tracker.State;
 using Bug_Tracker.Utility_Classes;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.Enum_Converters;
@@ -18,6 +19,8 @@ namespace Bug_Tracker.ViewModels
     public class AddUserToProjectPopupViewModel : ViewModelBase
     {
         private readonly IUserService UserDataService;
+        private readonly IDataService<ProjectUser> ProjectUserDataService;
+        private readonly IProjectContainer ProjectContainer;
         private readonly ProjectRoleOptionsRetriever ProjectRoleOptionsRetriever;
 
         public Dictionary<ProjectRole, string> ProjectRoleOptionsDictionary { get => ProjectRoleOptionsRetriever.ProjectRoleOptionsDictionary; }
@@ -34,11 +37,14 @@ namespace Bug_Tracker.ViewModels
         }
 
 
-        public AddUserToProjectPopupViewModel(IUserService userDataService, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
+        public AddUserToProjectPopupViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserDataService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
         {
             UserDataService = userDataService;
+            ProjectUserDataService = projectUserDataService;
+            ProjectContainer = projectContainer;
             ProjectRoleOptionsRetriever = projectRoleOptionsRetriever;
 
+            AddUserToProjectCommand = new AddUserToProjectCommand(UserDataService, ProjectUserDataService, ProjectContainer, this);
             CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
         }
 
@@ -140,6 +146,7 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        public ICommand AddUserToProjectCommand { get; }
         public ICommand CloseAddUserPopupCommand { get; }
     }
 }

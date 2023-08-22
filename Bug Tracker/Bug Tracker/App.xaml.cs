@@ -4,6 +4,7 @@ using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using Bug_Tracker.ViewModels.Factories;
+using BugTracker.Domain.Enumerables.Enum_Converters;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -65,6 +66,7 @@ namespace Bug_Tracker
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<DispatcherTimer>();
             services.AddSingleton<StatusOptionsRetriever>();
+            services.AddSingleton<ProjectRoleOptionsRetriever>();
             services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
 
 
@@ -113,7 +115,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<AddUserToProjectPopupViewModel>>(services =>
             {
-                return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IUserService>());
+                return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<ProjectRoleOptionsRetriever>());
             }
             );
 
@@ -131,7 +133,7 @@ namespace Bug_Tracker
 
             services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
             {
-                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<IDataService<Comment>>(), services.GetRequiredService<DispatcherTimer>(), services.GetRequiredService<StatusOptionsRetriever>());
+                return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<IDataService<Comment>>(), services.GetRequiredService<DispatcherTimer>(), services.GetRequiredService<StatusOptionsRetriever>());
             }
             );
 

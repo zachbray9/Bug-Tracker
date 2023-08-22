@@ -2,6 +2,7 @@
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
+using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
@@ -22,6 +23,7 @@ namespace Bug_Tracker.ViewModels
     public class TicketDetailsPageViewModel : ViewModelBase, IDisposable
     {
         private readonly IAuthenticator Authenticator;
+        public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
@@ -37,9 +39,10 @@ namespace Bug_Tracker.ViewModels
 
 
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
+            Navigator = navigator;
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
             CommentDataService = commentDataService;

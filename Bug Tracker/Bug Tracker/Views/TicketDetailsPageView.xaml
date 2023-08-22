@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Views"
+             xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
@@ -11,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Ticket  /  Details" FontFamily="Arial" FontSize="16" Opacity="0.5" Margin="40, 40, 40, 15"/>
@@ -48,7 +50,7 @@
                     
                     <!--Comment Textbox and save button-->
                     <StackPanel Grid.Row="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource TextBoxWithWatermark}" Text="{Binding CommentTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0, 0, 0, 5"/>
+                        <TextBox Text="{Binding CommentTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="16" TextWrapping="Wrap" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  HorizontalAlignment="Stretch" Margin="0, 0, 0, 5" Padding="0, 5, 0, 5"/>
                         <Grid>
                             <Grid.Style>
                                 <Style TargetType="Grid">
@@ -114,7 +116,7 @@
                                     <!--Actual comment text-->
                                     <TextBlock Grid.Row="1" Text="{Binding Text}" FontSize="16" FontFamily="Arial" TextWrapping="Wrap" Margin="50, 5, 0, 20"/>
 
-                                    <!--Delete Button (Need to change the command)-->
+                                    <!--Delete Button-->
                                     <TextBlock Grid.Row="2" Text="Delete" TextDecorations="Underline" Cursor="Hand" FontFamily="Arial" FontSize="12" Foreground="#242526" Margin="50, 0, 0, 0">
                                         <TextBlock.InputBindings>
                                             <MouseBinding Command="{Binding DataContext.DeleteCommentFromDbCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
@@ -175,6 +177,8 @@
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <Button Grid.Row="2" Style="{StaticResource GenericButton}" Content="Back" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectDetailsPage}" HorizontalAlignment="Left" Margin="40, 0, 40, 40" Width="50" Height="25" Padding="10"/>
 
     </Grid>
 </UserControl>

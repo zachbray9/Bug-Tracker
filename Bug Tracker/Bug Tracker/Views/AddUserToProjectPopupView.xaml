@@ -43,7 +43,7 @@
             </StackPanel>
 
             <TextBlock Text="Role" FontFamily="Arial" Opacity="0.6" Margin="0, 20, 0, 5"/>
-            <ComboBox>
+            <ComboBox ItemsSource="{Binding ProjectRoleOptionsDictionary.Values}" SelectedItem="{Binding SelectedProjectRoleAsString}">
                 
             </ComboBox>
         </StackPanel>

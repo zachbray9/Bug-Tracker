@@ -55,7 +55,7 @@
                                     <TextBlock Text="{Binding CurrentUser.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
                                 </Border>
 
-                                <TextBlock Grid.Column="1" Text="User Name" FontFamily="Arial" VerticalAlignment="Center" Margin="10, 0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding CurrentUser.FullName}" FontFamily="Arial" VerticalAlignment="Center" Margin="10, 0"/>
                             </Grid>
                         </StackPanel>
                     </StackPanel>

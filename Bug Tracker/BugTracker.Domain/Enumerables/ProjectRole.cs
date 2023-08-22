@@ -8,7 +8,7 @@ namespace BugTracker.Domain.Enumerables
 {
     public enum ProjectRole
     {
-        Admin,
+        Administrator,
         Developer
     }
 }

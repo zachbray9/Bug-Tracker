@@ -126,11 +126,13 @@ namespace Bug_Tracker.ViewModels
 
         private async void UpdateProjectUsers()
         {
-                foreach(ProjectUser projectUser in CurrentProject.ProjectUsers)
-                {
-                    projectUser.User = await UserDataService.Get(projectUser.UserId);
-                    ProjectUsers.Add(projectUser);
-                }               
+            ProjectUsers.Clear();
+
+            foreach(ProjectUser projectUser in CurrentProject.ProjectUsers)
+            {
+                projectUser.User = await UserDataService.Get(projectUser.UserId);
+                ProjectUsers.Add(projectUser);
+            }               
         }
 
         public void UpdateTickets()

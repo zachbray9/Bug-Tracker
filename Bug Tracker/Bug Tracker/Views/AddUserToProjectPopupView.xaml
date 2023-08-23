@@ -50,7 +50,7 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Margin="40, 0, 40, 40">
             <Button Style="{StaticResource GenericButton}" Content="Cancel" Command="{Binding CloseAddUserPopupCommand}" Margin="0, 0, 10, 0" Width="70" Height="40"/>
-            <Button Style="{StaticResource GenericButton}" Content="Add" Background="#7b68ee" Width="50" Height="40"/>
+            <Button Style="{StaticResource GenericButton}" Content="Add" Command="{Binding AddUserToProjectCommand}" Background="#7b68ee" Width="50" Height="40"/>
         </StackPanel>
     </Grid>
 </UserControl>

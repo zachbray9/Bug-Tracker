@@ -44,6 +44,8 @@ namespace Bug_Tracker.ViewModels
             ProjectContainer = projectContainer;
             ProjectRoleOptionsRetriever = projectRoleOptionsRetriever;
 
+            SelectedProjectRoleAsString = ProjectRoleOptionsRetriever.ConvertProjectRoleEnumToString(ProjectRole.Developer);
+
             AddUserToProjectCommand = new AddUserToProjectCommand(UserDataService, ProjectUserDataService, ProjectContainer, this);
             CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
         }

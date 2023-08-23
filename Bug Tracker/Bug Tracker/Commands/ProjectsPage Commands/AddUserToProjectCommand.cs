@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,33 +37,51 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
         public override async void Execute(object parameter)
         {
-            if(AddUserViewModel.SearchQuery.IsNullOrEmpty())
-            {
-                MessageBoxResult result = MessageBox.Show("Please enter a valid Users Name or Email.", "Invalid Search Query", MessageBoxButton.OK, MessageBoxImage.Error);
-                return; 
-            }
-
-
             User userToAdd = null;
 
-            if(SelectedUser.IsEmail)
+            if(SearchQuery != null)
             {
-                userToAdd = await UserDataService.GetByEmail(SelectedUser.Text);
+                if(SearchQuery.Contains("@"))
+                {
+                    userToAdd = await UserDataService.GetByEmail(SearchQuery);
+                }
+                else
+                {
+                    userToAdd = await UserDataService.GetByFullName(SearchQuery);
+                }
             }
             else
             {
-                userToAdd = await UserDataService.GetByFullName(SelectedUser.Text);
+                //handle if the search query is empty
+                MessageBox.Show("The search query is empty. Please enter a valid Name or Email.", "Search Query Is Empty", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-
-            ProjectUser newProjectUser = new ProjectUser()
+            
+            if(userToAdd != null)
             {
-                ProjectId = CurrentProject.Id,
-                UserId= userToAdd.Id,
-                Role = SelectedRole
-            };
+                ProjectUser newProjectUser = new ProjectUser()
+                {
+                    UserId = userToAdd.Id,
+                    ProjectId = CurrentProject.Id,
+                    Role = SelectedRole,
+                };
 
-            await ProjectUserDataService.Create(newProjectUser);
-            CurrentProject.ProjectUsers.Add(newProjectUser);
+                //Check if the user that is being added already exists in the project
+                if(CurrentProject.ProjectUsers.Any(pu => pu.UserId == newProjectUser.UserId))
+                {
+                    MessageBox.Show("The user you are trying to add is already in this project.", "User Already Exists", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                await ProjectUserDataService.Create(newProjectUser);
+                AddUserViewModel.IsPopupOpen = false;
+            }
+            else
+            {
+                //handle if the search query was not found
+                MessageBox.Show("The Name or Email you entered was not found. Please enter a valid Name or Email.", "User Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
     }
 }

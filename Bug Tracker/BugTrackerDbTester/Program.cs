@@ -28,7 +28,4 @@ IDataService<Comment> commentDataService = new GenericDataService<Comment>(DbCon
 IAuthenticationService authenticationService = new AuthenticationService(userDataService, passwordHasher);
 
 //put code below
-await projectDataService.Delete(2);
-await projectDataService.Delete(3);
-await projectDataService.Delete(4);
-await projectDataService.Delete(5);
+await projectUserDataService.Delete(8);

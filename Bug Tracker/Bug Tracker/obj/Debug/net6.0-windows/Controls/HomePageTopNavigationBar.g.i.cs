@@ -53,7 +53,7 @@ namespace Bug_Tracker.Controls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Bug Tracker;V1.0.0.0;component/controls/homepagetopnavigationbar.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Bug Tracker;component/controls/homepagetopnavigationbar.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Controls\HomePageTopNavigationBar.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

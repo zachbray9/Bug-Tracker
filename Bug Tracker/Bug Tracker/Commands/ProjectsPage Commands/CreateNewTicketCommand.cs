@@ -29,7 +29,12 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         public override void Execute(object parameter)
         {
             Status status = (Status)parameter;
-            CurrentTicket = new Ticket { Title=string.Empty, Description = string.Empty, Status = status };
+            CurrentTicket = new Ticket 
+            { 
+                Title=string.Empty, 
+                Description = string.Empty, 
+                Status = status 
+            };
             Navigator.Navigate(ViewType.CreateTicketPage);
         }
     }

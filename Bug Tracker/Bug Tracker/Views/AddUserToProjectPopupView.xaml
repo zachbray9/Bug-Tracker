@@ -31,7 +31,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Border Background="Green" Width="30" Height="30" CornerRadius="15" Margin="5, 5, 10, 5">
+                                    <Border Background="#00875A" Width="30" Height="30" CornerRadius="15" Margin="5, 5, 10, 5">
                                         <fa:ImageAwesome Icon="{Binding IsEmail, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource EmailToIconConverter}}" Foreground="White" Width="18" Height="18" SnapsToDevicePixels="False"/>
                                     </Border>
                                     <TextBlock Text="{Binding Text}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>

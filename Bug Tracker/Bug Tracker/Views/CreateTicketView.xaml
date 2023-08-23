@@ -51,7 +51,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Border Grid.Column="0" Background="DarkOliveGreen" CornerRadius="500" Padding="7, 8">
+                                <Border Grid.Column="0" Background="#00875A" CornerRadius="500" Padding="7, 8">
                                     <TextBlock Text="{Binding CurrentUser.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
                                 </Border>
 

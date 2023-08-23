@@ -60,7 +60,7 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Background="DarkOliveGreen" CornerRadius="500" VerticalAlignment="Center" Padding="7, 8" Margin="0, 0, 10, 0">
+                                        <Border Background="#00875A" CornerRadius="500" VerticalAlignment="Center" Padding="7, 8" Margin="0, 0, 10, 0">
                                             <TextBlock Text="{Binding User.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
                                         </Border>
                                     </DataTemplate>

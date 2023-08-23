@@ -7,6 +7,7 @@ using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using BugTracker.EntityFramework;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Identity.Client;
 using System;
@@ -124,13 +125,13 @@ namespace Bug_Tracker.ViewModels
             UpdateTickets();
         }
 
-        private async void UpdateProjectUsers()
+        public void UpdateProjectUsers()
         {
             ProjectUsers.Clear();
 
             foreach(ProjectUser projectUser in CurrentProject.ProjectUsers)
             {
-                projectUser.User = await UserDataService.Get(projectUser.UserId);
+                //projectUser.User = await UserDataService.Get(projectUser.UserId);
                 ProjectUsers.Add(projectUser);
             }               
         }
@@ -144,11 +145,19 @@ namespace Bug_Tracker.ViewModels
             foreach(Ticket ticket in CurrentProject.Tickets)
             {
                 if (ticket.Status == Status.ToDo)
+                {
                     ToDoTickets.Add(ticket);
-                else if (ticket.Status == Status.InProgress)
+                    continue;
+                }
+                if (ticket.Status == Status.InProgress)
+                {
                     InProgressTickets.Add(ticket);
-                else
+                    continue;
+                }
+                if(ticket.Status == Status.Done)
+                {
                     DoneTickets.Add(ticket);
+                }
             }
         }
 

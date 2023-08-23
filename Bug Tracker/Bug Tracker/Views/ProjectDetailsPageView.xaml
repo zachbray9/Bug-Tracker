@@ -50,18 +50,26 @@
                 <ComboBox Grid.Column="0" Height="40" IsEditable="True" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40, 0, 20, 0"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0, 5">
-                    <ItemsControl ItemsSource="{Binding ProjectUsers}" VerticalAlignment="Center">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="DarkOliveGreen" CornerRadius="500" VerticalAlignment="Center" Padding="7, 8">
-                                    <TextBlock Text="{Binding User.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Button Style="{StaticResource AddUserButton}" Command="{Binding OpenAddUserPopupCommand}" Margin="10, 0"/>
-
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal">
+                            <ItemsControl ItemsSource="{Binding ProjectUsers}" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="DarkOliveGreen" CornerRadius="500" VerticalAlignment="Center" Padding="7, 8" Margin="0, 0, 10, 0">
+                                            <TextBlock Text="{Binding User.Initials}" Foreground="White" FontSize="14" FontFamily="Arial"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                    
+                    <Button Style="{StaticResource AddUserButton}" Command="{Binding OpenAddUserPopupCommand}"/>
                 </StackPanel>
             </Grid>
 

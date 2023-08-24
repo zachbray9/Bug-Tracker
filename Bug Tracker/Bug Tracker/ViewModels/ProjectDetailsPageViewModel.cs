@@ -131,7 +131,6 @@ namespace Bug_Tracker.ViewModels
 
             foreach(ProjectUser projectUser in CurrentProject.ProjectUsers)
             {
-                //projectUser.User = await UserDataService.Get(projectUser.UserId);
                 ProjectUsers.Add(projectUser);
             }               
         }

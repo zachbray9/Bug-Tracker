@@ -28,6 +28,8 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
+        private bool isSaveOperationInProgress = false;
+
         //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
         private DispatcherTimer DebounceTimer;
 
@@ -233,8 +235,13 @@ namespace Bug_Tracker.ViewModels
 
         private async void DebounceTimer_Tick(object sender, EventArgs e)
         {
+            
+
+
             DebounceTimer.Stop();
             await SaveChangesAsync();
+
+            
         }
 
         private string CalculateTimeDifference(DateTime DateCommentWasCreated, DateTime CurrentDate)

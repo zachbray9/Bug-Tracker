@@ -9,9 +9,8 @@ using System.Windows.Input;
 
 namespace Bug_Tracker.Commands.Navigation_Commands
 {
-    public class NavigateCommand : ICommand
+    public class NavigateCommand : CommandBase
     {
-        public event EventHandler CanExecuteChanged;
         private readonly INavigator Navigator;
 
         public NavigateCommand(INavigator navigator)
@@ -19,12 +18,7 @@ namespace Bug_Tracker.Commands.Navigation_Commands
             Navigator = navigator;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             ViewType viewType = (ViewType)parameter;
             Navigator.Navigate(viewType);

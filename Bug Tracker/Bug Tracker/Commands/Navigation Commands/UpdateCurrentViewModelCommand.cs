@@ -10,9 +10,8 @@ using System.Windows.Input;
 
 namespace Bug_Tracker.Commands.Navigation_Commands
 {
-    public class UpdateCurrentViewModelCommand : ICommand
+    public class UpdateCurrentViewModelCommand : CommandBase
     {
-        public event EventHandler CanExecuteChanged;
         private readonly INavigator Navigator;
         private readonly IViewModelAbstractFactory ViewModelAbstractFactory;
 
@@ -22,18 +21,13 @@ namespace Bug_Tracker.Commands.Navigation_Commands
             ViewModelAbstractFactory = viewModelAbstractFactory;
         }
 
-        public bool CanExecute(object parameter)
+        public override void Execute(object parameter)
         {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            if(parameter is ViewType)
+            if (parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
                 Navigator.CurrentViewModel = ViewModelAbstractFactory.CreateViewModel(viewType);
-                
+
             }
         }
     }

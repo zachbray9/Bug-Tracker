@@ -85,9 +85,9 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             string confirmPassword = "incorrectTestPassword";
             RegistrationResult expectedResult = RegistrationResult.PasswordsDoNotMatch;
 
-            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), password, confirmPassword);
+            RegistrationResult result = await authenticationService.CreateAccount("Nonexistingemail@nonexistingemail.com", "TestFirstName", "TestLastName", password, confirmPassword);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
@@ -97,9 +97,9 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             RegistrationResult expectedResult = RegistrationResult.EmailAlreadyExists;
 
             mockUserService.Setup(s => s.GetByEmail(email)).ReturnsAsync(new User());
-            RegistrationResult result =  await authenticationService.CreateAccount(email, It.IsAny<string>(), It.IsAny<string>(), "test", "test");
+            RegistrationResult result =  await authenticationService.CreateAccount(email, "TestFirstName", "TestLastName", "test", "test");
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
@@ -108,9 +108,39 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             RegistrationResult expectedResult = RegistrationResult.Success;
 
             //mockUserService.Setup(s => s.GetByUsername(username)).ReturnsAsync(new User());
-            RegistrationResult result = await authenticationService.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), "test", "test");
+            RegistrationResult result = await authenticationService.CreateAccount("nonexistingemail@nonexistingemail.com", "TestFirstName", "TestLastName", "test", "test");
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async Task CreateAccount_WithFirstNameContainingSpecialCharacters_ReturnsNameContainsSpecialCharacterRegistrationResult()
+        {
+            string firstName = "Test@";
+            RegistrationResult expectedResult = RegistrationResult.NameContainsSpecialCharacter;
+
+            RegistrationResult result = await authenticationService.CreateAccount("nonexistingemail@nonexistingemail.com", firstName, "TestLastName", "test", "test");
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async Task CreateAccount_WithLastNameContainingSpecialCharacters_ReturnsNameContainsSpecialCharacterRegistrationResult()
+        {
+            string lastName = "Test@";
+            RegistrationResult expectedResult = RegistrationResult.NameContainsSpecialCharacter;
+
+            RegistrationResult result = await authenticationService.CreateAccount("nonexistingemail@nonexistingemail.com", "TestFirstName", lastName, "test", "test");
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async Task CreateAccount_WithEmailFormatBeingInvalid_ReturnsEmailFormatIsInvalidRegistrationResult()
+        {
+            string email = "test@@gmail.com";
+            RegistrationResult expectedResult = RegistrationResult.EmailFormatIsInvalid;
+
+            RegistrationResult result = await authenticationService.CreateAccount(email, "TestFirstName", "TestLastName", "test", "test");
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }

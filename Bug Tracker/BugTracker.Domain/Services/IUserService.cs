@@ -12,7 +12,9 @@ namespace BugTracker.Domain.Services
         Success,
         PasswordsDoNotMatch,
         EmailAlreadyExists,
-        InputFieldIsNull
+        InputFieldIsNull,
+        NameContainsSpecialCharacter,
+        EmailFormatIsInvalid
     }
     public interface IUserService : IDataService<User>
     {

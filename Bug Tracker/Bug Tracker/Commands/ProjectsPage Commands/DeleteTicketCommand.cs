@@ -34,9 +34,12 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 try
                 {
                     //clearing all comments in ticket before deleting ticket because cascade delete doesn't want to work
-                    foreach(Comment comment in ticketToDelete.Comments)
+                    if(ticketToDelete.Comments != null)
                     {
-                        await CommentDataService.Delete(comment.Id);
+                        foreach(Comment comment in ticketToDelete.Comments)
+                        {
+                            await CommentDataService.Delete(comment.Id);
+                        }
                     }
 
                     await TicketDataService.Delete(ticketToDelete.Id);

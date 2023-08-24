@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,45 +23,71 @@ namespace BugTracker.Domain.Services.AuthenticationServices
 
         public async Task<RegistrationResult> CreateAccount(string email, string firstName, string lastName, string password, string confirmPassword)
         {
-            RegistrationResult result = RegistrationResult.Success;
+            //RegistrationResult result = RegistrationResult.Success;
 
             //if any of the input fields are null
             if(email == null || firstName == null || lastName == null || password == null)
             {
-                result = RegistrationResult.InputFieldIsNull;
+                return RegistrationResult.InputFieldIsNull;
+            }
+
+            //if first or last name contains any specials characters
+            if(!String.IsNullOrEmpty(firstName))
+            {
+                foreach (char c in firstName)
+                {
+                    if (!char.IsLetter(c))
+                    {
+                        return RegistrationResult.NameContainsSpecialCharacter;
+                    }
+                }
+            }
+            if(!String.IsNullOrEmpty(lastName))
+            {
+                foreach (char c in lastName)
+                {
+                    if (!char.IsLetter(c))
+                    {
+                        return RegistrationResult.NameContainsSpecialCharacter;
+                    }
+                }
+            }
+
+            //if email format is invalid
+            if(!IsValidEmail(email))
+            {
+                return RegistrationResult.EmailFormatIsInvalid;
             }
 
             //if the passwords do not match
             if (password != confirmPassword)
             {
-                result = RegistrationResult.PasswordsDoNotMatch;
+                return RegistrationResult.PasswordsDoNotMatch;
             }
 
             //if the email already exists for the account that is being created
             User userByEmail = await UserService.GetByEmail(email);
             if (userByEmail != null) 
             {
-                result = RegistrationResult.EmailAlreadyExists;
+               return RegistrationResult.EmailAlreadyExists;
             }
 
             //if there are no errors then create the account
-            if(result== RegistrationResult.Success) 
+            string hashedPassword = PasswordHasher.HashPassword(password);
+
+            User user = new User()
             {
-                string hashedPassword = PasswordHasher.HashPassword(password);
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
+                PasswordHash = hashedPassword,
+                DateJoined = DateTime.Now
+            };
 
-                User user = new User()
-                {
-                    Email = email,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    PasswordHash = hashedPassword,
-                    DateJoined = DateTime.Now
-                };
+            await UserService.Create(user);
+        
 
-                await UserService.Create(user);
-            }
-
-            return result;
+            return RegistrationResult.Success;
 
         }
 
@@ -81,6 +108,22 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             }
 
             return storedUser;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            bool isValid = true;
+
+            try
+            {
+                MailAddress mailAddress= new MailAddress(email);
+            }
+            catch
+            {
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }

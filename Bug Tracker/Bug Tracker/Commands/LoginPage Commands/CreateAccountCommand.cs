@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,6 +54,14 @@ namespace Bug_Tracker.Commands
             {
                 CreateAccountPageViewModel.CreateAccountErrorText = "All input fields are required.";   
             }
+            else if(result == RegistrationResult.NameContainsSpecialCharacter)
+            {
+                CreateAccountPageViewModel.CreateAccountErrorText = "Please remove any special characters from first or last name.";
+            }
+            else if(result == RegistrationResult.EmailFormatIsInvalid)
+            {
+                CreateAccountPageViewModel.CreateAccountErrorText = "The email format you entered is invalid. Please Enter a valid email.";
+            }
             else if(result == RegistrationResult.EmailAlreadyExists)
             {
                 CreateAccountPageViewModel.CreateAccountErrorText = "The email you are trying to use already exists.";
@@ -62,5 +71,6 @@ namespace Bug_Tracker.Commands
                 CreateAccountPageViewModel.CreateAccountErrorText = "The passwords do not match. Please try again.";
             }
         }
+
     }
 }

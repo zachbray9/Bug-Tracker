@@ -28,6 +28,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
+        private object saveLock = new object();
         private bool isSaveOperationInProgress = false;
 
         //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
@@ -51,7 +52,7 @@ namespace Bug_Tracker.ViewModels
             DebounceTimer = debounceTimer;
             StatusOptionsRetriever = statusOptionsRetriever;
 
-            DebounceTimer.Interval = TimeSpan.FromMilliseconds(500);
+            DebounceTimer.Interval = TimeSpan.FromMilliseconds(250);
             DebounceTimer.IsEnabled = false;
 
             DebounceTimer.Tick += DebounceTimer_Tick;
@@ -235,12 +236,29 @@ namespace Bug_Tracker.ViewModels
 
         private async void DebounceTimer_Tick(object sender, EventArgs e)
         {
-            
+            lock (saveLock)
+            {
+                if (isSaveOperationInProgress)
+                {
+                    return; // Another save operation is already in progress, skip this tick
+                }
 
+                isSaveOperationInProgress = true;
+            }
 
             DebounceTimer.Stop();
-            await SaveChangesAsync();
 
+            try
+            {
+                await SaveChangesAsync();
+            }
+            finally
+            {
+                lock (saveLock)
+                {
+                    isSaveOperationInProgress = false;
+                }
+            }
             
         }
 

@@ -106,7 +106,11 @@
                                 
                                 <TextBlock Grid.Column="0" Text="{Binding Title}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
                                 <Border Grid.Column="1" Height="26" Width="26" CornerRadius="13" Background="#00875A" VerticalAlignment="Top">
-                                    <TextBlock Text="{Binding Assignee.User.Initials}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Assignee.User.Initials}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Content="{Binding AssigneeToolTipText}" Background="#242526" Foreground="White" Placement="Center" VerticalOffset="40"/>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
                                 </Border>
                             </Grid>
 

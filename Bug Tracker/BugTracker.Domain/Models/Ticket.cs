@@ -40,6 +40,18 @@ namespace BugTracker.Domain.Models
         [NotMapped]
         public string StatusString { get => StatusOptionsRetriever.ConvertStatusEnumToString(Status); }
 
+        [NotMapped]
+        public string AssigneeToolTipText
+        {
+            get
+            {
+                if (Assignee == null)
+                    return "Unassigned";
+                else
+                    return $"Assignee: {Assignee.User.FullName}";
+            }
+        }
+
         public override string ToString()
         {
             return Title;

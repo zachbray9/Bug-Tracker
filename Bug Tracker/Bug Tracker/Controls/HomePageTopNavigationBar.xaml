@@ -24,7 +24,7 @@
                                             <TextBlock Text="{Binding Authenticator.CurrentUser.Initials}" Foreground="White" FontSize="10" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
-                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="350" HorizontalOffset="-300" VerticalOffset="5">
+                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="155" HorizontalOffset="-300" VerticalOffset="5">
                                             <ContentControl>
                                                 <ContentControl.Style>
                                                     <Style TargetType="ContentControl">
@@ -33,7 +33,7 @@
                                                                 <ControlTemplate>
                                                                     <Border Background="White" CornerRadius="4" BorderBrush="Gray" BorderThickness="0.5">
                                                                         <StackPanel>
-                                                                            <Border Background="#f4f5f7" CornerRadius="4" Padding="15" Margin="10">
+                                                                            <Border Background="#f4f5f7" CornerRadius="4" Padding="15" Margin="5">
                                                                                 <Grid>
                                                                                     <Grid.ColumnDefinitions>
                                                                                         <ColumnDefinition Width="1*"/>

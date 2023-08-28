@@ -24,7 +24,7 @@
                                             <TextBlock Text="{Binding Authenticator.CurrentUser.Initials}" Foreground="White" FontSize="10" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
-                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="155" HorizontalOffset="-300" VerticalOffset="5">
+                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="145" HorizontalOffset="-300" VerticalOffset="5">
                                             <ContentControl>
                                                 <ContentControl.Style>
                                                     <Style TargetType="ContentControl">

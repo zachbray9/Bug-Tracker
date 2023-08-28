@@ -187,19 +187,18 @@
                     <Border x:Name="ButtonBorder" Width="40" Height="40" Background="#f4f5f7" CornerRadius="20" Padding="10">
                         <fa:ImageAwesome Icon="UserPlus" Opacity="0.6"/>
                     </Border>
-                    
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Background" Value="#dfe1e6"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
 
 
-    
+
 </ResourceDictionary>

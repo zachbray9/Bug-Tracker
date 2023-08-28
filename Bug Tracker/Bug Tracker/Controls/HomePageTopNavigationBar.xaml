@@ -4,9 +4,93 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Controls"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid Background="#242526" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="50">
-            
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10, 10, 20, 10">
+            <Button Cursor="Hand" Command="{Binding OpenAccountPopupCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Border Width="24" Height="24" CornerRadius="12" Background="#00875A">
+                                            <TextBlock Text="{Binding Authenticator.CurrentUser.Initials}" Foreground="White" FontSize="10" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="350" HorizontalOffset="-300" VerticalOffset="5">
+                                            <ContentControl>
+                                                <ContentControl.Style>
+                                                    <Style TargetType="ContentControl">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <Border Background="White" CornerRadius="4" BorderBrush="Gray" BorderThickness="0.5">
+                                                                        <StackPanel>
+                                                                            <Border Background="#f4f5f7" CornerRadius="4" Padding="15" Margin="10">
+                                                                                <Grid>
+                                                                                    <Grid.ColumnDefinitions>
+                                                                                        <ColumnDefinition Width="1*"/>
+                                                                                        <ColumnDefinition Width="3*"/>
+                                                                                    </Grid.ColumnDefinitions>
+
+                                                                                    <Border Grid.Column="0" Background="#00875A" Width="60" Height="60" CornerRadius="30">
+                                                                                        <TextBlock Text="{Binding Authenticator.CurrentUser.Initials}" FontSize="24" FontFamily="Arial" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                                    </Border>
+
+                                                                                    <StackPanel Grid.Column="1" Margin="15, 0, 0, 0" VerticalAlignment="Center">
+                                                                                        <TextBlock Text="{Binding Authenticator.CurrentUser.FullName}" FontSize="20" FontFamily="Arial" Margin="0, 0, 0, 5"/>
+                                                                                        <TextBlock Text="{Binding Authenticator.CurrentUser.Email}" FontFamily="Arial" Foreground="Gray"/>
+                                                                                    </StackPanel>
+                                                                                </Grid>
+                                                                            </Border>
+
+                                                                            <Button>
+                                                                                <Button.Style>
+                                                                                    <Style TargetType="Button">
+                                                                                        <Setter Property="Template">
+                                                                                            <Setter.Value>
+                                                                                                <ControlTemplate>
+                                                                                                    <Border x:Name="LogoutButtonBorder" Background="Transparent" Padding="20, 10">
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <fa:ImageAwesome Icon="SignOut" Width="18" Height="18" SnapsToDevicePixels="True" UseLayoutRounding="True" VerticalAlignment="Center"/>
+                                                                                                            <TextBlock Text="Log out" FontSize="14" FontFamily="Arial" VerticalAlignment="Center" Margin="20, 0, 0, 0"/>
+                                                                                                        </StackPanel>
+                                                                                                    </Border>
+
+                                                                                                    <ControlTemplate.Triggers>
+                                                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                                                            <Setter TargetName="LogoutButtonBorder" Property="Background" Value="#f4f5f7"/>
+                                                                                                        </Trigger>
+                                                                                                    </ControlTemplate.Triggers>
+                                                                                                </ControlTemplate>
+                                                                                            </Setter.Value>
+                                                                                        </Setter>
+                                                                                    </Style>
+                                                                                </Button.Style>
+                                                                            </Button>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
+                                        </Popup>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

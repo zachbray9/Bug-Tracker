@@ -51,7 +51,7 @@
                                                                                 </Grid>
                                                                             </Border>
 
-                                                                            <Button>
+                                                                            <Button Command="{Binding LogoutCommand}">
                                                                                 <Button.Style>
                                                                                     <Style TargetType="Button">
                                                                                         <Setter Property="Template">

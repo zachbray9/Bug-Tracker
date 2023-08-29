@@ -1,5 +1,6 @@
 ﻿using Bug_Tracker.Commands.AccountCommands;
 using Bug_Tracker.Commands.Navigation_Commands;
+using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels.Factories;
@@ -16,16 +17,19 @@ namespace Bug_Tracker.ViewModels
     {
         public INavigator Navigator { get; set; }
         public IAuthenticator Authenticator { get; set; }
-        public IViewModelAbstractFactory ViewModelAbstractFactory { get; }
+        private readonly IProjectContainer ProjectContainer;
+        private readonly IViewModelAbstractFactory ViewModelAbstractFactory;
 
-        public MainViewModel(INavigator navigator, IAuthenticator authenticator, IViewModelAbstractFactory viewModelAbstractFactory)
+        public MainViewModel(INavigator navigator, IAuthenticator authenticator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelAbstractFactory)
         {
             Navigator = navigator;
             Authenticator = authenticator;
+            ProjectContainer = projectContainer;
             ViewModelAbstractFactory = viewModelAbstractFactory;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(Navigator, ViewModelAbstractFactory);
             OpenAccountPopupCommand = new OpenAccountPopupCommand(this);
+            LogoutCommand = new LogoutCommand(this, ProjectContainer);
 
             UpdateCurrentViewModelCommand.Execute(ViewType.LoginPage);
         }
@@ -43,5 +47,6 @@ namespace Bug_Tracker.ViewModels
 
         public ICommand UpdateCurrentViewModelCommand { get; }
         public ICommand OpenAccountPopupCommand { get; }
+        public ICommand LogoutCommand { get; }
     }
 }

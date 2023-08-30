@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Background>
-        <ImageBrush ImageSource="../Assets/Images/LoginBackgroundImage.jpeg"/>
+        <ImageBrush ImageSource="../Assets/Images/LoginBackgroundImage.jpeg" Stretch="UniformToFill"/>
     </UserControl.Background>
     
     <Grid>

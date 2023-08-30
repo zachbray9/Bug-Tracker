@@ -32,8 +32,8 @@
                             
                             <TextBox Grid.Row="0" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding FirstNameTextboxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Margin="0, 0, 0, 5"/>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsFirstNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsFirstNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
+                                <Button Style="{StaticResource GenericButton}" Command="{Binding SaveAccountEditChangesCommand}" Visibility="{Binding IsFirstNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
+                                <Button Style="{StaticResource GenericButton}" Command="{Binding CancelAccountEditCommand}" Visibility="{Binding IsFirstNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
                             </StackPanel>
                         </Grid>
 
@@ -47,8 +47,8 @@
 
                             <TextBox Grid.Row="0" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding LastNameTextboxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Margin="0, 0, 0, 5"/>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsLastNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsLastNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
+                                <Button Style="{StaticResource GenericButton}" Command="{Binding SaveAccountEditChangesCommand}" Visibility="{Binding IsLastNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
+                                <Button Style="{StaticResource GenericButton}"  Command="{Binding CancelAccountEditCommand}" Visibility="{Binding IsLastNameTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
                             </StackPanel>
                         </Grid>
 
@@ -62,8 +62,8 @@
 
                             <TextBox Grid.Row="0" Style="{StaticResource FocusChangeableTextBox}" Text="{Binding EmailTextboxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Margin="0, 0, 0, 5"/>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsEmailTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
-                                <Button Style="{StaticResource GenericButton}" Visibility="{Binding IsEmailTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
+                                <Button Style="{StaticResource GenericButton}" Command="{Binding SaveAccountEditChangesCommand}" Visibility="{Binding IsEmailTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
+                                <Button Style="{StaticResource GenericButton}"  Command="{Binding CancelAccountEditCommand}" Visibility="{Binding IsEmailTextBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>

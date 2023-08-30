@@ -1,4 +1,5 @@
-﻿using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.Commands.AccountCommands;
+using Bug_Tracker.State.Authenticators;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Services;
 using BugTracker.EntityFramework.Services;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Bug_Tracker.ViewModels
@@ -28,6 +30,9 @@ namespace Bug_Tracker.ViewModels
             firstNameTextboxText = CurrentUser.FirstName;
             lastNameTextboxText = CurrentUser.LastName;
             emailTextboxText = CurrentUser.Email;
+
+            CancelAccountEditCommand = new CancelAccountEditCommand(this);
+            SaveAccountEditChangesCommand = new SaveAccountEditChangesCommand(UserDataService, this);
         }
 
         //first name properties
@@ -103,79 +108,8 @@ namespace Bug_Tracker.ViewModels
                 return false;
             }
         }
-
-        private async Task SaveChanges()
-        {
-            //check if any of the input boxes are null
-            if(string.IsNullOrEmpty(FirstNameTextboxText) || string.IsNullOrEmpty(LastNameTextboxText) || string.IsNullOrEmpty(EmailTextboxText))
-            { 
-                //handle error
-                return; 
-            }
-
-            //check if first name contains any specials characters
-            if (!String.IsNullOrEmpty(FirstNameTextboxText))
-            {
-                foreach (char c in FirstNameTextboxText)
-                {
-                    if (!char.IsLetter(c))
-                    {
-                        firstNameTextboxText = CurrentUser.FirstName;
-                        return;
-                    }
-                }
-            }
-
-            //check if last name contains any special characters
-            if (!String.IsNullOrEmpty(LastNameTextboxText))
-            {
-                foreach (char c in LastNameTextboxText)
-                {
-                    if (!char.IsLetter(c))
-                    {
-                        lastNameTextboxText = CurrentUser.LastName;
-                        return;
-                    }
-                }
-            }
-
-            //check if email is in a valid format
-            if(!IsValidEmail(EmailTextboxText))
-            {
-
-                emailTextboxText = CurrentUser.Email;
-                return;
-            }
-
-            //if all cases pass then save changes
-            CurrentUser.FirstName = FirstNameTextboxText;
-            CurrentUser.LastName = LastNameTextboxText;
-            CurrentUser.Email = EmailTextboxText;
-
-            try
-            {
-                await UserDataService.Update(CurrentUser.Id, CurrentUser);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-       
-        private bool IsValidEmail(string email)
-        {
-            bool isValid = true;
-
-            try
-            {
-                MailAddress mailAddress = new MailAddress(email);
-            }
-            catch
-            {
-                isValid = false;
-            }
-
-            return isValid;
-        }
+    
+        public ICommand CancelAccountEditCommand { get; }
+        public ICommand SaveAccountEditChangesCommand { get; }
     }
 }

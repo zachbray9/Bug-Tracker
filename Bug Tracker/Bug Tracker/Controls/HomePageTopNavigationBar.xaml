@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -24,7 +25,7 @@
                                             <TextBlock Text="{Binding Authenticator.CurrentUser.Initials}" Foreground="White" FontSize="10" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
-                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="145" HorizontalOffset="-300" VerticalOffset="5">
+                                        <Popup IsOpen="{Binding IsAccountPopupOpen}" StaysOpen="False" AllowsTransparency="True" Placement="Bottom" Width="325" Height="185" HorizontalOffset="-300" VerticalOffset="5">
                                             <ContentControl>
                                                 <ContentControl.Style>
                                                     <Style TargetType="ContentControl">
@@ -51,6 +52,33 @@
                                                                                 </Grid>
                                                                             </Border>
 
+                                                                            <!--Manage Account Button-->
+                                                                            <Button Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}">
+                                                                                <Button.Style>
+                                                                                    <Style TargetType="Button">
+                                                                                        <Setter Property="Template">
+                                                                                            <Setter.Value>
+                                                                                                <ControlTemplate>
+                                                                                                    <Border x:Name="ManageAccountButtonBorder" Background="Transparent" Padding="20, 10">
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <fa:ImageAwesome Icon="UserOutline" Width="18" Height="18" SnapsToDevicePixels="True" UseLayoutRounding="True" VerticalAlignment="Center"/>
+                                                                                                            <TextBlock Text="Manage Account" FontSize="14" FontFamily="Arial" VerticalAlignment="Center" Margin="20, 0, 0, 0"/>
+                                                                                                        </StackPanel>
+                                                                                                    </Border>
+
+                                                                                                    <ControlTemplate.Triggers>
+                                                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                                                            <Setter TargetName="ManageAccountButtonBorder" Property="Background" Value="#f4f5f7"/>
+                                                                                                        </Trigger>
+                                                                                                    </ControlTemplate.Triggers>
+                                                                                                </ControlTemplate>
+                                                                                            </Setter.Value>
+                                                                                        </Setter>
+                                                                                    </Style>
+                                                                                </Button.Style>
+                                                                            </Button>
+
+                                                                            <!--Logout Button-->
                                                                             <Button Command="{Binding LogoutCommand}">
                                                                                 <Button.Style>
                                                                                     <Style TargetType="Button">

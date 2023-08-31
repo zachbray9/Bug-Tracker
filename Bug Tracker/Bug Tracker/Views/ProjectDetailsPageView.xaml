@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Views"
              xmlns:enum="clr-namespace:BugTracker.Domain.Enumerables;assembly=BugTracker.Domain"
+             xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -16,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -81,65 +83,96 @@
                 </StackPanel>
             </Grid>
 
-            <!--StackPanel for Task Board Listboxes-->
-            <StackPanel Grid.Row="2" Margin="40, 40" Orientation="Horizontal">
-                <!--To Do panel-->
-                <Border Margin="0, 10" Background="#f4f5f7" CornerRadius="4" MinHeight="225" Width="275" Padding="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+            <UniformGrid Grid.Row="2" Rows="1" Columns="3" Margin="30, 20" HorizontalAlignment="Left">
+                <!-- To Do panel -->
+                <Grid Margin="10, 0, 10, 0" Width="300">
+                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="To Do" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+                            <TextBlock Grid.Row="0" Text="To Do" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
 
-                        <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding ToDoTickets}" BorderBrush="Transparent" Background="Transparent">
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinHeight="225" VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                        </ListBox>
+                                    <ListBox Grid.Row="0" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding ToDoTickets}" BorderBrush="Transparent" Background="Transparent">
 
-                        <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.ToDo}"/>
-                    </Grid>
-                </Border>
+                                    </ListBox>
 
-                <!--In Progress Panel-->
-                <Border Margin="20, 10" Background="#f4f5f7" CornerRadius="3" MinHeight="225" Width="275"  Padding="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                                    <Button Grid.Row="1" Style="{StaticResource TaskBoardButton}" Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.ToDo}" VerticalAlignment="Top"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
 
-                        <TextBlock Grid.Row="0" Text="In Progress" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+                <!-- In Progress panel -->
+                <Grid Margin="10, 0, 10, 0" Width="300">
+                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                        <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding InProgressTickets}" BorderBrush="Transparent" Background="Transparent">
+                            <TextBlock Grid.Row="0" Text="In Progress" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
 
-                        </ListBox>
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinHeight="225" VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                        <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.InProgress}"/>
-                    </Grid>
-                </Border>
+                                    <ListBox Grid.Row="0" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding InProgressTickets}" BorderBrush="Transparent" Background="Transparent">
 
-                <!--Done Panel-->
-                <Border Margin="0, 10" Background="#f4f5f7" CornerRadius="3" MinHeight="225" Width="275" Padding="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                                    </ListBox>
 
-                        <TextBlock Grid.Row="0" Text="Done" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
-                                                                            
-                        <ListBox Grid.Row="1" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding DoneTickets}" BorderBrush="Transparent" Background="Transparent">
-                            
-                        </ListBox>
+                                    <Button Grid.Row="1" Style="{StaticResource TaskBoardButton}" Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.InProgress}" VerticalAlignment="Top"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
 
-                        <Button Grid.Row="2" Style="{StaticResource TaskBoardButton}"  Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.Done}"/>
-                    </Grid>
-                </Border>
-            </StackPanel>
+                <!-- Done panel -->
+                <Grid Margin="10, 0, 10, 0" Width="300">
+                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                                
+                            <TextBlock Grid.Row="0" Text="Done" FontFamily="Arial" Opacity="0.6" Margin="10, 10"/>
+
+                            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinHeight="225" VerticalAlignment="Top">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                        
+                                    <ListBox Grid.Row="0" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding DoneTickets}" BorderBrush="Transparent" Background="Transparent">
+
+                                    </ListBox>
+
+                                    <Button Grid.Row="1" Style="{StaticResource TaskBoardButton}" Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.Done}" VerticalAlignment="Top"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </UniformGrid>
+
+            <Button Grid.Row="3" Style="{StaticResource GenericButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}" Content="Back" HorizontalAlignment="Left" Width="50" Height="25" Padding="10" Margin="40, 0, 40, 40"/>
         </Grid>
 
         <Grid x:Name="Overlay" Background="#80000009" Visibility="{Binding AddUserViewModel.IsPopupOpen, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">

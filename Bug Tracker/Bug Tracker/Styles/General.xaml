@@ -69,6 +69,17 @@
     <Style x:Key="TaskBoardListBox" TargetType="ListBox">
         <Setter Property="Padding" Value="5"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer>
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
 
         <Setter Property="ItemContainerStyle">
             <Setter.Value>

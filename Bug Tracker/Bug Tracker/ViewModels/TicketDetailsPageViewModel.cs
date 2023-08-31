@@ -20,7 +20,7 @@ using System.Windows.Threading;
 
 namespace Bug_Tracker.ViewModels
 {
-    public class TicketDetailsPageViewModel : ViewModelBase, IDisposable
+    public class TicketDetailsPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
@@ -28,34 +28,20 @@ namespace Bug_Tracker.ViewModels
         private readonly IDataService<Ticket> TicketDataService;
         private readonly IDataService<Comment> CommentDataService;
 
-        private object saveLock = new object();
-        private bool isSaveOperationInProgress = false;
-
-        //DebounceTimer is so that changes are only saved to the database after a few seconds of inactivity so the thread isn't overloaded with db requests.
-        private DispatcherTimer DebounceTimer;
-
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
 
         public Project CurrentProject => ProjectContainer.CurrentProject;
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
         public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
 
-
-
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, DispatcherTimer debounceTimer, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
             TicketDataService = ticketDataService;
             CommentDataService = commentDataService;
-            DebounceTimer = debounceTimer;
             StatusOptionsRetriever = statusOptionsRetriever;
-
-            DebounceTimer.Interval = TimeSpan.FromMilliseconds(250);
-            DebounceTimer.IsEnabled = false;
-
-            DebounceTimer.Tick += DebounceTimer_Tick;
 
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
@@ -90,9 +76,12 @@ namespace Bug_Tracker.ViewModels
             }
 
             AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketDataService, CommentDataService, this);
-            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketDataService, CommentDataService, this);   
+            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketDataService, CommentDataService, this);
+            SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(TicketDataService, this, StatusOptionsRetriever);
+            CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(this, StatusOptionsRetriever);
         }
 
+        //Ticket Title Properties
         private string ticketTitle;
         public string TicketTitle
         {
@@ -101,10 +90,21 @@ namespace Bug_Tracker.ViewModels
             {
                 ticketTitle = value;
                 OnPropertyChanged(nameof(TicketTitle));
-                StartDebounceTimer();   
+                OnPropertyChanged(nameof(IsTicketTitleTextboxBeingEdited));  
+            }
+        }
+        public bool IsTicketTitleTextboxBeingEdited
+        {
+            get
+            {
+                if(TicketTitle != CurrentTicket.Title) 
+                    return true;
+
+                return false;
             }
         }
 
+        //Ticket Description Properties
         private string ticketDescription;
         public string TicketDescription
         {
@@ -113,10 +113,21 @@ namespace Bug_Tracker.ViewModels
             {
                 ticketDescription = value;
                 OnPropertyChanged(nameof(TicketDescription));
-                StartDebounceTimer();
+                OnPropertyChanged(nameof(IsTicketDescriptionTextboxBeingEdited));
+            }
+        }
+        public bool IsTicketDescriptionTextboxBeingEdited
+        {
+            get
+            {
+                if(TicketDescription != CurrentTicket.Description)
+                    return true;
+
+                return false;
             }
         }
 
+        //comment collection properties
         private ObservableCollection<Comment> comments;
         public ObservableCollection<Comment> Comments 
         {
@@ -165,8 +176,14 @@ namespace Bug_Tracker.ViewModels
             {
                 ticketStatus = value;
                 OnPropertyChanged(nameof(TicketStatus));
-                StartDebounceTimer();
+                SaveTicketDetailsChangesCommand.Execute(this);
             }
+        }
+
+        public void SetTicketStatusWithoutExecutingSaveCommand(string value)
+        {
+            ticketStatus = value;
+            OnPropertyChanged(nameof(TicketStatus));
         }
 
         private ObservableCollection<ProjectUser> projectUsers;
@@ -188,8 +205,13 @@ namespace Bug_Tracker.ViewModels
             {
                 assignee = value;
                 OnPropertyChanged(nameof(Assignee));
-                StartDebounceTimer();
+                SaveTicketDetailsChangesCommand.Execute(this);
             }
+        }
+        public void SetAssigneeWithoutExecutingSaveCommand(ProjectUser value)
+        {
+            assignee = value;
+            OnPropertyChanged(nameof(Assignee));
         }
 
         private ProjectUser reporter;
@@ -200,66 +222,14 @@ namespace Bug_Tracker.ViewModels
             {
                 reporter = value;
                 OnPropertyChanged(nameof(Reporter));
-                StartDebounceTimer();
+                SaveTicketDetailsChangesCommand.Execute(this);
             }
         }
 
-        private async Task SaveChangesAsync()
+        public void SetReporterWithoutExecutingSaveCommand(ProjectUser value)
         {
-            CurrentTicket.Title = TicketTitle;
-            CurrentTicket.Description = TicketDescription;
-            CurrentTicket.Assignee = Assignee;
-            CurrentTicket.Author = Reporter;
-            CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(TicketStatus);
-
-            try
-            {
-                await TicketDataService.Update(CurrentTicket.Id, CurrentTicket);
-                System.Diagnostics.Debug.WriteLine("Changes have been saved");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error: {ex}");
-            }
-        }
-
-        private void StartDebounceTimer()
-        {
-            if(DebounceTimer.IsEnabled)
-            {
-                DebounceTimer.Stop();
-            }
-
-            DebounceTimer.Start();
-            CommentDateCreatedDifference = CalculateTimeDifference(CurrentTicket.DateSubmitted, DateTime.Now);
-        }
-
-        private async void DebounceTimer_Tick(object sender, EventArgs e)
-        {
-            lock (saveLock)
-            {
-                if (isSaveOperationInProgress)
-                {
-                    return; // Another save operation is already in progress, skip this tick
-                }
-
-                isSaveOperationInProgress = true;
-            }
-
-            DebounceTimer.Stop();
-
-            try
-            {
-                await SaveChangesAsync();
-            }
-            finally
-            {
-                lock (saveLock)
-                {
-                    isSaveOperationInProgress = false;
-                }
-            }
-            
+            reporter = value;
+            OnPropertyChanged(nameof(Reporter));
         }
 
         private string CalculateTimeDifference(DateTime DateCommentWasCreated, DateTime CurrentDate)
@@ -282,15 +252,11 @@ namespace Bug_Tracker.ViewModels
             {
                 return $"{(int)timeDifference.TotalDays} day{((int)timeDifference.TotalDays == 1 ? "" : "s")} ago";
             }
-          
-        }
-
-        public void Dispose()
-        {
-            DebounceTimer.Tick -= DebounceTimer_Tick;
         }
 
         public ICommand AddCommentToDbCommand { get; }
         public ICommand DeleteCommentFromDbCommand { get; }
+        public ICommand SaveTicketDetailsChangesCommand { get; }
+        public ICommand CancelTicketDetailsChangesCommand { get; }
     }
 }

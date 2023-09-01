@@ -70,12 +70,12 @@
         <Setter Property="Padding" Value="5"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
 
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
-                    <!--<Setter Property="FocusVisualStyle" Value="{x:Null}" />-->
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Margin" Value="0, 0, 0, 10"/>
                     <Setter Property="Template">
@@ -196,6 +196,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="ScrollViewer" x:Key="ThinScrollViewer">
+        
     </Style>
 
 </ResourceDictionary>

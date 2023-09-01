@@ -23,12 +23,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Width="100" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource GenericButton}" Content="Join Existing Project" Foreground="Black" Background="LightGray" HorizontalAlignment="Right" Margin="0, 0, 5, 0"/>
-                <Button Style="{StaticResource GenericButton}" Content="+ New Project" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.CreateNewProjectPage}" Foreground="White" Background="#7b68ee" HorizontalAlignment="Right" Margin="5, 0, 20, 0"/>
-            </StackPanel>
+            <Button Grid.Column="1" Style="{StaticResource GenericButton}" Content="+ New Project" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.CreateNewProjectPage}" Foreground="White" Background="#7b68ee" HorizontalAlignment="Right" Margin="5, 0, 20, 0"/>
         </Grid>
 
         <Grid Grid.Row="2" Margin="40, 0">

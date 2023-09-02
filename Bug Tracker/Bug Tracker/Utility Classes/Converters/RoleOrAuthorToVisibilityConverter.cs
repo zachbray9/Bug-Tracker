@@ -30,8 +30,10 @@ namespace Bug_Tracker.Utility_Classes.Converters
             //checks if parameter is a ticket or comment
             if (values[1] is Ticket ticket)
                 isAuthor = projectUser.Id == ticket.AuthorId;
-            if (values[1] is Comment comment)
+            else if (values[1] is Comment comment)
                 isAuthor = projectUser.Id == comment.AuthorId;
+            else
+                throw new Exception("values[1] is not an expected type.");
 
             if (isAdmin || isAuthor)
                 return Visibility.Visible;

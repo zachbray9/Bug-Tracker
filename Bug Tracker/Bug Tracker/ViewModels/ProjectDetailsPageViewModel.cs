@@ -117,8 +117,6 @@ namespace Bug_Tracker.ViewModels
             InProgressTickets = new ObservableCollection<Ticket>();
             DoneTickets = new ObservableCollection<Ticket>();
 
-            CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
-
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
             DeleteTicketCommand = new DeleteTicketCommand(TicketService, CommentService, this);
@@ -126,6 +124,8 @@ namespace Bug_Tracker.ViewModels
 
             UpdateProjectUsers();
             UpdateTickets();
+
+            CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
         }
 
         public void UpdateProjectUsers()

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators" xmlns:fa="http://schemas.fontawesome.io/icons/"
-                    xmlns:util="clr-namespace:Bug_Tracker.Utility_Classes.Converters">
+                    xmlns:util="clr-namespace:Bug_Tracker.Utility_Classes.Converters" xmlns:local="clr-namespace:Bug_Tracker.Views">
     
     <util:RoleOrAuthorToVisibilityConverter x:Key="RoleOrAuthorToVisibilityConverter"/>
 
@@ -134,12 +134,13 @@
                                 <Button Grid.Column="1" Command="{Binding DataContext.DeleteTicketCommand, RelativeSource={RelativeSource AncestorType=ListBox, AncestorLevel=1}}" CommandParameter="{Binding}" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
                                     <fa:ImageAwesome Icon="Trash" Foreground="#ebecf0"/>
 
-                                    <Button.Visibillity>
-                                        <MultiBinding Converter="{StaticResource RoleToVisibilityConverter}">
-                                            <Binding Path="CurrentProjectUser" />
-                                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}" />
+                                    <Button.Visibility>
+                                        <MultiBinding Converter="{StaticResource RoleOrAuthorToVisibilityConverter}">
+                                            <!--<Binding RelativeSource="{RelativeSource AncestorType={x:Type local:ProjectDetailsPageView}}" Path="DataContext.CurrentProjectUser" />-->
+                                            <Binding RelativeSource="{RelativeSource AncestorType=ListBox, AncestorLevel=1}" Path="DataContext.CurrentProjectUser" />
+                                            <Binding Path="." />
                                         </MultiBinding>
-                                    </Button.Visibillity>
+                                    </Button.Visibility>
                                 </Button>
                             </Grid>
                         </Grid>

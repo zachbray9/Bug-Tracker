@@ -11,21 +11,26 @@ using System.Windows.Data;
 
 namespace Bug_Tracker.Utility_Classes.Converters
 {
-    public class RoleOrAuthorToVisibilityConverter : IValueConverter
+    public class RoleOrAuthorToVisibilityConverter : IMultiValueConverter
     {
         //this class checks if the Current User is an Admin or the author of a ticket/comment and returns visibility based on that
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || !(value is ProjectUser projectUser))
+            if (values.Length < 2)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
+            if (values[0] == null || !(values[0] is ProjectUser projectUser))
                 return Visibility.Collapsed;
 
             bool isAdmin = projectUser.Role == ProjectRole.Administrator;
             bool isAuthor = false;
 
             //checks if parameter is a ticket or comment
-            if (parameter is Ticket ticket)
+            if (values[1] is Ticket ticket)
                 isAuthor = projectUser.Id == ticket.AuthorId;
-            if (parameter is Comment comment)
+            if (values[1] is Comment comment)
                 isAuthor = projectUser.Id == comment.AuthorId;
 
             if (isAdmin || isAuthor)
@@ -34,7 +39,8 @@ namespace Bug_Tracker.Utility_Classes.Converters
             return Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

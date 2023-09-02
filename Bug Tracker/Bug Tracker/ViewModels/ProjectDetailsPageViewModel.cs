@@ -35,6 +35,7 @@ namespace Bug_Tracker.ViewModels
 
         public User CurrentUser { get => Authenticator.CurrentUser; }
         public Project CurrentProject { get => ProjectContainer.CurrentProject; }
+        public ProjectUser CurrentProjectUser { get; }
 
         private ObservableCollection<ProjectUser> projectUsers;
         public ObservableCollection<ProjectUser> ProjectUsers
@@ -115,6 +116,8 @@ namespace Bug_Tracker.ViewModels
             ToDoTickets = new ObservableCollection<Ticket>();
             InProgressTickets = new ObservableCollection<Ticket>();
             DoneTickets = new ObservableCollection<Ticket>();
+
+            CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);

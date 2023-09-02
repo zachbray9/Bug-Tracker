@@ -133,7 +133,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" Background="Green" Width="34" Height="34" CornerRadius="17" Margin="0, 0, 10, 0">
+                                        <Border Grid.Column="0" Background="#00875A" Width="34" Height="34" CornerRadius="17" Margin="0, 0, 10, 0">
                                             <TextBlock Text="{Binding Author.User.Initials}" Foreground="White" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
@@ -149,6 +149,13 @@
                                         <TextBlock.InputBindings>
                                             <MouseBinding Command="{Binding DataContext.DeleteCommentFromDbCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
                                         </TextBlock.InputBindings>
+
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource RoleOrAuthorToVisibilityConverter}">
+                                                <Binding RelativeSource="{RelativeSource AncestorType=ListBox, AncestorLevel=1}" Path="DataContext.CurrentProjectUser"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
                                     </TextBlock>
                                 </Grid>
                             </DataTemplate>

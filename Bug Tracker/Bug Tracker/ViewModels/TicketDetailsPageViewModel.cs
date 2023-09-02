@@ -30,8 +30,10 @@ namespace Bug_Tracker.ViewModels
 
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
 
+        public User CurrentUser => Authenticator.CurrentUser;
         public Project CurrentProject => ProjectContainer.CurrentProject;
         public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
+        public ProjectUser CurrentProjectUser { get; }
         public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
 
         public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, StatusOptionsRetriever statusOptionsRetriever)
@@ -68,6 +70,8 @@ namespace Bug_Tracker.ViewModels
             {
                 ProjectUsers = new ObservableCollection<ProjectUser>();
             }
+
+            CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
             //Calculates the time difference for each comment so that it can display how long ago it was posted.
             foreach (var comment in Comments)

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -53,6 +54,19 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        private string ticketFilterQuery = String.Empty;
+        public string TicketFilterQuery
+        {
+            get { return ticketFilterQuery; }
+            set
+            {
+                ticketFilterQuery = value;
+                OnPropertyChanged(nameof(TicketFilterQuery));
+                UpdateFilteredTickets();
+            }
+        }
+
+        //unfiltered Lists
         private ObservableCollection<Ticket> toDoTickets;
         public ObservableCollection<Ticket> ToDoTickets
         {
@@ -101,6 +115,55 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
+        //filtered lists
+        private ObservableCollection<Ticket> filteredToDoTickets;
+        public ObservableCollection<Ticket> FilteredToDoTickets
+        {
+            get
+            {
+                return filteredToDoTickets;
+            }
+
+            set
+            {
+                filteredToDoTickets = value;
+                OnPropertyChanged(nameof(FilteredToDoTickets));
+
+            }
+        }
+
+        private ObservableCollection<Ticket> filteredInProgressTickets;
+        public ObservableCollection<Ticket> FilteredInProgressTickets
+        {
+            get
+            {
+                return filteredInProgressTickets;
+            }
+
+            set
+            {
+                filteredInProgressTickets = value;
+                OnPropertyChanged(nameof(FilteredInProgressTickets));
+
+            }
+        }
+
+        private ObservableCollection<Ticket> filteredDoneTickets;
+        public ObservableCollection<Ticket> FilteredDoneTickets
+        {
+            get
+            {
+                return filteredDoneTickets;
+            }
+
+            set
+            {
+                filteredDoneTickets = value;
+                OnPropertyChanged(nameof(FilteredDoneTickets));
+
+            }
+        }
+
         public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IDataService<Comment> commentService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelFactory)
         {
             UserDataService = userDataService;
@@ -113,6 +176,7 @@ namespace Bug_Tracker.ViewModels
             AddUserViewModel = (AddUserToProjectPopupViewModel)viewModelFactory.CreateViewModel(ViewType.AddUserToProjectPopup);
 
             ProjectUsers = new ObservableCollection<ProjectUser>();
+
             ToDoTickets = new ObservableCollection<Ticket>();
             InProgressTickets = new ObservableCollection<Ticket>();
             DoneTickets = new ObservableCollection<Ticket>();
@@ -124,6 +188,10 @@ namespace Bug_Tracker.ViewModels
 
             UpdateProjectUsers();
             UpdateTickets();
+
+            FilteredToDoTickets = new ObservableCollection<Ticket>(ToDoTickets);
+            FilteredInProgressTickets = new ObservableCollection<Ticket>(InProgressTickets);
+            FilteredDoneTickets = new ObservableCollection<Ticket>(DoneTickets);
 
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
         }
@@ -159,6 +227,37 @@ namespace Bug_Tracker.ViewModels
                 if(ticket.Status == Status.Done)
                 {
                     DoneTickets.Add(ticket);
+                }
+            }
+        }
+
+        public void UpdateFilteredTickets()
+        {
+            FilteredToDoTickets.Clear();
+            FilteredInProgressTickets.Clear();
+            FilteredDoneTickets.Clear();
+
+            foreach (Ticket ticket in ToDoTickets)
+            {
+                if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
+                {
+                    FilteredToDoTickets.Add(ticket);
+                }
+            }
+
+            foreach (Ticket ticket in InProgressTickets)
+            {
+                if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
+                {
+                    FilteredInProgressTickets.Add(ticket);
+                }
+            }
+
+            foreach (Ticket ticket in DoneTickets)
+            {
+                if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
+                {
+                    FilteredDoneTickets.Add(ticket);
                 }
             }
         }

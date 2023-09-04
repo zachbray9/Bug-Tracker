@@ -44,6 +44,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
                     await TicketDataService.Delete(ticketToDelete.Id);
                     ViewModel.UpdateTickets();
+                    ViewModel.UpdateFilteredTickets();
                 }
                 catch (Exception ex)
                 {

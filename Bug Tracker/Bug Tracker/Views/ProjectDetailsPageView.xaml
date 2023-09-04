@@ -49,7 +49,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="TaskFilterTextBox" Grid.Column="0" Text="{Binding TicketFilterQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40, 0, 20, 0"/>
+                <TextBox x:Name="TaskFilterTextBox" Grid.Column="0" Style="{StaticResource SearchBar}" Text="{Binding TicketFilterQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="40" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40, 0, 20, 0"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0, 5">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">

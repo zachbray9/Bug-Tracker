@@ -102,6 +102,7 @@
                                 </Grid.RowDefinitions>
 
                                 <ListBox Grid.Row="0" Style="{StaticResource TaskBoardListBox}" ItemsSource="{Binding FilteredToDoTickets, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Transparent" Background="Transparent">
+                                    
                                 </ListBox>
 
                                 <Button Grid.Row="1" Style="{StaticResource TaskBoardButton}" Content="+ Create Task" Command="{Binding CreateNewTicketCommand}" CommandParameter="{x:Static enum:Status.ToDo}" VerticalAlignment="Top"/>

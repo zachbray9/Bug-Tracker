@@ -16,12 +16,12 @@ using System.Windows.Input;
 using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Security.RightsManagement;
 
 namespace Bug_Tracker.ViewModels
 {
     public class ProjectsPageViewModel : ViewModelBase
     {
-        private readonly IDataService<Project> ProjectDataService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
@@ -32,13 +32,23 @@ namespace Bug_Tracker.ViewModels
             set
             {
                 projects = value;
-                OnPropertyChanged(nameof(projects));
+                OnPropertyChanged(nameof(Projects));
             }
         }
 
-        public ProjectsPageViewModel(IDataService<Project> projectDataService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        private ObservableCollection<Project> projectSearchResults;
+        public ObservableCollection<Project> ProjectSearchResults
         {
-            ProjectDataService = projectDataService;
+            get { return projectSearchResults; }
+            set
+            {
+                projectSearchResults = value;
+                OnPropertyChanged(nameof(ProjectSearchResults));
+            }
+        }
+
+        public ProjectsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -46,20 +56,42 @@ namespace Bug_Tracker.ViewModels
             ViewProjectDetailsCommand = new ViewProjectDetailsCommand(Navigator, ProjectContainer);
 
             UpdateProjects();
+            ProjectSearchResults = new ObservableCollection<Project>(Projects);
+            
         }
 
-        private async void UpdateProjects()
+        private string projectSearchQuery = String.Empty;
+        public string ProjectSearchQuery
         {
-            foreach (ProjectUser projectUser in Authenticator.CurrentUser.ProjectUsers)
+            get { return projectSearchQuery; }
+            set
             {
-                //checks if project already exists to prevent duplicates
-                bool projectAlreadyExists = projects.Any(p => p.Id == projectUser.ProjectId);
-                if (projectAlreadyExists)
-                    continue;
-                
+                projectSearchQuery = value;
+                OnPropertyChanged(nameof(ProjectSearchQuery));
+                UpdateProjectSearchResults();
+            }
+        }
 
-                Project project = await ProjectDataService.Get(projectUser.ProjectId);
-                projects.Add(project);
+        private void UpdateProjects()
+        {
+            Projects.Clear();
+
+            foreach(ProjectUser projectUser in Authenticator.CurrentUser.ProjectUsers)
+            {
+                Projects.Add(projectUser.Project);
+            }
+        }
+
+        private void UpdateProjectSearchResults()
+        {
+            ProjectSearchResults.Clear();
+
+            foreach(Project project in Projects)
+            {
+                if(project.Name.Contains(ProjectSearchQuery, StringComparison.OrdinalIgnoreCase))
+                {
+                    ProjectSearchResults.Add(project);
+                }    
             }
         }
 

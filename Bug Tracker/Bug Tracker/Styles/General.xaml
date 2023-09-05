@@ -5,21 +5,11 @@
 
     <util:RoleOrAuthorToVisibilityConverter x:Key="RoleOrAuthorToVisibilityConverter"/>
 
-
     <Style x:Key="OrganizationComboBox" TargetType="ComboBox">
         <Setter Property="IsEditable" Value="False"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        
-
-        <!--<Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBox">
-                    
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>-->
     </Style>
 
 
@@ -108,8 +98,10 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Grid.Column="0" Text="{Binding Title}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+
+                                <TextBlock Grid.Column="0" Text="{Binding Title}" HorizontalAlignment="Left" TextWrapping="Wrap">
+                                </TextBlock>
+
                                 <Border Grid.Column="1" Height="26" Width="26" CornerRadius="13" Background="#00875A" VerticalAlignment="Top">
                                     <TextBlock Text="{Binding Assignee.User.Initials}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <TextBlock.ToolTip>
@@ -230,7 +222,39 @@
     </Style>
 
     <Style TargetType="ScrollViewer" x:Key="ThinScrollViewer">
-        
+        <Setter Property="Width" Value="10" />
+        <!-- Set the width to make it thinner -->
+        <Setter Property="Background" Value="LightGray" />
+        <!-- Set background color -->
+        <Setter Property="Foreground" Value="DarkGray" />
+        <!-- Set foreground color -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <RepeatButton Grid.Row="0" Background="Transparent" Content="▲" Command="ScrollBar.LineUpCommand" />
+                        <Track x:Name="PART_Track" Grid.Row="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageUpCommand" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageDownCommand" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Background="{TemplateBinding Background}" />
+                            </Track.Thumb>
+                        </Track>
+                        <RepeatButton Grid.Row="2" Background="Transparent" Content="▼" Command="ScrollBar.LineDownCommand" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Width="100" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
+            <TextBox Grid.Column="0" Style="{StaticResource SearchBar}" Text="{Binding ProjectSearchQuery, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="125" HorizontalAlignment="Left" Margin="20, 0, 0, 0"/>
             <Button Grid.Column="1" Style="{StaticResource GenericButton}" Content="+ New Project" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.CreateNewProjectPage}" Foreground="White" Background="#7b68ee" HorizontalAlignment="Right" Margin="5, 0, 20, 0"/>
         </Grid>
 
@@ -45,7 +45,7 @@
 
         <Separator Grid.Row="3" Margin="40, 10, 40, 0"/>
 
-        <ListBox Grid.Row="4" BorderBrush="Transparent" ItemsSource="{Binding Projects, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" Margin="40, 0, 40, 40">
+        <ListBox Grid.Row="4" BorderBrush="Transparent" ItemsSource="{Binding ProjectSearchResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="True" Grid.IsSharedSizeScope="True" HorizontalContentAlignment="Stretch" Margin="40, 0, 40, 40">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

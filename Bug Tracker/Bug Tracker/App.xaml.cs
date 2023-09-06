@@ -51,12 +51,12 @@ namespace Bug_Tracker
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    string connectionString = context.Configuration.GetConnectionString("default");
+                    string connectionString = context.Configuration.GetConnectionString("sqlite");
 
                     //Registering the DbContext and its options
                     services.AddDbContext<BugTrackerDbContext>(options =>
                     {
-                        options.UseSqlServer(connectionString);
+                        options.UseSqlite(connectionString);
                         options.EnableSensitiveDataLogging(true);
                         options.UseLazyLoadingProxies();
                     }, ServiceLifetime.Scoped);
@@ -160,9 +160,10 @@ namespace Bug_Tracker
         protected override void OnStartup(StartupEventArgs e)
         {
             host.Start();
-            //IServiceProvider serviceProvider = CreateServiceProvider();
 
-            //Window window = serviceProvider.GetRequiredService<MainWindow>();
+            BugTrackerDbContext context = host.Services.GetRequiredService<BugTrackerDbContext>();
+            context.Database.Migrate();
+            
             Window window = host.Services.GetRequiredService<MainWindow>();
             window.Show();
 
@@ -177,111 +178,6 @@ namespace Bug_Tracker
             base.OnExit(e);
         }
 
-        //private IServiceProvider CreateServiceProvider()
-        //{
-        //    IServiceCollection services = new ServiceCollection();
-
-        //    //Registering the DbContext and its options
-        //    services.AddDbContext<BugTrackerDbContext>(options =>
-        //        {
-        //            options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BugTrackerDB;Trusted_Connection=true");
-        //            options.EnableSensitiveDataLogging(true);
-        //            options.UseLazyLoadingProxies();
-        //        }, ServiceLifetime.Scoped);
-
-        //    services.AddScoped<IAuthenticationService, AuthenticationService>();
-        //    services.AddScoped<IUserService, UserDataService>();
-
-        //    services.AddScoped<IDataService<Project>, GenericDataService<Project>>();
-        //    services.AddScoped<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
-        //    services.AddScoped<IDataService<Ticket>, GenericDataService<Ticket>>();
-        //    services.AddScoped<IDataService<Comment>, GenericDataService<Comment>>();
-
-        //    services.AddSingleton<IPasswordHasher, PasswordHasher>();
-        //    services.AddSingleton<DispatcherTimer>();
-        //    services.AddSingleton<StatusOptionsRetriever>();
-        //    services.AddSingleton<ProjectRoleOptionsRetriever>();
-        //    services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
-
-
-        //    //Registering all of the viewmodels for dependency injection//
-        //    services.AddSingleton<CreateViewModel<LoginPageViewModel>>(services =>
-        //    {
-        //        return () => new LoginPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
-        //    }
-        //        );
-
-        //    services.AddSingleton<CreateViewModel<CreateAccountPageViewModel>>(services =>
-        //    {
-        //        return () => new CreateAccountPageViewModel(services.GetRequiredService<INavigator>(), services.GetRequiredService<IAuthenticator>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<HomePageViewModel>>(services =>
-        //    {
-        //        return () => new HomePageViewModel(services.GetRequiredService<IAuthenticator>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<AccountPageViewModel>>(services =>
-        //    {
-        //        return () => new AccountPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<IUserService>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<ProjectsPageViewModel>>(services =>
-        //    {
-        //        return () => new ProjectsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
-        //    {
-        //        return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<StatusOptionsRetriever>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<CreateNewProjectPageViewModel>>(services =>
-        //    {
-        //        return () => new CreateNewProjectPageViewModel(services.GetRequiredService<BugTrackerDbContext>(), services.GetRequiredService<IDataService<Project>>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<AddUserToProjectPopupViewModel>>(services =>
-        //    {
-        //        return () => new AddUserToProjectPopupViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ProjectRoleOptionsRetriever>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<ProjectDetailsPageViewModel>>(services =>
-        //    {
-        //        return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserService>(), services.GetRequiredService<IDataService<ProjectUser>>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<IDataService<Comment>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IViewModelAbstractFactory>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<CreateTicketViewModel>>(services =>
-        //    {
-        //        return () => new CreateTicketViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<StatusOptionsRetriever>());
-        //    }
-        //    );
-
-        //    services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
-        //    {
-        //        return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<IDataService<Ticket>>(), services.GetRequiredService<IDataService<Comment>>(), services.GetRequiredService<StatusOptionsRetriever>());
-        //    }
-        //    );
-
-
-
-
-        //    services.AddSingleton<INavigator, Navigator>();
-        //    services.AddSingleton<IAuthenticator, Authenticator>();
-        //    services.AddSingleton<IProjectContainer, ProjectContainer>();
-        //    services.AddSingleton<MainViewModel>();
-
-        //    services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
-
-        //    return services.BuildServiceProvider();
-        //}
+        
     }
 }

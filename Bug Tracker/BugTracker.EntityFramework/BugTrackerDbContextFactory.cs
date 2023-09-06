@@ -21,7 +21,7 @@ namespace BugTracker.EntityFramework
         public BugTrackerDbContext CreateDbContext()
         {
             var options = new DbContextOptionsBuilder<BugTrackerDbContext>();
-            options.UseSqlServer(ConnectionString);
+            options.UseSqlite(ConnectionString);
             options.EnableSensitiveDataLogging(true);
             options.UseLazyLoadingProxies();
 

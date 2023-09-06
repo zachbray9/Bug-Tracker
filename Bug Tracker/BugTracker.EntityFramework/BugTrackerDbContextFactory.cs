@@ -9,13 +9,19 @@ using System.Threading.Tasks;
 
 namespace BugTracker.EntityFramework
 {
-    public class BugTrackerDbContextFactory : IDesignTimeDbContextFactory<BugTrackerDbContext>
+    public class BugTrackerDbContextFactory
     {
-        //This class is now only used for the BugTrackerDbTester Project
-        public BugTrackerDbContext CreateDbContext(string[] args = null)
+        private readonly string ConnectionString;
+
+        public BugTrackerDbContextFactory(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
+
+        public BugTrackerDbContext CreateDbContext()
         {
             var options = new DbContextOptionsBuilder<BugTrackerDbContext>();
-            options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BugTrackerDB;Trusted_Connection=true");
+            options.UseSqlServer(ConnectionString);
             options.EnableSensitiveDataLogging(true);
             options.UseLazyLoadingProxies();
 

@@ -15,9 +15,8 @@ using System.Windows.Input;
 
 namespace Bug_Tracker.Commands
 {
-    public class CreateNewProjectCommand : ICommand
+    public class CreateNewProjectCommand : CommandBase
     {
-        public event EventHandler CanExecuteChanged;
         private readonly BugTrackerDbContext DbContext;
         private readonly IDataService<Project> ProjectDataService;
         private readonly IDataService<ProjectUser> ProjectUserDataService;
@@ -34,38 +33,33 @@ namespace Bug_Tracker.Commands
             CreateNewProjectPageViewModel= createNewProjectPageViewModel;
         }
 
-        public bool CanExecute(object parameter)
+        public override async void Execute(object parameter)
         {
-            return true;
-        }
-
-        public async void Execute(object parameter)
-        {
-            if(CreateNewProjectPageViewModel.ProjectName== null)
+            if (CreateNewProjectPageViewModel.ProjectName == null)
             {
                 MessageBox.Show("You need to add a project name.", "Missing Project Name", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if(CreateNewProjectPageViewModel.ProjectDescription== null)
+            if (CreateNewProjectPageViewModel.ProjectDescription == null)
             {
                 MessageBox.Show("You need to add a project description.", "Missing Project Description", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             Project project = await ProjectDataService.Create(new Project { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
-            ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CurrentUser.Id});
+            ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CurrentUser.Id });
 
-            
+
 
             if (CurrentUser.ProjectUsers == null)
             {
                 CurrentUser.ProjectUsers = new List<ProjectUser>();
             }
 
-                CurrentUser.ProjectUsers.Add(projectUser);
-                DbContext.SaveChanges();
-            
+            //CurrentUser.ProjectUsers.Add(projectUser);
+            DbContext.SaveChanges();
+
 
             Navigator.Navigate(ViewType.ProjectsPage);
         }

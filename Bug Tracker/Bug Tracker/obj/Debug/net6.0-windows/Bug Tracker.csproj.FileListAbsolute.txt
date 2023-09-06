@@ -97,3 +97,28 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\Bug Tracker.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\ref\Bug Tracker.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.CommandLine.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Hosting.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Configuration.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Console.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Debug.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.EventLog.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.EventSource.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\System.Diagnostics.DiagnosticSource.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\System.Diagnostics.EventLog.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\System.Text.Encodings.Web.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\System.Text.Json.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\appsettings.json

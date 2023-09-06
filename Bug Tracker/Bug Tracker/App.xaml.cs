@@ -163,7 +163,7 @@ namespace Bug_Tracker
 
             BugTrackerDbContext context = host.Services.GetRequiredService<BugTrackerDbContext>();
             context.Database.Migrate();
-            
+
             Window window = host.Services.GetRequiredService<MainWindow>();
             window.Show();
 

@@ -3,7 +3,6 @@ using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Services;
 using BugTracker.Domain.Services.AuthenticationServices;
-using BugTracker.EntityFramework.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;

@@ -22,21 +22,33 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
-        private readonly StatusOptionsRetriever StatusOptionsRetriever;
 
         private User CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            StatusOptionsRetriever = statusOptionsRetriever;
             Tickets = new ObservableCollection<Ticket>();
+            TicketSearchResults = new ObservableCollection<Ticket>();
 
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
 
-            ResetTickets();
+            UpdateTickets();
+            UpdateTicketSearchResults();
+        }
+
+        private string ticketFilterQuery = string.Empty;
+        public string TicketFilterQuery
+        {
+            get { return ticketFilterQuery; }
+            set
+            {
+                ticketFilterQuery = value;
+                OnPropertyChanged(nameof(TicketFilterQuery));
+                UpdateTicketSearchResults();
+            }
         }
 
         private ObservableCollection<Ticket> tickets;
@@ -50,12 +62,18 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        //public string TicketStatus
-        //{
-        //    get { StatusOptionsRetriever.ConvertStatusEnumToString(); }
-        //}
+        private ObservableCollection<Ticket> ticketSearchResults;
+        public ObservableCollection<Ticket> TicketSearchResults
+        {
+            get { return ticketSearchResults; }
+            set
+            {
+                ticketSearchResults = value;
+                OnPropertyChanged(nameof(TicketSearchResults));
+            }
+        }
 
-        private void ResetTickets()
+        private void UpdateTickets()
         {
             Tickets.Clear();
 
@@ -79,7 +97,20 @@ namespace Bug_Tracker.ViewModels
                     }
                 }
 
-                Tickets = new ObservableCollection<Ticket>(allTicketsWithoutDuplicates);
+                Tickets = new ObservableCollection<Ticket>(allTicketsWithoutDuplicates.OrderBy(ticket => ticket.Status));
+            }
+        }
+
+        private void UpdateTicketSearchResults()
+        {
+            TicketSearchResults.Clear();
+
+            foreach(Ticket ticket in Tickets)
+            {
+                if(ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
+                {
+                    TicketSearchResults.Add(ticket);
+                }
             }
         }
 

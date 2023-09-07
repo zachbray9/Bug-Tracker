@@ -17,14 +17,7 @@
 
         <TextBlock Grid.Row="0" Text="Tickets" FontFamily="Arial" FontSize="16" Opacity="0.5" Margin="40, 40, 40, 10"/>
 
-        <Grid Grid.Row="1" Margin="40, 10, 40, 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="7*"/>
-            </Grid.ColumnDefinitions>
-            
-            <ComboBox Grid.Column="0" Style="{StaticResource OrganizationComboBox}" Margin="0, 10, 0, 10"/>
-        </Grid>
+        <TextBox Grid.Row="1" Style="{StaticResource SearchBar}" Text="{Binding TicketFilterQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="125" Height="40" HorizontalAlignment="Left" Margin="40, 10, 0, 10"/>
 
         <Grid Grid.Row="2" Margin="40, 10, 40, 10">
             <Grid.ColumnDefinitions>
@@ -47,7 +40,7 @@
 
         <Separator Grid.Row="3" Margin="40, 0, 40, 0"/>
 
-        <ListBox Grid.Row="4" ItemsSource="{Binding Tickets}" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="40, 10, 40, 40">
+        <ListBox Grid.Row="4" ItemsSource="{Binding TicketSearchResults}" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="40, 10, 40, 40">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Margin" Value="0, 0, 0, 10"/>

@@ -51,6 +51,7 @@ namespace Bug_Tracker
                 })
                 .ConfigureServices((context, services) =>
                 {
+                    //gets the database we are using from the appsettings.json file connection string
                     string connectionString = context.Configuration.GetConnectionString("sqlite");
 
                     //Registering the DbContext and its options
@@ -63,22 +64,24 @@ namespace Bug_Tracker
 
                     services.AddSingleton<BugTrackerDbContextFactory>(new BugTrackerDbContextFactory(connectionString));
 
+                    //Registering all of my services
+                    services.AddScoped<INavigator, Navigator>();
+                    services.AddScoped<IAuthenticator, Authenticator>();
+                    services.AddScoped<IProjectContainer, ProjectContainer>();
                     services.AddScoped<IAuthenticationService, AuthenticationService>();
                     services.AddScoped<IUserService, UserDataService>();
-
                     services.AddScoped<IDataService<Project>, GenericDataService<Project>>();
                     services.AddScoped<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
                     services.AddScoped<IDataService<Ticket>, GenericDataService<Ticket>>();
                     services.AddScoped<IDataService<Comment>, GenericDataService<Comment>>();
-
                     services.AddSingleton<IPasswordHasher, PasswordHasher>();
-                    services.AddSingleton<DispatcherTimer>();
                     services.AddSingleton<StatusOptionsRetriever>();
                     services.AddSingleton<ProjectRoleOptionsRetriever>();
+
+
+                    //Registering all of the viewmodels
                     services.AddSingleton<IViewModelAbstractFactory, ViewModelAbstractFactory>();
 
-
-                    //Registering all of the viewmodels for dependency injection//
                     services.AddSingleton<CreateViewModel<LoginPageViewModel>>(services =>
                     {
                         return () => new LoginPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>());
@@ -111,7 +114,7 @@ namespace Bug_Tracker
 
                     services.AddSingleton<CreateViewModel<TicketsPageViewModel>>(services =>
                     {
-                        return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<StatusOptionsRetriever>());
+                        return () => new TicketsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
                     }
                     );
 
@@ -145,15 +148,10 @@ namespace Bug_Tracker
                     }
                     );
 
-
-
-
-                    services.AddScoped<INavigator, Navigator>();
-                    services.AddScoped<IAuthenticator, Authenticator>();
-                    services.AddScoped<IProjectContainer, ProjectContainer>();
                     services.AddScoped<MainViewModel>();
 
-                    services.AddScoped(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
+                    //Registering the mainwindow view
+                    services.AddSingleton(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
                 });
         }
 

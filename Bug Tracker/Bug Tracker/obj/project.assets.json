@@ -2,11 +2,11 @@
   "version": 3,
   "targets": {
     "net6.0-windows7.0": {
-      "Azure.Core/1.24.0": {
+      "Azure.Core/1.34.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
-          "System.Diagnostics.DiagnosticSource": "4.6.0",
+          "System.Diagnostics.DiagnosticSource": "6.0.1",
           "System.Memory.Data": "1.0.2",
           "System.Numerics.Vectors": "4.5.0",
           "System.Text.Encodings.Web": "4.7.2",
@@ -14,22 +14,40 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "compile": {
-          "lib/net5.0/Azure.Core.dll": {
+          "lib/net6.0/Azure.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net5.0/Azure.Core.dll": {
+          "lib/net6.0/Azure.Core.dll": {
             "related": ".xml"
           }
         }
       },
-      "Azure.Identity/1.6.0": {
+      "Azure.Extensions.AspNetCore.Configuration.Secrets/1.2.2": {
         "type": "package",
         "dependencies": {
           "Azure.Core": "1.24.0",
-          "Microsoft.Identity.Client": "4.39.0",
-          "Microsoft.Identity.Client.Extensions.Msal": "2.19.3",
+          "Azure.Security.KeyVault.Secrets": "4.2.0",
+          "Microsoft.Extensions.Configuration": "2.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Azure.Identity/1.10.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.34.0",
+          "Microsoft.Identity.Client": "4.54.1",
+          "Microsoft.Identity.Client.Extensions.Msal": "2.31.0",
           "System.Memory": "4.5.4",
           "System.Security.Cryptography.ProtectedData": "4.7.0",
           "System.Text.Json": "4.7.2",
@@ -42,6 +60,25 @@
         },
         "runtime": {
           "lib/netstandard2.0/Azure.Identity.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Azure.Security.KeyVault.Secrets/4.5.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.30.0",
+          "System.Memory": "4.5.4",
+          "System.Text.Json": "4.7.2",
+          "System.Threading.Tasks.Extensions": "4.5.4"
+        },
+        "compile": {
+          "lib/netstandard2.0/Azure.Security.KeyVault.Secrets.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Azure.Security.KeyVault.Secrets.dll": {
             "related": ".xml"
           }
         }
@@ -915,40 +952,69 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Identity.Client/4.45.0": {
+      "Microsoft.Identity.Client/4.54.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.IdentityModel.Abstractions": "6.18.0"
+          "Microsoft.Identity.Client.NativeInterop": "0.13.8",
+          "Microsoft.IdentityModel.Abstractions": "6.22.0",
+          "Microsoft.Web.WebView2": "1.0.864.35"
         },
         "compile": {
-          "lib/netcoreapp2.1/Microsoft.Identity.Client.dll": {
+          "lib/net6.0-windows7.0/Microsoft.Identity.Client.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netcoreapp2.1/Microsoft.Identity.Client.dll": {
+          "lib/net6.0-windows7.0/Microsoft.Identity.Client.dll": {
             "related": ".xml"
           }
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
       },
-      "Microsoft.Identity.Client.Extensions.Msal/2.19.3": {
+      "Microsoft.Identity.Client.Extensions.Msal/2.31.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Identity.Client": "4.38.0",
+          "Microsoft.Identity.Client": "4.54.1",
+          "System.IO.FileSystem.AccessControl": "5.0.0",
           "System.Security.Cryptography.ProtectedData": "4.5.0"
         },
         "compile": {
-          "lib/netcoreapp2.1/Microsoft.Identity.Client.Extensions.Msal.dll": {
+          "lib/netcoreapp3.1/Microsoft.Identity.Client.Extensions.Msal.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netcoreapp2.1/Microsoft.Identity.Client.Extensions.Msal.dll": {
+          "lib/netcoreapp3.1/Microsoft.Identity.Client.Extensions.Msal.dll": {
             "related": ".xml"
           }
         }
       },
-      "Microsoft.IdentityModel.Abstractions/6.21.0": {
+      "Microsoft.Identity.Client.NativeInterop/0.13.8": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Identity.Client.NativeInterop.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Identity.Client.NativeInterop.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/msalruntime_arm64.dll": {
+            "assetType": "native",
+            "rid": "win-arm64"
+          },
+          "runtimes/win-x64/native/msalruntime.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/msalruntime_x86.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Abstractions/6.22.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.IdentityModel.Abstractions.dll": {
@@ -1073,6 +1139,48 @@
         "runtime": {
           "lib/netstandard2.0/Microsoft.SqlServer.Server.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Microsoft.Web.WebView2/1.0.864.35": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-arm64"
+          },
+          "runtimes/win-x64/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
           }
         }
       },
@@ -1419,6 +1527,29 @@
           }
         }
       },
+      "System.IO.FileSystem.AccessControl/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.AccessControl": "5.0.0",
+          "System.Security.Principal.Windows": "5.0.0"
+        },
+        "compile": {
+          "ref/netstandard2.0/System.IO.FileSystem.AccessControl.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Memory/4.5.4": {
         "type": "package",
         "compile": {
@@ -1554,7 +1685,7 @@
           "System.Security.Principal.Windows": "5.0.0"
         },
         "compile": {
-          "ref/netstandard2.0/_._": {
+          "ref/netstandard2.0/System.Security.AccessControl.dll": {
             "related": ".xml"
           }
         },
@@ -1631,7 +1762,7 @@
       "System.Security.Principal.Windows/5.0.0": {
         "type": "package",
         "compile": {
-          "ref/netcoreapp3.0/_._": {
+          "ref/netcoreapp3.0/System.Security.Principal.Windows.dll": {
             "related": ".xml"
           }
         },
@@ -1808,42 +1939,76 @@
     }
   },
   "libraries": {
-    "Azure.Core/1.24.0": {
-      "sha512": "+/qI1j2oU1S4/nvxb2k/wDsol00iGf1AyJX5g3epV7eOpQEP/2xcgh/cxgKMeFgn3U2fmgSiBnQZdkV+l5y0Uw==",
+    "Azure.Core/1.34.0": {
+      "sha512": "6dNpM8OlGO+5gvt97tHXBp9qWRFkimRFulupDSGRgyT3sje1kQNza1/EMYaDcolmNARPmVJo8+wgD6ReV9wG5Q==",
       "type": "package",
-      "path": "azure.core/1.24.0",
+      "path": "azure.core/1.34.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "CHANGELOG.md",
         "README.md",
-        "azure.core.1.24.0.nupkg.sha512",
+        "azure.core.1.34.0.nupkg.sha512",
         "azure.core.nuspec",
         "azureicon.png",
         "lib/net461/Azure.Core.dll",
         "lib/net461/Azure.Core.xml",
         "lib/net5.0/Azure.Core.dll",
         "lib/net5.0/Azure.Core.xml",
+        "lib/net6.0/Azure.Core.dll",
+        "lib/net6.0/Azure.Core.xml",
         "lib/netcoreapp2.1/Azure.Core.dll",
         "lib/netcoreapp2.1/Azure.Core.xml",
         "lib/netstandard2.0/Azure.Core.dll",
         "lib/netstandard2.0/Azure.Core.xml"
       ]
     },
-    "Azure.Identity/1.6.0": {
-      "sha512": "EycyMsb6rD2PK9P0SyibFfEhvWWttdrYhyPF4f41uzdB/44yQlV+2Wehxyg489Rj6gbPvSPgbKq0xsHJBhipZA==",
+    "Azure.Extensions.AspNetCore.Configuration.Secrets/1.2.2": {
+      "sha512": "veuqVD+Xr9/EOj9vTXBKvoh2GqObb6r+oK99L6rasJDOAJCTwwf6JqcOqXeNGnIDP0k0CcjfQSN4tY4nC7EHkg==",
       "type": "package",
-      "path": "azure.identity/1.6.0",
+      "path": "azure.extensions.aspnetcore.configuration.secrets/1.2.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "CHANGELOG.md",
         "README.md",
-        "azure.identity.1.6.0.nupkg.sha512",
+        "azure.extensions.aspnetcore.configuration.secrets.1.2.2.nupkg.sha512",
+        "azure.extensions.aspnetcore.configuration.secrets.nuspec",
+        "azureicon.png",
+        "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll",
+        "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.xml"
+      ]
+    },
+    "Azure.Identity/1.10.0": {
+      "sha512": "j7HIhQ8Bnf2s325hNwjsTa7jXlJmWFSPgKJCrc1cv2XozEmFsjto1XaCnQzLmbPaTeL6CS5t26icTflY20BnHQ==",
+      "type": "package",
+      "path": "azure.identity/1.10.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.identity.1.10.0.nupkg.sha512",
         "azure.identity.nuspec",
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Azure.Security.KeyVault.Secrets/4.5.0": {
+      "sha512": "ztr26Ai4K7AZGuw68/ffLDn+2G3WL0myjC7nY1RYkxPMnsplTPEH+Ke4RGxvSkg4kC7bJ9NwdlqpEwfDX0qhdw==",
+      "type": "package",
+      "path": "azure.security.keyvault.secrets/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.security.keyvault.secrets.4.5.0.nupkg.sha512",
+        "azure.security.keyvault.secrets.nuspec",
+        "azureicon.png",
+        "lib/netstandard2.0/Azure.Security.KeyVault.Secrets.dll",
+        "lib/netstandard2.0/Azure.Security.KeyVault.Secrets.xml"
       ]
     },
     "Castle.Core/5.1.0": {
@@ -3022,10 +3187,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Identity.Client/4.45.0": {
-      "sha512": "ircobISCLWbtE5eEoLKU+ldfZ8O41vg4lcy38KRj/znH17jvBiAl8oxcyNp89CsuqE3onxIpn21Ca7riyDDrRw==",
+    "Microsoft.Identity.Client/4.54.1": {
+      "sha512": "YkQkV3IRaA1W36HD4NRD1cq+QFr+4QPKK3SgTSpx+RiobXnLZ6E9anOjDi2TS7okOEofBbjR6GyTPp4IR0MnEQ==",
       "type": "package",
-      "path": "microsoft.identity.client/4.45.0",
+      "path": "microsoft.identity.client/4.54.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3037,8 +3202,14 @@
         "lib/net45/Microsoft.Identity.Client.xml",
         "lib/net461/Microsoft.Identity.Client.dll",
         "lib/net461/Microsoft.Identity.Client.xml",
-        "lib/net5.0-windows10.0.17763/Microsoft.Identity.Client.dll",
-        "lib/net5.0-windows10.0.17763/Microsoft.Identity.Client.xml",
+        "lib/net6.0-android31.0/Microsoft.Identity.Client.dll",
+        "lib/net6.0-android31.0/Microsoft.Identity.Client.xml",
+        "lib/net6.0-ios15.4/Microsoft.Identity.Client.dll",
+        "lib/net6.0-ios15.4/Microsoft.Identity.Client.xml",
+        "lib/net6.0-windows7.0/Microsoft.Identity.Client.dll",
+        "lib/net6.0-windows7.0/Microsoft.Identity.Client.xml",
+        "lib/net6.0/Microsoft.Identity.Client.dll",
+        "lib/net6.0/Microsoft.Identity.Client.xml",
         "lib/netcoreapp2.1/Microsoft.Identity.Client.dll",
         "lib/netcoreapp2.1/Microsoft.Identity.Client.xml",
         "lib/netstandard2.0/Microsoft.Identity.Client.dll",
@@ -3048,33 +3219,49 @@
         "lib/uap10.0.17763/Microsoft.Identity.Client.xml",
         "lib/xamarinios10/Microsoft.Identity.Client.dll",
         "lib/xamarinios10/Microsoft.Identity.Client.xml",
-        "lib/xamarinmac20/Microsoft.Identity.Client.dll",
-        "lib/xamarinmac20/Microsoft.Identity.Client.xml",
-        "microsoft.identity.client.4.45.0.nupkg.sha512",
+        "microsoft.identity.client.4.54.1.nupkg.sha512",
         "microsoft.identity.client.nuspec"
       ]
     },
-    "Microsoft.Identity.Client.Extensions.Msal/2.19.3": {
-      "sha512": "zVVZjn8aW7W79rC1crioDgdOwaFTQorsSO6RgVlDDjc7MvbEGz071wSNrjVhzR0CdQn6Sefx7Abf1o7vasmrLg==",
+    "Microsoft.Identity.Client.Extensions.Msal/2.31.0": {
+      "sha512": "IhGSqN0szneKC5Qk3/okJQJbDpQfLW/+mvslhzJPox4t2UuIkA2ZHe4w/z62ASye46G9sQWF9qqLXTgNacE2xQ==",
       "type": "package",
-      "path": "microsoft.identity.client.extensions.msal/2.19.3",
+      "path": "microsoft.identity.client.extensions.msal/2.31.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/net45/Microsoft.Identity.Client.Extensions.Msal.dll",
         "lib/net45/Microsoft.Identity.Client.Extensions.Msal.xml",
-        "lib/netcoreapp2.1/Microsoft.Identity.Client.Extensions.Msal.dll",
-        "lib/netcoreapp2.1/Microsoft.Identity.Client.Extensions.Msal.xml",
+        "lib/netcoreapp3.1/Microsoft.Identity.Client.Extensions.Msal.dll",
+        "lib/netcoreapp3.1/Microsoft.Identity.Client.Extensions.Msal.xml",
         "lib/netstandard2.0/Microsoft.Identity.Client.Extensions.Msal.dll",
         "lib/netstandard2.0/Microsoft.Identity.Client.Extensions.Msal.xml",
-        "microsoft.identity.client.extensions.msal.2.19.3.nupkg.sha512",
+        "microsoft.identity.client.extensions.msal.2.31.0.nupkg.sha512",
         "microsoft.identity.client.extensions.msal.nuspec"
       ]
     },
-    "Microsoft.IdentityModel.Abstractions/6.21.0": {
-      "sha512": "XeE6LQtD719Qs2IG7HDi1TSw9LIkDbJ33xFiOBoHbApVw/8GpIBCbW+t7RwOjErUDyXZvjhZliwRkkLb8Z1uzg==",
+    "Microsoft.Identity.Client.NativeInterop/0.13.8": {
+      "sha512": "eccVwaDOan12YJrh6ntIBIXeKTNoWz+af2/c13lhvrDoX0ydVXitCXMJVz0dh2eJK5y2KJ7IfkEvNilB/A9V7A==",
       "type": "package",
-      "path": "microsoft.identitymodel.abstractions/6.21.0",
+      "path": "microsoft.identity.client.nativeinterop/0.13.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/net461/Microsoft.Identity.Client.NativeInterop.props",
+        "buildtransitive/net461/Microsoft.Identity.Client.NativeInterop.targets",
+        "lib/net461/Microsoft.Identity.Client.NativeInterop.dll",
+        "lib/netstandard2.0/Microsoft.Identity.Client.NativeInterop.dll",
+        "microsoft.identity.client.nativeinterop.0.13.8.nupkg.sha512",
+        "microsoft.identity.client.nativeinterop.nuspec",
+        "runtimes/win-arm64/native/msalruntime_arm64.dll",
+        "runtimes/win-x64/native/msalruntime.dll",
+        "runtimes/win-x86/native/msalruntime_x86.dll"
+      ]
+    },
+    "Microsoft.IdentityModel.Abstractions/6.22.0": {
+      "sha512": "iI+9V+2ciCrbheeLjpmjcqCnhy+r6yCoEcid3nkoFWerHgjVuT6CPM4HODUTtUPe1uwks4wcnAujJ8u+IKogHQ==",
+      "type": "package",
+      "path": "microsoft.identitymodel.abstractions/6.22.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3088,7 +3275,7 @@
         "lib/net6.0/Microsoft.IdentityModel.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.IdentityModel.Abstractions.xml",
-        "microsoft.identitymodel.abstractions.6.21.0.nupkg.sha512",
+        "microsoft.identitymodel.abstractions.6.22.0.nupkg.sha512",
         "microsoft.identitymodel.abstractions.nuspec"
       ]
     },
@@ -3246,6 +3433,51 @@
         "lib/netstandard2.0/Microsoft.SqlServer.Server.xml",
         "microsoft.sqlserver.server.1.0.0.nupkg.sha512",
         "microsoft.sqlserver.server.nuspec"
+      ]
+    },
+    "Microsoft.Web.WebView2/1.0.864.35": {
+      "sha512": "V1qyLRiAZ31qmOOCFCjoONgaUfvJRiTHWcJWkT3V7pluM2+P6QAgqmbE4UX7Gt4sh6eN34wqM30OnTZ6HXI/sw==",
+      "type": "package",
+      "path": "microsoft.web.webview2/1.0.864.35",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "WebView2.idl",
+        "WebView2.tlb",
+        "build/Common.targets",
+        "build/Microsoft.Web.WebView2.targets",
+        "build/native/Microsoft.Web.WebView2.targets",
+        "build/native/arm64/WebView2Loader.dll",
+        "build/native/arm64/WebView2Loader.dll.lib",
+        "build/native/arm64/WebView2LoaderStatic.lib",
+        "build/native/include/WebView2.h",
+        "build/native/include/WebView2EnvironmentOptions.h",
+        "build/native/x64/WebView2Loader.dll",
+        "build/native/x64/WebView2Loader.dll.lib",
+        "build/native/x64/WebView2LoaderStatic.lib",
+        "build/native/x86/WebView2Loader.dll",
+        "build/native/x86/WebView2Loader.dll.lib",
+        "build/native/x86/WebView2LoaderStatic.lib",
+        "lib/net45/Microsoft.Web.WebView2.Core.dll",
+        "lib/net45/Microsoft.Web.WebView2.Core.xml",
+        "lib/net45/Microsoft.Web.WebView2.WinForms.dll",
+        "lib/net45/Microsoft.Web.WebView2.WinForms.xml",
+        "lib/net45/Microsoft.Web.WebView2.Wpf.dll",
+        "lib/net45/Microsoft.Web.WebView2.Wpf.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.xml",
+        "microsoft.web.webview2.1.0.864.35.nupkg.sha512",
+        "microsoft.web.webview2.nuspec",
+        "runtimes/win-arm64/native/WebView2Loader.dll",
+        "runtimes/win-x64/native/WebView2Loader.dll",
+        "runtimes/win-x86/native/WebView2Loader.dll",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
     "Microsoft.Win32.Registry/5.0.0": {
@@ -3755,6 +3987,50 @@
         "ref/xamarinwatchos10/_._",
         "system.io.4.3.0.nupkg.sha512",
         "system.io.nuspec"
+      ]
+    },
+    "System.IO.FileSystem.AccessControl/5.0.0": {
+      "sha512": "SxHB3nuNrpptVk+vZ/F+7OHEpoHUIKKMl02bUmYHQr1r+glbZQxs7pRtsf4ENO29TVm2TH3AEeep2fJcy92oYw==",
+      "type": "package",
+      "path": "system.io.filesystem.accesscontrol/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net46/System.IO.FileSystem.AccessControl.dll",
+        "lib/net461/System.IO.FileSystem.AccessControl.dll",
+        "lib/net461/System.IO.FileSystem.AccessControl.xml",
+        "lib/netstandard1.3/System.IO.FileSystem.AccessControl.dll",
+        "lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll",
+        "lib/netstandard2.0/System.IO.FileSystem.AccessControl.xml",
+        "ref/net46/System.IO.FileSystem.AccessControl.dll",
+        "ref/net461/System.IO.FileSystem.AccessControl.dll",
+        "ref/net461/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/System.IO.FileSystem.AccessControl.dll",
+        "ref/netstandard1.3/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/de/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/es/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/fr/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/it/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/ja/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/ko/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/ru/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/zh-hans/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard1.3/zh-hant/System.IO.FileSystem.AccessControl.xml",
+        "ref/netstandard2.0/System.IO.FileSystem.AccessControl.dll",
+        "ref/netstandard2.0/System.IO.FileSystem.AccessControl.xml",
+        "runtimes/win/lib/net46/System.IO.FileSystem.AccessControl.dll",
+        "runtimes/win/lib/net461/System.IO.FileSystem.AccessControl.dll",
+        "runtimes/win/lib/net461/System.IO.FileSystem.AccessControl.xml",
+        "runtimes/win/lib/netstandard1.3/System.IO.FileSystem.AccessControl.dll",
+        "runtimes/win/lib/netstandard2.0/System.IO.FileSystem.AccessControl.dll",
+        "runtimes/win/lib/netstandard2.0/System.IO.FileSystem.AccessControl.xml",
+        "system.io.filesystem.accesscontrol.5.0.0.nupkg.sha512",
+        "system.io.filesystem.accesscontrol.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Memory/4.5.4": {
@@ -4806,6 +5082,9 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
+      "Azure.Extensions.AspNetCore.Configuration.Secrets >= 1.2.2",
+      "Azure.Identity >= 1.10.0",
+      "Azure.Security.KeyVault.Secrets >= 4.5.0",
       "BugTracker.Domain >= 1.0.0",
       "BugTracker.EntityFramework >= 1.0.0",
       "FontAwesome.WPF >= 4.7.0.9",
@@ -4863,6 +5142,18 @@
       "net6.0-windows7.0": {
         "targetAlias": "net6.0-windows",
         "dependencies": {
+          "Azure.Extensions.AspNetCore.Configuration.Secrets": {
+            "target": "Package",
+            "version": "[1.2.2, )"
+          },
+          "Azure.Identity": {
+            "target": "Package",
+            "version": "[1.10.0, )"
+          },
+          "Azure.Security.KeyVault.Secrets": {
+            "target": "Package",
+            "version": "[4.5.0, )"
+          },
           "FontAwesome.WPF": {
             "target": "Package",
             "version": "[4.7.0.9, )"

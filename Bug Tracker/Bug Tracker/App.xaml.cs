@@ -1,4 +1,7 @@
-﻿using Bug_Tracker.State;
+﻿using Azure.Core;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
@@ -27,6 +30,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using static Bug_Tracker.ViewModels.ViewModelBase;
+using static System.Net.WebRequestMethods;
 
 namespace Bug_Tracker
 {
@@ -45,14 +49,15 @@ namespace Bug_Tracker
         public static IHostBuilder CreateHostBuilder(string[] args = null)
         {
             return Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(c =>
+                .ConfigureAppConfiguration(configurationBuilder =>
                 {
-                    c.AddJsonFile("appsettings.json");
+                    configurationBuilder.AddJsonFile("appsettings.json");
+
                 })
                 .ConfigureServices((context, services) =>
                 {
                     //gets the database we are using from the appsettings.json file connection string
-                    string connectionString = context.Configuration.GetConnectionString("sqlite");
+                    string connectionString = context.Configuration.GetConnectionString("SQLite");
 
                     //Registering the DbContext and its options
                     services.AddDbContext<BugTrackerDbContext>(options =>

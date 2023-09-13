@@ -46,7 +46,7 @@ namespace BugTracker.EntityFramework.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.Project", b =>
@@ -68,7 +68,7 @@ namespace BugTracker.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.ProjectUser", b =>
@@ -92,7 +92,7 @@ namespace BugTracker.EntityFramework.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProjectUsers", (string)null);
+                    b.ToTable("ProjectUsers");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.Ticket", b =>
@@ -138,7 +138,7 @@ namespace BugTracker.EntityFramework.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.User", b =>
@@ -168,7 +168,7 @@ namespace BugTracker.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BugTracker.Domain.Models.Comment", b =>

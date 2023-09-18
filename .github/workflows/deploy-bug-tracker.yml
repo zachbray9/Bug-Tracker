@@ -6,7 +6,7 @@ on:
       - "Bug-Tracker/v*"
 
 env:
-  PROJECT_PATH: Bug\ Tracker/Bug\ Tracker/Bug\ Tracker.csproj
+  PROJECT_PATH: Bug Tracker/Bug Tracker/Bug Tracker.csproj
 
 jobs:
   deploy:
@@ -18,11 +18,11 @@ jobs:
         with:
           dotnet-version: 6.x
 
-      - run: dotnet restore ${{ env.PROJECT_PATH }}
+      - run: dotnet restore "${{ env.PROJECT_PATH }}"
 
-      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+      - run: dotnet build "${{ env.PROJECT_PATH }}" -c Release --no-restore
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r winx64
+      - run: dotnet publish "${{ env.PROJECT_PATH }}" -c Release --self-contained -r winx64
 
       - uses: actions/create-release@v1
         id: create_release

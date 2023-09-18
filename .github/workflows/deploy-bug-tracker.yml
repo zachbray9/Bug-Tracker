@@ -6,7 +6,7 @@ on:
       - "Bug-Tracker/v*"
 
 env:
-  PROJECT_PATH: Bug Tracker/Bug Tracker.csproj
+  PROJECT_PATH: Bug Tracker/Bug Tracker/Bug Tracker.csproj
 
 jobs:
   deploy:

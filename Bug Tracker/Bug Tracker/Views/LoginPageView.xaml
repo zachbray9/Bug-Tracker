@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
 
       
-        <Border Grid.Row="1" Grid.Column="1" Width="500" Height="525" Background="WhiteSmoke" CornerRadius="8">
+        <Border Grid.Row="1" Grid.Column="1" Width="500" Height="475" Background="WhiteSmoke" CornerRadius="8">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -60,19 +60,13 @@
                     <Button x:Name="loginButton" Style="{StaticResource GenericButton}" Content="Sign In" Click="loginButton_Click" IsDefault="True" IsTabStop="True" TabIndex="2" Height="35" VerticalAlignment="Top" Margin="50, 0, 50, 20" Background="#7b68ee" Foreground="White"/>
                 </StackPanel>
 
-                <Grid Grid.Row="3" Margin="0, 50, 0, 0">
+                <Grid Grid.Row="3" Margin="0, 30, 0, 0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5" Visibility="Collapsed">
-                        <TextBlock Text="Forgot your " Foreground="DimGray" FontFamily="Arial"/>
-                        <TextBlock Text="Password?" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial"  Cursor="Hand"/>
-                    </StackPanel>
-
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
                         <TextBlock Text="Create an account? " Foreground="DimGray" FontFamily="Arial"/>
                         <TextBlock Text="Sign Up" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial"  Cursor="Hand">
                             <TextBlock.InputBindings>
@@ -81,7 +75,7 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5" Visibility="Collapsed">
                         <TextBlock Text="Sign in as a " Foreground="DimGray" FontFamily="Arial"/>
                         <TextBlock  Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial" Cursor="Hand">
                             <TextBlock.InputBindings>

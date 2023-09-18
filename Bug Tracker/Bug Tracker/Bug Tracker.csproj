@@ -5,6 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>Bug_Tracker</RootNamespace>
     <UseWPF>true</UseWPF>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UserSecretsId>889f2bca-a94e-49d7-a0a9-41b3baa0dd37</UserSecretsId>
   </PropertyGroup>

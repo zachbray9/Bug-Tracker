@@ -21,6 +21,16 @@ namespace Bug_Tracker.ViewModels
         private readonly IUserService UserDataService;
 
         public User CurrentUser { get => Authenticator.CurrentUser; }
+        public bool IsDemoUser
+        {
+            get
+            {
+                if (string.Compare(CurrentUser.Email, "test@gmail.com", StringComparison.OrdinalIgnoreCase) == 0)
+                    return true;
+
+                return false;
+            }
+        }
 
         public AccountPageViewModel(IAuthenticator authenticator, IUserService userDataService)
         {
@@ -53,7 +63,7 @@ namespace Bug_Tracker.ViewModels
         {
             get
             {
-                if (FirstNameTextboxText != CurrentUser.FirstName)
+                if (FirstNameTextboxText != CurrentUser.FirstName && !IsDemoUser)
                     return true;
 
                 return false;  
@@ -78,7 +88,7 @@ namespace Bug_Tracker.ViewModels
         {
             get
             {
-                if (LastNameTextboxText != CurrentUser.LastName)
+                if (LastNameTextboxText != CurrentUser.LastName && !IsDemoUser)
                     return true;
 
                 return false;
@@ -102,7 +112,7 @@ namespace Bug_Tracker.ViewModels
         {
             get
             {
-                if (EmailTextboxText != CurrentUser.Email)
+                if (EmailTextboxText != CurrentUser.Email && !IsDemoUser)
                     return true;
 
                 return false;

@@ -26,9 +26,8 @@ namespace Bug_Tracker.ViewModels
             Navigator = navigator;
 
             AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator);
+            LoginAsDemoUserCommand = new LoginAsDemoUserCommand(this, Authenticator, Navigator);
             //RecoverPasswordCommand = new RecoverPasswordCommand();
-            //CreateAccountCommand = new CreateAccountCommand(this, Authenticator);
-            LoginAsDemoUserCommand = new LoginAsDemoUserCommand();
 
             loginErrorText = string.Empty;
         }
@@ -73,8 +72,7 @@ namespace Bug_Tracker.ViewModels
         }
 
         public ICommand AttemptLoginCommand { get; }
-        //public ICommand RecoverPasswordCommand { get; }
-        //public ICommand CreateAccountCommand { get; }
         public ICommand LoginAsDemoUserCommand { get; }
+        //public ICommand RecoverPasswordCommand { get; }
     }
 }

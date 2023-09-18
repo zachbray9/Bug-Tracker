@@ -1,4 +1,7 @@
-﻿using Bug_Tracker.ViewModels;
+﻿using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Navigators;
+using Bug_Tracker.ViewModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +12,28 @@ namespace Bug_Tracker.Commands
 {
     public class LoginAsDemoUserCommand : CommandBase
     {
+        private readonly LoginPageViewModel LoginPageViewModel;
+        private readonly IAuthenticator Authenticator;
+        private readonly INavigator Navigator;
 
-        public LoginAsDemoUserCommand()
+        public LoginAsDemoUserCommand(LoginPageViewModel loginPageViewModel, IAuthenticator authenticator, INavigator navigator)
         {
-           
+            LoginPageViewModel = loginPageViewModel;
+            Authenticator = authenticator;
+            Navigator = navigator;
         }
 
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            bool success = await Authenticator.Login("test@gmail.com", "testPassword");
+            if (success)
+            {
+                Navigator.Navigate(ViewType.ProjectsPage);
+            }
+            else
+            {
+                LoginPageViewModel.LoginErrorText = "Your email and/or password is incorrect.";
+            }
         }
     }
 }

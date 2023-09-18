@@ -67,7 +67,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 5, 0, 5" Visibility="Collapsed">
                         <TextBlock Text="Forgot your " Foreground="DimGray" FontFamily="Arial"/>
                         <TextBlock Text="Password?" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial"  Cursor="Hand"/>
                     </StackPanel>
@@ -85,7 +85,7 @@
                         <TextBlock Text="Sign in as a " Foreground="DimGray" FontFamily="Arial"/>
                         <TextBlock  Text="Demo User" TextDecorations="Underline" Foreground="DarkSlateGray" FontFamily="Arial" Cursor="Hand">
                             <TextBlock.InputBindings>
-                                <MouseBinding Command="" MouseAction="LeftClick" CommandParameter="{x:Static nav:ViewType.CreateAccountPage}"/>
+                                <MouseBinding Command="{Binding LoginAsDemoUserCommand}" MouseAction="LeftClick"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>

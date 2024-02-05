@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.EntityFramework"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.Domain.UnitTests", "BugTracker.Domain.UnitTests\BugTracker.Domain.UnitTests.csproj", "{22C761FF-514A-4680-BD86-500F46BE0EA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTracker.Api", "BugTracker.Api\BugTracker.Api.csproj", "{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{22C761FF-514A-4680-BD86-500F46BE0EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22C761FF-514A-4680-BD86-500F46BE0EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22C761FF-514A-4680-BD86-500F46BE0EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

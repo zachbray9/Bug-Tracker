@@ -340,7 +340,6 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\hostfxr.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\hostpolicy.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\mscordaccore.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\mscordaccore_amd64_amd64_6.0.1222.56807.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\mscordbi.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\mscorrc.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\msquic.dll
@@ -623,3 +622,4 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\Bug Tracker.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\Bug Tracker.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\ref\Bug Tracker.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\mscordaccore_amd64_amd64_6.0.2223.42425.dll

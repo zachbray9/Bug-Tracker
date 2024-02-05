@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OUuQ+3WC72kgKEQQouDz5VQodYqIG3ML0Gc3Fs+drF6cGgJzY29w7grYJ1mW7Q9nhuS6Hb4alOz/JehpZKQ7+A==",
+  "dgSpecHash": "HVeQTHV3jZqIPT7ugsR3FLMHmG9DrhC65fauZ+9zQWpHeZkK4w0qhoIMHY6eW616Ik56BCbca4ojxh/9yeii8Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Domain.UnitTests\\BugTracker.Domain.UnitTests.csproj",
   "expectedPackageFiles": [

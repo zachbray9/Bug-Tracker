@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BugTracker.Domain\BugTracker.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

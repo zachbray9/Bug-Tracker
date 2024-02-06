@@ -5,7 +5,6 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Identity.Client;
 
 namespace BugTracker.Api.Controllers
 {
@@ -171,8 +170,6 @@ namespace BugTracker.Api.Controllers
             await DbContext.SaveChangesAsync();
 
             return Ok("User was successfully deleted.");
-
-
         }
 
         

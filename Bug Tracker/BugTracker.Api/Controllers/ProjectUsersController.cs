@@ -61,7 +61,7 @@ namespace BugTracker.Api.Controllers
         public async Task<IActionResult> Create([FromBody] ProjectUserDTO projectUserDTO)
         {
             if (projectUserDTO == null)
-                return BadRequest("The user object you are trying to pass is null.");
+                return BadRequest("The ProjectUser object you are trying to pass is null.");
 
             if (await DbContext.ProjectUsers.AnyAsync(pu => pu.Id == projectUserDTO.Id && pu.ProjectId == projectUserDTO.ProjectId))
                 return Conflict("This user is already a member of this project.");
@@ -75,14 +75,14 @@ namespace BugTracker.Api.Controllers
             EntityEntry<ProjectUser> newProjectUser = await DbContext.ProjectUsers.AddAsync(projectUser);
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Users/{projectUserDTO.Id}", Mapper.Map<ProjectUserDTO>(newProjectUser.Entity));
+            return Created($"~/api/ProjectUsers/{projectUserDTO.Id}", Mapper.Map<ProjectUserDTO>(newProjectUser.Entity));
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ProjectUserDTO projectUserDTO)
         {
             if (projectUserDTO == null)
-                return BadRequest("The user object you are trying to pass is null.");
+                return BadRequest("The ProjectUser object you are trying to pass is null.");
 
             ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(u => u.Id == projectUserDTO.Id);
             if (projectUser == null)

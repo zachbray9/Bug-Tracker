@@ -54,7 +54,7 @@ namespace Bug_Tracker.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Bug Tracker;component/views/createnewprojectpageview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Bug Tracker;V1.0.0.0;component/views/createnewprojectpageview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\CreateNewProjectPageView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

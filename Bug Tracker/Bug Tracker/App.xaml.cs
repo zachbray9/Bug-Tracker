@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
+﻿using Bug_Tracker.Services.Api;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
@@ -10,27 +8,17 @@ using Bug_Tracker.ViewModels.Factories;
 using BugTracker.Domain.Enumerables.Enum_Converters;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services;
+using BugTracker.Domain.Services.Api;
 using BugTracker.Domain.Services.AuthenticationServices;
-using BugTracker.EntityFramework;
-using BugTracker.EntityFramework.Services;
 using Microsoft.AspNet.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 using static Bug_Tracker.ViewModels.ViewModelBase;
-using static System.Net.WebRequestMethods;
 
 namespace Bug_Tracker
 {
@@ -56,29 +44,17 @@ namespace Bug_Tracker
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    //gets the database we are using from the appsettings.json file connection string
-                    string connectionString = context.Configuration.GetConnectionString("SQLite");
-
-                    //Registering the DbContext and its options
-                    services.AddDbContext<BugTrackerDbContext>(options =>
-                    {
-                        options.UseSqlite(connectionString);
-                        options.EnableSensitiveDataLogging(true);
-                        options.UseLazyLoadingProxies();
-                    }, ServiceLifetime.Scoped);
-
-                    services.AddSingleton<BugTrackerDbContextFactory>(new BugTrackerDbContextFactory(connectionString));
-
                     //Registering all of my services
+                    services.AddHttpClient();
+
                     services.AddScoped<INavigator, Navigator>();
                     services.AddScoped<IAuthenticator, Authenticator>();
                     services.AddScoped<IProjectContainer, ProjectContainer>();
                     services.AddScoped<IAuthenticationService, AuthenticationService>();
-                    services.AddScoped<IUserService, UserDataService>();
-                    services.AddScoped<IDataService<Project>, GenericDataService<Project>>();
-                    services.AddScoped<IDataService<ProjectUser>, GenericDataService<ProjectUser>>();
-                    services.AddScoped<IDataService<Ticket>, GenericDataService<Ticket>>();
-                    services.AddScoped<IDataService<Comment>, GenericDataService<Comment>>();
+                    services.AddScoped<IApiService<UserDTO>, UserApiService>();
+                    services.AddScoped<IApiService<ProjectUserDTO>, ProjectUserApiService>();
+                    services.AddScoped<IApiService<ProjectDTO>, ProjectApiService>();
+                    services.AddScoped<IApiService<TicketDTO>, TicketApiService>();
                     services.AddSingleton<IPasswordHasher, PasswordHasher>();
                     services.AddSingleton<StatusOptionsRetriever>();
                     services.AddSingleton<ProjectRoleOptionsRetriever>();

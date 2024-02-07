@@ -1,12 +1,6 @@
 ﻿using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bug_Tracker.Commands
 {

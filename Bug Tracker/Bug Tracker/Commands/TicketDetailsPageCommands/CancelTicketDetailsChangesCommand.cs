@@ -1,11 +1,6 @@
 ﻿using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 {
@@ -13,7 +8,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
     {
         private readonly TicketDetailsPageViewModel ViewModel;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
-        private Ticket CurrentTicket { get => ViewModel.CurrentTicket; }
+        private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
         public CancelTicketDetailsChangesCommand(TicketDetailsPageViewModel viewModel, StatusOptionsRetriever statusOptionsRetriever)
         {

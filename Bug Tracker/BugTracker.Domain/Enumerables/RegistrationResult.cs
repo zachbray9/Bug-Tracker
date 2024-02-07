@@ -1,11 +1,10 @@
-﻿using BugTracker.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BugTracker.Domain.Services
+namespace BugTracker.Domain.Enumerables
 {
     public enum RegistrationResult
     {
@@ -15,10 +14,5 @@ namespace BugTracker.Domain.Services
         InputFieldIsNull,
         NameContainsSpecialCharacter,
         EmailFormatIsInvalid
-    }
-    public interface IUserService : IDataService<User>
-    {
-        Task<User> GetByEmail(string email);
-        Task<User> GetByFullName(string name);
     }
 }

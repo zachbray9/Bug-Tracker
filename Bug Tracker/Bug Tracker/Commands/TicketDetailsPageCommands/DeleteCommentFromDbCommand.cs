@@ -1,27 +1,23 @@
 ﻿using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using System;
-using System.Collections.Generic;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 {
     public class DeleteCommentFromDbCommand : CommandBase
     {
-        private readonly IDataService<Ticket> TicketDataService;
-        private readonly IDataService<Comment> CommentDataService;
+        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly IApiService<CommentDTO> CommentApiService;
         private readonly TicketDetailsPageViewModel ViewModel;
-        private Ticket CurrentTicket { get => ViewModel.CurrentTicket; }
+        private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
-        public DeleteCommentFromDbCommand(IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, TicketDetailsPageViewModel viewModel)
+        public DeleteCommentFromDbCommand(IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, TicketDetailsPageViewModel viewModel)
         {
-            TicketDataService = ticketDataService;
-            CommentDataService = commentDataService;
+            TicketApiService = ticketApiService;
+            CommentApiService = commentApiService;
             ViewModel = viewModel;
         }
 
@@ -30,9 +26,9 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             MessageBoxResult result = MessageBox.Show("Once you delete, it's gone for good.", "Delete this comment?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                Comment commentToDelete = (Comment)parameter;
-                await CommentDataService.Delete(commentToDelete.Id);
-                ViewModel.Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+                CommentDTO commentToDelete = (CommentDTO)parameter;
+                await CommentApiService.DeleteById(commentToDelete.Id);
+                ViewModel.Comments = new ObservableCollection<CommentDTO>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
             }
         }
     }

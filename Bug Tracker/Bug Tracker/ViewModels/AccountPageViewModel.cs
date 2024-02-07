@@ -1,26 +1,19 @@
 ﻿using Bug_Tracker.Commands.AccountCommands;
 using Bug_Tracker.State.Authenticators;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using BugTracker.EntityFramework.Services;
-using Microsoft.IdentityModel.Tokens;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace Bug_Tracker.ViewModels
 {
     public class AccountPageViewModel : ViewModelBase
     {
         private readonly IAuthenticator Authenticator;
-        private readonly IUserService UserDataService;
+        private readonly IUserApiService UserApiService;
 
-        public User CurrentUser { get => Authenticator.CurrentUser; }
+        public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
         public bool IsDemoUser
         {
             get
@@ -32,17 +25,17 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public AccountPageViewModel(IAuthenticator authenticator, IUserService userDataService)
+        public AccountPageViewModel(IAuthenticator authenticator, IUserApiService userApiService)
         {
             Authenticator = authenticator;
-            UserDataService = userDataService;      
+            UserApiService = userApiService;      
 
             firstNameTextboxText = CurrentUser.FirstName;
             lastNameTextboxText = CurrentUser.LastName;
             emailTextboxText = CurrentUser.Email;
 
             CancelAccountEditCommand = new CancelAccountEditCommand(this);
-            SaveAccountEditChangesCommand = new SaveAccountEditChangesCommand(UserDataService, this);
+            SaveAccountEditChangesCommand = new SaveAccountEditChangesCommand(UserApiService, this);
         }
 
         //first name properties

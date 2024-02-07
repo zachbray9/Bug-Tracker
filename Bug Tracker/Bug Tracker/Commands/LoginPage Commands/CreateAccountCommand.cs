@@ -1,15 +1,7 @@
 ﻿using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Services;
-using BugTracker.Domain.Services.AuthenticationServices;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Enumerables;
 using System.Windows;
 
 namespace Bug_Tracker.Commands

@@ -1,22 +1,12 @@
 ﻿using BugTracker.Domain.Models;
 using Bug_Tracker.State.Authenticators;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Bug_Tracker.State.Navigators;
-using Microsoft.EntityFrameworkCore.Internal;
-using BugTracker.EntityFramework;
-using System.ComponentModel;
-using BugTracker.Domain.Services;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Windows.Input;
 using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Security.RightsManagement;
+using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -25,8 +15,8 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
-        private ObservableCollection<Project> projects;
-        public ObservableCollection<Project> Projects
+        private ObservableCollection<ProjectDTO> projects;
+        public ObservableCollection<ProjectDTO> Projects
         {
             get { return projects; }
             set
@@ -36,8 +26,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Project> projectSearchResults;
-        public ObservableCollection<Project> ProjectSearchResults
+        private ObservableCollection<ProjectDTO> projectSearchResults;
+        public ObservableCollection<ProjectDTO> ProjectSearchResults
         {
             get { return projectSearchResults; }
             set
@@ -52,11 +42,11 @@ namespace Bug_Tracker.ViewModels
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            Projects = new ObservableCollection<Project>();
+            Projects = new ObservableCollection<ProjectDTO>();
             ViewProjectDetailsCommand = new ViewProjectDetailsCommand(Navigator, ProjectContainer);
 
             UpdateProjects();
-            ProjectSearchResults = new ObservableCollection<Project>(Projects);
+            ProjectSearchResults = new ObservableCollection<ProjectDTO>(Projects);
             
         }
 
@@ -76,7 +66,7 @@ namespace Bug_Tracker.ViewModels
         {
             Projects.Clear();
 
-            foreach(ProjectUser projectUser in Authenticator.CurrentUser.ProjectUsers)
+            foreach(ProjectUserDTO projectUser in Authenticator.CurrentUser.ProjectUsers)
             {
                 Projects.Add(projectUser.Project);
             }
@@ -86,7 +76,7 @@ namespace Bug_Tracker.ViewModels
         {
             ProjectSearchResults.Clear();
 
-            foreach(Project project in Projects)
+            foreach(ProjectDTO project in Projects)
             {
                 if(project.Name.Contains(ProjectSearchQuery, StringComparison.OrdinalIgnoreCase))
                 {

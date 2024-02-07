@@ -1,11 +1,6 @@
 ﻿using Bug_Tracker.State;
 using Bug_Tracker.State.Navigators;
-using BugTracker.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
@@ -20,7 +15,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         }
         public override void Execute(object parameter)
         {
-            Project project = (Project)parameter;
+            ProjectDTO project = (ProjectDTO)parameter;
             if (project != null)
             {
                 ProjectContainer.CurrentProject = project;

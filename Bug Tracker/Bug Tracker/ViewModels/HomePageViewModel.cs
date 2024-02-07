@@ -1,10 +1,5 @@
 ﻿using Bug_Tracker.State.Authenticators;
-using BugTracker.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -12,7 +7,7 @@ namespace Bug_Tracker.ViewModels
     {
         private readonly IAuthenticator Authenticator;
 
-        public User User 
+        public UserDTO User 
         {
             get => Authenticator.CurrentUser;
         }

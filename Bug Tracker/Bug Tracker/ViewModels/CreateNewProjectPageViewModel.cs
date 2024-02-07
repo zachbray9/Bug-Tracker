@@ -2,22 +2,17 @@
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using BugTracker.EntityFramework;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
 {
     public class CreateNewProjectPageViewModel : ViewModelBase
     {
-        private readonly BugTrackerDbContext DbContext;
-        private readonly IDataService<Project> ProjectDataService; 
-        private readonly IDataService<ProjectUser> ProjectUserDataService;
+        private readonly IApiService<ProjectDTO> ProjectApiService; 
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         public IAuthenticator Authenticator { get; }
         public INavigator Navigator { get; }
 
@@ -42,15 +37,14 @@ namespace Bug_Tracker.ViewModels
             set { dateCreated = value; }
         }
 
-        public CreateNewProjectPageViewModel(BugTrackerDbContext dbContext, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, IAuthenticator authenticator, INavigator navigator)
+        public CreateNewProjectPageViewModel(IApiService<ProjectDTO> projectApiService, IApiService<ProjectUserDTO> projectUserApiService, IAuthenticator authenticator, INavigator navigator)
         {
-            DbContext = dbContext; 
-            ProjectDataService = projectDataService;
-            ProjectUserDataService = projectUserDataService;
+            ProjectApiService = projectApiService;
+            ProjectUserApiService = projectUserApiService;
             Authenticator = authenticator;
             Navigator = navigator;
 
-            CreateNewProjectCommand = new CreateNewProjectCommand(DbContext, ProjectDataService, ProjectUserDataService, Navigator, this);
+            CreateNewProjectCommand = new CreateNewProjectCommand(ProjectApiService, ProjectUserApiService, Navigator, this);
         }
 
         public ICommand CreateNewProjectCommand { get; }

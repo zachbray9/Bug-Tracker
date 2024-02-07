@@ -1,14 +1,9 @@
-﻿using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
+﻿using BugTracker.Domain.Enumerables;
+using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.AuthenticationServices;
-using Microsoft.Identity.Client;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Bug_Tracker.State.Authenticators
 {
@@ -18,8 +13,8 @@ namespace Bug_Tracker.State.Authenticators
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private User currentUser;
-        public User CurrentUser
+        private UserDTO currentUser;
+        public UserDTO CurrentUser
         {
             get
             {

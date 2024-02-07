@@ -1,28 +1,24 @@
 ﻿using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 {
     public class SaveTicketDetailsChangesCommand : CommandBase
     {
-        private readonly IDataService<Ticket> TicketDataService;
+        private readonly IApiService<TicketDTO> TicketApiService;
         private readonly TicketDetailsPageViewModel ViewModel;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
 
-        private Ticket CurrentTicket { get => ViewModel.CurrentTicket; }
+        private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
-        public SaveTicketDetailsChangesCommand(IDataService<Ticket> ticketDataService, TicketDetailsPageViewModel viewModel, StatusOptionsRetriever statusOptionsRetriever)
+        public SaveTicketDetailsChangesCommand(IApiService<TicketDTO> ticketApiService, TicketDetailsPageViewModel viewModel, StatusOptionsRetriever statusOptionsRetriever)
         {
-            TicketDataService = ticketDataService;
+            TicketApiService = ticketApiService;
             ViewModel = viewModel;
             StatusOptionsRetriever = statusOptionsRetriever;
         }
@@ -31,19 +27,21 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
         {
             CurrentTicket.Title = ViewModel.TicketTitle;
             CurrentTicket.Description = ViewModel.TicketDescription;
-            CurrentTicket.Assignee = ViewModel.Assignee;
-            CurrentTicket.Author = ViewModel.Reporter;
+            CurrentTicket.AssigneeId = ViewModel.Assignee.Id;
+            CurrentTicket.AuthorId = ViewModel.Reporter.Id;
             CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(ViewModel.TicketStatus);
 
             try
             {
-                await TicketDataService.Update(CurrentTicket.Id, CurrentTicket);
+                await TicketApiService.Update(CurrentTicket);
                 System.Diagnostics.Debug.WriteLine("Changes have been saved");
 
                 ViewModel.TicketTitle = CurrentTicket.Title;
                 ViewModel.TicketDescription = CurrentTicket.Description;
-                ViewModel.SetAssigneeWithoutExecutingSaveCommand(CurrentTicket.Assignee);
-                ViewModel.SetReporterWithoutExecutingSaveCommand(CurrentTicket.Author);
+
+               
+                //await ViewModel.SetAssigneeWithoutExecutingSaveCommand(CurrentTicket.AssigneeId);
+                //await ViewModel.SetReporterWithoutExecutingSaveCommand(CurrentTicket.AuthorId);
                 ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
             }
             catch (Exception ex)

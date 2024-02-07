@@ -5,15 +5,11 @@ using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using BugTracker.EntityFramework;
-using Microsoft.EntityFrameworkCore.Internal;
-using System;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
@@ -23,31 +19,31 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
-        private readonly IDataService<Ticket> TicketService;
+        private readonly IApiService<TicketDTO> TicketApiService;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
         public Dictionary<Status, string> StatusOptionsDictionary { get => StatusOptionsRetriever.StatusOptionsDictionary; }
 
-        public User CurrentUser { get => Authenticator.CurrentUser; }
+        public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService, StatusOptionsRetriever statusOptionsRetriever)
+        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IApiService<TicketDTO> ticketApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            TicketService = ticketService;
+            TicketApiService = ticketApiService;
             StatusOptionsRetriever = statusOptionsRetriever;
 
             if(ProjectContainer.CurrentProject.ProjectUsers != null)
             {
-                ProjectUsers = new ObservableCollection<ProjectUser>(ProjectContainer.CurrentProject.ProjectUsers);
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>(ProjectContainer.CurrentProject.ProjectUsers);
             }
             else
             {
-                ProjectUsers = new ObservableCollection<ProjectUser>();
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
-            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketService, this);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketApiService, this);
         }
 
         private string ticketTitle;
@@ -96,8 +92,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<ProjectUser> projectUsers;
-        public ObservableCollection<ProjectUser> ProjectUsers
+        private ObservableCollection<ProjectUserDTO> projectUsers;
+        public ObservableCollection<ProjectUserDTO> ProjectUsers
         {
             get { return projectUsers; }
             set

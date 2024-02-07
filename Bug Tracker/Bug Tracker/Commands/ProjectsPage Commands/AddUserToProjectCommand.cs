@@ -3,51 +3,46 @@ using Bug_Tracker.Utility_Classes;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
     public class AddUserToProjectCommand : CommandBase
     {
-        private readonly IUserService UserDataService;
-        private readonly IDataService<ProjectUser> ProjectUserDataService;
+        private readonly IUserApiService UserApiService;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         private readonly IProjectContainer ProjectContainer;
         private readonly AddUserToProjectPopupViewModel AddUserViewModel;
 
-        private Project CurrentProject { get => ProjectContainer.CurrentProject; }
+        private ProjectDTO CurrentProject { get => ProjectContainer.CurrentProject; }
         private UserSearchResult SelectedUser { get => AddUserViewModel.SelectedUser; }
         private string SearchQuery { get => AddUserViewModel.SearchQuery; }
         private ProjectRole SelectedRole { get => AddUserViewModel.SelectedProjectRoleAsEnum; }
 
-        public AddUserToProjectCommand(IUserService userDataService, IDataService<ProjectUser> projectUserDataService, IProjectContainer projectContainer, AddUserToProjectPopupViewModel addUserViewModel)
+        public AddUserToProjectCommand(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IProjectContainer projectContainer, AddUserToProjectPopupViewModel addUserViewModel)
         {
-            UserDataService = userDataService;
-            ProjectUserDataService = projectUserDataService;
+            UserApiService = userApiService;
+            ProjectUserApiService = projectUserApiService;
             ProjectContainer = projectContainer;
             AddUserViewModel = addUserViewModel;
         }
 
         public override async void Execute(object parameter)
         {
-            User userToAdd = null;
+            UserDTO userToAdd = null;
 
             if(SearchQuery != null)
             {
                 if(SearchQuery.Contains("@"))
                 {
-                    userToAdd = await UserDataService.GetByEmail(SearchQuery);
+                    userToAdd = await UserApiService.GetByEmail(SearchQuery);
                 }
                 else
                 {
-                    userToAdd = await UserDataService.GetByFullName(SearchQuery);
+                    userToAdd = await UserApiService.GetByFullName(SearchQuery);
                 }
             }
             else
@@ -59,7 +54,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             
             if(userToAdd != null)
             {
-                ProjectUser newProjectUser = new ProjectUser()
+                ProjectUserDTO newProjectUser = new ProjectUserDTO()
                 {
                     UserId = userToAdd.Id,
                     ProjectId = CurrentProject.Id,
@@ -73,7 +68,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                     return;
                 }
 
-                await ProjectUserDataService.Create(newProjectUser);
+                await ProjectUserApiService.Create(newProjectUser);
                 AddUserViewModel.IsPopupOpen = false;
             }
             else

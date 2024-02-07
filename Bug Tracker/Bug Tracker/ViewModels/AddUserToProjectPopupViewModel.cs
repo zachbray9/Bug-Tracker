@@ -4,22 +4,19 @@ using Bug_Tracker.Utility_Classes;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.Enum_Converters;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using Microsoft.IdentityModel.Tokens;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
 {
     public class AddUserToProjectPopupViewModel : ViewModelBase
     {
-        private readonly IUserService UserDataService;
-        private readonly IDataService<ProjectUser> ProjectUserDataService;
+        private readonly IUserApiService UserApiService;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         private readonly IProjectContainer ProjectContainer;
         private readonly ProjectRoleOptionsRetriever ProjectRoleOptionsRetriever;
 
@@ -37,16 +34,16 @@ namespace Bug_Tracker.ViewModels
         }
 
 
-        public AddUserToProjectPopupViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserDataService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
+        public AddUserToProjectPopupViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
         {
-            UserDataService = userDataService;
-            ProjectUserDataService = projectUserDataService;
+            UserApiService = userApiService;
+            ProjectUserApiService = projectUserApiService;
             ProjectContainer = projectContainer;
             ProjectRoleOptionsRetriever = projectRoleOptionsRetriever;
 
             SelectedProjectRoleAsString = ProjectRoleOptionsRetriever.ConvertProjectRoleEnumToString(ProjectRole.Developer);
 
-            AddUserToProjectCommand = new AddUserToProjectCommand(UserDataService, ProjectUserDataService, ProjectContainer, this);
+            AddUserToProjectCommand = new AddUserToProjectCommand(UserApiService, ProjectUserApiService, ProjectContainer, this);
             CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
         }
 
@@ -130,7 +127,7 @@ namespace Bug_Tracker.ViewModels
                 return;
             }
 
-            IEnumerable<User> AllUsers = await UserDataService.GetAll();
+            IEnumerable<UserDTO> AllUsers = await UserApiService.GetAll();
             foreach(var user in AllUsers)
             {
 

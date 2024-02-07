@@ -2,17 +2,11 @@
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
-using BugTracker.Domain.Enumerables;
-using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models;
-using Microsoft.IdentityModel.Tokens;
+using BugTracker.Domain.Models.DTOs;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
@@ -23,15 +17,15 @@ namespace Bug_Tracker.ViewModels
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
 
-        private User CurrentUser { get => Authenticator.CurrentUser; }
+        private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
         public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            Tickets = new ObservableCollection<Ticket>();
-            TicketSearchResults = new ObservableCollection<Ticket>();
+            Tickets = new ObservableCollection<TicketDTO>();
+            TicketSearchResults = new ObservableCollection<TicketDTO>();
 
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
 
@@ -51,8 +45,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> tickets;
-        public ObservableCollection<Ticket> Tickets
+        private ObservableCollection<TicketDTO> tickets;
+        public ObservableCollection<TicketDTO> Tickets
         {
             get { return tickets; }
             set
@@ -62,8 +56,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> ticketSearchResults;
-        public ObservableCollection<Ticket> TicketSearchResults
+        private ObservableCollection<TicketDTO> ticketSearchResults;
+        public ObservableCollection<TicketDTO> TicketSearchResults
         {
             get { return ticketSearchResults; }
             set
@@ -80,16 +74,16 @@ namespace Bug_Tracker.ViewModels
             if (CurrentUser.ProjectUsers != null)
             {
                 //Adds all authored and assigned tickets into a list (will contain duplicates if any ticket is authored and assigned by the current user)
-                List<Ticket> allTicketsWithDuplicates = new List<Ticket>();
-                foreach(ProjectUser projectUser in CurrentUser.ProjectUsers)
+                List<TicketDTO> allTicketsWithDuplicates = new List<TicketDTO>();
+                foreach(ProjectUserDTO projectUser in CurrentUser.ProjectUsers)
                 {
                     allTicketsWithDuplicates.AddRange(projectUser.AuthoredTickets);
                     allTicketsWithDuplicates.AddRange(projectUser.AssignedTickets);
                 }
 
                 //Creates a new list and checks if the new list already contains each ticket. If it doesn't contain the ticket, then the ticket is added.
-                List<Ticket> allTicketsWithoutDuplicates = new List<Ticket>();
-                foreach(Ticket ticket in allTicketsWithDuplicates)
+                List<TicketDTO> allTicketsWithoutDuplicates = new List<TicketDTO>();
+                foreach(TicketDTO ticket in allTicketsWithDuplicates)
                 {
                     if(!allTicketsWithoutDuplicates.Contains(ticket))
                     {
@@ -97,7 +91,7 @@ namespace Bug_Tracker.ViewModels
                     }
                 }
 
-                Tickets = new ObservableCollection<Ticket>(allTicketsWithoutDuplicates.OrderBy(ticket => ticket.Status));
+                Tickets = new ObservableCollection<TicketDTO>(allTicketsWithoutDuplicates.OrderBy(ticket => ticket.Status));
             }
         }
 
@@ -105,7 +99,7 @@ namespace Bug_Tracker.ViewModels
         {
             TicketSearchResults.Clear();
 
-            foreach(Ticket ticket in Tickets)
+            foreach(TicketDTO ticket in Tickets)
             {
                 if(ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
                 {

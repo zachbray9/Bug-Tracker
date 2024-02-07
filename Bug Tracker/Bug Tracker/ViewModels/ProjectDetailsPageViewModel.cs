@@ -4,42 +4,32 @@ using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels.Factories;
 using BugTracker.Domain.Enumerables;
-using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using BugTracker.EntityFramework;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Identity.Client;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography.Pkcs;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace Bug_Tracker.ViewModels
 {
     public class ProjectDetailsPageViewModel : ViewModelBase
     {
-        private readonly IUserService UserDataService;
-        private readonly IDataService<ProjectUser> ProjectUserService;
-        private readonly IDataService<Ticket> TicketService;
-        private readonly IDataService<Comment> CommentService;
+        private readonly IApiService<UserDTO> UserApiService;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly IApiService<CommentDTO> CommentApiService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
         public AddUserToProjectPopupViewModel AddUserViewModel { get; }
 
-        public User CurrentUser { get => Authenticator.CurrentUser; }
-        public Project CurrentProject { get => ProjectContainer.CurrentProject; }
-        public ProjectUser CurrentProjectUser { get; }
+        public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
+        public ProjectDTO CurrentProject { get => ProjectContainer.CurrentProject; }
+        public ProjectUserDTO CurrentProjectUser { get; }
 
-        private ObservableCollection<ProjectUser> projectUsers;
-        public ObservableCollection<ProjectUser> ProjectUsers
+        private ObservableCollection<ProjectUserDTO> projectUsers;
+        public ObservableCollection<ProjectUserDTO> ProjectUsers
         {
             get
             {
@@ -67,8 +57,8 @@ namespace Bug_Tracker.ViewModels
         }
 
         //unfiltered Lists
-        private ObservableCollection<Ticket> toDoTickets;
-        public ObservableCollection<Ticket> ToDoTickets
+        private ObservableCollection<TicketDTO> toDoTickets;
+        public ObservableCollection<TicketDTO> ToDoTickets
         {
             get
             {
@@ -83,8 +73,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> inProgressTickets;
-        public ObservableCollection<Ticket> InProgressTickets
+        private ObservableCollection<TicketDTO> inProgressTickets;
+        public ObservableCollection<TicketDTO> InProgressTickets
         {
             get
             {
@@ -99,8 +89,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> doneTickets;
-        public ObservableCollection<Ticket> DoneTickets
+        private ObservableCollection<TicketDTO> doneTickets;
+        public ObservableCollection<TicketDTO> DoneTickets
         {
             get
             {
@@ -116,8 +106,8 @@ namespace Bug_Tracker.ViewModels
         }
 
         //filtered lists
-        private ObservableCollection<Ticket> filteredToDoTickets;
-        public ObservableCollection<Ticket> FilteredToDoTickets
+        private ObservableCollection<TicketDTO> filteredToDoTickets;
+        public ObservableCollection<TicketDTO> FilteredToDoTickets
         {
             get
             {
@@ -132,8 +122,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> filteredInProgressTickets;
-        public ObservableCollection<Ticket> FilteredInProgressTickets
+        private ObservableCollection<TicketDTO> filteredInProgressTickets;
+        public ObservableCollection<TicketDTO> FilteredInProgressTickets
         {
             get
             {
@@ -148,8 +138,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ObservableCollection<Ticket> filteredDoneTickets;
-        public ObservableCollection<Ticket> FilteredDoneTickets
+        private ObservableCollection<TicketDTO> filteredDoneTickets;
+        public ObservableCollection<TicketDTO> FilteredDoneTickets
         {
             get
             {
@@ -164,34 +154,34 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserService userDataService, IDataService<ProjectUser> projectUserService, IDataService<Ticket> ticketService, IDataService<Comment> commentService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelFactory)
+        public ProjectDetailsPageViewModel(IApiService<UserDTO> userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelFactory)
         {
-            UserDataService = userDataService;
-            ProjectUserService = projectUserService;
-            TicketService = ticketService;
-            CommentService = commentService;
+            UserApiService = userApiService;
+            ProjectUserApiService = projectUserApiService;
+            TicketApiService = ticketApiService;
+            CommentApiService = commentApiService;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
             AddUserViewModel = (AddUserToProjectPopupViewModel)viewModelFactory.CreateViewModel(ViewType.AddUserToProjectPopup);
 
-            ProjectUsers = new ObservableCollection<ProjectUser>();
+            ProjectUsers = new ObservableCollection<ProjectUserDTO>();
 
-            ToDoTickets = new ObservableCollection<Ticket>();
-            InProgressTickets = new ObservableCollection<Ticket>();
-            DoneTickets = new ObservableCollection<Ticket>();
+            ToDoTickets = new ObservableCollection<TicketDTO>();
+            InProgressTickets = new ObservableCollection<TicketDTO>();
+            DoneTickets = new ObservableCollection<TicketDTO>();
 
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
             ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
-            DeleteTicketCommand = new DeleteTicketCommand(TicketService, CommentService, this);
+            DeleteTicketCommand = new DeleteTicketCommand(TicketApiService, CommentApiService, this);
             OpenAddUserPopupCommand = new OpenAddUserPopupCommand(AddUserViewModel);
 
             UpdateProjectUsers();
             UpdateTickets();
 
-            FilteredToDoTickets = new ObservableCollection<Ticket>(ToDoTickets);
-            FilteredInProgressTickets = new ObservableCollection<Ticket>(InProgressTickets);
-            FilteredDoneTickets = new ObservableCollection<Ticket>(DoneTickets);
+            FilteredToDoTickets = new ObservableCollection<TicketDTO>(ToDoTickets);
+            FilteredInProgressTickets = new ObservableCollection<TicketDTO>(InProgressTickets);
+            FilteredDoneTickets = new ObservableCollection<TicketDTO>(DoneTickets);
 
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
         }
@@ -200,7 +190,7 @@ namespace Bug_Tracker.ViewModels
         {
             ProjectUsers.Clear();
 
-            foreach(ProjectUser projectUser in CurrentProject.ProjectUsers)
+            foreach(ProjectUserDTO projectUser in CurrentProject.ProjectUsers)
             {
                 ProjectUsers.Add(projectUser);
             }               
@@ -212,7 +202,7 @@ namespace Bug_Tracker.ViewModels
             InProgressTickets.Clear();
             DoneTickets.Clear();
 
-            foreach(Ticket ticket in CurrentProject.Tickets)
+            foreach(TicketDTO ticket in CurrentProject.Tickets)
             {
                 if (ticket.Status == Status.ToDo)
                 {
@@ -237,7 +227,7 @@ namespace Bug_Tracker.ViewModels
             FilteredInProgressTickets.Clear();
             FilteredDoneTickets.Clear();
 
-            foreach (Ticket ticket in ToDoTickets)
+            foreach (TicketDTO ticket in ToDoTickets)
             {
                 if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
                 {
@@ -245,7 +235,7 @@ namespace Bug_Tracker.ViewModels
                 }
             }
 
-            foreach (Ticket ticket in InProgressTickets)
+            foreach (TicketDTO ticket in InProgressTickets)
             {
                 if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
                 {
@@ -253,7 +243,7 @@ namespace Bug_Tracker.ViewModels
                 }
             }
 
-            foreach (Ticket ticket in DoneTickets)
+            foreach (TicketDTO ticket in DoneTickets)
             {
                 if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
                 {

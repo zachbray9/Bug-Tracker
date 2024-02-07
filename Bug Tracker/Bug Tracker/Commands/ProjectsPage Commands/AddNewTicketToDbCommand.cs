@@ -1,48 +1,44 @@
 ﻿using Bug_Tracker.State;
-using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services;
-using BugTracker.EntityFramework;
-using BugTracker.EntityFramework.Services;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
     public class AddNewTicketToDbCommand : CommandBase
     {
-        private readonly User CurrentUser;
+        private readonly UserDTO CurrentUser;
         public INavigator Navigator{ get; }
         private readonly IProjectContainer ProjectContainer;
-        private readonly IDataService<Ticket> TicketService;
+        private readonly IApiService<TicketDTO> TicketApiService;
         private readonly CreateTicketViewModel CreateTicketViewModel;
 
-        private Project CurrentProject { get => ProjectContainer.CurrentProject; }
-        private Ticket CurrentTicket { get => ProjectContainer.CurrentTicket; }
+        private ProjectDTO CurrentProject { get => ProjectContainer.CurrentProject; }
+        private TicketDTO CurrentTicket { get => ProjectContainer.CurrentTicket; }
 
-        public AddNewTicketToDbCommand(User currentUser, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketService, CreateTicketViewModel createTicketViewModel)
+        public AddNewTicketToDbCommand(UserDTO currentUser, INavigator navigator, IProjectContainer projectContainer, IApiService<TicketDTO> ticketApiService, CreateTicketViewModel createTicketViewModel)
         {
             CurrentUser = currentUser;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            TicketService = ticketService;
+            TicketApiService = ticketApiService;
             CreateTicketViewModel = createTicketViewModel;
         }
 
         public async override void Execute(object parameter)
         {
-            ProjectUser projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.User.Id == CurrentUser.Id);
+            ProjectUserDTO projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
             //this line is added to check if assignee is null or not to make it so the db doesn't throw an error when creating a ticket with a null assignee
             int? assigneeId = CreateTicketViewModel.Assignee?.Id;
 
-            ProjectContainer.CurrentTicket = await TicketService.Create(new Ticket 
+            ProjectContainer.CurrentTicket = await TicketApiService.Create(new TicketDTO 
             { 
                 Title = CreateTicketViewModel.TicketTitle, 
                 Description = CreateTicketViewModel.TicketDescription, 

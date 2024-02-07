@@ -1,23 +1,21 @@
-﻿using BugTracker.Domain.Exceptions;
+﻿using BugTracker.Domain.Enumerables;
+using BugTracker.Domain.Exceptions;
 using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BugTracker.Domain.Services.AuthenticationServices
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IUserService UserService;
+        private readonly IUserApiService UserApiService;
         private readonly IPasswordHasher PasswordHasher;
 
-        public AuthenticationService(IUserService userService, IPasswordHasher passwordHasher)
+        public AuthenticationService(IUserApiService userApiService, IPasswordHasher passwordHasher)
         {
-            UserService = userService;
+            UserApiService = userApiService;
             PasswordHasher = passwordHasher;
         }
 
@@ -66,7 +64,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             }
 
             //if the email already exists for the account that is being created
-            User userByEmail = await UserService.GetByEmail(email);
+            UserDTO userByEmail = await UserApiService.GetByEmail(email);
             if (userByEmail != null) 
             {
                return RegistrationResult.EmailAlreadyExists;
@@ -75,7 +73,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             //if there are no errors then create the account
             string hashedPassword = PasswordHasher.HashPassword(password);
 
-            User user = new User()
+            UserDTO user = new UserDTO()
             {
                 Email = email,
                 FirstName = firstName,
@@ -84,16 +82,16 @@ namespace BugTracker.Domain.Services.AuthenticationServices
                 DateJoined = DateTime.Now
             };
 
-            await UserService.Create(user);
+            await UserApiService.Create(user);
         
 
             return RegistrationResult.Success;
 
         }
 
-        public async Task<User> Login(string email, string password)
+        public async Task<UserDTO> Login(string email, string password)
         {
-            User storedUser = await UserService.GetByEmail(email);
+            UserDTO storedUser = await UserApiService.GetByEmail(email);
 
             if (storedUser == null)
             {

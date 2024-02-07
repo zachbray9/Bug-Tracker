@@ -1,17 +1,12 @@
 ﻿using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.Commands.AccountCommands
 {
     public class CancelAccountEditCommand : CommandBase
     {
         private readonly AccountPageViewModel ViewModel;
-        private User CurrentUser { get => ViewModel.CurrentUser; }
+        private UserDTO CurrentUser { get => ViewModel.CurrentUser; }
 
         public CancelAccountEditCommand(AccountPageViewModel viewModel)
         {

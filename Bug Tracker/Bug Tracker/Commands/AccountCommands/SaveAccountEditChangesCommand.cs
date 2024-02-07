@@ -1,27 +1,24 @@
 ﻿using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services;
-using BugTracker.EntityFramework.Services;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Bug_Tracker.Commands.AccountCommands
 {
     public class SaveAccountEditChangesCommand : CommandBase
     {
-        private readonly IUserService UserDataService;
+        private readonly IApiService<UserDTO> UserApiService;
         private readonly AccountPageViewModel ViewModel;
 
-        private User CurrentUser { get => ViewModel.CurrentUser; }
+        private UserDTO CurrentUser { get => ViewModel.CurrentUser; }
 
-        public SaveAccountEditChangesCommand(IUserService userDataService, AccountPageViewModel viewModel)
+        public SaveAccountEditChangesCommand(IApiService<UserDTO> userDataService, AccountPageViewModel viewModel)
         {
-            UserDataService = userDataService;
+            UserApiService = userDataService;
             ViewModel = viewModel;
         }
 
@@ -81,7 +78,7 @@ namespace Bug_Tracker.Commands.AccountCommands
 
             try
             {
-                await UserDataService.Update(CurrentUser.Id, CurrentUser);
+                await UserApiService.Update(CurrentUser);
 
                 //doing this just so the save and cancel edit buttons disappear after saving changes.
                 ViewModel.FirstNameTextboxText = CurrentUser.FirstName;

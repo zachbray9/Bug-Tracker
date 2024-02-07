@@ -1,22 +1,16 @@
 ﻿using Bug_Tracker.Commands.TicketDetailsPageCommands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
-using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using Microsoft.IdentityModel.Tokens;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Printing;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -25,24 +19,26 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
-        private readonly IDataService<Ticket> TicketDataService;
-        private readonly IDataService<Comment> CommentDataService;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly IApiService<CommentDTO> CommentApiService;
 
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
 
-        public User CurrentUser => Authenticator.CurrentUser;
-        public Project CurrentProject => ProjectContainer.CurrentProject;
-        public Ticket CurrentTicket => ProjectContainer.CurrentTicket;
-        public ProjectUser CurrentProjectUser { get; }
-        public bool DoesCommentTextBoxContainText { get => !CommentTextBoxText.IsNullOrEmpty(); }
+        public UserDTO CurrentUser => Authenticator.CurrentUser;
+        public ProjectDTO CurrentProject => ProjectContainer.CurrentProject;
+        public TicketDTO CurrentTicket => ProjectContainer.CurrentTicket;
+        public ProjectUserDTO CurrentProjectUser { get; }
+        public bool DoesCommentTextBoxContainText { get => !String.IsNullOrEmpty(CommentTextBoxText); }
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IDataService<Ticket> ticketDataService, IDataService<Comment> commentDataService, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
-            TicketDataService = ticketDataService;
-            CommentDataService = commentDataService;
+            ProjectUserApiService = projectUserApiService;
+            TicketApiService = ticketApiService;
+            CommentApiService = commentApiService;
             StatusOptionsRetriever = statusOptionsRetriever;
 
             ticketTitle = CurrentTicket.Title;
@@ -52,23 +48,23 @@ namespace Bug_Tracker.ViewModels
             reporter = CurrentTicket.Author;
 
             //checks if ticket has any comments and if so, fills the collection with tickets. Otherwise initializes empty collection
-            if(CurrentTicket.Comments != null) 
+            if (CurrentTicket.Comments != null) 
             {
-                Comments = new ObservableCollection<Comment>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+                Comments = new ObservableCollection<CommentDTO>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
             }
             else
             {
-                Comments = new ObservableCollection<Comment>();
+                Comments = new ObservableCollection<CommentDTO>();
             }
 
             //checks if the current project has any project users (which it always should) and if so, fills the collection with the project users. Otherwise initializes an empty list.
             if(CurrentProject.ProjectUsers != null) 
             {
-                ProjectUsers = new ObservableCollection<ProjectUser>(CurrentProject.ProjectUsers);
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>(CurrentProject.ProjectUsers);
             }
             else
             {
-                ProjectUsers = new ObservableCollection<ProjectUser>();
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
@@ -79,9 +75,9 @@ namespace Bug_Tracker.ViewModels
                 comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
             }
 
-            AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketDataService, CommentDataService, this);
-            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketDataService, CommentDataService, this);
-            SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(TicketDataService, this, StatusOptionsRetriever);
+            AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketApiService, CommentApiService, this);
+            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketApiService, CommentApiService, this);
+            SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(TicketApiService, this, StatusOptionsRetriever);
             CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(this, StatusOptionsRetriever);
         }
 
@@ -132,8 +128,8 @@ namespace Bug_Tracker.ViewModels
         }
 
         //comment collection properties
-        private ObservableCollection<Comment> comments;
-        public ObservableCollection<Comment> Comments 
+        private ObservableCollection<CommentDTO> comments;
+        public ObservableCollection<CommentDTO> Comments 
         {
             get { return comments; }
             set
@@ -141,7 +137,7 @@ namespace Bug_Tracker.ViewModels
                 comments = value;
 
                 //updates the CommentDateCreatedDifference every time the collection is set so it updates when a new comment is added or deleted.
-                foreach (var comment in Comments)
+                foreach (CommentDTO comment in Comments)
                 {
                     comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
                 }
@@ -190,8 +186,8 @@ namespace Bug_Tracker.ViewModels
             OnPropertyChanged(nameof(TicketStatus));
         }
 
-        private ObservableCollection<ProjectUser> projectUsers;
-        public ObservableCollection<ProjectUser> ProjectUsers
+        private ObservableCollection<ProjectUserDTO> projectUsers;
+        public ObservableCollection<ProjectUserDTO> ProjectUsers
         {
             get { return projectUsers; }
             set
@@ -201,8 +197,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ProjectUser assignee;
-        public ProjectUser Assignee
+        private ProjectUserDTO assignee;
+        public ProjectUserDTO Assignee
         {
             get { return assignee; }
             set
@@ -212,14 +208,14 @@ namespace Bug_Tracker.ViewModels
                 SaveTicketDetailsChangesCommand.Execute(this);
             }
         }
-        public void SetAssigneeWithoutExecutingSaveCommand(ProjectUser value)
+        public async Task SetAssigneeWithoutExecutingSaveCommand(int id)
         {
-            assignee = value;
+            assignee = await ProjectUserApiService.GetById(id);
             OnPropertyChanged(nameof(Assignee));
         }
 
-        private ProjectUser reporter;
-        public ProjectUser Reporter
+        private ProjectUserDTO reporter;
+        public ProjectUserDTO Reporter
         {
             get { return reporter; }
             set 
@@ -230,9 +226,9 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public void SetReporterWithoutExecutingSaveCommand(ProjectUser value)
+        public async Task SetReporterWithoutExecutingSaveCommand(int id)
         {
-            reporter = value;
+            reporter = await ProjectUserApiService.GetById(id);
             OnPropertyChanged(nameof(Reporter));
         }
 

@@ -1,34 +1,26 @@
 ﻿using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Services;
-using BugTracker.EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Bug_Tracker.Commands
 {
     public class CreateNewProjectCommand : CommandBase
     {
-        private readonly BugTrackerDbContext DbContext;
-        private readonly IDataService<Project> ProjectDataService;
-        private readonly IDataService<ProjectUser> ProjectUserDataService;
+        private readonly IApiService<ProjectDTO> ProjectApiService;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         private readonly INavigator Navigator;
         private readonly CreateNewProjectPageViewModel CreateNewProjectPageViewModel;
-        private User CurrentUser => CreateNewProjectPageViewModel.Authenticator.CurrentUser;
+        private UserDTO CurrentUser => CreateNewProjectPageViewModel.Authenticator.CurrentUser;
 
-        public CreateNewProjectCommand(BugTrackerDbContext dbContext, IDataService<Project> projectDataService, IDataService<ProjectUser> projectUserDataService, INavigator navigator, CreateNewProjectPageViewModel createNewProjectPageViewModel)
+        public CreateNewProjectCommand(IApiService<ProjectDTO> projectApiService, IApiService<ProjectUserDTO> projectUserApiService, INavigator navigator, CreateNewProjectPageViewModel createNewProjectPageViewModel)
         {
-            DbContext = dbContext;
-            ProjectDataService = projectDataService;
-            ProjectUserDataService = projectUserDataService;
+            ProjectApiService = projectApiService;
+            ProjectUserApiService = projectUserApiService;
             Navigator = navigator;
             CreateNewProjectPageViewModel= createNewProjectPageViewModel;
         }
@@ -47,19 +39,15 @@ namespace Bug_Tracker.Commands
                 return;
             }
 
-            Project project = await ProjectDataService.Create(new Project { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
-            ProjectUser projectUser = await ProjectUserDataService.Create(new ProjectUser { ProjectId = project.Id, UserId = CurrentUser.Id });
+            ProjectDTO project = await ProjectApiService.Create(new ProjectDTO { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
+            ProjectUserDTO projectUser = await ProjectUserApiService.Create(new ProjectUserDTO { ProjectId = project.Id, UserId = CurrentUser.Id });
 
 
 
             if (CurrentUser.ProjectUsers == null)
             {
-                CurrentUser.ProjectUsers = new List<ProjectUser>();
+                CurrentUser.ProjectUsers = new List<ProjectUserDTO>();
             }
-
-            //CurrentUser.ProjectUsers.Add(projectUser);
-            DbContext.SaveChanges();
-
 
             Navigator.Navigate(ViewType.ProjectsPage);
         }

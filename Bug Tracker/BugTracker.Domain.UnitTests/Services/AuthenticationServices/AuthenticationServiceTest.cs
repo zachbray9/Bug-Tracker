@@ -1,14 +1,12 @@
 ﻿using Moq;
 using BugTracker.Domain.Services;
 using BugTracker.Domain.Services.AuthenticationServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Exceptions;
+using BugTracker.Domain.Services.Api;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Enumerables;
 
 namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
 {
@@ -16,13 +14,13 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
     public class AuthenticationServiceTest
     {
         private AuthenticationService authenticationService;
-        private Mock<IUserService> mockUserService;
+        private Mock<IUserApiService> mockUserService;
         private Mock<IPasswordHasher> mockPasswordHasher;
 
         [SetUp]
         public void Setup()
         {
-            mockUserService = new Mock<IUserService>();
+            mockUserService = new Mock<IUserApiService>();
             mockPasswordHasher = new Mock<IPasswordHasher>();
             authenticationService = new AuthenticationService(mockUserService.Object, mockPasswordHasher.Object);
         }
@@ -33,11 +31,11 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             //arrange
             string expectedEmail = "test@gmail.com";
             string password = "testPassword";
-            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new User() { Email = expectedEmail});
+            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new UserDTO() { Email = expectedEmail});
             mockPasswordHasher.Setup(s => s.VerifyHashedPassword(It.IsAny<string>(), password)).Returns(PasswordVerificationResult.Success);
 
             //act
-            User user =  await authenticationService.Login(expectedEmail, password);
+            UserDTO user =  await authenticationService.Login(expectedEmail, password);
 
             //assert
             string actualEmail = user.Email;
@@ -51,7 +49,7 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             string expectedEmail = "test@gmail.com";
             string password = "testPassword";
             //string incorrectPassword = "asdfasdfasdf";
-            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new User() { Email = expectedEmail });
+            mockUserService.Setup(s => s.GetByEmail(expectedEmail)).ReturnsAsync(new UserDTO() { Email = expectedEmail });
             mockPasswordHasher.Setup(s => s.VerifyHashedPassword(It.IsAny<string>(), password)).Returns(PasswordVerificationResult.Failed);
 
             //act
@@ -96,7 +94,7 @@ namespace BugTracker.Domain.UnitTests.Services.AuthenticationServices
             string email = "test@gmail.com";
             RegistrationResult expectedResult = RegistrationResult.EmailAlreadyExists;
 
-            mockUserService.Setup(s => s.GetByEmail(email)).ReturnsAsync(new User());
+            mockUserService.Setup(s => s.GetByEmail(email)).ReturnsAsync(new UserDTO());
             RegistrationResult result =  await authenticationService.CreateAccount(email, "TestFirstName", "TestLastName", "test", "test");
 
             Assert.AreEqual(expectedResult, result);

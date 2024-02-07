@@ -11,7 +11,7 @@ using System.Windows.Documents;
 
 namespace Bug_Tracker.Services.Api
 {
-    public class UserApiService : IApiService<UserDTO>
+    public class UserApiService : IUserApiService
     {
         private readonly IHttpClientFactory HttpClientFactory;
         private readonly HttpClient HttpClient;

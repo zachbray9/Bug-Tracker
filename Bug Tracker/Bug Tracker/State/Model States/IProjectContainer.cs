@@ -6,6 +6,5 @@ namespace Bug_Tracker.State
     public interface IProjectContainer
     {
         ProjectDTO CurrentProject { get; set; }
-        TicketDTO CurrentTicket { get; set; }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,18 +18,25 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IApiService<ProjectDTO> ProjectApiService;
 
         private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
+            ProjectUserApiService = projectUserApiService;
+            ProjectApiService = projectApiService;
+
             Tickets = new ObservableCollection<TicketDTO>();
             TicketSearchResults = new ObservableCollection<TicketDTO>();
 
-            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService);
 
             UpdateTickets();
             UpdateTicketSearchResults();

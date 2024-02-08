@@ -8,7 +8,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
     {
         private readonly TicketDetailsPageViewModel ViewModel;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
-        private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
+        private TicketDTO CurrentTicket { get => ViewModel.TicketContainer.CurrentTicket; }
 
         public CancelTicketDetailsChangesCommand(TicketDetailsPageViewModel viewModel, StatusOptionsRetriever statusOptionsRetriever)
         {
@@ -20,8 +20,8 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
         {
             ViewModel.TicketTitle = CurrentTicket.Title;
             ViewModel.TicketDescription = CurrentTicket.Description;
-            ViewModel.SetAssigneeWithoutExecutingSaveCommand(CurrentTicket.Assignee);
-            ViewModel.SetReporterWithoutExecutingSaveCommand(CurrentTicket.Author);
+            ViewModel.SetAssigneeWithoutExecutingSaveCommand();
+            ViewModel.SetReporterWithoutExecutingSaveCommand();
             ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
         }
     }

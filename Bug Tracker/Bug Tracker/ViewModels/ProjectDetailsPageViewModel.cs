@@ -1,6 +1,8 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using Bug_Tracker.Services.Api;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels.Factories;
 using BugTracker.Domain.Enumerables;
@@ -15,13 +17,15 @@ namespace Bug_Tracker.ViewModels
 {
     public class ProjectDetailsPageViewModel : ViewModelBase
     {
-        private readonly IApiService<UserDTO> UserApiService;
+        private readonly IUserApiService UserApiService;
         private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IApiService<ProjectDTO> ProjectApiService;
         private readonly IApiService<TicketDTO> TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
+        public ITicketContainer TicketContainer { get; }
         public AddUserToProjectPopupViewModel AddUserViewModel { get; }
 
         public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
@@ -154,15 +158,17 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IApiService<UserDTO> userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelFactory)
+        public ProjectDetailsPageViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IViewModelAbstractFactory viewModelFactory)
         {
             UserApiService = userApiService;
             ProjectUserApiService = projectUserApiService;
+            ProjectApiService = projectApiService;
             TicketApiService = ticketApiService;
             CommentApiService = commentApiService;
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
             AddUserViewModel = (AddUserToProjectPopupViewModel)viewModelFactory.CreateViewModel(ViewType.AddUserToProjectPopup);
 
             ProjectUsers = new ObservableCollection<ProjectUserDTO>();
@@ -171,8 +177,8 @@ namespace Bug_Tracker.ViewModels
             InProgressTickets = new ObservableCollection<TicketDTO>();
             DoneTickets = new ObservableCollection<TicketDTO>();
 
-            CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer);
-            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer);
+            CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer, TicketContainer);
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService);
             DeleteTicketCommand = new DeleteTicketCommand(TicketApiService, CommentApiService, this);
             OpenAddUserPopupCommand = new OpenAddUserPopupCommand(AddUserViewModel);
 

@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
@@ -10,14 +11,16 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
     {
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
 
         private ProjectDTO CurrentProject { get => ProjectContainer.CurrentProject; }
-        private TicketDTO CurrentTicket { get => ProjectContainer.CurrentTicket; set { ProjectContainer.CurrentTicket = value; } }
+        private TicketDTO CurrentTicket { get => TicketContainer.CurrentTicket; set { TicketContainer.CurrentTicket = value; } }
 
-        public CreateNewTicketCommand(INavigator navigator, IProjectContainer projectContainer)
+        public CreateNewTicketCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer)
         {
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
         }
 
         public override void Execute(object parameter)

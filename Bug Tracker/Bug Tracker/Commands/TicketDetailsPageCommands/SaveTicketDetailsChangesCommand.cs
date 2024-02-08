@@ -39,9 +39,9 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
                 ViewModel.TicketTitle = CurrentTicket.Title;
                 ViewModel.TicketDescription = CurrentTicket.Description;
 
-               
-                //await ViewModel.SetAssigneeWithoutExecutingSaveCommand(CurrentTicket.AssigneeId);
-                //await ViewModel.SetReporterWithoutExecutingSaveCommand(CurrentTicket.AuthorId);
+
+                ViewModel.SetAssigneeWithoutExecutingSaveCommand();
+                ViewModel.SetReporterWithoutExecutingSaveCommand();
                 ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
             }
             catch (Exception ex)

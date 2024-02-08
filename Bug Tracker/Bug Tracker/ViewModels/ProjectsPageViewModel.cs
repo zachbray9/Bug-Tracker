@@ -1,5 +1,4 @@
-﻿using BugTracker.Domain.Models;
-using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.State.Authenticators;
 using System;
 using System.Collections.ObjectModel;
 using Bug_Tracker.State.Navigators;

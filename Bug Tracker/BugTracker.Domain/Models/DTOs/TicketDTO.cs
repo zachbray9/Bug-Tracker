@@ -16,8 +16,7 @@ namespace BugTracker.Domain.Models.DTOs
         public string Description { get; set; } = null!;
         public int ProjectId { get; set; }
         public int AuthorId { get; set; }
-        public int? AssigneeId { get; set; }
-
+        public int AssigneeId { get; set; }
         public ICollection<CommentDTO> Comments { get; set; } = null!;
         public Status Status { get; set; }
         public Priority Priority { get; set; }

@@ -16,23 +16,27 @@ namespace Bug_Tracker.Commands.AccountCommands
     {
         private readonly MainViewModel ViewModel;
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
 
         private INavigator Navigator { get => ViewModel.Navigator; }
         private IAuthenticator Authenticator { get => ViewModel.Authenticator; }
    
         
 
-        public LogoutCommand(MainViewModel viewModel, IProjectContainer projectContainer)
+        public LogoutCommand(MainViewModel viewModel, IProjectContainer projectContainer, ITicketContainer ticketContainer)
         {
             ViewModel = viewModel;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
         }
 
         public override void Execute(object parameter)
         {
             ViewModel.IsAccountPopupOpen = false;
-            ProjectContainer.CurrentTicket = null;
             ProjectContainer.CurrentProject = null;
+            TicketContainer.CurrentTicket = null;
+            TicketContainer.Assignee = null;
+            TicketContainer.Author = null;
             Authenticator.Logout();
             Navigator.Navigate(ViewType.LoginPage);
         }

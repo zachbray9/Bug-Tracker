@@ -1,6 +1,9 @@
 ﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Api;
+using System.Runtime.InteropServices;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
@@ -8,20 +11,28 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
     {
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
+        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IApiService<ProjectDTO> ProjectApiService;
 
-        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer)
+        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserDataService, IApiService<ProjectDTO> projectApiService)
         {
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
+            ProjectUserApiService = projectUserDataService;
+            ProjectApiService = projectApiService;
         }
 
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             TicketDTO ticket = (TicketDTO)parameter;
             if(ticket != null)
             {
-                ProjectContainer.CurrentProject = ticket.Project;
-                ProjectContainer.CurrentTicket = ticket;
+                ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
+                TicketContainer.CurrentTicket = ticket;
+                TicketContainer.Assignee = await ProjectUserApiService.GetById(ticket.AssigneeId);
+                TicketContainer.Author = await ProjectUserApiService.GetById(ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }
         }

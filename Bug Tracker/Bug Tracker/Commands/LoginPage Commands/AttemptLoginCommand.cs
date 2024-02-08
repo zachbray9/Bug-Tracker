@@ -1,14 +1,6 @@
-﻿using Bug_Tracker.State;
-using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Services.AuthenticationServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bug_Tracker.Commands
 {

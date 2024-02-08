@@ -2,6 +2,7 @@
 using Bug_Tracker.Commands.Navigation_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels.Factories;
 using System;
@@ -18,18 +19,20 @@ namespace Bug_Tracker.ViewModels
         public INavigator Navigator { get; set; }
         public IAuthenticator Authenticator { get; set; }
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
         private readonly IViewModelAbstractFactory ViewModelAbstractFactory;
 
-        public MainViewModel(INavigator navigator, IAuthenticator authenticator, IProjectContainer projectContainer, IViewModelAbstractFactory viewModelAbstractFactory)
+        public MainViewModel(INavigator navigator, IAuthenticator authenticator, IProjectContainer projectContainer, ITicketContainer ticketcontainer, IViewModelAbstractFactory viewModelAbstractFactory)
         {
             Navigator = navigator;
             Authenticator = authenticator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketcontainer;
             ViewModelAbstractFactory = viewModelAbstractFactory;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(Navigator, ViewModelAbstractFactory);
             OpenAccountPopupCommand = new OpenAccountPopupCommand(this);
-            LogoutCommand = new LogoutCommand(this, ProjectContainer);
+            LogoutCommand = new LogoutCommand(this, ProjectContainer, TicketContainer);
 
             UpdateCurrentViewModelCommand.Execute(ViewType.LoginPage);
         }

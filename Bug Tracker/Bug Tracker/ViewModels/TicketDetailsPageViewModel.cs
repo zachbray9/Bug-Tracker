@@ -1,9 +1,9 @@
 ﻿using Bug_Tracker.Commands.TicketDetailsPageCommands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;
@@ -19,6 +19,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         public IProjectContainer ProjectContainer { get; }
+        public ITicketContainer TicketContainer { get; }
         private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         private readonly IApiService<TicketDTO> TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
@@ -27,15 +28,16 @@ namespace Bug_Tracker.ViewModels
 
         public UserDTO CurrentUser => Authenticator.CurrentUser;
         public ProjectDTO CurrentProject => ProjectContainer.CurrentProject;
-        public TicketDTO CurrentTicket => ProjectContainer.CurrentTicket;
+        public TicketDTO CurrentTicket => TicketContainer.CurrentTicket;
         public ProjectUserDTO CurrentProjectUser { get; }
         public bool DoesCommentTextBoxContainText { get => !String.IsNullOrEmpty(CommentTextBoxText); }
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
             ProjectUserApiService = projectUserApiService;
             TicketApiService = ticketApiService;
             CommentApiService = commentApiService;
@@ -44,8 +46,9 @@ namespace Bug_Tracker.ViewModels
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
             ticketStatus = StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status);
-            assignee = CurrentTicket.Assignee;
-            reporter = CurrentTicket.Author;
+            assignee = TicketContainer.Assignee;
+            reporter = TicketContainer.Author; 
+
 
             //checks if ticket has any comments and if so, fills the collection with tickets. Otherwise initializes empty collection
             if (CurrentTicket.Comments != null) 
@@ -208,9 +211,10 @@ namespace Bug_Tracker.ViewModels
                 SaveTicketDetailsChangesCommand.Execute(this);
             }
         }
-        public async Task SetAssigneeWithoutExecutingSaveCommand(int id)
+        public void SetAssigneeWithoutExecutingSaveCommand()
         {
-            assignee = await ProjectUserApiService.GetById(id);
+            //assignee = await ProjectUserApiService.GetById(id);
+            assignee = TicketContainer.Assignee;
             OnPropertyChanged(nameof(Assignee));
         }
 
@@ -226,9 +230,10 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public async Task SetReporterWithoutExecutingSaveCommand(int id)
+        public void SetReporterWithoutExecutingSaveCommand()
         {
-            reporter = await ProjectUserApiService.GetById(id);
+            //reporter = await ProjectUserApiService.GetById(id);
+            reporter = TicketContainer.Author;
             OnPropertyChanged(nameof(Reporter));
         }
 

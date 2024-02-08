@@ -1,10 +1,10 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System.Collections.Generic;
@@ -19,6 +19,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
         private readonly IApiService<TicketDTO> TicketApiService;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
         public Dictionary<Status, string> StatusOptionsDictionary { get => StatusOptionsRetriever.StatusOptionsDictionary; }
@@ -26,11 +27,12 @@ namespace Bug_Tracker.ViewModels
         public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IApiService<TicketDTO> ticketApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<TicketDTO> ticketApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
             TicketApiService = ticketApiService;
             StatusOptionsRetriever = statusOptionsRetriever;
 
@@ -43,7 +45,7 @@ namespace Bug_Tracker.ViewModels
                 ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
-            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketApiService, this);
+            AddNewTicketToDbCommand = new AddNewTicketToDbCommand(CurrentUser, Navigator, ProjectContainer, TicketContainer, TicketApiService, this);
         }
 
         private string ticketTitle;
@@ -79,14 +81,14 @@ namespace Bug_Tracker.ViewModels
         {
             get 
             {
-                return StatusOptionsRetriever.ConvertStatusEnumToString(ProjectContainer.CurrentTicket.Status);
+                return StatusOptionsRetriever.ConvertStatusEnumToString(TicketContainer.CurrentTicket.Status);
             }
             set
             {
                 if(ticketStatus != value)
                 {
                     ticketStatus = value;
-                    ProjectContainer.CurrentTicket.Status = StatusOptionsDictionary.FirstOrDefault(x => x.Value == value).Key;
+                    TicketContainer.CurrentTicket.Status = StatusOptionsDictionary.FirstOrDefault(x => x.Value == value).Key;
                     OnPropertyChanged(nameof(TicketStatus));
                 }
             }
@@ -103,8 +105,8 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        private ProjectUser assignee;
-        public ProjectUser Assignee
+        private ProjectUserDTO assignee;
+        public ProjectUserDTO Assignee
         {
             get { return assignee; }
             set

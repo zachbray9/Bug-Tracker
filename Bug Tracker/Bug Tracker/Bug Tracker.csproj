@@ -72,10 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="State\Model States\TicketStatus\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

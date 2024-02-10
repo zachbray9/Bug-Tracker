@@ -8,8 +8,8 @@ string ConnectionString = builder.Configuration["ConnectionString"];
 // Add services to the container.
 builder.Services.AddDbContext<BugTrackerDbContext>(options =>
 {
-    //options.UseSqlServer(ConnectionString);
-    options.UseInMemoryDatabase("BugTrackerTestDb");
+    options.UseSqlServer(ConnectionString);
+    //options.UseInMemoryDatabase("BugTrackerTestDb");
 });
 
 builder.Services.AddAutoMapper(typeof(Program));

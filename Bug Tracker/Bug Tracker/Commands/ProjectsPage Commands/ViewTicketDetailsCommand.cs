@@ -3,7 +3,6 @@ using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
-using System.Runtime.InteropServices;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands
 {
@@ -31,7 +30,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
-                TicketContainer.Assignee = await ProjectUserApiService.GetById(ticket.AssigneeId);
+                TicketContainer.Assignee = ticket.AssigneeId != 0 ? await ProjectUserApiService.GetById(ticket.AssigneeId) : null;
                 TicketContainer.Author = await ProjectUserApiService.GetById(ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }

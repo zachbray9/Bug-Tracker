@@ -2,7 +2,6 @@
 using Bug_Tracker.State.Model_States;
 using Bug_Tracker.State.Navigators;
 using BugTracker.Domain.Enumerables;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 
 namespace Bug_Tracker.Commands.ProjectsPage_Commands

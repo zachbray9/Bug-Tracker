@@ -11,5 +11,6 @@ namespace BugTracker.Domain.Services.Api
     {
         Task<UserDTO> GetByEmail(string email);
         Task<UserDTO> GetByFullName(string fullName);
+        Task<List<ProjectDTO>> GetAllProjectsFromUserById(int id);
     }
 }

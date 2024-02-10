@@ -3,7 +3,6 @@ using BugTracker.Domain.Services.Api;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +19,8 @@ namespace Bug_Tracker.Services.Api
             HttpClientFactory = httpClientFactory;
 
             HttpClient = HttpClientFactory.CreateClient();
-            HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            //HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
         public async Task<ProjectDTO> GetById(int id)

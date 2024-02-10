@@ -20,14 +20,14 @@ namespace Bug_Tracker.ViewModels
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
         private readonly ITicketContainer TicketContainer;
-        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly ITicketApiService TicketApiService;
         private readonly StatusOptionsRetriever StatusOptionsRetriever;
         public Dictionary<Status, string> StatusOptionsDictionary { get => StatusOptionsRetriever.StatusOptionsDictionary; }
 
         public UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
 
-        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<TicketDTO> ticketApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public CreateTicketViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, ITicketApiService ticketApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
@@ -36,9 +36,9 @@ namespace Bug_Tracker.ViewModels
             TicketApiService = ticketApiService;
             StatusOptionsRetriever = statusOptionsRetriever;
 
-            if(ProjectContainer.CurrentProject.ProjectUsers != null)
+            if(ProjectContainer.CurrentProjectUsers != null)
             {
-                ProjectUsers = new ObservableCollection<ProjectUserDTO>(ProjectContainer.CurrentProject.ProjectUsers);
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>(ProjectContainer.CurrentProjectUsers);
             }
             else
             {

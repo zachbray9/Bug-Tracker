@@ -1,7 +1,7 @@
 ﻿using Bug_Tracker.Commands;
+using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;
@@ -15,6 +15,8 @@ namespace Bug_Tracker.ViewModels
         private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         public IAuthenticator Authenticator { get; }
         public INavigator Navigator { get; }
+        private readonly IProjectContainer ProjectContainer;
+
 
         private string projectName;
         public string ProjectName
@@ -37,14 +39,15 @@ namespace Bug_Tracker.ViewModels
             set { dateCreated = value; }
         }
 
-        public CreateNewProjectPageViewModel(IApiService<ProjectDTO> projectApiService, IApiService<ProjectUserDTO> projectUserApiService, IAuthenticator authenticator, INavigator navigator)
+        public CreateNewProjectPageViewModel(IApiService<ProjectDTO> projectApiService, IApiService<ProjectUserDTO> projectUserApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             ProjectApiService = projectApiService;
             ProjectUserApiService = projectUserApiService;
             Authenticator = authenticator;
             Navigator = navigator;
+            ProjectContainer = projectContainer;
 
-            CreateNewProjectCommand = new CreateNewProjectCommand(ProjectApiService, ProjectUserApiService, Navigator, this);
+            CreateNewProjectCommand = new CreateNewProjectCommand(ProjectApiService, ProjectUserApiService, Navigator, ProjectContainer, this);
         }
 
         public ICommand CreateNewProjectCommand { get; }

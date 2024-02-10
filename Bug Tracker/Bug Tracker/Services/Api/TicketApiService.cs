@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bug_Tracker.Services.Api
 {
-    public class TicketApiService : IApiService<TicketDTO>
+    public class TicketApiService : ITicketApiService
     {
         private readonly IHttpClientFactory HttpClientFactory;
         private readonly HttpClient HttpClient;
@@ -20,7 +20,8 @@ namespace Bug_Tracker.Services.Api
             HttpClientFactory = httpClientFactory;
 
             HttpClient = HttpClientFactory.CreateClient();
-            HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            //HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
         public async Task<TicketDTO> GetById(int id)
@@ -47,6 +48,11 @@ namespace Bug_Tracker.Services.Api
             string jsonString = await response.Content.ReadAsStringAsync();
             List<TicketDTO> tickets = JsonConvert.DeserializeObject<List<TicketDTO>>(jsonString);
             return tickets;
+        }
+
+        public async Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<TicketDTO> Create(TicketDTO newTicket)
@@ -91,5 +97,6 @@ namespace Bug_Tracker.Services.Api
 
             return true;
         }
+
     }
 }

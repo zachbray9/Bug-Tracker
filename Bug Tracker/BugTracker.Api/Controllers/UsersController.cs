@@ -5,6 +5,7 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Runtime.InteropServices;
 
 namespace BugTracker.Api.Controllers
 {
@@ -25,16 +26,18 @@ namespace BugTracker.Api.Controllers
         [Route ("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            User? user = await DbContext.Users
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            //User? user = await DbContext.Users
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .FirstOrDefaultAsync(u => u.Id == id);
+
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id  == id);
                     
             if(user == null)
             {
@@ -48,16 +51,18 @@ namespace BugTracker.Api.Controllers
         [Route ("byEmail/{email}")]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
-            User? user = await DbContext.Users
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
-                .FirstOrDefaultAsync(u => u.Email == email);
+            //User? user = await DbContext.Users
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .FirstOrDefaultAsync(u => u.Email == email);
+
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
             {
@@ -71,16 +76,18 @@ namespace BugTracker.Api.Controllers
         [Route ("byName/{fullName}")]
         public async Task<IActionResult> GetByFullName([FromRoute] string fullName)
         {
-            User? user = await DbContext.Users
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
-                .FirstOrDefaultAsync ((u) => (u.FirstName + u.LastName) == fullName);
+            //User? user = await DbContext.Users
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .FirstOrDefaultAsync ((u) => (u.FirstName + u.LastName) == fullName);
+
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.FirstName + u.LastName == fullName);
 
             if(user == null)
             {
@@ -93,19 +100,40 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<User>? users = await DbContext.Users
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(u => u.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
+            //List<User>? users = await DbContext.Users
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(u => u.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .ToListAsync();
+
+            List<User>? users = await DbContext.Users.ToListAsync();
+
+            return Ok(Mapper.Map<List<UserDTO>>(users));
+        }
+
+        [HttpGet]
+        [Route("{id:int}/Projects")]
+        public async Task<IActionResult> GetAllProjectsFromUserById([FromRoute] int id)
+        {
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if(user == null)
+            {
+                return NotFound($"No user with an id of {id} exists.");
+            }
+
+            List<ProjectDTO>? projects = await DbContext.Projects
+                .Where(p => p.Users.Any(pu => pu.UserId == id))
+                .Select(p => Mapper.Map<ProjectDTO>(p))
                 .ToListAsync();
 
-            return Ok(users);
+            return Ok(projects);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserDTO userDTO)

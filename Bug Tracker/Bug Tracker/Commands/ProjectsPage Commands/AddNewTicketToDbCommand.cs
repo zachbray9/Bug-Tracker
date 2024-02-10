@@ -16,13 +16,13 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         public INavigator Navigator{ get; }
         private readonly IProjectContainer ProjectContainer;
         private readonly ITicketContainer TicketContainer;
-        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly ITicketApiService TicketApiService;
         private readonly CreateTicketViewModel CreateTicketViewModel;
 
         private ProjectDTO CurrentProject { get => ProjectContainer.CurrentProject; }
         private TicketDTO CurrentTicket { get => TicketContainer.CurrentTicket; }
 
-        public AddNewTicketToDbCommand(UserDTO currentUser, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<TicketDTO> ticketApiService, CreateTicketViewModel createTicketViewModel)
+        public AddNewTicketToDbCommand(UserDTO currentUser, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, ITicketApiService ticketApiService, CreateTicketViewModel createTicketViewModel)
         {
             CurrentUser = currentUser;
             Navigator = navigator;
@@ -34,7 +34,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
         public async override void Execute(object parameter)
         {
-            ProjectUserDTO projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
+            ProjectUserDTO projectUser = ProjectContainer.CurrentProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
             //this line is added to check if assignee is null or not to make it so the db doesn't throw an error when creating a ticket with a null assignee
             //int assigneeId = null;
@@ -46,8 +46,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 Title = CreateTicketViewModel.TicketTitle, 
                 Description = CreateTicketViewModel.TicketDescription, 
                 ProjectId = CurrentProject.Id, 
-                AuthorId = projectUser.Id, 
-                AssigneeId = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.Id : 0, 
+                AuthorId = CurrentUser.Id, 
+                AssigneeId = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.UserId : 0, 
                 Status = CurrentTicket.Status, 
                 Priority = Priority.Low, 
                 DateSubmitted = DateTime.Now 

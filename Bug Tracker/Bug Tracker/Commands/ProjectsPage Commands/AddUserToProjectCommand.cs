@@ -2,7 +2,6 @@
 using Bug_Tracker.Utility_Classes;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System.Linq;
@@ -62,7 +61,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 };
 
                 //Check if the user that is being added already exists in the project
-                if(CurrentProject.ProjectUsers.Any(pu => pu.UserId == newProjectUser.UserId))
+                if(ProjectContainer.CurrentProjectUsers.Any(pu => pu.UserId == newProjectUser.UserId))
                 {
                     MessageBox.Show("The user you are trying to add is already in this project.", "User Already Exists", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;

@@ -1,6 +1,8 @@
 ﻿using Bug_Tracker.Commands;
+using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
+using BugTracker.Domain.Services.Api;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
@@ -9,13 +11,17 @@ namespace Bug_Tracker.ViewModels
     {
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; private set; }
+        private readonly IProjectContainer ProjectContainer;
+        private readonly IUserApiService UserApiService;
 
-        public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator)
+        public LoginPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IUserApiService userApiService)
         {
             Authenticator = authenticator;
             Navigator = navigator;
+            ProjectContainer = projectContainer;
+            UserApiService = userApiService;
 
-            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator);
+            AttemptLoginCommand = new AttemptLoginCommand(this, Authenticator, Navigator, ProjectContainer, UserApiService);
             LoginAsDemoUserCommand = new LoginAsDemoUserCommand(this, Authenticator, Navigator);
             //RecoverPasswordCommand = new RecoverPasswordCommand();
 

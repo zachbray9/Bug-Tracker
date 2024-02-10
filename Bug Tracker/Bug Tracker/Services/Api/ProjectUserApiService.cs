@@ -20,7 +20,8 @@ namespace Bug_Tracker.Services.Api
             HttpClientFactory = httpClientFactory;
 
             HttpClient = HttpClientFactory.CreateClient();
-            HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            //HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
+            HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
         public async Task<ProjectUserDTO> GetById(int id)
@@ -54,7 +55,7 @@ namespace Bug_Tracker.Services.Api
             string jsonString = JsonConvert.SerializeObject(newProjectUser);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await HttpClient.PostAsync("ProjectUsers", content);
+            HttpResponseMessage response = await HttpClient.PostAsync($"Projects/{newProjectUser.ProjectId}/Users", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());

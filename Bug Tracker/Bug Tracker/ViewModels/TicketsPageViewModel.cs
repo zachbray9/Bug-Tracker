@@ -80,14 +80,14 @@ namespace Bug_Tracker.ViewModels
         {
             Tickets.Clear();
 
-            if (CurrentUser.ProjectUsers != null)
+            if (ProjectContainer.CurrentProjectUsers != null)
             {
                 //Adds all authored and assigned tickets into a list (will contain duplicates if any ticket is authored and assigned by the current user)
                 List<TicketDTO> allTicketsWithDuplicates = new List<TicketDTO>();
-                foreach(ProjectUserDTO projectUser in CurrentUser.ProjectUsers)
+                foreach(ProjectUserDTO projectUser in ProjectContainer.CurrentProjectUsers)
                 {
-                    allTicketsWithDuplicates.AddRange(projectUser.AuthoredTickets);
-                    allTicketsWithDuplicates.AddRange(projectUser.AssignedTickets);
+                    allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AuthorId == CurrentUser.Id));
+                    allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AssigneeId == CurrentUser.Id));
                 }
 
                 //Creates a new list and checks if the new list already contains each ticket. If it doesn't contain the ticket, then the ticket is added.

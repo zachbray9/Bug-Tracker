@@ -34,7 +34,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Name="loginLabel" Content="&#x1F577; Bug Tracker Login" FontFamily="Arial" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 50, 0, 15"/>
+                <Label Grid.Row="0" Name="loginLabel" Content="&#x1F577; Login" FontFamily="Arial" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 50, 0, 15"/>
                 
                 <Grid Grid.Row="1" >
                     <Grid.RowDefinitions>

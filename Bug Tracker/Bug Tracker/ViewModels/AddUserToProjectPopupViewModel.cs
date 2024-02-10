@@ -3,7 +3,6 @@ using Bug_Tracker.State;
 using Bug_Tracker.Utility_Classes;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Enumerables.Enum_Converters;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;

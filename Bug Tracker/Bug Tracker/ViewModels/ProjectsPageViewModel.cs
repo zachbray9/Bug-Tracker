@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using BugTracker.Domain.Models.DTOs;
+using System.Collections.Generic;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -65,10 +66,11 @@ namespace Bug_Tracker.ViewModels
         {
             Projects.Clear();
 
-            foreach(ProjectUserDTO projectUser in Authenticator.CurrentUser.ProjectUsers)
-            {
-                Projects.Add(projectUser.Project);
-            }
+            //foreach(ProjectUserDTO projectUser in Authenticator.CurrentUser.ProjectUsers)
+            //{
+            //    Projects.Add(projectUser.Project);
+            //}
+            Projects = new ObservableCollection<ProjectDTO>(ProjectContainer.CurrentUserProjects);
         }
 
         private void UpdateProjectSearchResults()

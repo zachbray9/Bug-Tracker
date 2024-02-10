@@ -1,6 +1,7 @@
-﻿using Bug_Tracker.State.Authenticators;
+﻿using Bug_Tracker.State;
+using Bug_Tracker.State.Authenticators;
+using Bug_Tracker.State.Model_States;
 using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;
@@ -12,37 +13,36 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
     public class AddCommentToDbCommand : CommandBase
     {
         private readonly IAuthenticator Authenticator;
-        private readonly IApiService<TicketDTO> TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
         private readonly TicketDetailsPageViewModel ViewModel;
+        private readonly IProjectContainer ProjectContainer;
+        private readonly ITicketContainer TicketContainer;
 
         private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
         private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
-        public AddCommentToDbCommand(IAuthenticator authenticator, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, TicketDetailsPageViewModel viewModel)
+        public AddCommentToDbCommand(IAuthenticator authenticator, IApiService<CommentDTO> commentApiService, TicketDetailsPageViewModel viewModel, IProjectContainer projectContainer, ITicketContainer ticketContainer)
         {
             Authenticator = authenticator;
-            TicketApiService = ticketApiService;
             CommentApiService = commentApiService;
             ViewModel = viewModel;
+            ProjectContainer = projectContainer;
+            TicketContainer = ticketContainer;
         }
 
         public async override void Execute(object parameter)
         {
-            ProjectUserDTO projectUser = CurrentUser.ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
-
             CommentDTO newComment = new CommentDTO
             {
                 Text = ViewModel.CommentTextBoxText,
-                AuthorId = projectUser.Id,
+                AuthorId = CurrentUser.Id,
                 TicketId = CurrentTicket.Id,
                 DateSubmitted = DateTime.Now,
             };
 
             await CommentApiService.Create(newComment);
-            CurrentTicket.Comments.Add(newComment);
-            await TicketApiService.Update(CurrentTicket);
-            ViewModel.Comments = new ObservableCollection<CommentDTO>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+            TicketContainer.CurrentCommentsOnTicket.Add(newComment);
+            ViewModel.Comments = new ObservableCollection<CommentDTO>(TicketContainer.CurrentCommentsOnTicket.OrderByDescending(i => i.DateSubmitted));
             ViewModel.CommentTextBoxText = String.Empty;
         }
     }

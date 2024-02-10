@@ -25,18 +25,20 @@ namespace BugTracker.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            Project? project = await DbContext.Projects
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
-                .Include(p => p.Tickets)
-                    .ThenInclude(t => t.Comments)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            //Project? project = await DbContext.Projects
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .Include(p => p.Tickets)
+            //        .ThenInclude(t => t.Comments)
+            //    .FirstOrDefaultAsync(p => p.Id == id);
+
+            Project? project = await DbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
 
             if (project == null)
             {
@@ -49,18 +51,20 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Project>? projects = await DbContext.Projects
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.AuthoredTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.AssignedTickets)
-                        .ThenInclude(t => t.Comments)
-                .Include(p => p.ProjectUsers)
-                    .ThenInclude(pu => pu.Comments)
-                .Include(p => p.Tickets)
-                    .ThenInclude(t => t.Comments)
-                .ToListAsync();
+            //List<Project>? projects = await DbContext.Projects
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.AuthoredTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.AssignedTickets)
+            //            .ThenInclude(t => t.Comments)
+            //    .Include(p => p.ProjectUsers)
+            //        .ThenInclude(pu => pu.Comments)
+            //    .Include(p => p.Tickets)
+            //        .ThenInclude(t => t.Comments)
+            //    .ToListAsync();
+
+            List<Project>? projects = await DbContext.Projects.ToListAsync();
 
             List<ProjectDTO> projectDTOs = projects.Select(p => Mapper.Map<ProjectDTO>(p)!).ToList();
 
@@ -95,7 +99,6 @@ namespace BugTracker.Api.Controllers
             if (project == null)
                 return NotFound();
 
-            project.Id = projectDTO.Id;
             project.Name = projectDTO.Name;
             project.Description = projectDTO.Description;
 

@@ -5,6 +5,7 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace BugTracker.Api.Controllers
 {
@@ -25,36 +26,79 @@ namespace BugTracker.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            Ticket? ticket = await DbContext.Tickets
-                .Include(t => t.Comments)
-                .FirstOrDefaultAsync(t => t.Id == id);
+            //Ticket? ticket = await DbContext.Tickets
+            //    .Include(t => t.Comments)
+            //    .FirstOrDefaultAsync(t => t.Id == id);
+
+            Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id  == id);
 
             if (ticket == null)
             {
-                return NotFound();
+                return NotFound("No ticket with this id was found.");
             }
 
-            return Ok(Mapper.Map<TicketDTO>(ticket));
+            TicketDTO ticketDTO = await MapToDTO(id);
+            return Ok(ticketDTO);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Ticket>? tickets = await DbContext.Tickets
-                .Include(t => t.Comments)
-                .ToListAsync();
+            //List<Ticket>? tickets = await DbContext.Tickets
+            //    .Include(t => t.Comments)
+            //    .ToListAsync();
 
-            List<TicketDTO> ticketDTOs = tickets.Select(t => Mapper.Map<TicketDTO>(t)!).ToList();
+            List<Ticket>? tickets = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).ToListAsync();
+
+            List<TicketDTO> ticketDTOs = tickets.Select(t => new TicketDTO
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Description = t.Description,
+                ProjectId = t.ProjectId,
+                AuthorId = t.AuthorId,
+                AssigneeId = t.Assignee != null ? t.AssigneeId : 0,
+                AuthorFirstName = t.Author.FirstName,
+                AuthorLastName = t.Author.LastName,
+                AssigneeFirstName = t.Assignee != null ? t.Assignee.FirstName : string.Empty,
+                AssigneeLastName = t.Assignee != null ? t.Assignee.LastName : string.Empty,
+                Status = t.Status,
+                Priority = t.Priority,
+                TicketType = t.TicketType,
+                DateSubmitted = t.DateSubmitted
+            }).ToList();
+            
 
             return Ok(ticketDTOs);
+        }
+
+        [HttpGet]
+        [Route("{ticketId:int}/Comments")]
+        public async Task<IActionResult> GetAllCommentsOnTicket([FromRoute] int ticketId)
+        {
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Comments).ThenInclude(c => c.Author).FirstOrDefaultAsync(t => t.Id == ticketId);
+            if(ticket == null)
+            {
+                return NotFound("No ticket with this id was found.");
+            }
+
+            List<CommentDTO> comments = ticket.Comments.Select(c => new CommentDTO
+            {
+                Id = c.Id,
+                Text = c.Text,
+                AuthorId = c.AuthorId,
+                AuthorFirstName = c.Author.FirstName,
+                AuthorLastName = c.Author.LastName,
+                TicketId = ticketId,
+                DateSubmitted = c.DateSubmitted
+            }).ToList();
+
+            return Ok(comments);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TicketDTO ticketDTO)
         {
-            if (ticketDTO == null)
-                return BadRequest("The ticket object you are trying to pass is null.");
-
             Ticket ticket = new Ticket
             {
                 Title = ticketDTO.Title,
@@ -67,36 +111,38 @@ namespace BugTracker.Api.Controllers
                 TicketType = ticketDTO.TicketType,
                 DateSubmitted = ticketDTO.DateSubmitted,
             };
-            EntityEntry<Ticket> newTicket = await DbContext.Tickets.AddAsync(ticket);
+            EntityEntry<Ticket> updatedTicket = await DbContext.Tickets.AddAsync(ticket);
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Tickets/{ticketDTO.Id}", Mapper.Map<TicketDTO>(newTicket.Entity));
+            TicketDTO updatedTicketDTO = await MapToDTO(updatedTicket.Entity.Id);
+
+            return Created($"~/api/Tickets/{ticketDTO.Id}", updatedTicketDTO);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] TicketDTO ticketDTO)
+        [Route("{ticketId:int}")]
+        public async Task<IActionResult> Update([FromRoute] int ticketId, [FromBody] TicketDTO ticketDTO)
         {
-            if (ticketDTO == null)
-                return BadRequest("The Ticket object you are trying to pass is null.");
-
-            Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketDTO.Id);
+            Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketId);
             if (ticket == null)
                 return NotFound();
 
-            ticket.Id = ticketDTO.Id;
             ticket.Title = ticketDTO.Title;
             ticket.Description = ticketDTO.Description;
             ticket.ProjectId = ticketDTO.ProjectId;
-            ticket.AuthorId = ticketDTO.AuthorId;
             ticket.AssigneeId = ticketDTO.AssigneeId;
             ticket.Status = ticketDTO.Status;
             ticket.Priority = ticketDTO.Priority;
             ticket.TicketType = ticketDTO.TicketType;
 
-            EntityEntry<Ticket> updatedTicket = DbContext.Tickets.Update(ticket);
+            DbContext.Tickets.Update(ticket);
             await DbContext.SaveChangesAsync();
 
-            return Ok(Mapper.Map<TicketDTO>(updatedTicket.Entity));
+            ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
+
+            TicketDTO updatedTicket = await MapToDTO(ticketId);
+
+            return Ok(updatedTicket);
         }
 
         [HttpDelete]
@@ -111,6 +157,21 @@ namespace BugTracker.Api.Controllers
             await DbContext.SaveChangesAsync();
 
             return Ok("Ticket was successfully deleted.");
+        }
+
+        private async Task<TicketDTO> MapToDTO(int id)
+        {
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == id);
+            if (ticket == null)
+                throw new Exception("There was an issue mapping the ticket to a data transer object.");
+
+            TicketDTO? ticketDTO = Mapper.Map<TicketDTO>(ticket);
+            ticketDTO.AuthorFirstName = ticket.Author.FirstName;
+            ticketDTO.AuthorLastName = ticket.Author.LastName;
+            ticketDTO.AssigneeFirstName = ticket.Assignee != null ? ticket.Assignee.FirstName : string.Empty;
+            ticketDTO.AssigneeLastName = ticket.Assignee != null ? ticket.Assignee.LastName : string.Empty;
+
+            return ticketDTO;
         }
     }
 }

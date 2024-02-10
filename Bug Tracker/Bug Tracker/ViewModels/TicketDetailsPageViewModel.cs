@@ -9,7 +9,6 @@ using BugTracker.Domain.Services.Api;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
@@ -21,7 +20,7 @@ namespace Bug_Tracker.ViewModels
         public IProjectContainer ProjectContainer { get; }
         public ITicketContainer TicketContainer { get; }
         private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
-        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly ITicketApiService TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
 
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
@@ -32,7 +31,7 @@ namespace Bug_Tracker.ViewModels
         public ProjectUserDTO CurrentProjectUser { get; }
         public bool DoesCommentTextBoxContainText { get => !String.IsNullOrEmpty(CommentTextBoxText); }
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserApiService, ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
@@ -51,9 +50,9 @@ namespace Bug_Tracker.ViewModels
 
 
             //checks if ticket has any comments and if so, fills the collection with tickets. Otherwise initializes empty collection
-            if (CurrentTicket.Comments != null) 
+            if (TicketContainer.CurrentCommentsOnTicket != null) 
             {
-                Comments = new ObservableCollection<CommentDTO>(CurrentTicket.Comments.OrderByDescending(i => i.DateSubmitted));
+                Comments = new ObservableCollection<CommentDTO>(TicketContainer.CurrentCommentsOnTicket.OrderByDescending(i => i.DateSubmitted));
             }
             else
             {
@@ -61,9 +60,9 @@ namespace Bug_Tracker.ViewModels
             }
 
             //checks if the current project has any project users (which it always should) and if so, fills the collection with the project users. Otherwise initializes an empty list.
-            if(CurrentProject.ProjectUsers != null) 
+            if(ProjectContainer.CurrentProjectUsers != null) 
             {
-                ProjectUsers = new ObservableCollection<ProjectUserDTO>(CurrentProject.ProjectUsers);
+                ProjectUsers = new ObservableCollection<ProjectUserDTO>(ProjectContainer.CurrentProjectUsers);
             }
             else
             {
@@ -78,8 +77,8 @@ namespace Bug_Tracker.ViewModels
                 comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
             }
 
-            AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, TicketApiService, CommentApiService, this);
-            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(TicketApiService, CommentApiService, this);
+            AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, CommentApiService, this, ProjectContainer, TicketContainer);
+            DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(CommentApiService, this, TicketContainer);
             SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(TicketApiService, this, StatusOptionsRetriever);
             CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(this, StatusOptionsRetriever);
         }

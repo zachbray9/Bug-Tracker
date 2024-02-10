@@ -1,6 +1,5 @@
 ﻿using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;
@@ -27,8 +26,8 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
         {
             CurrentTicket.Title = ViewModel.TicketTitle;
             CurrentTicket.Description = ViewModel.TicketDescription;
-            CurrentTicket.AssigneeId = ViewModel.Assignee.Id;
-            CurrentTicket.AuthorId = ViewModel.Reporter.Id;
+            CurrentTicket.AssigneeId = ViewModel.Assignee.UserId;
+            CurrentTicket.AuthorId = ViewModel.Reporter.UserId;
             CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(ViewModel.TicketStatus);
 
             try

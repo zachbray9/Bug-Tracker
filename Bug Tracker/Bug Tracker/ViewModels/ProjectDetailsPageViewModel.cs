@@ -1,5 +1,4 @@
 ﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
-using Bug_Tracker.Services.Api;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
@@ -20,7 +19,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IUserApiService UserApiService;
         private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
         private readonly IApiService<ProjectDTO> ProjectApiService;
-        private readonly IApiService<TicketDTO> TicketApiService;
+        private readonly ITicketApiService TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
@@ -158,7 +157,7 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService, IApiService<TicketDTO> ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IViewModelAbstractFactory viewModelFactory)
+        public ProjectDetailsPageViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService, ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IViewModelAbstractFactory viewModelFactory)
         {
             UserApiService = userApiService;
             ProjectUserApiService = projectUserApiService;
@@ -196,7 +195,7 @@ namespace Bug_Tracker.ViewModels
         {
             ProjectUsers.Clear();
 
-            foreach(ProjectUserDTO projectUser in CurrentProject.ProjectUsers)
+            foreach(ProjectUserDTO projectUser in ProjectContainer.CurrentProjectUsers)
             {
                 ProjectUsers.Add(projectUser);
             }               
@@ -208,7 +207,7 @@ namespace Bug_Tracker.ViewModels
             InProgressTickets.Clear();
             DoneTickets.Clear();
 
-            foreach(TicketDTO ticket in CurrentProject.Tickets)
+            foreach(TicketDTO ticket in ProjectContainer.CurrentTicketsOnProject)
             {
                 if (ticket.Status == Status.ToDo)
                 {

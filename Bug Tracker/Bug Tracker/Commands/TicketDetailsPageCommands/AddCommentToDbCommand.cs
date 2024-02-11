@@ -36,6 +36,8 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             {
                 Text = ViewModel.CommentTextBoxText,
                 AuthorId = CurrentUser.Id,
+                AuthorFirstName = CurrentUser.FirstName,
+                AuthorLastName = CurrentUser.LastName,
                 TicketId = CurrentTicket.Id,
                 DateSubmitted = DateTime.Now,
             };

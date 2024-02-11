@@ -11,10 +11,10 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
         private readonly ITicketContainer TicketContainer;
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
-        private readonly IApiService<ProjectDTO> ProjectApiService;
+        private readonly IProjectUserApiService ProjectUserApiService;
+        private readonly IProjectApiService ProjectApiService;
 
-        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserDataService, IApiService<ProjectDTO> projectApiService)
+        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserDataService, IProjectApiService projectApiService)
         {
             Navigator = navigator;
             ProjectContainer = projectContainer;
@@ -30,8 +30,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
-                TicketContainer.Assignee = ticket.AssigneeId != 0 ? await ProjectUserApiService.GetById(ticket.AssigneeId) : null;
-                TicketContainer.Author = await ProjectUserApiService.GetById(ticket.AuthorId);
+                TicketContainer.Assignee = ticket.AssigneeId.HasValue ? await ProjectUserApiService.GetById(ticket.AssigneeId.Value) : null;
+                TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }
         }

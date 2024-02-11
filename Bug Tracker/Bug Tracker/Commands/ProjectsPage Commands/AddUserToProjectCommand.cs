@@ -12,7 +12,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
     public class AddUserToProjectCommand : CommandBase
     {
         private readonly IUserApiService UserApiService;
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IProjectUserApiService ProjectUserApiService;
         private readonly IProjectContainer ProjectContainer;
         private readonly AddUserToProjectPopupViewModel AddUserViewModel;
 
@@ -21,7 +21,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         private string SearchQuery { get => AddUserViewModel.SearchQuery; }
         private ProjectRole SelectedRole { get => AddUserViewModel.SelectedProjectRoleAsEnum; }
 
-        public AddUserToProjectCommand(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IProjectContainer projectContainer, AddUserToProjectPopupViewModel addUserViewModel)
+        public AddUserToProjectCommand(IUserApiService userApiService, IProjectUserApiService projectUserApiService, IProjectContainer projectContainer, AddUserToProjectPopupViewModel addUserViewModel)
         {
             UserApiService = userApiService;
             ProjectUserApiService = projectUserApiService;

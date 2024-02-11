@@ -11,7 +11,7 @@ namespace BugTracker.Domain.Services.Api
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
         Task<T> Create(T entity);
-        Task<T> Update(T entity);
+        Task<T> Update(int id, T entity);
         Task<bool> DeleteById(int id);
         
     }

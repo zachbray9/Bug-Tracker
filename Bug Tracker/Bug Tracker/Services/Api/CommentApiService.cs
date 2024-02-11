@@ -65,12 +65,12 @@ namespace Bug_Tracker.Services.Api
             return comment;
         }
 
-        public async Task<CommentDTO> Update(CommentDTO commentToUpdate)
+        public async Task<CommentDTO> Update(int id, CommentDTO commentToUpdate)
         {
             string jsonString = JsonConvert.SerializeObject(commentToUpdate);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await HttpClient.PutAsync("Comments", content);
+            HttpResponseMessage response = await HttpClient.PutAsync($"Comments/{id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());

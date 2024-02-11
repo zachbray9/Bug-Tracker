@@ -47,7 +47,11 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 Description = CreateTicketViewModel.TicketDescription, 
                 ProjectId = CurrentProject.Id, 
                 AuthorId = CurrentUser.Id, 
-                AssigneeId = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.UserId : 0, 
+                AuthorFirstName = CurrentUser.FirstName,
+                AuthorLastName = CurrentUser.LastName,
+                AssigneeId = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.UserId : null, 
+                AssigneeFirstName = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.UserFirstName : null,
+                AssigneeLastName = CreateTicketViewModel.Assignee != null ? CreateTicketViewModel.Assignee.UserLastName : null,
                 Status = CurrentTicket.Status, 
                 Priority = Priority.Low, 
                 DateSubmitted = DateTime.Now 

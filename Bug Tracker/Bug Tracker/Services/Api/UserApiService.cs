@@ -108,12 +108,12 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<UserDTO> Update(UserDTO userToUpdate)
+        public async Task<UserDTO> Update(int id, UserDTO userToUpdate)
         {
             string jsonString = JsonConvert.SerializeObject(userToUpdate);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await HttpClient.PutAsync("Users", content);
+            HttpResponseMessage response = await HttpClient.PutAsync($"Users/{id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());

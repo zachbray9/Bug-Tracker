@@ -12,7 +12,7 @@ namespace BugTracker.Domain.Models.DTOs
         public int AuthorId { get; set; }
         public string AuthorFirstName { get; set; } = null!;
         public string AuthorLastName { get; set; } = null!;
-        public int AssigneeId { get; set; } = 0;
+        public int? AssigneeId { get; set; } = 0;
         public string? AssigneeFirstName { get; set; } = string.Empty;
         public string? AssigneeLastName { get; set; } = string.Empty;
         public Status Status { get; set; }

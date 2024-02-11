@@ -50,7 +50,7 @@ namespace Bug_Tracker.Services.Api
             return tickets;
         }
 
-        public async Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
+        public Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
         {
             throw new NotImplementedException();
         }
@@ -71,12 +71,12 @@ namespace Bug_Tracker.Services.Api
             return ticket;
         }
 
-        public async Task<TicketDTO> Update(TicketDTO ticketToUpdate)
+        public async Task<TicketDTO> Update(int id, TicketDTO ticketToUpdate)
         {
             string jsonString = JsonConvert.SerializeObject(ticketToUpdate);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await HttpClient.PutAsync("Tickets", content);
+            HttpResponseMessage response = await HttpClient.PutAsync($"Tickets/{id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());

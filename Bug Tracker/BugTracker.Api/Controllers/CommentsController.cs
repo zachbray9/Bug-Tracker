@@ -42,16 +42,16 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Comment>? comments = await DbContext.Comments.ToListAsync();
+            List<Comment>? comments = await DbContext.Comments.Include(c => c.Author).Include(c => c.Ticket).ToListAsync();
 
             List<CommentDTO> commentDTOs = comments.Select(c => new CommentDTO
             {
                 Id = c.Id,
                 Text = c.Text,
-                AuthorId = c.Author.Id,
+                AuthorId = c.AuthorId,
                 AuthorFirstName = c.Author.FirstName,
                 AuthorLastName = c.Author.LastName,
-                TicketId = c.Ticket.Id,
+                TicketId = c.TicketId,
                 DateSubmitted = c.DateSubmitted
             }).ToList();
 

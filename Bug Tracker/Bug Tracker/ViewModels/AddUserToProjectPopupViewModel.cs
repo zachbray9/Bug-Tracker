@@ -15,7 +15,7 @@ namespace Bug_Tracker.ViewModels
     public class AddUserToProjectPopupViewModel : ViewModelBase
     {
         private readonly IUserApiService UserApiService;
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IProjectUserApiService ProjectUserApiService;
         private readonly IProjectContainer ProjectContainer;
         private readonly ProjectRoleOptionsRetriever ProjectRoleOptionsRetriever;
 
@@ -33,7 +33,7 @@ namespace Bug_Tracker.ViewModels
         }
 
 
-        public AddUserToProjectPopupViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
+        public AddUserToProjectPopupViewModel(IUserApiService userApiService, IProjectUserApiService projectUserApiService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
         {
             UserApiService = userApiService;
             ProjectUserApiService = projectUserApiService;

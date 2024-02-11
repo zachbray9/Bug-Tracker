@@ -21,38 +21,6 @@ namespace BugTracker.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.ProjectUsers)
-            //    .WithOne(pu => pu.User);
-
-            //modelBuilder.Entity<ProjectUser>()
-            //    .HasOne(pu => pu.Project)
-            //    .WithMany(p => p.ProjectUsers);
-
-            //modelBuilder.Entity<ProjectUser>()
-            //    .HasMany(pu => pu.AuthoredTickets)
-            //    .WithOne(t => t.Author)
-            //    .HasForeignKey(t => t.AuthorId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<ProjectUser>()
-            //    .HasMany(pu => pu.AssignedTickets)
-            //    .WithOne(t => t.Assignee)
-            //    .HasForeignKey(t => t.AssigneeId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<ProjectUser>()
-            //    .HasMany(pu => pu.Comments)
-            //    .WithOne(t => t.Author)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<Project>()
-            //    .HasMany(p => p.Tickets)
-            //    .WithOne(t => t.Project);
-
-            //modelBuilder.Entity<Ticket>()
-            //    .HasMany(t => t.Comments)
-            //    .WithOne(c => c.Ticket); 
 
             modelBuilder.Entity<ProjectUser>()
                 .HasKey(pu => new { pu.UserId, pu.ProjectId });
@@ -86,7 +54,8 @@ namespace BugTracker.EntityFramework
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Author)
                 .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.AuthorId);
+                .HasForeignKey(c => c.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Ticket)

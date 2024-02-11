@@ -17,8 +17,8 @@ namespace Bug_Tracker.ViewModels
     public class ProjectDetailsPageViewModel : ViewModelBase
     {
         private readonly IUserApiService UserApiService;
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
-        private readonly IApiService<ProjectDTO> ProjectApiService;
+        private readonly IProjectUserApiService ProjectUserApiService;
+        private readonly IProjectApiService ProjectApiService;
         private readonly ITicketApiService TicketApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
         private readonly IAuthenticator Authenticator;
@@ -157,7 +157,7 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectDetailsPageViewModel(IUserApiService userApiService, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService, ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IViewModelAbstractFactory viewModelFactory)
+        public ProjectDetailsPageViewModel(IUserApiService userApiService, IProjectUserApiService projectUserApiService, IProjectApiService projectApiService, ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IViewModelAbstractFactory viewModelFactory)
         {
             UserApiService = userApiService;
             ProjectUserApiService = projectUserApiService;

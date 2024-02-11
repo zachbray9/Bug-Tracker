@@ -26,13 +26,13 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
         {
             CurrentTicket.Title = ViewModel.TicketTitle;
             CurrentTicket.Description = ViewModel.TicketDescription;
-            CurrentTicket.AssigneeId = ViewModel.Assignee.UserId;
+            CurrentTicket.AssigneeId = ViewModel.Assignee != null ? ViewModel.Assignee.UserId : null;
             CurrentTicket.AuthorId = ViewModel.Reporter.UserId;
             CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(ViewModel.TicketStatus);
 
             try
             {
-                await TicketApiService.Update(CurrentTicket);
+                await TicketApiService.Update(CurrentTicket.Id, CurrentTicket);
                 System.Diagnostics.Debug.WriteLine("Changes have been saved");
 
                 ViewModel.TicketTitle = CurrentTicket.Title;

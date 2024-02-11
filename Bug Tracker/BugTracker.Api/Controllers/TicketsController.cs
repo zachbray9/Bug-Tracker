@@ -5,7 +5,6 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace BugTracker.Api.Controllers
 {
@@ -26,11 +25,7 @@ namespace BugTracker.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            //Ticket? ticket = await DbContext.Tickets
-            //    .Include(t => t.Comments)
-            //    .FirstOrDefaultAsync(t => t.Id == id);
-
-            Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id  == id);
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id  == id);
 
             if (ticket == null)
             {
@@ -44,30 +39,8 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            //List<Ticket>? tickets = await DbContext.Tickets
-            //    .Include(t => t.Comments)
-            //    .ToListAsync();
-
             List<Ticket>? tickets = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).ToListAsync();
-
-            List<TicketDTO> ticketDTOs = tickets.Select(t => new TicketDTO
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Description = t.Description,
-                ProjectId = t.ProjectId,
-                AuthorId = t.AuthorId,
-                AssigneeId = t.Assignee != null ? t.AssigneeId : 0,
-                AuthorFirstName = t.Author.FirstName,
-                AuthorLastName = t.Author.LastName,
-                AssigneeFirstName = t.Assignee != null ? t.Assignee.FirstName : string.Empty,
-                AssigneeLastName = t.Assignee != null ? t.Assignee.LastName : string.Empty,
-                Status = t.Status,
-                Priority = t.Priority,
-                TicketType = t.TicketType,
-                DateSubmitted = t.DateSubmitted
-            }).ToList();
-            
+            List<TicketDTO>? ticketDTOs = Mapper.Map<List<TicketDTO>>(tickets);
 
             return Ok(ticketDTOs);
         }

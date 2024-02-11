@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bug_Tracker.Services.Api
 {
-    public class ProjectApiService : IApiService<ProjectDTO>
+    public class ProjectApiService : IProjectApiService
     {
         private readonly IHttpClientFactory HttpClientFactory;
         private readonly HttpClient HttpClient;
@@ -49,6 +49,19 @@ namespace Bug_Tracker.Services.Api
             return projects;
         }
 
+        public async Task<List<TicketDTO>> GetAllTicketsOnProject(int projectId)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Tickets");
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            List<TicketDTO> tickets = JsonConvert.DeserializeObject<List<TicketDTO>>(jsonString);
+            return tickets;
+        }
+
         public async Task<ProjectDTO> Create(ProjectDTO newProject)
         {
             string jsonString = JsonConvert.SerializeObject(newProject);
@@ -65,12 +78,12 @@ namespace Bug_Tracker.Services.Api
             return project;
         }
 
-        public async Task<ProjectDTO> Update(ProjectDTO projectToUpdate)
+        public async Task<ProjectDTO> Update(int id, ProjectDTO projectToUpdate)
         {
             string jsonString = JsonConvert.SerializeObject(projectToUpdate);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await HttpClient.PutAsync("Projects", content);
+            HttpResponseMessage response = await HttpClient.PutAsync($"Projects/{id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());
@@ -91,5 +104,6 @@ namespace Bug_Tracker.Services.Api
 
             return true;
         }
+
     }
 }

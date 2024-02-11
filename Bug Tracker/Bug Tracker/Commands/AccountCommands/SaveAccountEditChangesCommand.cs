@@ -78,7 +78,7 @@ namespace Bug_Tracker.Commands.AccountCommands
 
             try
             {
-                await UserApiService.Update(CurrentUser);
+                await UserApiService.Update(CurrentUser.Id, CurrentUser);
 
                 //doing this just so the save and cancel edit buttons disappear after saving changes.
                 ViewModel.FirstNameTextboxText = CurrentUser.FirstName;

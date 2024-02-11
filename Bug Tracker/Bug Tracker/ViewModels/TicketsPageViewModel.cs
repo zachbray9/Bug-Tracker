@@ -19,12 +19,12 @@ namespace Bug_Tracker.ViewModels
         private readonly INavigator Navigator;
         private readonly IProjectContainer ProjectContainer;
         private readonly ITicketContainer TicketContainer;
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
-        private readonly IApiService<ProjectDTO> ProjectApiService;
+        private readonly IProjectUserApiService ProjectUserApiService;
+        private readonly IProjectApiService ProjectApiService;
 
         private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IApiService<ProjectUserDTO> projectUserApiService, IApiService<ProjectDTO> projectApiService)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, IProjectApiService projectApiService)
         {
             Authenticator = authenticator;
             Navigator = navigator;

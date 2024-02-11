@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Bug_Tracker.Commands.ProjectsPage_Commands;
 using Bug_Tracker.State;
 using BugTracker.Domain.Models.DTOs;
-using System.Collections.Generic;
+using BugTracker.Domain.Services.Api;
 
 namespace Bug_Tracker.ViewModels
 {
@@ -15,6 +15,8 @@ namespace Bug_Tracker.ViewModels
         private readonly IAuthenticator Authenticator;
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
+        private readonly IProjectApiService ProjectApiService;
+
         private ObservableCollection<ProjectDTO> projects;
         public ObservableCollection<ProjectDTO> Projects
         {
@@ -37,13 +39,15 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public ProjectsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public ProjectsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, IProjectApiService projectApiService)
         {
             Authenticator = authenticator;
             Navigator = navigator;
             ProjectContainer = projectContainer;
+            ProjectApiService = projectApiService;
+
             Projects = new ObservableCollection<ProjectDTO>();
-            ViewProjectDetailsCommand = new ViewProjectDetailsCommand(Navigator, ProjectContainer);
+            ViewProjectDetailsCommand = new ViewProjectDetailsCommand(Navigator, ProjectContainer, ProjectApiService);
 
             UpdateProjects();
             ProjectSearchResults = new ObservableCollection<ProjectDTO>(Projects);
@@ -66,10 +70,11 @@ namespace Bug_Tracker.ViewModels
         {
             Projects.Clear();
 
-            //foreach(ProjectUserDTO projectUser in Authenticator.CurrentUser.ProjectUsers)
+            //foreach (ProjectUserDTO projectUser in Authenticator.CurrentUser.ProjectUsers)
             //{
             //    Projects.Add(projectUser.Project);
             //}
+
             Projects = new ObservableCollection<ProjectDTO>(ProjectContainer.CurrentUserProjects);
         }
 

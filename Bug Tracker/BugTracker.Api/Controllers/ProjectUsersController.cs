@@ -25,15 +25,7 @@ namespace BugTracker.Api.Controllers
         [Route("Projects/{projectId:int}/Users/{userId:int}")]
         public async Task<IActionResult> GetById([FromRoute] int projectId, [FromRoute] int userId)
         {
-            //ProjectUser? projectUser = await DbContext.ProjectUsers
-            //    .Include(pu => pu.AuthoredTickets)
-            //        .ThenInclude(t => t.Comments)
-            //    .Include(pu => pu.AssignedTickets)
-            //        .ThenInclude(t => t.Comments)
-            //    .Include(pu => pu.Comments)
-            //    .FirstOrDefaultAsync(u => u.Id == id);
-
-            ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.UserId == userId && pu.ProjectId == projectId);
+            ProjectUser? projectUser = await DbContext.ProjectUsers.Include(pu => pu.Project).Include(pu => pu.User).FirstOrDefaultAsync(pu => pu.UserId == userId && pu.ProjectId == projectId);
 
             if (projectUser == null)
             {
@@ -47,20 +39,8 @@ namespace BugTracker.Api.Controllers
         [Route("ProjectUsers")]
         public async Task<IActionResult> GetAll()
         {
-            //List<ProjectUser>? projectUsers = await DbContext.ProjectUsers
-            //    .Include(pu => pu.AuthoredTickets)
-            //        .ThenInclude(t => t.Comments)
-            //    .Include(pu => pu.AssignedTickets)
-            //        .ThenInclude(t => t.Comments)
-            //    .Include(pu => pu.Comments)
-            //    .ToListAsync();
-
-            List<ProjectUser>? projectUsers = await DbContext.ProjectUsers.ToListAsync();
-
-            //List<ProjectUserDTO> projectUserDTOs = projectUsers.Select(pu => Mapper.Map<ProjectUserDTO>(pu)!).ToList();
+            List<ProjectUser>? projectUsers = await DbContext.ProjectUsers.Include(pu => pu.Project).Include(pu => pu.User).ToListAsync();
             return Ok(Mapper.Map<List<ProjectUserDTO>>(projectUsers));
-
-            //return Ok(projectUserDTOs);
         }
 
         [HttpPost]
@@ -73,16 +53,11 @@ namespace BugTracker.Api.Controllers
             if (await DbContext.ProjectUsers.AnyAsync(pu => pu.UserId == projectUserDTO.UserId && pu.ProjectId == projectId))
                 return Conflict("This user is already a member of this project.");
 
-            ProjectUser projectUser = new ProjectUser
-            {
-                ProjectId = projectUserDTO.ProjectId,
-                UserId = projectUserDTO.UserId,
-                Role = projectUserDTO.Role
-            };
+            ProjectUser? projectUser = Mapper.Map<ProjectUser>(projectUserDTO);
             EntityEntry<ProjectUser> newProjectUser = await DbContext.ProjectUsers.AddAsync(projectUser);
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Projects/{projectId}/Users", Mapper.Map<ProjectUserDTO>(newProjectUser.Entity));
+            return Created("~/api/Projects/{projectId}/Users/{userId}", await GetById(newProjectUser.Entity.ProjectId, newProjectUser.Entity.UserId));
         }
 
         [HttpPut]
@@ -93,12 +68,12 @@ namespace BugTracker.Api.Controllers
             if (projectUser == null)
                 return NotFound("No Project User exists with this ProjectId and UserId.");
 
-            projectUser.Role = projectUserDTO.Role;
+            projectUser = Mapper.Map<ProjectUser>(projectUserDTO);
 
             EntityEntry<ProjectUser> updatedProjectUser = DbContext.ProjectUsers.Update(projectUser);
             await DbContext.SaveChangesAsync();
 
-            return Ok(Mapper.Map<ProjectUserDTO>(updatedProjectUser.Entity));
+            return Ok(await GetById(projectId, updatedProjectUser.Entity.UserId));
         }
 
         [HttpDelete]

@@ -134,7 +134,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Border Grid.Column="0" Background="#00875A" Width="34" Height="34" CornerRadius="17" Margin="0, 0, 10, 0">
-                                            <TextBlock Text="{Binding Author.User.Initials}" Foreground="White" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding AuthorInitials}" Foreground="White" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock Grid.Column="1" Text="{Binding Author.User.FullName}" FontSize="16" FontWeight="Bold" FontFamily="Arial" Margin="0, 0, 20, 0"/>
@@ -207,7 +207,7 @@
 
                     <StackPanel Orientation="Horizontal" Margin="15, 20, 0, 0">
                         <TextBlock Text="Created " FontSize="12" FontFamily="Arial" Foreground="Gray"/>
-                        <TextBlock Text="{Binding ProjectContainer.CurrentTicket.DateSubmitted}" FontSize="12" FontFamily="Arial" Foreground="Gray"/>
+                        <TextBlock Text="{Binding TicketContainer.CurrentTicket.DateSubmitted}" FontSize="12" FontFamily="Arial" Foreground="Gray"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

@@ -177,7 +177,7 @@ namespace Bug_Tracker.ViewModels
             DoneTickets = new ObservableCollection<TicketDTO>();
 
             CreateNewTicketCommand = new CreateNewTicketCommand(Navigator, ProjectContainer, TicketContainer);
-            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService);
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService, TicketApiService);
             DeleteTicketCommand = new DeleteTicketCommand(TicketApiService, CommentApiService, this);
             OpenAddUserPopupCommand = new OpenAddUserPopupCommand(AddUserViewModel);
 
@@ -193,12 +193,8 @@ namespace Bug_Tracker.ViewModels
 
         public void UpdateProjectUsers()
         {
-            ProjectUsers.Clear();
-
-            foreach(ProjectUserDTO projectUser in ProjectContainer.CurrentProjectUsers)
-            {
-                ProjectUsers.Add(projectUser);
-            }               
+            //ProjectUsers.Clear();
+            ProjectUsers = new ObservableCollection<ProjectUserDTO>(ProjectContainer.CurrentProjectUsers);
         }
 
         public void UpdateTickets()

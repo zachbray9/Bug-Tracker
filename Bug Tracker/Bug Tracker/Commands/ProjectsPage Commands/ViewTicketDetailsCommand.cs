@@ -13,14 +13,16 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         private readonly ITicketContainer TicketContainer;
         private readonly IProjectUserApiService ProjectUserApiService;
         private readonly IProjectApiService ProjectApiService;
+        private readonly ITicketApiService TicketApiService;
 
-        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserDataService, IProjectApiService projectApiService)
+        public ViewTicketDetailsCommand(INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserDataService, IProjectApiService projectApiService, ITicketApiService ticketApiService)
         {
             Navigator = navigator;
             ProjectContainer = projectContainer;
             TicketContainer = ticketContainer;
             ProjectUserApiService = projectUserDataService;
             ProjectApiService = projectApiService;
+            TicketApiService = ticketApiService;
         }
 
         public override async void Execute(object parameter)
@@ -30,6 +32,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
+                //need to make an api endpoint for getting all comments on a ticket in the tickets controller
+                TicketContainer.CurrentCommentsOnTicket = await TicketApiService.GetAllCommentsOnTicket(ticket.Id);
                 TicketContainer.Assignee = ticket.AssigneeId.HasValue ? await ProjectUserApiService.GetById(ticket.AssigneeId.Value) : null;
                 TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);

@@ -32,7 +32,7 @@ namespace BugTracker.Api.Controllers
                 return NotFound("No ticket with this id was found.");
             }
 
-            TicketDTO ticketDTO = await MapToDTO(id);
+            TicketDTO? ticketDTO = Mapper.Map<TicketDTO>(ticket);
             return Ok(ticketDTO);
         }
 
@@ -55,16 +55,7 @@ namespace BugTracker.Api.Controllers
                 return NotFound("No ticket with this id was found.");
             }
 
-            List<CommentDTO> comments = ticket.Comments.Select(c => new CommentDTO
-            {
-                Id = c.Id,
-                Text = c.Text,
-                AuthorId = c.AuthorId,
-                AuthorFirstName = c.Author.FirstName,
-                AuthorLastName = c.Author.LastName,
-                TicketId = ticketId,
-                DateSubmitted = c.DateSubmitted
-            }).ToList();
+            List<CommentDTO>? comments = Mapper.Map<List<CommentDTO>>(ticket.Comments);
 
             return Ok(comments);
         }
@@ -72,23 +63,13 @@ namespace BugTracker.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TicketDTO ticketDTO)
         {
-            Ticket ticket = new Ticket
-            {
-                Title = ticketDTO.Title,
-                Description = ticketDTO.Description,
-                ProjectId = ticketDTO.ProjectId,
-                AuthorId = ticketDTO.AuthorId,
-                AssigneeId = ticketDTO.AssigneeId,
-                Status = ticketDTO.Status,
-                Priority = ticketDTO.Priority,
-                TicketType = ticketDTO.TicketType,
-                DateSubmitted = ticketDTO.DateSubmitted,
-            };
+            Ticket? ticket = Mapper.Map<Ticket>(ticketDTO);
+
             EntityEntry<Ticket> updatedTicket = await DbContext.Tickets.AddAsync(ticket);
             await DbContext.SaveChangesAsync();
 
-            TicketDTO updatedTicketDTO = await MapToDTO(updatedTicket.Entity.Id);
-
+            TicketDTO? updatedTicketDTO = Mapper.Map<TicketDTO>(await GetById(updatedTicket.Entity.Id));
+            
             return Created($"~/api/Tickets/{ticketDTO.Id}", updatedTicketDTO);
         }
 
@@ -100,20 +81,14 @@ namespace BugTracker.Api.Controllers
             if (ticket == null)
                 return NotFound();
 
-            ticket.Title = ticketDTO.Title;
-            ticket.Description = ticketDTO.Description;
-            ticket.ProjectId = ticketDTO.ProjectId;
-            ticket.AssigneeId = ticketDTO.AssigneeId;
-            ticket.Status = ticketDTO.Status;
-            ticket.Priority = ticketDTO.Priority;
-            ticket.TicketType = ticketDTO.TicketType;
+            ticket = Mapper.Map<Ticket>(ticketDTO);
 
             DbContext.Tickets.Update(ticket);
             await DbContext.SaveChangesAsync();
 
             ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
 
-            TicketDTO updatedTicket = await MapToDTO(ticketId);
+            TicketDTO? updatedTicket = Mapper.Map<TicketDTO>(ticket);
 
             return Ok(updatedTicket);
         }
@@ -132,19 +107,5 @@ namespace BugTracker.Api.Controllers
             return Ok("Ticket was successfully deleted.");
         }
 
-        private async Task<TicketDTO> MapToDTO(int id)
-        {
-            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == id);
-            if (ticket == null)
-                throw new Exception("There was an issue mapping the ticket to a data transer object.");
-
-            TicketDTO? ticketDTO = Mapper.Map<TicketDTO>(ticket);
-            ticketDTO.AuthorFirstName = ticket.Author.FirstName;
-            ticketDTO.AuthorLastName = ticket.Author.LastName;
-            ticketDTO.AssigneeFirstName = ticket.Assignee != null ? ticket.Assignee.FirstName : string.Empty;
-            ticketDTO.AssigneeLastName = ticket.Assignee != null ? ticket.Assignee.LastName : string.Empty;
-
-            return ticketDTO;
-        }
     }
 }

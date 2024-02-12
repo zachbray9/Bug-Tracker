@@ -32,71 +32,44 @@ namespace BugTracker.Api.Controllers
                 return NotFound();
             }
 
-            CommentDTO commentDTO = Mapper.Map<CommentDTO>(comment);
-            commentDTO.AuthorFirstName = comment.Author.FirstName;
-            commentDTO.AuthorLastName = comment.Author.LastName;
+            CommentDTO? commentDTO = Mapper.Map<CommentDTO>(comment);
 
-            return Ok(Mapper.Map<CommentDTO>(comment));
+            return Ok(commentDTO);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             List<Comment>? comments = await DbContext.Comments.Include(c => c.Author).Include(c => c.Ticket).ToListAsync();
-
-            List<CommentDTO> commentDTOs = comments.Select(c => new CommentDTO
-            {
-                Id = c.Id,
-                Text = c.Text,
-                AuthorId = c.AuthorId,
-                AuthorFirstName = c.Author.FirstName,
-                AuthorLastName = c.Author.LastName,
-                TicketId = c.TicketId,
-                DateSubmitted = c.DateSubmitted
-            }).ToList();
-
+            List<CommentDTO>? commentDTOs = Mapper.Map<List<CommentDTO>>(comments);
             return Ok(commentDTOs);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CommentDTO commentDTO)
         {
-            Comment comment = new Comment
-            {
-                Text = commentDTO.Text,
-                AuthorId = commentDTO.AuthorId,
-                TicketId = commentDTO.TicketId,
-                DateSubmitted = commentDTO.DateSubmitted
-            };
+            Comment? comment = Mapper.Map<Comment>(commentDTO);
 
             EntityEntry<Comment> newComment = await DbContext.Comments.AddAsync(comment);
             await DbContext.SaveChangesAsync();
 
-            CommentDTO commentDTOToReturn = await MapToDTO(newComment.Entity.Id);
-
+            CommentDTO? commentDTOToReturn = Mapper.Map<CommentDTO>(await GetById(newComment.Entity.Id));
             return Created($"~/api/Comments/{commentDTO.Id}", commentDTOToReturn);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CommentDTO commentDTO)
         {
-            if (commentDTO == null)
-                return BadRequest("The Comment object you are trying to pass is null.");
-
             Comment? comment = await DbContext.Comments.FirstOrDefaultAsync(c => c.Id == commentDTO.Id);
             if (comment == null)
                 return NotFound();
 
-            comment.Text = commentDTO.Text;
-            comment.AuthorId = commentDTO.AuthorId;
-            comment.TicketId = commentDTO.TicketId;
-            comment.DateSubmitted = commentDTO.DateSubmitted;
+            comment = Mapper.Map<Comment>(commentDTO);
 
             EntityEntry<Comment> updatedComment = DbContext.Comments.Update(comment);
             await DbContext.SaveChangesAsync();
 
-            CommentDTO commentDTOToReturn = await MapToDTO(updatedComment.Entity.Id);
-
+            CommentDTO? commentDTOToReturn = Mapper.Map<CommentDTO>(await GetById(updatedComment.Entity.Id));
             return Ok(commentDTOToReturn);
         }
 
@@ -114,17 +87,5 @@ namespace BugTracker.Api.Controllers
             return Ok("Comment was successfully deleted.");
         }
 
-        private async Task<CommentDTO> MapToDTO(int id)
-        {
-            Comment? comment = await DbContext.Comments.Include(t => t.Author).FirstOrDefaultAsync(t => t.Id == id);
-            if (comment == null)
-                throw new Exception("There was an issue mapping the comment to a data transfer object.");
-
-            CommentDTO? commentDTO = Mapper.Map<CommentDTO>(comment);
-            commentDTO.AuthorFirstName = comment.Author.FirstName;
-            commentDTO.AuthorLastName = comment.Author.LastName;
-
-            return commentDTO;
-        }
     }
 }

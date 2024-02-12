@@ -21,10 +21,11 @@ namespace Bug_Tracker.ViewModels
         private readonly ITicketContainer TicketContainer;
         private readonly IProjectUserApiService ProjectUserApiService;
         private readonly IProjectApiService ProjectApiService;
+        private readonly ITicketApiService TicketApiService;
 
         private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
 
-        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, IProjectApiService projectApiService)
+        public TicketsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, IProjectApiService projectApiService, ITicketApiService ticketApiService)
         {
             Authenticator = authenticator;
             Navigator = navigator;
@@ -32,11 +33,12 @@ namespace Bug_Tracker.ViewModels
             TicketContainer = ticketContainer;
             ProjectUserApiService = projectUserApiService;
             ProjectApiService = projectApiService;
+            TicketApiService = ticketApiService;
 
             Tickets = new ObservableCollection<TicketDTO>();
             TicketSearchResults = new ObservableCollection<TicketDTO>();
 
-            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService);
+            ViewTicketDetailsCommand = new ViewTicketDetailsCommand(Navigator, ProjectContainer, TicketContainer, ProjectUserApiService, ProjectApiService, TicketApiService);
 
             UpdateTickets();
             UpdateTicketSearchResults();

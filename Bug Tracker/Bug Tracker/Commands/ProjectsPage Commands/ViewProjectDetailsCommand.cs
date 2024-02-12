@@ -22,6 +22,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             if (project != null)
             {
                 ProjectContainer.CurrentProject = project;
+                ProjectContainer.CurrentProjectUsers = await ProjectApiService.GetAllUsersOnProject(project.Id);
                 ProjectContainer.CurrentTicketsOnProject = await ProjectApiService.GetAllTicketsOnProject(project.Id);
                 Navigator.Navigate(ViewType.ProjectDetailsPage);
             }

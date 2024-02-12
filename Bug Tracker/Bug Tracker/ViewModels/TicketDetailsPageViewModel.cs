@@ -231,7 +231,6 @@ namespace Bug_Tracker.ViewModels
 
         public void SetReporterWithoutExecutingSaveCommand()
         {
-            //reporter = await ProjectUserApiService.GetById(id);
             reporter = TicketContainer.Author;
             OnPropertyChanged(nameof(Reporter));
         }

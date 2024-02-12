@@ -50,9 +50,17 @@ namespace Bug_Tracker.Services.Api
             return tickets;
         }
 
-        public Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
+        public async Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{ticketId}/Comments");
+            if(!response.IsSuccessStatusCode) 
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            List<CommentDTO> comments = JsonConvert.DeserializeObject<List<CommentDTO>>(jsonString);
+            return comments;
         }
 
         public async Task<TicketDTO> Create(TicketDTO newTicket)

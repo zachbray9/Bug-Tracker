@@ -49,6 +49,19 @@ namespace Bug_Tracker.Services.Api
             return projects;
         }
 
+        public async Task<List<ProjectUserDTO>> GetAllUsersOnProject(int projectId)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Users");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.StatusCode.ToString() );
+            }
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            List<ProjectUserDTO> projectUsers = JsonConvert.DeserializeObject<List<ProjectUserDTO>>(jsonString);
+            return projectUsers;
+        }
+
         public async Task<List<TicketDTO>> GetAllTicketsOnProject(int projectId)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Tickets");

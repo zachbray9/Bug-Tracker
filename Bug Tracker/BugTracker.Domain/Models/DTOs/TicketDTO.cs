@@ -12,13 +12,26 @@ namespace BugTracker.Domain.Models.DTOs
         public int AuthorId { get; set; }
         public string AuthorFirstName { get; set; } = null!;
         public string AuthorLastName { get; set; } = null!;
+        public string AuthorInitials { get => $"{AuthorFirstName?.FirstOrDefault()}{AuthorLastName?.FirstOrDefault()}".ToUpper(); }
         public int? AssigneeId { get; set; }
         public string? AssigneeFirstName { get; set; } = string.Empty;
         public string? AssigneeLastName { get; set; } = string.Empty;
+        public string? AssigneeInitials { get => $"{AssigneeFirstName?.FirstOrDefault()}{AssigneeLastName?.FirstOrDefault()}".ToUpper(); }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
         public TicketType TicketType { get; set; }
         public DateTime DateSubmitted { get; set; }
+
+        public string AssigneeToolTipText
+        {
+            get
+            {
+                if (!AssigneeId.HasValue)
+                    return "Unassigned";
+                else
+                    return $"Assignee: {AssigneeFirstName + " " + AssigneeLastName}";
+            }
+        }
     }
 
     //public class TicketDTO
@@ -44,16 +57,6 @@ namespace BugTracker.Domain.Models.DTOs
 
     //    public string StatusString { get => StatusOptionsRetriever.ConvertStatusEnumToString(Status); }
 
-    //    //public string AssigneeToolTipText
-    //    //{
-    //    //    get
-    //    //    {
-    //    //        if (Assignee == null)
-    //    //            return "Unassigned";
-    //    //        else
-    //    //            return $"Assignee: {Assignee.User.FullName}";
-    //    //    }
-    //    //}
 
     //    public override string ToString()
     //    {

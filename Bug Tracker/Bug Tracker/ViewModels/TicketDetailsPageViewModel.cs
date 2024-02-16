@@ -45,8 +45,6 @@ namespace Bug_Tracker.ViewModels
             ticketTitle = CurrentTicket.Title;
             ticketDescription = CurrentTicket.Description;
             ticketStatus = StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status);
-            assignee = TicketContainer.Assignee;
-            reporter = TicketContainer.Author; 
 
 
             //checks if ticket has any comments and if so, fills the collection with tickets. Otherwise initializes empty collection
@@ -69,6 +67,9 @@ namespace Bug_Tracker.ViewModels
                 ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
+            SetReporterWithoutExecutingSaveCommand();
+            SetAssigneeWithoutExecutingSaveCommand();
+
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
             //Calculates the time difference for each comment so that it can display how long ago it was posted.
@@ -83,7 +84,6 @@ namespace Bug_Tracker.ViewModels
             CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(this, StatusOptionsRetriever);
         }
 
-        //Ticket Title Properties
         private string ticketTitle;
         public string TicketTitle
         {
@@ -106,7 +106,6 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        //Ticket Description Properties
         private string ticketDescription;
         public string TicketDescription
         {
@@ -129,7 +128,6 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        //comment collection properties
         private ObservableCollection<CommentDTO> comments;
         public ObservableCollection<CommentDTO> Comments 
         {
@@ -206,14 +204,13 @@ namespace Bug_Tracker.ViewModels
             set
             {
                 assignee = value;
-                OnPropertyChanged(nameof(Assignee));
                 SaveTicketDetailsChangesCommand.Execute(this);
+                OnPropertyChanged(nameof(Assignee));
             }
         }
         public void SetAssigneeWithoutExecutingSaveCommand()
         {
-            //assignee = await ProjectUserApiService.GetById(id);
-            assignee = TicketContainer.Assignee;
+            assignee = TicketContainer.Assignee != null ? ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AssigneeId) : null;
             OnPropertyChanged(nameof(Assignee));
         }
 
@@ -224,14 +221,14 @@ namespace Bug_Tracker.ViewModels
             set 
             {
                 reporter = value;
-                OnPropertyChanged(nameof(Reporter));
                 SaveTicketDetailsChangesCommand.Execute(this);
+                OnPropertyChanged(nameof(Reporter));
             }
         }
 
         public void SetReporterWithoutExecutingSaveCommand()
         {
-            reporter = TicketContainer.Author;
+            reporter = ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AuthorId);
             OnPropertyChanged(nameof(Reporter));
         }
 

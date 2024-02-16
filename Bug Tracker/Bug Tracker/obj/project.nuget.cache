@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GKmrZ4lsYT58oNUkSOrDsoy41vhrgdpm0au5NQ8f9yJkq71auJf/Z5Xyfz+EQ5S/bJZhs37C3wIEH5SeEEmtbA==",
+  "dgSpecHash": "ThBOANeJZSyBd3ERAFr6Y/fAg0LgRvTbaIAUBzBHzG6N0b5oykeT5L9AxgLYxoTxGTA/1g6OEdjbDfdbj/ah6w==",
   "success": true,
   "projectFilePath": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\Bug Tracker\\Bug Tracker.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\zachb\\.nuget\\packages\\extended.wpf.toolkit\\4.6.0\\extended.wpf.toolkit.4.6.0.nupkg.sha512",
     "C:\\Users\\zachb\\.nuget\\packages\\fontawesome.wpf\\4.7.0.9\\fontawesome.wpf.4.7.0.9.nupkg.sha512",
     "C:\\Users\\zachb\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",
     "C:\\Users\\zachb\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",

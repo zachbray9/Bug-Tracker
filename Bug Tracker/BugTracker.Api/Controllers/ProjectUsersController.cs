@@ -68,12 +68,10 @@ namespace BugTracker.Api.Controllers
             if (projectUser == null)
                 return NotFound("No Project User exists with this ProjectId and UserId.");
 
-            projectUser = Mapper.Map<ProjectUser>(projectUserDTO);
-
-            EntityEntry<ProjectUser> updatedProjectUser = DbContext.ProjectUsers.Update(projectUser);
+            Mapper.Map(projectUserDTO, projectUser);
             await DbContext.SaveChangesAsync();
 
-            return Ok(await GetById(projectId, updatedProjectUser.Entity.UserId));
+            return Ok(await GetById(projectId, projectUser.UserId));
         }
 
         [HttpDelete]

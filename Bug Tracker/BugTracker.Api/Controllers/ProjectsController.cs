@@ -84,12 +84,9 @@ namespace BugTracker.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProjectDTO projectDTO)
         {
-            Project project = new Project
-            {
-                Name = projectDTO.Name,
-                Description = projectDTO.Description,
-                DateStarted = projectDTO.DateStarted,
-            };
+            Project? project = new Project();
+            project = Mapper.Map<Project>(projectDTO);
+            
             EntityEntry<Project> newProject = await DbContext.Projects.AddAsync(project);
             await DbContext.SaveChangesAsync();
 
@@ -103,13 +100,10 @@ namespace BugTracker.Api.Controllers
             if (project == null)
                 return NotFound();
 
-            project.Name = projectDTO.Name;
-            project.Description = projectDTO.Description;
-
-            EntityEntry<Project> updatedProject = DbContext.Projects.Update(project);
+            Mapper.Map(projectDTO, project);
             await DbContext.SaveChangesAsync();
 
-            return Ok(Mapper.Map<ProjectDTO>(updatedProject.Entity));
+            return Ok(Mapper.Map<ProjectDTO>(project));
         }
 
         [HttpDelete]

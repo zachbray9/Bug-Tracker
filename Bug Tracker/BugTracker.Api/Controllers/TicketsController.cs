@@ -68,7 +68,7 @@ namespace BugTracker.Api.Controllers
             EntityEntry<Ticket> updatedTicket = await DbContext.Tickets.AddAsync(ticket);
             await DbContext.SaveChangesAsync();
 
-            TicketDTO? updatedTicketDTO = Mapper.Map<TicketDTO>(await GetById(updatedTicket.Entity.Id));
+            TicketDTO? updatedTicketDTO = Mapper.Map<TicketDTO>(updatedTicket.Entity);
             
             return Created($"~/api/Tickets/{ticketDTO.Id}", updatedTicketDTO);
         }
@@ -77,13 +77,13 @@ namespace BugTracker.Api.Controllers
         [Route("{ticketId:int}")]
         public async Task<IActionResult> Update([FromRoute] int ticketId, [FromBody] TicketDTO ticketDTO)
         {
-            Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketId);
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
             if (ticket == null)
                 return NotFound();
 
-            ticket = Mapper.Map<Ticket>(ticketDTO);
-
-            DbContext.Tickets.Update(ticket);
+            Mapper.Map(ticketDTO, ticket);
+            DbContext.ChangeTracker.DetectChanges();
+            Console.WriteLine(DbContext.ChangeTracker.DebugView.LongView);
             await DbContext.SaveChangesAsync();
 
             ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);

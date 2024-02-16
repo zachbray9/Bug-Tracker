@@ -26,17 +26,6 @@ namespace BugTracker.Api.Controllers
         [Route ("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            //User? user = await DbContext.Users
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AuthoredTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AssignedTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.Comments)
-            //    .FirstOrDefaultAsync(u => u.Id == id);
-
             User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id  == id);
                     
             if(user == null)
@@ -51,17 +40,6 @@ namespace BugTracker.Api.Controllers
         [Route ("byEmail/{email}")]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
-            //User? user = await DbContext.Users
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AuthoredTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AssignedTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.Comments)
-            //    .FirstOrDefaultAsync(u => u.Email == email);
-
             User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user == null)
@@ -76,17 +54,6 @@ namespace BugTracker.Api.Controllers
         [Route ("byName/{fullName}")]
         public async Task<IActionResult> GetByFullName([FromRoute] string fullName)
         {
-            //User? user = await DbContext.Users
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AuthoredTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AssignedTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.Comments)
-            //    .FirstOrDefaultAsync ((u) => (u.FirstName + u.LastName) == fullName);
-
             User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.FirstName + u.LastName == fullName);
 
             if(user == null)
@@ -100,19 +67,7 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            //List<User>? users = await DbContext.Users
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AuthoredTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.AssignedTickets)
-            //            .ThenInclude(t => t.Comments)
-            //    .Include(u => u.ProjectUsers)
-            //        .ThenInclude(pu => pu.Comments)
-            //    .ToListAsync();
-
             List<User>? users = await DbContext.Users.ToListAsync();
-
             return Ok(Mapper.Map<List<UserDTO>>(users));
         }
 
@@ -126,7 +81,7 @@ namespace BugTracker.Api.Controllers
                 return NotFound($"No user with an id of {id} exists.");
             }
 
-            List<ProjectDTO>? projects = await DbContext.Projects
+            List<ProjectDTO?> projects = await DbContext.Projects
                 .Where(p => p.Users.Any(pu => pu.UserId == id))
                 .Select(p => Mapper.Map<ProjectDTO>(p))
                 .ToListAsync();
@@ -148,18 +103,14 @@ namespace BugTracker.Api.Controllers
             if (user != null)
                 return Conflict("A user with this id already exists.");
 
-            user = new User
-            {
-                Email = userDTO.Email,
-                FirstName = userDTO.FirstName,
-                LastName = userDTO.LastName,
-                PasswordHash = userDTO.PasswordHash,
-                DateJoined = userDTO.DateJoined
-            };
-            EntityEntry<User> newUser = await DbContext.Users.AddAsync(user);
+
+            User? newUser = new User();
+            newUser = Mapper.Map<User>(userDTO);
+
+            EntityEntry<User> newUserEntity = await DbContext.Users.AddAsync(user);
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Users/{userDTO.Id}", Mapper.Map<UserDTO>(newUser.Entity));
+            return Created($"~/api/Users/{userDTO.Id}", Mapper.Map<UserDTO>(newUserEntity.Entity));
         }
 
         [HttpPut]
@@ -175,15 +126,10 @@ namespace BugTracker.Api.Controllers
             if(user == null)
                 return NotFound();
 
-            user.Id = userDTO.Id;
-            user.Email = userDTO.Email;
-            user.FirstName = userDTO.FirstName;
-            user.LastName = userDTO.LastName;
-
-            EntityEntry<User> updatedUser = DbContext.Users.Update(user);
+            Mapper.Map(userDTO, user);
             await DbContext.SaveChangesAsync();
 
-            return Ok(Mapper.Map<UserDTO>(updatedUser.Entity));
+            return Ok(Mapper.Map<UserDTO>(user));
         }
 
         [HttpDelete]

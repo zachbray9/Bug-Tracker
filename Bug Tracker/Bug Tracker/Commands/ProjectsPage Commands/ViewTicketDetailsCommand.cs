@@ -32,9 +32,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
-                //need to make an api endpoint for getting all comments on a ticket in the tickets controller
                 TicketContainer.CurrentCommentsOnTicket = await TicketApiService.GetAllCommentsOnTicket(ticket.Id);
-                TicketContainer.Assignee = ticket.AssigneeId.HasValue ? await ProjectUserApiService.GetById(ticket.AssigneeId.Value) : null;
+                TicketContainer.Assignee = ticket.AssigneeId.HasValue ? await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AssigneeId.Value) : null;
                 TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }

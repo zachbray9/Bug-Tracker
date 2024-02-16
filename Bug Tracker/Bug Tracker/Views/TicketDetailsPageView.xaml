@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Bug_Tracker.Views"
              xmlns:nav="clr-namespace:Bug_Tracker.State.Navigators"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -137,7 +138,7 @@
                                             <TextBlock Text="{Binding AuthorInitials}" Foreground="White" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock Grid.Column="1" Text="{Binding Author.User.FullName}" FontSize="16" FontWeight="Bold" FontFamily="Arial" Margin="0, 0, 20, 0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding AuthorFullName}" FontSize="16" FontWeight="Bold" FontFamily="Arial" Margin="0, 0, 20, 0"/>
                                         <TextBlock Grid.Column="2" Text="{Binding TimeDifference}" FontFamily="Arial" FontSize="14" Foreground="Gray"/>
                                     </Grid>
 
@@ -195,11 +196,13 @@
                                 
                                 <!--Assignee combo box-->
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Assignee" FontFamily="Arial" FontSize="14" Margin="15, 15, 0, 50"/>
-                                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"/>
+                                <!--<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"/>-->
+                                <xctk:WatermarkComboBox Grid.Row="0" Grid.Column="1" Watermark="Unassigned"  ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"></xctk:WatermarkComboBox>
 
                                 <!--Reporter combo box-->
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Reporter" FontFamily="Arial" FontSize="14" Margin="15, 0, 0, 15"/>
-                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"/>
+                                <!--<ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"/>-->
+                                <xctk:WatermarkComboBox Grid.Row="1" Grid.Column="1" Watermark="Unassigned" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"></xctk:WatermarkComboBox>
                             </Grid>
 
                         </Grid>

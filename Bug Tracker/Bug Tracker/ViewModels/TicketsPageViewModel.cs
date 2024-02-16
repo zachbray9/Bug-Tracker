@@ -110,9 +110,9 @@ namespace Bug_Tracker.ViewModels
         {
             TicketSearchResults.Clear();
 
-            foreach(TicketDTO ticket in Tickets)
+            foreach (TicketDTO ticket in Tickets)
             {
-                if(ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
+                if (ticket.Title.Contains(TicketFilterQuery, StringComparison.OrdinalIgnoreCase))
                 {
                     TicketSearchResults.Add(ticket);
                 }

@@ -1,5 +1,6 @@
 ﻿using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,17 +22,17 @@ namespace Bug_Tracker.Utility_Classes.Converters
                 return DependencyProperty.UnsetValue;
             }
 
-            if (values[0] == null || !(values[0] is ProjectUser projectUser))
+            if (values[0] == null || !(values[0] is ProjectUserDTO projectUser))
                 return Visibility.Collapsed;
 
             bool isAdmin = projectUser.Role == ProjectRole.Administrator;
             bool isAuthor = false;
 
             //checks if parameter is a ticket or comment
-            if (values[1] is Ticket ticket)
-                isAuthor = projectUser.Id == ticket.AuthorId;
-            else if (values[1] is Comment comment)
-                isAuthor = projectUser.Id == comment.AuthorId;
+            if (values[1] is TicketDTO ticket)
+                isAuthor = projectUser.UserId == ticket.AuthorId;
+            else if (values[1] is CommentDTO comment)
+                isAuthor = projectUser.UserId == comment.AuthorId;
             else
                 throw new Exception("values[1] is not an expected type.");
 

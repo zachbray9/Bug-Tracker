@@ -124,7 +124,7 @@ namespace Bug_Tracker
 
                     services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
                     {
-                        return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<IApiService<CommentDTO>>(), services.GetRequiredService<StatusOptionsRetriever>());
+                        return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<IApiService<CommentDTO>>(), services.GetRequiredService<StatusOptionsRetriever>());
                     }
                     );
 

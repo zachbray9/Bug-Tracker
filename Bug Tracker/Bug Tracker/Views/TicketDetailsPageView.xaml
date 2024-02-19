@@ -12,7 +12,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     
-    <Grid Background="White">
+    <Grid Background="White" IsEnabled="{Binding UserInputIsEnabled}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -197,12 +197,24 @@
                                 <!--Assignee combo box-->
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Assignee" FontFamily="Arial" FontSize="14" Margin="15, 15, 0, 50"/>
                                 <!--<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"/>-->
-                                <xctk:WatermarkComboBox Grid.Row="0" Grid.Column="1" Watermark="Unassigned"  ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"></xctk:WatermarkComboBox>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="0, 0, 0, 15">
+                                    <xctk:WatermarkComboBox  Watermark="Unassigned"  ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Assignee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 15, 15, 10"></xctk:WatermarkComboBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 5, 0, 0">
+                                        <Button Style="{StaticResource GenericButton}" Command="{Binding SaveTicketDetailsChangesCommand}" Visibility="{Binding IsAssigneeComboBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
+                                        <Button Style="{StaticResource GenericButton}" Command="{Binding CancelTicketDetailsChangesCommand}" Visibility="{Binding IsAssigneeComboBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35" Margin="0, 0, 15, 0"/>
+                                    </StackPanel>
+                                </StackPanel>
 
                                 <!--Reporter combo box-->
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Reporter" FontFamily="Arial" FontSize="14" Margin="15, 0, 0, 15"/>
                                 <!--<ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"/>-->
-                                <xctk:WatermarkComboBox Grid.Row="1" Grid.Column="1" Watermark="Unassigned" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"></xctk:WatermarkComboBox>
+                                <StackPanel Grid.Row="1" Grid.Column="1">
+                                    <xctk:WatermarkComboBox Watermark="Unassigned" ItemsSource="{Binding ProjectUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Reporter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="UserFullName" FontFamily="Arial" FontSize="14" VerticalAlignment="Top" Padding="10, 5" Margin="0, 0, 15, 15"></xctk:WatermarkComboBox>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0, 5, 0, 0">
+                                        <Button Style="{StaticResource GenericButton}" Command="{Binding SaveTicketDetailsChangesCommand}" Visibility="{Binding IsReporterComboBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="✓" FontSize="18" Width="35" Height="35" Margin="0, 0, 5, 0"/>
+                                        <Button Style="{StaticResource GenericButton}" Command="{Binding CancelTicketDetailsChangesCommand}" Visibility="{Binding IsReporterComboBoxBeingEdited, Converter={StaticResource BooleanToVisibilityConverter}}" Content="X" FontSize="18" FontFamily="Calibri" Width="35" Height="35" Margin="0, 0, 15, 0"/>
+                                    </StackPanel>
+                                </StackPanel>
                             </Grid>
 
                         </Grid>
@@ -216,7 +228,6 @@
             </Grid>
         </Grid>
 
-        <Button Grid.Row="2" Style="{StaticResource GenericButton}" Content="Back" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectDetailsPage}" HorizontalAlignment="Left" Margin="40, 0, 40, 40" Width="50" Height="25" Padding="10"/>
-
+        <Button Grid.Row="2" Style="{StaticResource GenericButton}" Content="Back" Command="{Binding ViewProjectDetailsCommand}" CommandParameter="{Binding ProjectContainer.CurrentProject}" HorizontalAlignment="Left" Margin="40, 0, 40, 40" Width="50" Height="25" Padding="10"/>
     </Grid>
 </UserControl>

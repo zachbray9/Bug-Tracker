@@ -29,18 +29,12 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 try
                 {
-                    //clearing all comments in ticket before deleting ticket because cascade delete doesn't want to work
-                    //if(ticketToDelete.Comments != null)
-                    //{
-                    //    foreach(CommentDTO comment in ticketToDelete.Comments)
-                    //    {
-                    //        await CommentApiService.DeleteById(comment.Id);
-                    //    }
-                    //}
-
                     await TicketApiService.DeleteById(ticketToDelete.Id);
+                    ViewModel.ProjectContainer.CurrentTicketsOnProject.Remove(ticketToDelete);
                     ViewModel.UpdateTickets();
-                    ViewModel.UpdateFilteredTickets();
+                    ViewModel.FilteredToDoTickets.Remove(ticketToDelete);
+                    ViewModel.FilteredInProgressTickets.Remove(ticketToDelete);
+                    ViewModel.FilteredDoneTickets.Remove(ticketToDelete);
                 }
                 catch (Exception ex)
                 {

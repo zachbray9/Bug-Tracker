@@ -36,7 +36,7 @@
 
                     <!--<RadioButton Content="Home" IsChecked="False" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.HomePage}"/>-->
                     <RadioButton Content="Projects" IsChecked="True" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.ProjectsPage}"/>
-                    <RadioButton Content="My Tickets" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>
+                    <!--<RadioButton Content="My Tickets" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.TicketsPage}"/>-->
                     <RadioButton Content="Account" Style="{StaticResource NavButton}" Command="{Binding Navigator.NavigateCommand}" CommandParameter="{x:Static nav:ViewType.AccountPage}"/>
 
                 </StackPanel>

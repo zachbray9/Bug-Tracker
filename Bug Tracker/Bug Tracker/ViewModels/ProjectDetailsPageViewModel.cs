@@ -220,6 +220,10 @@ namespace Bug_Tracker.ViewModels
                     DoneTickets.Add(ticket);
                 }
             }
+
+            OnPropertyChanged(nameof(ToDoTickets));
+            OnPropertyChanged(nameof(InProgressTickets));
+            OnPropertyChanged(nameof(DoneTickets));
         }
 
         public void UpdateFilteredTickets()
@@ -251,6 +255,10 @@ namespace Bug_Tracker.ViewModels
                     FilteredDoneTickets.Add(ticket);
                 }
             }
+
+            OnPropertyChanged(nameof(FilteredToDoTickets));
+            OnPropertyChanged(nameof(FilteredInProgressTickets));
+            OnPropertyChanged(nameof(DoneTickets));
         }
 
         public ICommand CreateNewTicketCommand { get; }

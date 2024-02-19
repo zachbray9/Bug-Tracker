@@ -1,4 +1,5 @@
-﻿using Bug_Tracker.Commands.TicketDetailsPageCommands;
+﻿using Bug_Tracker.Commands.ProjectsPage_Commands;
+using Bug_Tracker.Commands.TicketDetailsPageCommands;
 using Bug_Tracker.State;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Model_States;
@@ -21,6 +22,7 @@ namespace Bug_Tracker.ViewModels
         public ITicketContainer TicketContainer { get; }
         private readonly IProjectUserApiService ProjectUserApiService;
         private readonly ITicketApiService TicketApiService;
+        private readonly IProjectApiService ProjectApiService;
         private readonly IApiService<CommentDTO> CommentApiService;
 
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
@@ -31,7 +33,7 @@ namespace Bug_Tracker.ViewModels
         public ProjectUserDTO CurrentProjectUser { get; }
         public bool DoesCommentTextBoxContainText { get => !String.IsNullOrEmpty(CommentTextBoxText); }
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, ITicketApiService ticketApiService, IProjectApiService projectApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;
@@ -39,6 +41,7 @@ namespace Bug_Tracker.ViewModels
             TicketContainer = ticketContainer;
             ProjectUserApiService = projectUserApiService;
             TicketApiService = ticketApiService;
+            ProjectApiService = projectApiService;
             CommentApiService = commentApiService;
             StatusOptionsRetriever = statusOptionsRetriever;
 
@@ -67,10 +70,11 @@ namespace Bug_Tracker.ViewModels
                 ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
-            SetReporterWithoutExecutingSaveCommand();
-            SetAssigneeWithoutExecutingSaveCommand();
+            Assignee = TicketContainer.Assignee != null ? ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AssigneeId) : null;
+            Reporter = ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AuthorId);
 
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
+            UserInputIsEnabled = true;
 
             //Calculates the time difference for each comment so that it can display how long ago it was posted.
             foreach (var comment in Comments)
@@ -80,8 +84,20 @@ namespace Bug_Tracker.ViewModels
 
             AddCommentToDbCommand = new AddCommentToDbCommand(Authenticator, CommentApiService, this, ProjectContainer, TicketContainer);
             DeleteCommentFromDbCommand = new DeleteCommentFromDbCommand(CommentApiService, this, TicketContainer);
-            SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(TicketApiService, this, StatusOptionsRetriever);
-            CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(this, StatusOptionsRetriever);
+            SaveTicketDetailsChangesCommand = new SaveTicketDetailsChangesCommand(ProjectApiService, ProjectUserApiService, TicketApiService, ProjectContainer, this, StatusOptionsRetriever);
+            CancelTicketDetailsChangesCommand = new CancelTicketDetailsChangesCommand(ProjectUserApiService, this, StatusOptionsRetriever);
+            ViewProjectDetailsCommand = new ViewProjectDetailsCommand(Navigator, ProjectContainer, ProjectApiService);
+        }
+
+        private bool userInputIsEnabled;
+        public bool UserInputIsEnabled
+        {
+            get => userInputIsEnabled;
+            set
+            {
+                userInputIsEnabled = value;
+                OnPropertyChanged(nameof(UserInputIsEnabled));
+            }
         }
 
         private string ticketTitle;
@@ -122,6 +138,36 @@ namespace Bug_Tracker.ViewModels
             get
             {
                 if(TicketDescription != CurrentTicket.Description)
+                    return true;
+
+                return false;
+            }
+        }
+
+        public bool IsAssigneeComboBoxBeingEdited
+        {
+            get
+            {
+                if(Assignee == null)
+                {
+                    if(CurrentTicket.AssigneeId != null)
+                        return true;
+                }
+                else
+                {
+                    if(Assignee.UserId != CurrentTicket.AssigneeId) 
+                        return true;
+                }
+                
+                return false;
+            }
+        }
+
+        public bool IsReporterComboBoxBeingEdited
+        {
+            get
+            {
+                if (Reporter.UserId != CurrentTicket.AuthorId)
                     return true;
 
                 return false;
@@ -204,14 +250,9 @@ namespace Bug_Tracker.ViewModels
             set
             {
                 assignee = value;
-                SaveTicketDetailsChangesCommand.Execute(this);
                 OnPropertyChanged(nameof(Assignee));
+                OnPropertyChanged(nameof(IsAssigneeComboBoxBeingEdited));
             }
-        }
-        public void SetAssigneeWithoutExecutingSaveCommand()
-        {
-            assignee = TicketContainer.Assignee != null ? ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AssigneeId) : null;
-            OnPropertyChanged(nameof(Assignee));
         }
 
         private ProjectUserDTO reporter;
@@ -221,15 +262,9 @@ namespace Bug_Tracker.ViewModels
             set 
             {
                 reporter = value;
-                SaveTicketDetailsChangesCommand.Execute(this);
                 OnPropertyChanged(nameof(Reporter));
+                OnPropertyChanged(nameof(IsReporterComboBoxBeingEdited));
             }
-        }
-
-        public void SetReporterWithoutExecutingSaveCommand()
-        {
-            reporter = ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AuthorId);
-            OnPropertyChanged(nameof(Reporter));
         }
 
         private string CalculateTimeDifference(DateTime DateCommentWasCreated, DateTime CurrentDate)
@@ -258,5 +293,6 @@ namespace Bug_Tracker.ViewModels
         public ICommand DeleteCommentFromDbCommand { get; }
         public ICommand SaveTicketDetailsChangesCommand { get; }
         public ICommand CancelTicketDetailsChangesCommand { get; }
+        public ICommand ViewProjectDetailsCommand { get; }
     }
 }

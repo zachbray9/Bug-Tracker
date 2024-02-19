@@ -63,9 +63,9 @@
                     <DataTemplate DataType="{x:Type viewModels:ProjectsPageViewModel}">
                         <views:ProjectsPageView/>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewModels:TicketsPageViewModel}">
+                    <!--<DataTemplate DataType="{x:Type viewModels:TicketsPageViewModel}">
                         <views:TicketsPageView/>
-                    </DataTemplate>
+                    </DataTemplate>-->
                     <DataTemplate DataType="{x:Type viewModels:CreateNewProjectPageViewModel}">
                         <views:CreateNewProjectPageView/>
                     </DataTemplate>

@@ -36,11 +36,6 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         {
             ProjectUserDTO projectUser = ProjectContainer.CurrentProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
-            //this line is added to check if assignee is null or not to make it so the db doesn't throw an error when creating a ticket with a null assignee
-            //int assigneeId = null;
-            //if(CreateTicketViewModel.Assignee != null)
-            //    assigneeId = CreateTicketViewModel.Assignee.Id;
-
             TicketContainer.CurrentTicket = await TicketApiService.Create(new TicketDTO 
             { 
                 Title = CreateTicketViewModel.TicketTitle, 
@@ -56,6 +51,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 Priority = Priority.Low, 
                 DateSubmitted = DateTime.Now 
             });
+
+            ProjectContainer.CurrentTicketsOnProject.Add(TicketContainer.CurrentTicket);
             Navigator.Navigate(ViewType.ProjectDetailsPage);
                            
         }

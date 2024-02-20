@@ -10,7 +10,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     
-    <Grid Background="White">
+    <Grid Background="White" IsEnabled="{Binding IsUserInputEnabled}">
         <StackPanel>
             <Border Width="100" Height="100" CornerRadius="50" Background="#00875A" Margin="0, 40, 0, 20">
                 <TextBlock Text="{Binding CurrentUser.Initials, UpdateSourceTrigger=PropertyChanged}" FontSize="42" FontFamily="Arial" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>

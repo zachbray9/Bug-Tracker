@@ -1,6 +1,5 @@
 ﻿using BugTracker.Domain.Enumerables;
 using BugTracker.Domain.Exceptions;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using Microsoft.AspNet.Identity;
@@ -24,7 +23,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             //RegistrationResult result = RegistrationResult.Success;
 
             //if any of the input fields are null
-            if(email == null || firstName == null || lastName == null || password == null)
+            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(password))
             {
                 return RegistrationResult.InputFieldIsNull;
             }
@@ -91,7 +90,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
 
         public async Task<UserDTO> Login(string email, string password)
         {
-            UserDTO storedUser = await UserApiService.GetByEmail(email);
+            UserDTO? storedUser = await UserApiService.GetByEmail(email);
 
             if (storedUser == null)
             {

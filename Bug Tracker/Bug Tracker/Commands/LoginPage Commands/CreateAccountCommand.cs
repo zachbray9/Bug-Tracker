@@ -28,6 +28,8 @@ namespace Bug_Tracker.Commands
 
         public async override void Execute(object parameter)
         {
+            CreateAccountPageViewModel.UserInputIsEnabled = false;
+
             RegistrationResult result = await Authenticator.CreateAccount(Email, FirstName, LastName, Password, ConfirmPassword);
             if(result == RegistrationResult.Success)
             {
@@ -61,6 +63,8 @@ namespace Bug_Tracker.Commands
             {
                 CreateAccountPageViewModel.CreateAccountErrorText = "The passwords do not match. Please try again.";
             }
+
+            CreateAccountPageViewModel.UserInputIsEnabled = true;
         }
 
     }

@@ -11,7 +11,7 @@
     <UserControl.Background>
         <ImageBrush ImageSource="../Assets/Images/LoginBackgroundImage.jpeg" Stretch="UniformToFill"/>
     </UserControl.Background>
-    <Grid>
+    <Grid IsEnabled="{Binding UserInputIsEnabled}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>

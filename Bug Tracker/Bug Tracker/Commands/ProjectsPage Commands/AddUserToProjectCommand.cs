@@ -31,23 +31,19 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
         public override async void Execute(object parameter)
         {
-            UserDTO userToAdd = null;
+            AddUserViewModel.UserInputIsEnabled = false;
+
+            UserDTO? userToAdd = null;
 
             if(SearchQuery != null)
             {
-                if(SearchQuery.Contains("@"))
-                {
-                    userToAdd = await UserApiService.GetByEmail(SearchQuery);
-                }
-                else
-                {
-                    userToAdd = await UserApiService.GetByFullName(SearchQuery);
-                }
+                userToAdd = await UserApiService.GetByEmail(SearchQuery);
             }
             else
             {
                 //handle if the search query is empty
                 MessageBox.Show("The search query is empty. Please enter a valid Name or Email.", "Search Query Is Empty", MessageBoxButton.OK, MessageBoxImage.Error);
+                AddUserViewModel.UserInputIsEnabled = true;
                 return;
             }
             
@@ -64,6 +60,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 if(ProjectContainer.CurrentProjectUsers.Any(pu => pu.UserId == newProjectUser.UserId))
                 {
                     MessageBox.Show("The user you are trying to add is already in this project.", "User Already Exists", MessageBoxButton.OK, MessageBoxImage.Error);
+                    AddUserViewModel.UserInputIsEnabled= true;
                     return;
                 }
 
@@ -75,6 +72,8 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 //handle if the search query was not found
                 MessageBox.Show("The Name or Email you entered was not found. Please enter a valid Name or Email.", "User Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            AddUserViewModel.UserInputIsEnabled = true;
         }
 
     }

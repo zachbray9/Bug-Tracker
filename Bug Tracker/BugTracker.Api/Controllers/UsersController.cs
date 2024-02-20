@@ -93,36 +93,26 @@ namespace BugTracker.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserDTO userDTO)
         {
-            if (userDTO == null)
-                return BadRequest("The user object you are trying to pass is null.");
-
             if(await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email))
                 return Conflict("A user with this email already exists.");
-
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userDTO.Id);
-            if (user != null)
-                return Conflict("A user with this id already exists.");
-
 
             User? newUser = new User();
             newUser = Mapper.Map<User>(userDTO);
 
-            EntityEntry<User> newUserEntity = await DbContext.Users.AddAsync(user);
+            EntityEntry<User> newUserEntity = await DbContext.Users.AddAsync(newUser);
             await DbContext.SaveChangesAsync();
 
             return Created($"~/api/Users/{userDTO.Id}", Mapper.Map<UserDTO>(newUserEntity.Entity));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UserDTO userDTO)
+        [Route("{userId:int}")]
+        public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserDTO userDTO)
         {
-            if(userDTO == null)
-                return BadRequest("The user object you are trying to pass is null.");
-
-            if (await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email))
+            if (await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email && u.Id != userId))
                 return Conflict("A user with this email already exists.");
 
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userDTO.Id);
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if(user == null)
                 return NotFound();
 

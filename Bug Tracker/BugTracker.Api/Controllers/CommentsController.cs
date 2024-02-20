@@ -54,22 +54,21 @@ namespace BugTracker.Api.Controllers
             EntityEntry<Comment> newComment = await DbContext.Comments.AddAsync(comment);
             await DbContext.SaveChangesAsync();
 
-            CommentDTO? commentDTOToReturn = Mapper.Map<CommentDTO>(comment);
-            return Created($"~/api/Comments/{commentDTO.Id}", commentDTOToReturn);
+            return Created($"~/api/Comments/{newComment.Entity.Id}", await GetById(newComment.Entity.Id));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] CommentDTO commentDTO)
+        [Route("commentId:int")]
+        public async Task<IActionResult> Update([FromRoute] int commentId, [FromBody] CommentDTO commentDTO)
         {
-            Comment? comment = await DbContext.Comments.FirstOrDefaultAsync(c => c.Id == commentDTO.Id);
+            Comment? comment = await DbContext.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
             if (comment == null)
                 return NotFound();
 
             Mapper.Map(commentDTO, comment);
             await DbContext.SaveChangesAsync();
 
-            CommentDTO? commentDTOToReturn = Mapper.Map<CommentDTO>(comment);
-            return Ok(commentDTOToReturn);
+            return Ok(await GetById(commentId));
         }
 
         [HttpDelete]

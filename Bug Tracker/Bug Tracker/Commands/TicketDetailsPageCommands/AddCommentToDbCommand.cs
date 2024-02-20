@@ -42,7 +42,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
                 DateSubmitted = DateTime.Now,
             };
 
-            await CommentApiService.Create(newComment);
+            newComment = await CommentApiService.Create(newComment);
             TicketContainer.CurrentCommentsOnTicket.Add(newComment);
             ViewModel.Comments = new ObservableCollection<CommentDTO>(TicketContainer.CurrentCommentsOnTicket.OrderByDescending(i => i.DateSubmitted));
             ViewModel.CommentTextBoxText = String.Empty;

@@ -1,6 +1,5 @@
 ﻿using Bug_Tracker.Commands.AccountCommands;
 using Bug_Tracker.State.Authenticators;
-using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using System;
@@ -33,6 +32,7 @@ namespace Bug_Tracker.ViewModels
             firstNameTextboxText = CurrentUser.FirstName;
             lastNameTextboxText = CurrentUser.LastName;
             emailTextboxText = CurrentUser.Email;
+            UserInputIsEnabled = true;
 
             CancelAccountEditCommand = new CancelAccountEditCommand(this);
             SaveAccountEditChangesCommand = new SaveAccountEditChangesCommand(UserApiService, this);
@@ -109,6 +109,17 @@ namespace Bug_Tracker.ViewModels
                     return true;
 
                 return false;
+            }
+        }
+
+        private bool userInputIsEnabled;
+        public bool UserInputIsEnabled
+        {
+            get => userInputIsEnabled;
+            set
+            {
+                userInputIsEnabled = value;
+                OnPropertyChanged(nameof(UserInputIsEnabled));
             }
         }
     

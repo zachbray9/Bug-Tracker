@@ -1,4 +1,5 @@
-﻿using Bug_Tracker.ViewModels;
+﻿using Bug_Tracker.Services.Api;
+using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services;
@@ -11,12 +12,12 @@ namespace Bug_Tracker.Commands.AccountCommands
 {
     public class SaveAccountEditChangesCommand : CommandBase
     {
-        private readonly IApiService<UserDTO> UserApiService;
+        private readonly IUserApiService UserApiService;
         private readonly AccountPageViewModel ViewModel;
 
         private UserDTO CurrentUser { get => ViewModel.CurrentUser; }
 
-        public SaveAccountEditChangesCommand(IApiService<UserDTO> userDataService, AccountPageViewModel viewModel)
+        public SaveAccountEditChangesCommand(IUserApiService userDataService, AccountPageViewModel viewModel)
         {
             UserApiService = userDataService;
             ViewModel = viewModel;
@@ -24,12 +25,12 @@ namespace Bug_Tracker.Commands.AccountCommands
 
         public async override void Execute(object parameter)
         {
+            ViewModel.UserInputIsEnabled = false;
+
             //check if any of the input boxes are null
             if (string.IsNullOrEmpty(ViewModel.FirstNameTextboxText) || string.IsNullOrEmpty(ViewModel.LastNameTextboxText) || string.IsNullOrEmpty(ViewModel.EmailTextboxText))
             {
-                ViewModel.FirstNameTextboxText = CurrentUser.FirstName;
-                ViewModel.LastNameTextboxText = CurrentUser.LastName;
-                ViewModel.EmailTextboxText = CurrentUser.Email;
+                CancelChanges();
                 MessageBox.Show("All fields are required. Please don't leave anything blank.", "Null Field Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -41,7 +42,7 @@ namespace Bug_Tracker.Commands.AccountCommands
                 {
                     if (!char.IsLetter(c))
                     {
-                        ViewModel.FirstNameTextboxText = CurrentUser.FirstName;
+                        CancelChanges();
                         MessageBox.Show("First name cannot contain any special characters.", "Invalid Character Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
@@ -49,13 +50,13 @@ namespace Bug_Tracker.Commands.AccountCommands
             }
 
             //check if last name contains any special characters
-            if (!String.IsNullOrEmpty(ViewModel.LastNameTextboxText))
+            if (!string.IsNullOrEmpty(ViewModel.LastNameTextboxText))
             {
                 foreach (char c in ViewModel.LastNameTextboxText)
                 {
                     if (!char.IsLetter(c))
                     {
-                        ViewModel.LastNameTextboxText = CurrentUser.LastName;
+                        CancelChanges();
                         MessageBox.Show("Last name cannot contain any special characters.", "Invalid Character Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
@@ -66,30 +67,33 @@ namespace Bug_Tracker.Commands.AccountCommands
             if (!IsValidEmail(ViewModel.EmailTextboxText))
             {
 
-                ViewModel.EmailTextboxText = CurrentUser.Email;
+                CancelChanges();
                 MessageBox.Show("The email you entered is invalid. Please enter a valid email.", "Invalid Email Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             //if all cases pass then save changes
-            ViewModel.CurrentUser.FirstName = ViewModel.FirstNameTextboxText;
+            CurrentUser.FirstName = ViewModel.FirstNameTextboxText;
             CurrentUser.LastName = ViewModel.LastNameTextboxText;
             CurrentUser.Email = ViewModel.EmailTextboxText;
 
             try
             {
                 await UserApiService.Update(CurrentUser.Id, CurrentUser);
-
-                //doing this just so the save and cancel edit buttons disappear after saving changes.
-                ViewModel.FirstNameTextboxText = CurrentUser.FirstName;
-                ViewModel.LastNameTextboxText = CurrentUser.LastName;
-                ViewModel.EmailTextboxText = CurrentUser.Email;
+                CancelChanges();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("There was a problem saving your changes. Please try again.", "Save Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CancelChanges();
+            }
+            finally
+            {
+                ViewModel.UserInputIsEnabled = true;
             }
         }
+
+        //helper methods
 
         private bool IsValidEmail(string email)
         {
@@ -105,6 +109,14 @@ namespace Bug_Tracker.Commands.AccountCommands
             }
 
             return isValid;
+        }
+
+        private void CancelChanges()
+        {
+            ViewModel.FirstNameTextboxText = CurrentUser.FirstName;
+            ViewModel.LastNameTextboxText = CurrentUser.LastName;
+            ViewModel.EmailTextboxText = CurrentUser.Email;
+            return;
         }
     }
 }

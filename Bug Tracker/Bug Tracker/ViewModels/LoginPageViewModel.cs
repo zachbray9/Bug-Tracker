@@ -26,6 +26,7 @@ namespace Bug_Tracker.ViewModels
             //RecoverPasswordCommand = new RecoverPasswordCommand();
 
             loginErrorText = string.Empty;
+            UserInputIsEnabled = true;
         }
 
         private string email;
@@ -64,6 +65,17 @@ namespace Bug_Tracker.ViewModels
             {
                 loginErrorText = value;
                 OnPropertyChanged(nameof(LoginErrorText));
+            }
+        }
+
+        private bool userInputIsEnabled;
+        public bool UserInputIsEnabled
+        {
+            get => userInputIsEnabled;
+            set
+            {
+                userInputIsEnabled = value;
+                OnPropertyChanged(nameof(UserInputIsEnabled));
             }
         }
 

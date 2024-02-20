@@ -1,11 +1,6 @@
 ﻿using Bug_Tracker.Commands;
 using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Bug_Tracker.ViewModels
@@ -14,6 +9,17 @@ namespace Bug_Tracker.ViewModels
     {
         public INavigator Navigator { get; }
         private readonly IAuthenticator Authenticator;
+
+        public CreateAccountPageViewModel(INavigator navigator, IAuthenticator authenticator)
+        {
+            Navigator = navigator;
+            Authenticator = authenticator;
+
+            CreateAccountCommand = new CreateAccountCommand(this, Authenticator, Navigator);
+
+            CreateAccountErrorText = string.Empty;
+            UserInputIsEnabled = true;
+        }
 
         private string firstName;
         public string FirstName
@@ -81,15 +87,17 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-        public CreateAccountPageViewModel(INavigator navigator, IAuthenticator authenticator)
+        private bool userInputIsEnabled;
+        public bool UserInputIsEnabled
         {
-            Navigator = navigator;
-            Authenticator = authenticator;
-
-            CreateAccountCommand = new CreateAccountCommand(this, Authenticator, Navigator);
-
-            CreateAccountErrorText = string.Empty;
+            get => userInputIsEnabled;
+            set
+            {
+                userInputIsEnabled = value;
+                OnPropertyChanged(nameof(UserInputIsEnabled));
+            }
         }
+
 
         public ICommand CreateAccountCommand { get; }
     }

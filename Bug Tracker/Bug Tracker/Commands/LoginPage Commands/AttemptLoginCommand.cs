@@ -26,6 +26,7 @@ namespace Bug_Tracker.Commands
 
         public async override void Execute(object parameter)
         {
+            LoginPageViewModel.UserInputIsEnabled = false;
             bool success = await Authenticator.Login(LoginPageViewModel.Email, parameter.ToString());
             if (success) 
             {
@@ -36,6 +37,8 @@ namespace Bug_Tracker.Commands
             {
                 LoginPageViewModel.LoginErrorText = "Your email and/or password is incorrect.";
             }
+
+            LoginPageViewModel.UserInputIsEnabled = true;
         }
     }
 }

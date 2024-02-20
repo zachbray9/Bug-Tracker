@@ -13,7 +13,7 @@
         <utility:EmailToIconConverter x:Key="EmailToIconConverter"/>
     </UserControl.Resources>
     
-    <Grid Background="White">
+    <Grid Background="White" IsEnabled="{Binding UserInputIsEnabled}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

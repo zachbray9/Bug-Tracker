@@ -21,6 +21,20 @@ namespace Bug_Tracker.ViewModels
 
         public Dictionary<ProjectRole, string> ProjectRoleOptionsDictionary { get => ProjectRoleOptionsRetriever.ProjectRoleOptionsDictionary; }
 
+        public AddUserToProjectPopupViewModel(IUserApiService userApiService, IProjectUserApiService projectUserApiService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
+        {
+            UserApiService = userApiService;
+            ProjectUserApiService = projectUserApiService;
+            ProjectContainer = projectContainer;
+            ProjectRoleOptionsRetriever = projectRoleOptionsRetriever;
+
+            SelectedProjectRoleAsString = ProjectRoleOptionsRetriever.ConvertProjectRoleEnumToString(ProjectRole.Developer);
+            UserInputIsEnabled = true;
+
+            AddUserToProjectCommand = new AddUserToProjectCommand(UserApiService, ProjectUserApiService, ProjectContainer, this);
+            CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
+        }
+
         private bool isPopupOpen;
         public bool IsPopupOpen
         {
@@ -32,18 +46,15 @@ namespace Bug_Tracker.ViewModels
             }
         }
 
-
-        public AddUserToProjectPopupViewModel(IUserApiService userApiService, IProjectUserApiService projectUserApiService, IProjectContainer projectContainer, ProjectRoleOptionsRetriever projectRoleOptionsRetriever)
+        private bool userInputIsEnabled;
+        public bool UserInputIsEnabled
         {
-            UserApiService = userApiService;
-            ProjectUserApiService = projectUserApiService;
-            ProjectContainer = projectContainer;
-            ProjectRoleOptionsRetriever = projectRoleOptionsRetriever;
-
-            SelectedProjectRoleAsString = ProjectRoleOptionsRetriever.ConvertProjectRoleEnumToString(ProjectRole.Developer);
-
-            AddUserToProjectCommand = new AddUserToProjectCommand(UserApiService, ProjectUserApiService, ProjectContainer, this);
-            CloseAddUserPopupCommand = new CloseAddUserPopupCommand(this);
+            get => userInputIsEnabled;
+            set
+            {
+                userInputIsEnabled = value;
+                OnPropertyChanged(nameof(UserInputIsEnabled));
+            }
         }
 
         private string searchQuery;
@@ -129,18 +140,10 @@ namespace Bug_Tracker.ViewModels
             IEnumerable<UserDTO> AllUsers = await UserApiService.GetAll();
             foreach(var user in AllUsers)
             {
-
-                if(user.FullName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase))
-                {
-                    SearchResults.Add(new UserSearchResult { Text = user.FullName});
-                }
-
                 if(user.Email.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase))
                 {
                     SearchResults.Add(new UserSearchResult { Text = user.Email, IsEmail = true }); ;
                 }
-
-
             }
         }
 

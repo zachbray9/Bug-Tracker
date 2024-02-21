@@ -86,7 +86,7 @@
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="30, 20" HorizontalAlignment="Left">
                 <!-- To Do panel -->
                 <Grid Margin="10, 0, 10, 0" Width="300">
-                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5" Height="Auto">
+                    <Border Background="#e9edef" CornerRadius="3" BorderThickness="0.25" BorderBrush="#333333" Padding="5" Height="Auto">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -113,7 +113,7 @@
 
                 <!-- In Progress panel -->
                 <Grid Margin="10, 0, 10, 0" Width="300">
-                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5" Height="Auto">
+                    <Border Background="#e9edef" CornerRadius="3" BorderThickness="0.25" BorderBrush="#333333" Padding="5" Height="Auto">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -139,7 +139,7 @@
 
                 <!-- Done panel -->
                 <Grid Margin="10, 0, 10, 0" Width="300">
-                    <Border Background="#f4f5f7" CornerRadius="3" Padding="5" Height="Auto">
+                    <Border Background="#e9edef" CornerRadius="3" BorderThickness="0.25" BorderBrush="#333333" Padding="5" Height="Auto">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

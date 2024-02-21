@@ -54,7 +54,10 @@ namespace BugTracker.Api.Controllers
             EntityEntry<Comment> newComment = await DbContext.Comments.AddAsync(comment);
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Comments/{newComment.Entity.Id}", await GetById(newComment.Entity.Id));
+            comment = await DbContext.Comments.Include(c => c.Author).FirstOrDefaultAsync(c => c.Id == newComment.Entity.Id);
+            CommentDTO? newCommentDTO = Mapper.Map<CommentDTO>(comment);
+
+            return Created($"~/api/Comments/{newComment.Entity.Id}", newCommentDTO);
         }
 
         [HttpPut]
@@ -68,7 +71,10 @@ namespace BugTracker.Api.Controllers
             Mapper.Map(commentDTO, comment);
             await DbContext.SaveChangesAsync();
 
-            return Ok(await GetById(commentId));
+            comment = await DbContext.Comments.Include(c => c.Author).FirstOrDefaultAsync(c => c.Id == commentId);
+            CommentDTO? updatedComment = Mapper.Map<CommentDTO>(comment);
+
+            return Ok(updatedComment);
         }
 
         [HttpDelete]

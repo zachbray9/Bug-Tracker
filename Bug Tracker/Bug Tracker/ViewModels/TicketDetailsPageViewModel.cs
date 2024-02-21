@@ -183,7 +183,7 @@ namespace Bug_Tracker.ViewModels
                 comments = value;
 
                 //updates the CommentDateCreatedDifference every time the collection is set so it updates when a new comment is added or deleted.
-                foreach (CommentDTO comment in Comments)
+                foreach (CommentDTO comment in comments)
                 {
                     comment.TimeDifference = CalculateTimeDifference(comment.DateSubmitted, DateTime.Now);
                 }

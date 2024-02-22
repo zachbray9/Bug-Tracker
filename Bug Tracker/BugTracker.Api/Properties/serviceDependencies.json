@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "AgileProKeyVaultUri",
+      "dynamicId": null
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionString",
+      "dynamicId": null
+    }
+  }
+}

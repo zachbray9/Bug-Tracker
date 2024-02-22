@@ -1,7 +1,11 @@
 using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("AgileProKeyVaultUri"));
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 string ConnectionString = builder.Configuration["ConnectionString"];
 

@@ -28,13 +28,13 @@ namespace Bug_Tracker.Commands
 
         public override async void Execute(object parameter)
         {
-            if (CreateNewProjectPageViewModel.ProjectName == null)
+            if (string.IsNullOrEmpty(CreateNewProjectPageViewModel.ProjectName))
             {
                 MessageBox.Show("You need to add a project name.", "Missing Project Name", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (CreateNewProjectPageViewModel.ProjectDescription == null)
+            if (string.IsNullOrEmpty(CreateNewProjectPageViewModel.ProjectDescription))
             {
                 MessageBox.Show("You need to add a project description.", "Missing Project Description", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -42,6 +42,7 @@ namespace Bug_Tracker.Commands
 
             ProjectDTO project = await ProjectApiService.Create(new ProjectDTO { Name = CreateNewProjectPageViewModel.ProjectName, Description = CreateNewProjectPageViewModel.ProjectDescription, DateStarted = DateTime.Now });
             ProjectUserDTO projectUser = await ProjectUserApiService.Create(new ProjectUserDTO { ProjectId = project.Id, UserId = CurrentUser.Id , Role = 0});
+            ProjectContainer.CurrentUserProjects.Add(project);
 
             Navigator.Navigate(ViewType.ProjectsPage);
         }

@@ -122,3 +122,6 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\obj\Debug\net6.0\ref\BugTracker.Api.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\Azure.Extensions.AspNetCore.Configuration.Secrets.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

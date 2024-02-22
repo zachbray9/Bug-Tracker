@@ -19,8 +19,8 @@ namespace Bug_Tracker.Services.Api
             HttpClientFactory = httpClientFactory;
 
             HttpClient = HttpClientFactory.CreateClient();
-            //HttpClient.BaseAddress = new Uri("https://bugtrackerapi.azurewebsites.net/api/");
-            HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
+            HttpClient.BaseAddress = new Uri("https://agileproapi.azurewebsites.net/api/");
+            //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
         public async Task<UserDTO> GetById(int id)

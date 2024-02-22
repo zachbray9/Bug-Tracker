@@ -1,23 +1,15 @@
-﻿{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53517",
-      "sslPort": 44386
-    }
-  },
+{
   "profiles": {
     "BugTracker.Api": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7226;http://localhost:5104",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AgileProKeyVaultUri": "https://bugtrackerdbvault.vault.azure.net/"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7226;http://localhost:5104"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -26,6 +18,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:53517",
+      "sslPort": 44386
     }
   }
 }

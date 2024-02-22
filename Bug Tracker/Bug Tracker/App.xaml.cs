@@ -100,7 +100,7 @@ namespace Bug_Tracker
 
                     services.AddSingleton<CreateViewModel<CreateNewProjectPageViewModel>>(services =>
                     {
-                        return () => new CreateNewProjectPageViewModel(services.GetRequiredService<IApiService<ProjectDTO>>(), services.GetRequiredService<IApiService<ProjectUserDTO>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
+                        return () => new CreateNewProjectPageViewModel(services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>());
                     }
                     );
 

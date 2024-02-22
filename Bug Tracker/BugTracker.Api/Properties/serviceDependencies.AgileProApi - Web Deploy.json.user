@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "apis1": {
+      "restored": true,
+      "restoreTime": "2024-02-22T00:00:27.4779497Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2024-02-22T00:02:54.8265383Z"
+    },
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2024-02-22T00:01:22.007605Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "7070e8d4-9acd-475e-b722-21b3be47ae22"
+    },
+    "secrets1.resourceGroupName": {
+      "Name": "secrets1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "BugTracker.Wpf"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "BugTracker.Wpf"
+    },
+    "secrets1.subscriptionId": {
+      "Name": "secrets1.subscriptionId",
+      "Type": "subscription",
+      "Value": "7070e8d4-9acd-475e-b722-21b3be47ae22"
+    }
+  }
+}

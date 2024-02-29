@@ -1,3 +1,4 @@
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\bin\Debug\net6.0\CoverletSourceRootsMapping_BugTracker.Domain.UnitTests
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\bin\Debug\net6.0\testhost.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\bin\Debug\net6.0\testhost.exe
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\bin\Debug\net6.0\NUnit3.TestAdapter.dll
@@ -105,4 +106,3 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\obj\Debug\net6.0\BugTracker.Domain.UnitTests.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\obj\Debug\net6.0\BugTracker.Domain.UnitTests.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\obj\Debug\net6.0\ref\BugTracker.Domain.UnitTests.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain.UnitTests\bin\Debug\net6.0\CoverletSourceRootsMapping_BugTracker.Domain.UnitTests

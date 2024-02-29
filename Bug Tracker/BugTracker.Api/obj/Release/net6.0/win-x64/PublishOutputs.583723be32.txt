@@ -1,0 +1,9 @@
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\appsettings.Development.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\appsettings.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\BugTracker.Api.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\aspnetcorev2_inprocess.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\e_sqlite3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\BugTracker.EntityFramework.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\BugTracker.Domain.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Release\net6.0\win-x64\publish\BugTracker.Api.exe

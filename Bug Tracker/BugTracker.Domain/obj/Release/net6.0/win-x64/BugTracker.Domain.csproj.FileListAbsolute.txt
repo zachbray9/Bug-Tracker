@@ -1,0 +1,12 @@
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\bin\Release\net6.0\win-x64\BugTracker.Domain.deps.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\bin\Release\net6.0\win-x64\BugTracker.Domain.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\bin\Release\net6.0\win-x64\BugTracker.Domain.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.csproj.AssemblyReference.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.AssemblyInfoInputs.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.AssemblyInfo.cs
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\refint\BugTracker.Domain.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\BugTracker.Domain.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Domain\obj\Release\net6.0\win-x64\ref\BugTracker.Domain.dll

@@ -1,0 +1,10 @@
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\Bug Tracker.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\Assets\Images\LoginBackgroundImage.jpeg
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\appsettings.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\D3DCompiler_47_cor3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\PenImc_cor3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\PresentationNative_cor3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\vcruntime140_cor3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\wpfgfx_cor3.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\BugTracker.Domain.pdb
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Release\net6.0-windows\win-x86\publish\Bug Tracker.exe

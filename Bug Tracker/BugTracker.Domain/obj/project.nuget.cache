@@ -1,13 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "isPzeKHMdm9y6+H+mE8j9faiyW0Ut1v1HEsWSG0+kt1oHfrNNvc6FxjhvPUCVksl1jCU7yzppvPTHSRQ+Qlaew==",
+  "dgSpecHash": "CSUvJt3LrdGXdiIpJ2Ak9ydfs3no2gAuQnhSLHLWrABt35mZYBf0HucmPaditOyarCb4dKnZzfirDBWEpzTLAA==",
   "success": true,
   "projectFilePath": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Domain\\BugTracker.Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",
-    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.22\\microsoft.netcore.app.runtime.win-x64.6.0.22.nupkg.sha512",
-    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.22\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.22.nupkg.sha512",
-    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.22\\microsoft.aspnetcore.app.runtime.win-x64.6.0.22.nupkg.sha512"
+    "C:\\Users\\zachb\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512"
   ],
   "logs": [
     {

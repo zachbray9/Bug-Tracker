@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.EntityFramework"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.Domain.UnitTests", "BugTracker.Domain.UnitTests\BugTracker.Domain.UnitTests.csproj", "{22C761FF-514A-4680-BD86-500F46BE0EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTracker.Api", "BugTracker.Api\BugTracker.Api.csproj", "{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BugTracker.Api", "BugTracker.Api\BugTracker.Api.csproj", "{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "agileproreactapp", "AgileProReactApp\agileproreactapp.esproj", "{E80A7B56-4035-40A0-AE71-EC39543D7F20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,12 @@ Global
 		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4B7C630-9DC8-4A89-9CB2-19A19D20E45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E80A7B56-4035-40A0-AE71-EC39543D7F20}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

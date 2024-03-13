@@ -5,7 +5,7 @@
     align-items: center;
     gap: 40px;
     background-image: linear-gradient(to right, #5f0a87, #a4508b);
-    padding: 0px 40px;
+    padding: 40px;
 }
 
 
@@ -13,5 +13,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 40px;
+    padding: 40px;
+}
+
+.usecase-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    gap: 1rem;
+}
+
+.usecase-card {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.card-top {
+    position: relative;
+    height: 3rem;
+    background-color: orangered;
+}
+
+.getstarted-section {
+    background-image: linear-gradient(to right, #5f0a87, #a4508b);
+    padding: 80px 40px;
 }

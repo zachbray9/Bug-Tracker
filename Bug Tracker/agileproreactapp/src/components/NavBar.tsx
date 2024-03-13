@@ -1,4 +1,4 @@
-import { HStack, Image } from "@chakra-ui/react";
+import { Button, HStack, Image } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import AgileProLogo from "../assets/AgileProLogo.png";
 
@@ -12,8 +12,12 @@ const NavBar = () => {
                     <Image src={AgileProLogo} alt='Logo' boxSize='80px' objectFit='cover'></Image>
                 </NavLink>
                 <HStack gap={ 4 }>
-                    <NavLink to='/Signup' className='btn btn-outline-primary'>Sign Up</NavLink>
-                    <NavLink to='/Login' className='btn btn-primary'>Login</NavLink>
+                    <NavLink to='/Signup'>
+                        <Button colorScheme='messenger' variant='outline'>Sign Up</Button>
+                    </NavLink>
+                    <NavLink to='/Login'>
+                        <Button colorScheme='messenger'>Login</Button>
+                    </NavLink>
                 </HStack>
             </HStack>
         </div>

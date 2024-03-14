@@ -92,7 +92,7 @@ const Home = () => {
             </section>
 
             <section className='getstarted-section'>
-                <Flex direction='column' align='center'>
+                <Flex direction='column' align='center' gap='1rem'>
                     <Text fontSize='4xl' fontWeight='500' color='white'>Get started with AgilePro today</Text>
                     <NavLink to='signup'>
                         <Button colorScheme='messenger'>Create an account - It's free!</Button>

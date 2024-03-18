@@ -1,4 +1,3 @@
-import "../styles/home.css";
 import { Box, Button, Card, CardBody, CardHeader, Flex, Heading, Image, Square, Text } from "@chakra-ui/react";
 import HeroImage from "../assets/AgileProLandingPageImage.png";
 import DemoImage from "../assets/Bug Tracker Project Details Page Screenshot.png";
@@ -6,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { FaFolder, FaTasks } from "react-icons/fa";
 import { BiSolidMegaphone } from "react-icons/bi";
 import { PiLeafDuotone } from "react-icons/pi";
+import "../styles/home.css";
 
 const Home = () => {
     return (

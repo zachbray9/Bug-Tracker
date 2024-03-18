@@ -1,13 +1,27 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Input, InputGroup, InputLeftElement, Stack, Text } from "@chakra-ui/react"
+import { Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Image, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react"
 import { FaUser } from "react-icons/fa"
 import { FaLock } from "react-icons/fa6"
 import { NavLink } from "react-router-dom"
-import "../styles/login.css"
+import Image1 from "../assets/AgileProLoginPageImage1.png";
+import Image2 from "../assets/AgileProLoginPageImage2.png";
+import "../styles/login.css";
+import { useState } from "react";
 
 const Login = () => {
+    const [show, setShow] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        if (show === false)
+            setShow(true);
+        else
+            setShow(false);
+    }
+
     return (
-        <div className='main-wrapper'>
-            <Card align='center' size='lg'>
+        <div className='login-main-wrapper'>
+            <Image src={Image1} pos='absolute' bottom='0' left='3rem' boxSize={[0, 200, 300, 400]} />
+            <Image src={Image2} pos='absolute' bottom='0' right='3rem' boxSize={[0, 200, 300, 400]} />
+            <Card variant='outline' align='center' maxW='lg' width='100%' boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
                 <CardHeader>
                     <Heading size='lg'>Login</Heading>
                 </CardHeader>
@@ -18,6 +32,7 @@ const Login = () => {
                             <InputLeftElement>
                                 <FaUser color='#d3d3d3' />
                             </InputLeftElement>
+
                             <Input size='md' mb={4} placeholder='Username'></Input>
                         </InputGroup>
                     </Stack>
@@ -27,11 +42,18 @@ const Login = () => {
                             <InputLeftElement>
                                 <FaLock color='#d3d3d3' />
                             </InputLeftElement>
-                            <Input size='md' mb={4} placeholder='Password'></Input>
+
+                            <InputRightElement width='4.5rem'>
+                                <Button h='1.75rem' size='sm' onClick={togglePasswordVisibility}>
+                                    {show ? 'Hide' : 'Show'}
+                                </Button>
+                            </InputRightElement>
+                            <Input type={show ? 'text' : 'password'} size='md' mb={4} placeholder='Password'></Input>
+
                         </InputGroup>
                     </Stack>
                     <Flex width='100%' justify='center' align='center'>
-                        <Button width='100%' bgGradient='linear(to-r, #5f0a87, #a4508b)' color='white'>Login</Button>
+                        <Button colorScheme='messenger' width='100%' color='white'>Login</Button>
                     </Flex>
                 </CardBody>
                 <CardFooter>

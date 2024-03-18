@@ -1,6 +1,14 @@
-main-wrapper {
+.login-main-wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 60px); /*Calculating the height of the viewport minus the height of the navbar and footer*/
+    width: 100%;
+    padding: 0px 20px;
+}
+
+.login-button:hover {
+    background-image: inherit;
+    backdrop-filter: brightness(50%); 
 }

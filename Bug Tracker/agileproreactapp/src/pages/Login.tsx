@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Flex, FormControl, Heading, Image, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react"
+import { Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Image, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react"
 import { FaUser } from "react-icons/fa"
 import { FaLock } from "react-icons/fa6"
 import { NavLink } from "react-router-dom"
@@ -64,7 +64,7 @@ const Login = () => {
                             </InputGroup>
                         </Stack>
                         <Flex width='100%' justify='center' align='center'>
-                            <Button onClick={handleSubmit(data => console.log(data))} colorScheme='messenger' width='100%' color='white'>Login</Button>
+                            <Button type='submit' colorScheme='messenger' width='100%' color='white'>Login</Button>
                         </Flex>
                     </form>
                 </CardBody>

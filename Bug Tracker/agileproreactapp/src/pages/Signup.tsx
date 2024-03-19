@@ -5,6 +5,11 @@ import { FaLock } from "react-icons/fa6";
 import Image1 from "../assets/AgileProLoginPageImage1.png";
 import Image2 from "../assets/AgileProLoginPageImage2.png";
 import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
+import "../styles/signup.css";
+
 
 const Signup = () => {
     const [show, setShow] = useState(false);
@@ -24,6 +29,25 @@ const Signup = () => {
             setShowConfirm(false);
     }
 
+    /*schema form validation*/
+    const schema = z.object({
+        email: z.string().email(),
+        password: z.string().min(8, { message: "Password must be at least 8 characters." }),
+        confirmPassword: z.string()
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match.",
+        path: ['confirmPassword']
+    })
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+    const onSubmit = (data: FieldValues) => {
+        console.log(data);
+    }
+
+
+    type FormData = z.infer<typeof schema>;
+
     return (
         <div className='login-main-wrapper'>
             <Image src={Image1} pos='absolute' bottom='0' left='3rem' boxSize={[0, 200, 300, 400]} />
@@ -34,7 +58,7 @@ const Signup = () => {
                     <Heading size='lg'>Sign Up</Heading>
                 </CardHeader>
                 <CardBody>
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
                         <Stack>
                             <Text size='xs' fontWeight='400' marginBottom='0px'>Email</Text>
                             <InputGroup>
@@ -42,8 +66,11 @@ const Signup = () => {
                                     <FaUser color='#d3d3d3' />
                                 </InputLeftElement>
 
-                                <Input size='md' mb={4} placeholder='Email'></Input>
+                                <Input {...register('email')} size='md' mb={0} placeholder='Email'></Input>
                             </InputGroup>
+                            {errors.email && (
+                                <Text color='red' mb={0}>{errors.email.message}</Text>
+                            )}
                         </Stack>
 
                         <Stack>
@@ -58,9 +85,11 @@ const Signup = () => {
                                         {show ? 'Hide' : 'Show'}
                                     </Button>
                                 </InputRightElement>
-                                <Input type={show ? 'text' : 'password'} size='md' mb={4} placeholder='Password'></Input>
-
+                                <Input {...register('password')} type={show ? 'text' : 'password'} size='md' mb={0} placeholder='Password'></Input>
                             </InputGroup>
+                            {errors.password && (
+                                <Text color='red' mb={0}>{errors.password.message}</Text>
+                            )}
                         </Stack>
 
                         <Stack>
@@ -75,13 +104,15 @@ const Signup = () => {
                                         {showConfirm ? 'Hide' : 'Show'}
                                     </Button>
                                 </InputRightElement>
-                                <Input type={showConfirm ? 'text' : 'password'} size='md' mb={4} placeholder='Confirm Password'></Input>
-
+                                <Input {...register('confirmPassword')} type={showConfirm ? 'text' : 'password'} size='md' mb={0} placeholder='Confirm Password'></Input>
                             </InputGroup>
+                            {errors.confirmPassword && (
+                                <Text color='red' mb={0}>{errors.confirmPassword.message}</Text>
+                            )}
                         </Stack>
 
                         <Flex width='100%' justify='center' align='center'>
-                            <Button colorScheme='messenger' width='100%' color='white'>Login</Button>
+                            <Button type='submit' colorScheme='messenger' width='100%' color='white'>Login</Button>
                         </Flex>
                     </form>
                 </CardBody>

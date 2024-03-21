@@ -2,13 +2,14 @@
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Runtime.InteropServices;
 
 namespace BugTracker.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller

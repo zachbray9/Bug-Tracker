@@ -31,7 +31,7 @@ const Signup = () => {
 
     /*schema form validation*/
     const schema = z.object({
-        email: z.string().email(),
+        email: z.string().email({ message: "Invalid email." }),
         password: z.string().min(8, { message: "Password must be at least 8 characters." }),
         confirmPassword: z.string()
     }).refine((data) => data.password === data.confirmPassword, {

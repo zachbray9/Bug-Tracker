@@ -3,5 +3,6 @@
     public class AuthenticatedUserResponse
     {
         public string AccessToken = null!;
+        public string RefreshToken = null!;
     }
 }

@@ -8,29 +8,27 @@ namespace BugTracker.Api.Services.TokenGenerators
 {
     public class AccessTokenGenerator
     {
-        private readonly string JwtAuthenticationKey;
+        private readonly IConfiguration Configuration;
+        private readonly TokenGenerator TokenGenerator;
+        private readonly string JwtAccessTokenKey;
 
-        public AccessTokenGenerator(string jwtAuthenticationKey)
+        public AccessTokenGenerator(IConfiguration configuration, TokenGenerator tokenGenerator)
         {
+            Configuration = configuration;
+            TokenGenerator = tokenGenerator;
 
-            JwtAuthenticationKey = jwtAuthenticationKey;
-
+            JwtAccessTokenKey = Configuration["JwtAccessTokenKey"];
         }
 
         public string GenerateAccessToken(User user)
         {
-            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtAuthenticationKey));
-            SigningCredentials credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("id", user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email.ToString()),
             };
 
-            JwtSecurityToken token = new JwtSecurityToken("https://agileproapi.azurewebsites.net", "https://agilepro.azurewebsites.net", claims, DateTime.UtcNow, DateTime.UtcNow.AddMinutes(30));
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return TokenGenerator.GenerateToken(JwtAccessTokenKey, "https://agileproapi.azurewebsites.net", "https://agilepro.azurewebsites.net", 0.25, claims);
         }
     }
 }

@@ -6,6 +6,9 @@ using BugTracker.Api.Services.TokenGenerators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BugTracker.Api.Services.TokenValidators;
+using BugTracker.Api.Services.TokenDbServices;
+using BugTracker.Api.Services.Authenticators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 string ConnectionString = builder.Configuration["ConnectionString"];
-string JwtAuthenticationKey = builder.Configuration["JwtAuthenticationKey"];
+string JwtAccessTokenKey = builder.Configuration["JwtAccessTokenKey"];
+string JwtRefreshTokenKey = builder.Configuration["JwtRefreshTokenKey"];
 
 // Add services to the container.
 builder.Services.AddDbContext<BugTrackerDbContext>(options =>
@@ -22,19 +26,26 @@ builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     //options.UseInMemoryDatabase("BugTrackerTestDb");
 });
 
+builder.Services.AddSingleton<IConfiguration>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-builder.Services.AddSingleton<AccessTokenGenerator>(new AccessTokenGenerator(JwtAuthenticationKey));
+builder.Services.AddSingleton<TokenGenerator>();
+builder.Services.AddSingleton<AccessTokenGenerator>();
+builder.Services.AddSingleton<RefreshTokenGenerator>();
+builder.Services.AddSingleton<RefreshTokenValidator>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddSingleton<Authenticator>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
 {
     o.TokenValidationParameters = new TokenValidationParameters() {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtAuthenticationKey)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtAccessTokenKey)),
         ValidIssuer = "https://agileproapi.azurewebsites.net",
         ValidAudience = "https://agilepro.azurewebsites.net",
         ValidateIssuerSigningKey = true,
         ValidateIssuer = true,
-        ValidateAudience = true
+        ValidateAudience = true,
+        ClockSkew = TimeSpan.Zero
     };
 });
 

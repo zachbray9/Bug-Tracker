@@ -1,11 +1,6 @@
 ﻿using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.Auth;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BugTracker.EntityFramework
 {
@@ -16,6 +11,7 @@ namespace BugTracker.EntityFramework
         public DbSet<ProjectUser> ProjectUsers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public BugTrackerDbContext(DbContextOptions options) : base(options) {}
 

@@ -2,7 +2,7 @@
 {
     public class AuthenticatedUserResponse
     {
-        public string AccessToken = null!;
-        public string RefreshToken = null!;
+        public string AccessToken { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
     }
 }

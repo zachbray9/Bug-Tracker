@@ -9,6 +9,7 @@ using System.Text;
 using BugTracker.Api.Services.TokenValidators;
 using BugTracker.Api.Services.TokenDbServices;
 using BugTracker.Api.Services.Authenticators;
+using BugTracker.Api.Models.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,14 +27,14 @@ builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     //options.UseInMemoryDatabase("BugTrackerTestDb");
 });
 
-builder.Services.AddSingleton<IConfiguration>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<TokenGenerator>();
 builder.Services.AddSingleton<AccessTokenGenerator>();
 builder.Services.AddSingleton<RefreshTokenGenerator>();
 builder.Services.AddSingleton<RefreshTokenValidator>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-builder.Services.AddSingleton<Authenticator>();
+builder.Services.AddScoped<Authenticator>();
+builder.Services.AddSingleton(new AuthenticationConfiguration(JwtAccessTokenKey, JwtRefreshTokenKey));
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>

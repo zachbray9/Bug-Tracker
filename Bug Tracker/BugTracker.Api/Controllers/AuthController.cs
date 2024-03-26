@@ -2,7 +2,6 @@
 using BugTracker.Api.Models.Responses;
 using BugTracker.Api.Services.Authenticators;
 using BugTracker.Api.Services.TokenDbServices;
-using BugTracker.Api.Services.TokenGenerators;
 using BugTracker.Api.Services.TokenValidators;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.Auth;
@@ -12,8 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
@@ -24,11 +21,11 @@ namespace BugTracker.Api.Controllers
     {
         private readonly BugTrackerDbContext DbContext;
         private readonly RefreshTokenValidator RefreshTokenValidator;
-        private readonly RefreshTokenService RefreshTokenService;
+        private readonly IRefreshTokenService RefreshTokenService;
         private readonly Authenticator Authenticator;
         private readonly IPasswordHasher PasswordHasher;
 
-        public AuthController(BugTrackerDbContext dbContext, RefreshTokenValidator refreshTokenValidator, RefreshTokenService refreshTokenService, Authenticator authenticator, IPasswordHasher passwordHasher)
+        public AuthController(BugTrackerDbContext dbContext, RefreshTokenValidator refreshTokenValidator, IRefreshTokenService refreshTokenService, Authenticator authenticator, IPasswordHasher passwordHasher)
         {
             DbContext = dbContext;
             RefreshTokenValidator = refreshTokenValidator;
@@ -134,6 +131,9 @@ namespace BugTracker.Api.Controllers
             {
                 return Unauthorized();
             }
+
+            await RefreshTokenService.DeleteAll(userId);
+            return NoContent();
         }
     }
 }

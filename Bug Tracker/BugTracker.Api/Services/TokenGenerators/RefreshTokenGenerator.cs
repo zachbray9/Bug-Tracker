@@ -1,17 +1,17 @@
-﻿namespace BugTracker.Api.Services.TokenGenerators
+﻿using BugTracker.Api.Models.Config;
+
+namespace BugTracker.Api.Services.TokenGenerators
 {
     public class RefreshTokenGenerator
     {
-        private readonly IConfiguration Configuration;
         private readonly TokenGenerator TokenGenerator;
         private readonly string JwtRefreshTokenKey;
 
-        public RefreshTokenGenerator(IConfiguration configuration, TokenGenerator tokenGenerator)
+        public RefreshTokenGenerator(AuthenticationConfiguration configuration, TokenGenerator tokenGenerator)
         {
-            Configuration = configuration;
             TokenGenerator = tokenGenerator;
 
-            JwtRefreshTokenKey = Configuration["JwtRefreshTokenKey"];
+            JwtRefreshTokenKey = configuration.JwtRefreshTokenKey;
         }
 
         public string GenerateRefreshToken()

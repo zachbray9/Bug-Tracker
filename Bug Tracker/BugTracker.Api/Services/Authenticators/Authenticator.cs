@@ -10,9 +10,9 @@ namespace BugTracker.Api.Services.Authenticators
     {
         private readonly AccessTokenGenerator AccessTokenGenerator;
         private readonly RefreshTokenGenerator RefreshTokenGenerator;
-        private readonly RefreshTokenService RefreshTokenService;
+        private readonly IRefreshTokenService RefreshTokenService;
 
-        public Authenticator(AccessTokenGenerator accessTokenGenerator, RefreshTokenGenerator refreshTokenGenerator, RefreshTokenService refreshTokenService)
+        public Authenticator(AccessTokenGenerator accessTokenGenerator, RefreshTokenGenerator refreshTokenGenerator, IRefreshTokenService refreshTokenService)
         {
             AccessTokenGenerator = accessTokenGenerator;
             RefreshTokenGenerator = refreshTokenGenerator;

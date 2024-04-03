@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 
 const Login = () => {
     const [show, setShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         if (show === false)
@@ -20,8 +21,13 @@ const Login = () => {
 
     const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data: FieldValues) => {
+    const onSubmit = async(data: FieldValues) => {
+        setIsLoading(true);
         console.log(data);
+
+        //authenticate user here
+
+        setIsLoading(false);
     }
 
 
@@ -64,7 +70,7 @@ const Login = () => {
                             </InputGroup>
                         </Stack>
                         <Flex width='100%' justify='center' align='center'>
-                            <Button type='submit' colorScheme='messenger' width='100%' color='white'>Login</Button>
+                            <Button type='submit' colorScheme='messenger' width='100%' color='white' isLoading={isLoading} loadingText='Logging in'>Login</Button>
                         </Flex>
                     </form>
                 </CardBody>

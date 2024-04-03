@@ -3,18 +3,25 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./pages/Layout";
-import Error from "./pages/Error";
+import PrivateRoutes from "./routing/PrivateRoutes";
+/*import Error from "./pages/Error";*/
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
         children: [
-            { path: '', element: <Home /> },
+            { path: '', element: <Home />},
             { path: 'login', element: <Login /> },
             { path: 'signup', element: <Signup /> }
         ],
         /*errorElement: <Error/>*/
+    },
+    {
+        element: <PrivateRoutes />,
+        children: [
+
+        ]
     }
 ])
 

@@ -14,6 +14,7 @@ import "../styles/signup.css";
 const Signup = () => {
     const [show, setShow] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         if (show === false)
@@ -42,7 +43,9 @@ const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     const onSubmit = (data: FieldValues) => {
+        setIsLoading(true);
         console.log(data);
+        setIsLoading(false);
     }
 
 
@@ -112,7 +115,7 @@ const Signup = () => {
                         </Stack>
 
                         <Flex width='100%' justify='center' align='center'>
-                            <Button type='submit' colorScheme='messenger' width='100%' color='white'>Login</Button>
+                            <Button type='submit' colorScheme='messenger' width='100%' color='white' isLoading={isLoading} loadingText='Submitting'>Login</Button>
                         </Flex>
                     </form>
                 </CardBody>

@@ -96,16 +96,17 @@ namespace BugTracker.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            //check to make sure refesh token signature is valid and token is not expired
-            bool isValidRefreshToken = RefreshTokenValidator.ValidateRefreshToken(refreshRequest.RefreshToken);
-            if (!isValidRefreshToken)
-                return BadRequest("Your refresh token is invalid.");
-
+            //check to make sure refresh token exists in the database
             RefreshToken? refreshTokenDTO = await RefreshTokenService.GetByToken(refreshRequest.RefreshToken);
             if(refreshTokenDTO == null)
             {
                 return BadRequest("Invalid refresh token.");
             }
+
+            //check to make sure refesh token signature is valid and token is not expired
+            bool isValidRefreshToken = RefreshTokenValidator.ValidateRefreshToken(refreshRequest.RefreshToken);
+            if (!isValidRefreshToken)
+                return BadRequest("Your refresh token is invalid.");
 
             //Delete refresh token after retrieving it so it can't be used more than once.
             await RefreshTokenService.Delete(refreshTokenDTO.Id);

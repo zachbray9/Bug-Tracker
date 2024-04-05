@@ -6,27 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.Eventing.Reader;
+using BugTracker.Domain.Models.Auth;
+using Azure;
+using BugTracker.Api.Attributes;
 
 namespace BugTracker.Api.Controllers
 {
-    [Authorize]
+    [CheckAuthorization]
     [ApiController]
     [Route("api/[controller]")]
     public class CommentsController : Controller
     {
         private readonly BugTrackerDbContext DbContext;
         private readonly IMapper Mapper;
+        private readonly IHttpContextAccessor HttpContextAccessor;
 
-        public CommentsController(BugTrackerDbContext dbContext, IMapper mapper)
+        public CommentsController(BugTrackerDbContext dbContext, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             DbContext = dbContext;
             Mapper = mapper;
+            HttpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+
             Comment? comment = await DbContext.Comments.Include(c => c.Author).FirstOrDefaultAsync(c => c.Id == id);
 
             if (comment == null)
@@ -91,6 +98,26 @@ namespace BugTracker.Api.Controllers
             await DbContext.SaveChangesAsync();
 
             return Ok("Comment was successfully deleted.");
+        }
+
+        //helpers
+        private async Task<bool> Authorize()
+        {
+            var sessionId = HttpContext.Request.Cookies["sessionId"];
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return false;
+            }
+
+            AgileSession? session = await DbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
+            if (session == null)
+                return false;
+
+            if (session.ExpirationDate <= DateTime.Now)
+                return false;
+
+            return true;
+
         }
 
     }

@@ -1,15 +1,12 @@
 using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Azure.Identity;
 using Microsoft.AspNet.Identity;
 using BugTracker.Api.Services.TokenGenerators;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using BugTracker.Api.Services.TokenValidators;
 using BugTracker.Api.Services.TokenDbServices;
 using BugTracker.Api.Services.Authenticators;
 using BugTracker.Api.Models.Config;
+using BugTracker.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +24,7 @@ builder.Services.AddDbContext<BugTrackerDbContext>(options =>
     //options.UseInMemoryDatabase("BugTrackerTestDb");
 });
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<TokenGenerator>();
 builder.Services.AddSingleton<AccessTokenGenerator>();
@@ -36,19 +34,6 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<Authenticator>();
 builder.Services.AddSingleton(new AuthenticationConfiguration(JwtAccessTokenKey, JwtRefreshTokenKey));
 builder.Services.AddAutoMapper(typeof(Program));
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
-{
-    o.TokenValidationParameters = new TokenValidationParameters() {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtAccessTokenKey)),
-        ValidIssuer = "https://agileproapi.azurewebsites.net",
-        ValidAudience = "https://agilepro.azurewebsites.net",
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ClockSkew = TimeSpan.Zero
-    };
-});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -66,8 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseMiddleware<AuthenticationMiddleware>();
 
 app.MapControllers();
 

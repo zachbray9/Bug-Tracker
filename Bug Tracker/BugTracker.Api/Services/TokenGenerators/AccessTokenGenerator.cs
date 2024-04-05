@@ -23,7 +23,7 @@ namespace BugTracker.Api.Services.TokenGenerators
                 new Claim(ClaimTypes.Email, user.Email.ToString()),
             };
 
-            return TokenGenerator.GenerateToken(JwtAccessTokenKey, "https://agileproapi.azurewebsites.net", "https://agilepro.azurewebsites.net", 15, claims);
+            return TokenGenerator.GenerateToken(JwtAccessTokenKey, "https://agileproapi.azurewebsites.net", "https://agilepro.azurewebsites.net", 5, claims);
         }
     }
 }

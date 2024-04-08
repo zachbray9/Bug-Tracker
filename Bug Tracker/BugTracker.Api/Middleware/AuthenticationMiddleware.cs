@@ -26,22 +26,34 @@ namespace BugTracker.Api.Middleware
                 return;
             }
 
-            var sessionId = context.Request.Cookies["sessionId"];
-            if (!string.IsNullOrEmpty(sessionId))
+            //checks if header contains a cookie with the session id
+            string? sessionId = context.Request.Cookies["AgileSessionId"];
+            if (sessionId == null)
             {
-                // Check if session exists in the database
-                AgileSession? session = await dbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
-
-                if (session != null && session.ExpirationDate > DateTime.Now)
-                {
-                    // Authentication successful
-                    await _next(context);
-                    return;
-                }
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
             }
 
-            // Authentication failed
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            //checks if the database contains a session with the sessionId from the cookie
+            AgileSession? session = await dbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
+            if (session == null)
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
+            }
+
+            //checks if the session in the database has expired
+            if(session.ExpirationDate < DateTime.UtcNow)
+            {
+                dbContext.Sessions.Remove(session);
+                await dbContext.SaveChangesAsync();
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
+            }
+
+            //successfully authenticates the user
+            await _next(context);
+            return;
         }
     }
 }

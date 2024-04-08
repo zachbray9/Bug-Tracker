@@ -1,6 +1,8 @@
-﻿using BugTracker.Api.Models.Requests;
+﻿using BugTracker.Api.Attributes;
+using BugTracker.Api.Models.Requests;
 using BugTracker.Api.Models.Responses;
 using BugTracker.Api.Services.Authenticators;
+using BugTracker.Api.Services.SessionServices;
 using BugTracker.Api.Services.TokenDbServices;
 using BugTracker.Api.Services.TokenValidators;
 using BugTracker.Domain.Models;
@@ -20,18 +22,14 @@ namespace BugTracker.Api.Controllers
     public class AuthController : Controller
     {
         private readonly BugTrackerDbContext DbContext;
-        private readonly RefreshTokenValidator RefreshTokenValidator;
-        private readonly IRefreshTokenService RefreshTokenService;
-        private readonly Authenticator Authenticator;
         private readonly IPasswordHasher PasswordHasher;
+        private readonly SessionDbService SessionService;
 
-        public AuthController(BugTrackerDbContext dbContext, RefreshTokenValidator refreshTokenValidator, IRefreshTokenService refreshTokenService, Authenticator authenticator, IPasswordHasher passwordHasher)
+        public AuthController(BugTrackerDbContext dbContext, IPasswordHasher passwordHasher, SessionDbService sessionService)
         {
             DbContext = dbContext;
-            RefreshTokenValidator = refreshTokenValidator;
-            RefreshTokenService = refreshTokenService;
-            Authenticator = authenticator;
             PasswordHasher = passwordHasher;
+            SessionService = sessionService;
         }
 
         [HttpPost("[action]")]
@@ -86,55 +84,35 @@ namespace BugTracker.Api.Controllers
                 return Unauthorized("Incorrect password.");
             }
 
-            AuthenticatedUserResponse response = await Authenticator.Authenticate(user);
-            return Ok(response);
+            //AuthenticatedUserResponse response = await Authenticator.Authenticate(user);
+            AgileSession session = await SessionService.CreateSession(user);
+            Response.Cookies.Append("AgileSessionId", session.Id.ToString(), new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = DateTime.UtcNow.AddDays(30),
+                //SameSite = SameSiteMode.Strict,
+                //Domain = ".localhost:7226"
+            });
+
+            return Ok();
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Refresh([FromBody] RefreshRequest refreshRequest)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            //check to make sure refresh token exists in the database
-            RefreshToken? refreshTokenDTO = await RefreshTokenService.GetByToken(refreshRequest.RefreshToken);
-            if(refreshTokenDTO == null)
-            {
-                return BadRequest("Invalid refresh token.");
-            }
-
-            //check to make sure refesh token signature is valid and token is not expired
-            bool isValidRefreshToken = RefreshTokenValidator.ValidateRefreshToken(refreshRequest.RefreshToken);
-            if (!isValidRefreshToken)
-                return BadRequest("Your refresh token is invalid.");
-
-            //Delete refresh token after retrieving it so it can't be used more than once.
-            await RefreshTokenService.Delete(refreshTokenDTO.Id);
-
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == refreshTokenDTO.UserId);
-            if(user == null)
-            {
-                return NotFound("User not found.");
-            }
-
-            //if user has valid refresh token, then give them a new access token and refresh token for new login
-            AuthenticatedUserResponse response = await Authenticator.Authenticate(user);
-            return Ok(response);
-        }
-
-        [Authorize]
+        [CheckAuthorization]
         [HttpDelete("[action]")]
         public async Task<IActionResult> Logout()
         {
-            string rawUserId = HttpContext.User.FindFirstValue("id");
-
-            if(!int.TryParse(rawUserId, out int userId))
-            {
+            string? sessionId = HttpContext.Request.Cookies["AgileSessionId"];
+            if (sessionId == null)
                 return Unauthorized();
-            }
 
-            await RefreshTokenService.DeleteAll(userId);
-            return NoContent();
+            AgileSession? session = await DbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
+            if (session == null)
+                return Unauthorized();
+
+            await SessionService.DeleteSession(sessionId);
+            HttpContext.Response.Cookies.Delete("AgileSessionId");
+            return Ok("User has successfully logged out.");
         }
     }
 }

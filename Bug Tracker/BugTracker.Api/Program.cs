@@ -1,28 +1,15 @@
-using BugTracker.EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNet.Identity;
 using BugTracker.Api.Middleware;
-using BugTracker.Api.Services.SessionServices;
+using BugTracker.Api.Extensions;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("AgileProKeyVaultUri"));
 //builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
-string ConnectionString = builder.Configuration["ConnectionString"];
-
 // Add services to the container.
-builder.Services.AddDbContext<BugTrackerDbContext>(options =>
-{
-    options.UseSqlServer(ConnectionString);
-    //options.UseInMemoryDatabase("BugTrackerTestDb");
-});
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-builder.Services.AddScoped<SessionDbService>();
-builder.Services.AddAutoMapper(typeof(Program));
-
+builder.Services.AddApplicationServices(builder.Configuration);           //extension method that adds application services
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

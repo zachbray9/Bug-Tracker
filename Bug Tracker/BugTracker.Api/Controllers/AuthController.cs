@@ -1,19 +1,13 @@
 ﻿using BugTracker.Api.Attributes;
 using BugTracker.Api.Models.Requests;
-using BugTracker.Api.Models.Responses;
-using BugTracker.Api.Services.Authenticators;
 using BugTracker.Api.Services.SessionServices;
-using BugTracker.Api.Services.TokenDbServices;
-using BugTracker.Api.Services.TokenValidators;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.Auth;
 using BugTracker.EntityFramework;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
 {

@@ -5,7 +5,6 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using BugTracker.Api.Attributes;
 
 namespace BugTracker.Api.Controllers
@@ -25,10 +24,10 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Projects/{projectId:int}/Users/{userId:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int projectId, [FromRoute] int userId)
+        [Route("Projects/{projectId:int}/Users/{userId}")]
+        public async Task<IActionResult> GetById([FromRoute] int projectId, [FromRoute] string userId)
         {
-            ProjectUser? projectUser = await DbContext.ProjectUsers.Include(pu => pu.Project).Include(pu => pu.User).FirstOrDefaultAsync(pu => pu.UserId == userId && pu.ProjectId == projectId);
+            ProjectUser? projectUser = await DbContext.ProjectUsers.Include(pu => pu.Project).Include(pu => pu.User).FirstOrDefaultAsync(pu => pu.UserId.Equals(userId) && pu.ProjectId == projectId);
 
             if (projectUser == null)
             {
@@ -53,7 +52,7 @@ namespace BugTracker.Api.Controllers
             if (!await DbContext.Projects.AnyAsync(p => p.Id == projectId))
                 return NotFound("No project with that project id exists.");
 
-            if (await DbContext.ProjectUsers.AnyAsync(pu => pu.UserId == projectUserDTO.UserId && pu.ProjectId == projectId))
+            if (await DbContext.ProjectUsers.AnyAsync(pu => pu.UserId.Equals(projectUserDTO.UserId) && pu.ProjectId == projectId))
                 return Conflict("This user is already a member of this project.");
 
             ProjectUser? projectUser = Mapper.Map<ProjectUser>(projectUserDTO);
@@ -64,10 +63,10 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("Projects/{projectId:int}/Users/{userId:int}")]
-        public async Task<IActionResult> Update([FromRoute] int projectId, [FromRoute] int userId, [FromBody] ProjectUserDTO projectUserDTO)
+        [Route("Projects/{projectId:int}/Users/{userId}")]
+        public async Task<IActionResult> Update([FromRoute] int projectId, [FromRoute] string userId, [FromBody] ProjectUserDTO projectUserDTO)
         {
-            ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId == userId);
+            ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId.Equals(userId));
             if (projectUser == null)
                 return NotFound("No Project User exists with this ProjectId and UserId.");
 
@@ -78,10 +77,10 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("Projects/{projectId:int}/Users/{userId:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int projectId, [FromRoute] int userId)
+        [Route("Projects/{projectId:int}/Users/{userId}")]
+        public async Task<IActionResult> Delete([FromRoute] int projectId, [FromRoute] string userId)
         {
-            ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId == userId);
+            ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId.Equals(userId));
             if (projectUser == null)
                 return NotFound("No Project User exists with this ProjectId and UserId.");
 

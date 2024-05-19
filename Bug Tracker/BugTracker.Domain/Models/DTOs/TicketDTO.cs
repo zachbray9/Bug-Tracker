@@ -9,11 +9,11 @@ namespace BugTracker.Domain.Models.DTOs
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int ProjectId { get; set; }
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; } = null!;
         public string AuthorFirstName { get; set; } = null!;
         public string AuthorLastName { get; set; } = null!;
         public string AuthorInitials { get => $"{AuthorFirstName?.FirstOrDefault()}{AuthorLastName?.FirstOrDefault()}".ToUpper(); }
-        public int? AssigneeId { get; set; }
+        public string? AssigneeId { get; set; }
         public string? AssigneeFirstName { get; set; } = string.Empty;
         public string? AssigneeLastName { get; set; } = string.Empty;
         public string? AssigneeInitials { get => $"{AssigneeFirstName?.FirstOrDefault()}{AssigneeLastName?.FirstOrDefault()}".ToUpper(); }
@@ -26,7 +26,7 @@ namespace BugTracker.Domain.Models.DTOs
         {
             get
             {
-                if (!AssigneeId.HasValue)
+                if (string.IsNullOrEmpty(AssigneeId))
                     return "Unassigned";
                 else
                     return $"Assignee: {AssigneeFirstName + " " + AssigneeLastName}";

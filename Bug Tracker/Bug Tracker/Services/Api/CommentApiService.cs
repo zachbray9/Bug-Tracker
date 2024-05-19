@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bug_Tracker.Services.Api
 {
-    public class CommentApiService : IApiService<CommentDTO>
+    public class CommentApiService : ICommentApiService
     {
         private readonly IHttpClientFactory HttpClientFactory;
         private readonly HttpClient HttpClient;

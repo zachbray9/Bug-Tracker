@@ -1,9 +1,7 @@
-﻿using Bug_Tracker.Services.Api;
-using Bug_Tracker.ViewModels;
+﻿using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Enumerables.EnumConverters;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
-using System.Threading.Tasks;
 
 namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 {
@@ -28,7 +26,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 
             ViewModel.TicketTitle = CurrentTicket.Title;
             ViewModel.TicketDescription = CurrentTicket.Description;
-            ViewModel.Assignee = CurrentTicket.AssigneeId != null ? await ProjectUserApiService.GetByProjectAndUserId(CurrentProject.Id, CurrentTicket.AssigneeId.Value) : null;
+            ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserId(CurrentProject.Id, CurrentTicket.AssigneeId) : null;
             ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserId(CurrentProject.Id, CurrentTicket.AuthorId);
             ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
 

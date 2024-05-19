@@ -51,7 +51,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
                 ViewModel.TicketTitle = CurrentTicket.Title;
                 ViewModel.TicketDescription = CurrentTicket.Description;
 
-                ViewModel.Assignee = CurrentTicket.AssigneeId != null ? await ProjectUserApiService.GetByProjectAndUserId(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId.Value) : null;
+                ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserId(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId) : null;
                 ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserId(ProjectContainer.CurrentProject.Id, CurrentTicket.AuthorId);
 
                 ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));

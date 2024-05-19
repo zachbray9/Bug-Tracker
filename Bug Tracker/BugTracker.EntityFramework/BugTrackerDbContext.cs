@@ -1,23 +1,23 @@
 ﻿using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.Auth;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.EntityFramework
 {
-    public class BugTrackerDbContext : DbContext
+    public class BugTrackerDbContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectUser> ProjectUsers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<AgileSession> Sessions { get; set; }
 
         public BugTrackerDbContext(DbContextOptions options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ProjectUser>()
                 .HasKey(pu => new { pu.UserId, pu.ProjectId });

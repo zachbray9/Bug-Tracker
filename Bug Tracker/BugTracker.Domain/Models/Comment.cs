@@ -1,7 +1,8 @@
 ﻿namespace BugTracker.Domain.Models
 {
-    public class Comment : DomainObject
+    public class Comment
     {
+        public int Id { get; set; }
         public string Text { get; set; } = null!;
         public int AuthorId { get; set; }
         public User Author { get; set; } = null!;

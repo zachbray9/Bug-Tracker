@@ -23,7 +23,7 @@ namespace Bug_Tracker.Services.Api
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
-        public async Task<ProjectUserDTO> GetByProjectAndUserId(int projectId, int userId)
+        public async Task<ProjectUserDTO> GetByProjectAndUserId(int projectId, string userId)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Users/{userId}");
             if (!response.IsSuccessStatusCode)
@@ -90,12 +90,6 @@ namespace Bug_Tracker.Services.Api
             }
 
             return true;
-        }
-
-        //Does not need this method since the primary key for ProjectUsers is both the project id and user id (even though the IApiService interface requires this method)
-        public async Task<ProjectUserDTO> GetById(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

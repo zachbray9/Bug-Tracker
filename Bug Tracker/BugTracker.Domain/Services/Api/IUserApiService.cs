@@ -1,16 +1,15 @@
 ﻿using BugTracker.Domain.Models.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BugTracker.Domain.Services.Database;
 
 namespace BugTracker.Domain.Services.Api
 {
-    public interface IUserApiService : IApiService<UserDTO>
+    public interface IUserApiService : IWritable<UserDTO>
     {
-        Task<UserDTO> GetByEmail(string email);
-        Task<UserDTO> GetByFullName(string fullName);
+        Task<UserDTO> GetByIdAsync(string id);
+        Task<UserDTO> GetByEmailAsync(string email);
+        Task<UserDTO> GetByFullNameAsync(string fullName);
         Task<List<ProjectDTO>> GetAllProjectsFromUserById(int id);
+        Task<UserDTO> UpdateAsync (string id,  UserDTO user);
+        Task<bool> DeleteAsync (string id);
     }
 }

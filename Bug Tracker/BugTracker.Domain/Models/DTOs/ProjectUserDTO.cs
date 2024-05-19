@@ -4,7 +4,7 @@ namespace BugTracker.Domain.Models.DTOs
 {
     public class ProjectUserDTO
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; } = null!;
         public string UserFirstName { get; set; } = string.Empty;
         public string UserLastName { get; set; } = string.Empty;
         public string UserFullName { get =>  UserFirstName + " " + UserLastName; }

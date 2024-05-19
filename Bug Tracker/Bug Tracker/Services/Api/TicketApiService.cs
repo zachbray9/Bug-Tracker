@@ -1,5 +1,6 @@
 ﻿using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
+using BugTracker.Domain.Services.Database;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,20 @@ namespace Bug_Tracker.Services.Api
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
-        public async Task<TicketDTO> GetById(int id)
+        public async Task<List<CommentDTO>> GetAllCommentsOnTicketAsync(int ticketId)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{ticketId}/Comments");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            List<CommentDTO> comments = JsonConvert.DeserializeObject<List<CommentDTO>>(jsonString);
+            return comments;
+        }
+
+        public async Task<TicketDTO> GetByIdAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{id}");
             if (!response.IsSuccessStatusCode)
@@ -36,7 +50,7 @@ namespace Bug_Tracker.Services.Api
             return ticket;
         }
 
-        public async Task<List<TicketDTO>> GetAll()
+        public async Task<List<TicketDTO>> GetAllAsync()
         {
             HttpResponseMessage response = await HttpClient.GetAsync("Tickets");
             if (!response.IsSuccessStatusCode)
@@ -49,22 +63,9 @@ namespace Bug_Tracker.Services.Api
             return tickets;
         }
 
-        public async Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId)
+        public async Task<TicketDTO> CreateAsync(TicketDTO entity)
         {
-            HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{ticketId}/Comments");
-            if(!response.IsSuccessStatusCode) 
-            {
-                throw new Exception(response.StatusCode.ToString());
-            }
-
-            string jsonString = await response.Content.ReadAsStringAsync();
-            List<CommentDTO> comments = JsonConvert.DeserializeObject<List<CommentDTO>>(jsonString);
-            return comments;
-        }
-
-        public async Task<TicketDTO> Create(TicketDTO newTicket)
-        {
-            string jsonString = JsonConvert.SerializeObject(newTicket);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PostAsync("Tickets", content);
@@ -78,9 +79,9 @@ namespace Bug_Tracker.Services.Api
             return ticket;
         }
 
-        public async Task<TicketDTO> Update(int id, TicketDTO ticketToUpdate)
+        public async Task<TicketDTO> UpdateAsync(Guid id, TicketDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(ticketToUpdate);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PutAsync($"Tickets/{id}", content);
@@ -94,7 +95,7 @@ namespace Bug_Tracker.Services.Api
             return ticket;
         }
 
-        public async Task<bool> DeleteById(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.DeleteAsync($"Tickets/{id}");
             if (!response.IsSuccessStatusCode)
@@ -104,6 +105,5 @@ namespace Bug_Tracker.Services.Api
 
             return true;
         }
-
     }
 }

@@ -1,6 +1,4 @@
-﻿using Azure.Extensions.AspNetCore.Configuration.Secrets;
-using Azure.Identity;
-using BugTracker.Api.Services.SessionServices;
+﻿using BugTracker.Api.Services.SessionServices;
 using BugTracker.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;

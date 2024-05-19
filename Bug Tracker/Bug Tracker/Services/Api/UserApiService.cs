@@ -108,7 +108,7 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<UserDTO> Update(int id, UserDTO userToUpdate)
+        public async Task<UserDTO> Update(string id, UserDTO userToUpdate)
         {
             string jsonString = JsonConvert.SerializeObject(userToUpdate);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");

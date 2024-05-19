@@ -1,9 +1,11 @@
-﻿using BugTracker.Domain.Models.DTOs;
+﻿using BugTracker.Domain.Models;
+using BugTracker.Domain.Models.DTOs;
+using BugTracker.Domain.Services.Database;
 
 namespace BugTracker.Domain.Services.Api
 {
-    public interface ITicketApiService : IApiService<TicketDTO>
+    public interface ITicketApiService : IReadable<TicketDTO>, IWritable<TicketDTO>, IUpdatable<TicketDTO>, IDeletable<TicketDTO>
     {
-        Task<List<CommentDTO>> GetAllCommentsOnTicket(int ticketId);
+        Task<List<CommentDTO>> GetAllCommentsOnTicketAsync(int ticketId);
     }
 }

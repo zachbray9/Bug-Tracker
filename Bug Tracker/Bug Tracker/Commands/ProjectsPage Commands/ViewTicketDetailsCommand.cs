@@ -33,7 +33,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                 ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
                 TicketContainer.CurrentCommentsOnTicket = await TicketApiService.GetAllCommentsOnTicket(ticket.Id);
-                TicketContainer.Assignee = ticket.AssigneeId.HasValue ? await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AssigneeId.Value) : null;
+                TicketContainer.Assignee = !string.IsNullOrEmpty(ticket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AssigneeId) : null;
                 TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }

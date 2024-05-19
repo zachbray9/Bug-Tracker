@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Text { get; set; } = null!;
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; } = null!;
         public string AuthorFirstName { get; set; } = null!;
         public string AuthorLastName { get; set; } = null!;
         public string AuthorFullName { get => AuthorFirstName + " " + AuthorLastName; }

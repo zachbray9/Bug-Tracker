@@ -3,7 +3,7 @@ using BugTracker.Api.Attributes;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -16,19 +16,21 @@ namespace BugTracker.Api.Controllers
     public class UsersController : Controller
     {
         private readonly BugTrackerDbContext DbContext;
+        private readonly UserManager<User> UserManager;
         private readonly IMapper Mapper;
 
-        public UsersController(BugTrackerDbContext dbContext, IMapper mapper)
+        public UsersController(BugTrackerDbContext dbContext, UserManager<User> userManager, IMapper mapper)
         {
             DbContext = dbContext;
+            UserManager = userManager;
             Mapper = mapper;
         }
 
         [HttpGet]
-        [Route ("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [Route ("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] string id)
         {
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id  == id);
+            User? user = await UserManager.FindByIdAsync(id);
                     
             if(user == null)
             {
@@ -42,7 +44,7 @@ namespace BugTracker.Api.Controllers
         [Route ("byEmail/{email}")]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+            User? user = await UserManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -74,17 +76,17 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}/Projects")]
-        public async Task<IActionResult> GetAllProjectsFromUserById([FromRoute] int id)
+        [Route("{id}/Projects")]
+        public async Task<IActionResult> GetAllProjectsFromUserById([FromRoute] string id)
         {
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User? user = await UserManager.FindByIdAsync(id);
             if(user == null)
             {
                 return NotFound($"No user with an id of {id} exists.");
             }
 
             List<ProjectDTO?> projects = await DbContext.Projects
-                .Where(p => p.Users.Any(pu => pu.UserId == id))
+                .Where(p => p.Users.Any(pu => pu.UserId.Equals(id)))
                 .Select(p => Mapper.Map<ProjectDTO>(p))
                 .ToListAsync();
 
@@ -108,13 +110,13 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("{userId:int}")]
+        [Route("{userId:guid}")]
         public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserDTO userDTO)
         {
-            if (await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email && u.Id != userId))
+            if (await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email && !u.Id.Equals(userId)))
                 return Conflict("A user with this email already exists.");
 
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
             if(user == null)
                 return NotFound();
 
@@ -125,10 +127,10 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route ("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [Route ("{id:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
             if (user == null)
                 return NotFound();
 

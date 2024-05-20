@@ -23,10 +23,10 @@ namespace Bug_Tracker.Services.Api
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
-        public async Task<UserDTO> GetById(int id)
+        public async Task<UserDTO> GetByIdAsync(string id)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Users/{id}");
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());
             }
@@ -36,7 +36,7 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<UserDTO> GetByEmail(string email)
+        public async Task<UserDTO> GetByEmailAsync(string email)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Users/byEmail/{email}");
             if (!response.IsSuccessStatusCode)
@@ -50,7 +50,7 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<UserDTO> GetByFullName(string fullName)
+        public async Task<UserDTO> GetByFullNameAsync(string fullName)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Users/byName/{fullName}");
             if (!response.IsSuccessStatusCode)
@@ -64,7 +64,7 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<List<UserDTO>> GetAll()
+        public async Task<List<UserDTO>> GetAllAsync()
         {
             HttpResponseMessage response = await HttpClient.GetAsync("Users");
             if (!response.IsSuccessStatusCode)
@@ -78,7 +78,7 @@ namespace Bug_Tracker.Services.Api
             return users;
         }
 
-        public async Task<List<ProjectDTO>> GetAllProjectsFromUserById(int id)
+        public async Task<List<ProjectDTO>> GetAllProjectsFromUserByIdAsync(string id)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Users/{id}/Projects");
             if (!response.IsSuccessStatusCode)
@@ -92,28 +92,12 @@ namespace Bug_Tracker.Services.Api
             return projects;
         }
 
-        public async Task<UserDTO> Create(UserDTO newUser)
+        public async Task<UserDTO> CreateAsync(UserDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(newUser);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PostAsync("Users", content);
-            if(!response.IsSuccessStatusCode)
-            {
-                throw new Exception(response.StatusCode.ToString());
-            }
-
-            jsonString = await response.Content.ReadAsStringAsync();
-            UserDTO user = JsonConvert.DeserializeObject<UserDTO>(jsonString);
-            return user;
-        }
-
-        public async Task<UserDTO> Update(string id, UserDTO userToUpdate)
-        {
-            string jsonString = JsonConvert.SerializeObject(userToUpdate);
-            StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await HttpClient.PutAsync($"Users/{id}", content);
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(response.StatusCode.ToString());
@@ -124,7 +108,24 @@ namespace Bug_Tracker.Services.Api
             return user;
         }
 
-        public async Task<bool> DeleteById(int id)
+        public async Task<UserDTO> UpdateAsync(string id, UserDTO user)
+        {
+            string jsonString = JsonConvert.SerializeObject(user);
+            StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await HttpClient.PutAsync($"Users/{id}", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+
+            jsonString = await response.Content.ReadAsStringAsync();
+            UserDTO updatedUser = JsonConvert.DeserializeObject<UserDTO>(jsonString);
+            return updatedUser;
+        }
+
+
+        public async Task<bool> DeleteAsync(string id)
         {
             HttpResponseMessage response = await HttpClient.DeleteAsync($"Users/{id}");
             if (!response.IsSuccessStatusCode)

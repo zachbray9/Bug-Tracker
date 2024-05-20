@@ -63,7 +63,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
             }
 
             //if the email already exists for the account that is being created
-            UserDTO userByEmail = await UserApiService.GetByEmail(email);
+            UserDTO userByEmail = await UserApiService.GetByEmailAsync(email);
             if (userByEmail != null) 
             {
                return RegistrationResult.EmailAlreadyExists;
@@ -81,7 +81,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
                 DateJoined = DateTime.Now
             };
 
-            await UserApiService.Create(user);
+            await UserApiService.CreateAsync(user);
         
 
             return RegistrationResult.Success;
@@ -90,7 +90,7 @@ namespace BugTracker.Domain.Services.AuthenticationServices
 
         public async Task<UserDTO> Login(string email, string password)
         {
-            UserDTO? storedUser = await UserApiService.GetByEmail(email);
+            UserDTO? storedUser = await UserApiService.GetByEmailAsync(email);
 
             if (storedUser == null)
             {

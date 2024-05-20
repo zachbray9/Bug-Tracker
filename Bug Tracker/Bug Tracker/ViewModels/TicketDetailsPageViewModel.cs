@@ -23,7 +23,7 @@ namespace Bug_Tracker.ViewModels
         private readonly IProjectUserApiService ProjectUserApiService;
         private readonly ITicketApiService TicketApiService;
         private readonly IProjectApiService ProjectApiService;
-        private readonly IApiService<CommentDTO> CommentApiService;
+        private readonly ICommentApiService CommentApiService;
 
         public StatusOptionsRetriever StatusOptionsRetriever { get; set; }
 
@@ -33,7 +33,7 @@ namespace Bug_Tracker.ViewModels
         public ProjectUserDTO CurrentProjectUser { get; }
         public bool DoesCommentTextBoxContainText { get => !String.IsNullOrEmpty(CommentTextBoxText); }
 
-        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, ITicketApiService ticketApiService, IProjectApiService projectApiService, IApiService<CommentDTO> commentApiService, StatusOptionsRetriever statusOptionsRetriever)
+        public TicketDetailsPageViewModel(IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer, ITicketContainer ticketContainer, IProjectUserApiService projectUserApiService, ITicketApiService ticketApiService, IProjectApiService projectApiService, ICommentApiService commentApiService, StatusOptionsRetriever statusOptionsRetriever)
         {
             Authenticator = authenticator;
             Navigator = navigator;

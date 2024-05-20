@@ -10,10 +10,10 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
     public class DeleteTicketCommand : CommandBase
     {
         private readonly ITicketApiService TicketApiService;
-        private readonly IApiService<CommentDTO> CommentApiService;
+        private readonly ICommentApiService CommentApiService;
         private readonly ProjectDetailsPageViewModel ViewModel;
 
-        public DeleteTicketCommand(ITicketApiService ticketApiService, IApiService<CommentDTO> commentApiService, ProjectDetailsPageViewModel viewmodel)
+        public DeleteTicketCommand(ITicketApiService ticketApiService, ICommentApiService commentApiService, ProjectDetailsPageViewModel viewmodel)
         {
             TicketApiService = ticketApiService;
             CommentApiService = commentApiService;
@@ -29,7 +29,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             {
                 try
                 {
-                    await TicketApiService.DeleteById(ticketToDelete.Id);
+                    await TicketApiService.DeleteAsync(ticketToDelete.Id);
                     ViewModel.ProjectContainer.CurrentTicketsOnProject.Remove(ticketToDelete);
                     ViewModel.UpdateTickets();
                     ViewModel.FilteredToDoTickets.Remove(ticketToDelete);

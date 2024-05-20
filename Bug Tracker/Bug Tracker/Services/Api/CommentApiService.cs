@@ -23,7 +23,7 @@ namespace Bug_Tracker.Services.Api
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
-        public async Task<CommentDTO> GetById(int id)
+        public async Task<CommentDTO> GetByIdAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Comments/{id}");
             if (!response.IsSuccessStatusCode)
@@ -36,7 +36,7 @@ namespace Bug_Tracker.Services.Api
             return comment;
         }
 
-        public async Task<List<CommentDTO>> GetAll()
+        public async Task<List<CommentDTO>> GetAllAsync()
         {
             HttpResponseMessage response = await HttpClient.GetAsync("Comments");
             if (!response.IsSuccessStatusCode)
@@ -49,9 +49,9 @@ namespace Bug_Tracker.Services.Api
             return comments;
         }
 
-        public async Task<CommentDTO> Create(CommentDTO newComment)
+        public async Task<CommentDTO> CreateAsync(CommentDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(newComment);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PostAsync("Comments", content);
@@ -65,9 +65,9 @@ namespace Bug_Tracker.Services.Api
             return comment;
         }
 
-        public async Task<CommentDTO> Update(int id, CommentDTO commentToUpdate)
+        public async Task<CommentDTO> UpdateAsync(Guid id, CommentDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(commentToUpdate);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PutAsync($"Comments/{id}", content);
@@ -81,7 +81,7 @@ namespace Bug_Tracker.Services.Api
             return comment;
         }
 
-        public async Task<bool> DeleteById(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.DeleteAsync($"Comments/{id}");
             if (!response.IsSuccessStatusCode)

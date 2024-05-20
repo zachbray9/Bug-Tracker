@@ -37,7 +37,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
 
             if(SearchQuery != null)
             {
-                userToAdd = await UserApiService.GetByEmail(SearchQuery);
+                userToAdd = await UserApiService.GetByEmailAsync(SearchQuery);
             }
             else
             {
@@ -64,7 +64,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
                     return;
                 }
 
-                await ProjectUserApiService.Create(newProjectUser);
+                await ProjectUserApiService.CreateAsync(CurrentProject.Id, newProjectUser);
                 AddUserViewModel.IsPopupOpen = false;
             }
             else

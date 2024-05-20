@@ -7,7 +7,6 @@ using Bug_Tracker.ViewModels;
 using Bug_Tracker.ViewModels.Factories;
 using BugTracker.Domain.Enumerables.Enum_Converters;
 using BugTracker.Domain.Enumerables.EnumConverters;
-using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
 using BugTracker.Domain.Services.AuthenticationServices;
 using Microsoft.AspNet.Identity;
@@ -53,7 +52,7 @@ namespace Bug_Tracker
                     services.AddScoped<IProjectUserApiService, ProjectUserApiService>();
                     services.AddScoped<IProjectApiService, ProjectApiService>();
                     services.AddScoped<ITicketApiService, TicketApiService>();
-                    services.AddScoped<IApiService<CommentDTO>, CommentApiService>();
+                    services.AddScoped<ICommentApiService, CommentApiService>();
                     services.AddSingleton<IPasswordHasher, PasswordHasher>();
                     services.AddSingleton<StatusOptionsRetriever>();
                     services.AddSingleton<ProjectRoleOptionsRetriever>();
@@ -112,7 +111,7 @@ namespace Bug_Tracker
 
                     services.AddSingleton<CreateViewModel<ProjectDetailsPageViewModel>>(services =>
                     {
-                        return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserApiService>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<IApiService<CommentDTO>>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IViewModelAbstractFactory>());
+                        return () => new ProjectDetailsPageViewModel(services.GetRequiredService<IUserApiService>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<ICommentApiService>(), services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IViewModelAbstractFactory>());
                     }
                     );
 
@@ -124,7 +123,7 @@ namespace Bug_Tracker
 
                     services.AddSingleton<CreateViewModel<TicketDetailsPageViewModel>>(services =>
                     {
-                        return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<IApiService<CommentDTO>>(), services.GetRequiredService<StatusOptionsRetriever>());
+                        return () => new TicketDetailsPageViewModel(services.GetRequiredService<IAuthenticator>(), services.GetRequiredService<INavigator>(), services.GetRequiredService<IProjectContainer>(), services.GetRequiredService<ITicketContainer>(), services.GetRequiredService<IProjectUserApiService>(), services.GetRequiredService<ITicketApiService>(), services.GetRequiredService<IProjectApiService>(), services.GetRequiredService<ICommentApiService>(), services.GetRequiredService<StatusOptionsRetriever>());
                     }
                     );
 

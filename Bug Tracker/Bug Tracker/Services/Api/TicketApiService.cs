@@ -1,6 +1,5 @@
 ﻿using BugTracker.Domain.Models.DTOs;
 using BugTracker.Domain.Services.Api;
-using BugTracker.Domain.Services.Database;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,19 +21,6 @@ namespace Bug_Tracker.Services.Api
             HttpClient = HttpClientFactory.CreateClient();
             HttpClient.BaseAddress = new Uri("https://agileproapi.azurewebsites.net/api/");
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
-        }
-
-        public async Task<List<CommentDTO>> GetAllCommentsOnTicketAsync(int ticketId)
-        {
-            HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{ticketId}/Comments");
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception(response.StatusCode.ToString());
-            }
-
-            string jsonString = await response.Content.ReadAsStringAsync();
-            List<CommentDTO> comments = JsonConvert.DeserializeObject<List<CommentDTO>>(jsonString);
-            return comments;
         }
 
         public async Task<TicketDTO> GetByIdAsync(Guid id)
@@ -61,6 +47,19 @@ namespace Bug_Tracker.Services.Api
             string jsonString = await response.Content.ReadAsStringAsync();
             List<TicketDTO> tickets = JsonConvert.DeserializeObject<List<TicketDTO>>(jsonString);
             return tickets;
+        }
+
+        public async Task<List<CommentDTO>> GetAllCommentsOnTicketAsync(Guid ticketId)
+        {
+            HttpResponseMessage response = await HttpClient.GetAsync($"Tickets/{ticketId}/Comments");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.StatusCode.ToString());
+            }
+
+            string jsonString = await response.Content.ReadAsStringAsync();
+            List<CommentDTO> comments = JsonConvert.DeserializeObject<List<CommentDTO>>(jsonString);
+            return comments;
         }
 
         public async Task<TicketDTO> CreateAsync(TicketDTO entity)

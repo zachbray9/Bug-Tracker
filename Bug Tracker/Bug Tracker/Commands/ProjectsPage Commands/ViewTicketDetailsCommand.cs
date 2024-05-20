@@ -30,11 +30,11 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
             TicketDTO ticket = (TicketDTO)parameter;
             if(ticket != null)
             {
-                ProjectContainer.CurrentProject = await ProjectApiService.GetById(ticket.ProjectId);
+                ProjectContainer.CurrentProject = await ProjectApiService.GetByIdAsync(ticket.ProjectId);
                 TicketContainer.CurrentTicket = ticket;
-                TicketContainer.CurrentCommentsOnTicket = await TicketApiService.GetAllCommentsOnTicket(ticket.Id);
-                TicketContainer.Assignee = !string.IsNullOrEmpty(ticket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AssigneeId) : null;
-                TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserId(ticket.ProjectId, ticket.AuthorId);
+                TicketContainer.CurrentCommentsOnTicket = await TicketApiService.GetAllCommentsOnTicketAsync(ticket.Id);
+                TicketContainer.Assignee = !string.IsNullOrEmpty(ticket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserIdAsync(ticket.ProjectId, ticket.AssigneeId) : null;
+                TicketContainer.Author = await ProjectUserApiService.GetByProjectAndUserIdAsync(ticket.ProjectId, ticket.AuthorId);
                 Navigator.Navigate(ViewType.TicketDetailsPage);
             }
         }

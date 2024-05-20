@@ -45,14 +45,14 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 
             try
             {
-                await TicketApiService.Update(CurrentTicket.Id, CurrentTicket);
+                await TicketApiService.UpdateAsync(CurrentTicket.Id, CurrentTicket);
                 System.Diagnostics.Debug.WriteLine("Changes have been saved");
 
                 ViewModel.TicketTitle = CurrentTicket.Title;
                 ViewModel.TicketDescription = CurrentTicket.Description;
 
-                ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserId(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId) : null;
-                ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserId(ProjectContainer.CurrentProject.Id, CurrentTicket.AuthorId);
+                ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId) : null;
+                ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AuthorId);
 
                 ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
             }

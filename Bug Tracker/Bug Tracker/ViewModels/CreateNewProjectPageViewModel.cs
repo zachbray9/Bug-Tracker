@@ -11,8 +11,8 @@ namespace Bug_Tracker.ViewModels
 {
     public class CreateNewProjectPageViewModel : ViewModelBase
     {
-        private readonly IApiService<ProjectDTO> ProjectApiService; 
-        private readonly IApiService<ProjectUserDTO> ProjectUserApiService;
+        private readonly IProjectApiService ProjectApiService; 
+        private readonly IProjectUserApiService ProjectUserApiService;
         public IAuthenticator Authenticator { get; }
         public INavigator Navigator { get; }
         private readonly IProjectContainer ProjectContainer;
@@ -39,7 +39,7 @@ namespace Bug_Tracker.ViewModels
             set { dateCreated = value; }
         }
 
-        public CreateNewProjectPageViewModel(IApiService<ProjectDTO> projectApiService, IApiService<ProjectUserDTO> projectUserApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
+        public CreateNewProjectPageViewModel(IProjectApiService projectApiService, IProjectUserApiService projectUserApiService, IAuthenticator authenticator, INavigator navigator, IProjectContainer projectContainer)
         {
             ProjectApiService = projectApiService;
             ProjectUserApiService = projectUserApiService;

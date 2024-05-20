@@ -3,7 +3,6 @@ using Bug_Tracker.State.Authenticators;
 using Bug_Tracker.State.Navigators;
 using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Services.Api;
-using System.Linq;
 
 namespace Bug_Tracker.Commands
 {
@@ -30,7 +29,7 @@ namespace Bug_Tracker.Commands
             bool success = await Authenticator.Login(LoginPageViewModel.Email, parameter.ToString());
             if (success) 
             {
-                ProjectContainer.CurrentUserProjects = await UserApiService.GetAllProjectsFromUserById(Authenticator.CurrentUser.Id);
+                ProjectContainer.CurrentUserProjects = await UserApiService.GetAllProjectsFromUserByIdAsync(Authenticator.CurrentUser.Id);
                 Navigator.Navigate(ViewType.ProjectsPage);
             }
             else

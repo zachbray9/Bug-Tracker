@@ -23,7 +23,8 @@ namespace Bug_Tracker.Services.Api
             //HttpClient.BaseAddress = new Uri("https://localhost:7226/api/");
         }
 
-        public async Task<ProjectDTO> GetById(int id)
+
+        public async Task<ProjectDTO> GetByIdAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{id}");
             if (!response.IsSuccessStatusCode)
@@ -36,7 +37,7 @@ namespace Bug_Tracker.Services.Api
             return project;
         }
 
-        public async Task<List<ProjectDTO>> GetAll()
+        public async Task<List<ProjectDTO>> GetAllAsync()
         {
             HttpResponseMessage response = await HttpClient.GetAsync("Projects");
             if (!response.IsSuccessStatusCode)
@@ -49,7 +50,7 @@ namespace Bug_Tracker.Services.Api
             return projects;
         }
 
-        public async Task<List<ProjectUserDTO>> GetAllUsersOnProject(int projectId)
+        public async Task<List<ProjectUserDTO>> GetAllUsersOnProject(Guid projectId)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Users");
             if (!response.IsSuccessStatusCode)
@@ -62,7 +63,7 @@ namespace Bug_Tracker.Services.Api
             return projectUsers;
         }
 
-        public async Task<List<TicketDTO>> GetAllTicketsOnProject(int projectId)
+        public async Task<List<TicketDTO>> GetAllTicketsOnProject(Guid projectId)
         {
             HttpResponseMessage response = await HttpClient.GetAsync($"Projects/{projectId}/Tickets");
             if(!response.IsSuccessStatusCode)
@@ -75,9 +76,9 @@ namespace Bug_Tracker.Services.Api
             return tickets;
         }
 
-        public async Task<ProjectDTO> Create(ProjectDTO newProject)
+        public async Task<ProjectDTO> CreateAsync(ProjectDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(newProject);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PostAsync("Projects", content);
@@ -91,9 +92,9 @@ namespace Bug_Tracker.Services.Api
             return project;
         }
 
-        public async Task<ProjectDTO> Update(int id, ProjectDTO projectToUpdate)
+        public async Task<ProjectDTO> UpdateAsync(Guid id, ProjectDTO entity)
         {
-            string jsonString = JsonConvert.SerializeObject(projectToUpdate);
+            string jsonString = JsonConvert.SerializeObject(entity);
             StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await HttpClient.PutAsync($"Projects/{id}", content);
@@ -107,7 +108,7 @@ namespace Bug_Tracker.Services.Api
             return project;
         }
 
-        public async Task<bool> DeleteById(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             HttpResponseMessage response = await HttpClient.DeleteAsync($"Projects/{id}");
             if (!response.IsSuccessStatusCode)
@@ -117,6 +118,5 @@ namespace Bug_Tracker.Services.Api
 
             return true;
         }
-
     }
 }

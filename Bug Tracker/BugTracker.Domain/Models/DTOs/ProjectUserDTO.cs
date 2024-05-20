@@ -9,7 +9,7 @@ namespace BugTracker.Domain.Models.DTOs
         public string UserLastName { get; set; } = string.Empty;
         public string UserFullName { get =>  UserFirstName + " " + UserLastName; }
         public string UserInitials { get => $"{UserFirstName?.FirstOrDefault()}{UserLastName?.FirstOrDefault()}".ToUpper(); }
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public ProjectRole Role { get; set; }
 
         public override string ToString()

@@ -137,7 +137,7 @@ namespace Bug_Tracker.ViewModels
                 return;
             }
 
-            IEnumerable<UserDTO> AllUsers = await UserApiService.GetAll();
+            IEnumerable<UserDTO> AllUsers = await UserApiService.GetAllAsync();
             foreach(var user in AllUsers)
             {
                 if(user.Email.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase))

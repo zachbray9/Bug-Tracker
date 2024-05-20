@@ -25,8 +25,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             Project? project = await DbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
 
@@ -49,8 +49,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{projectId:int}/Users")]
-        public async Task<IActionResult> GetAllUsersOnProject([FromRoute] int projectId)
+        [Route("{projectId:guid}/Users")]
+        public async Task<IActionResult> GetAllUsersOnProject([FromRoute] Guid projectId)
         {
             Project? project = await DbContext.Projects.Include(p => p.Users).ThenInclude(pu => pu.User).FirstOrDefaultAsync(p => p.Id.Equals(projectId));
             if(project == null)
@@ -65,8 +65,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{projectId:int}/Tickets")]
-        public async Task<IActionResult> GetAllTicketsOnProject([FromRoute] int projectId)
+        [Route("{projectId:guid}/Tickets")]
+        public async Task<IActionResult> GetAllTicketsOnProject([FromRoute] Guid projectId)
         {
             Project? project = await DbContext.Projects
                 .Include(p => p.Tickets)
@@ -110,8 +110,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             Project? project = await DbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
             if (project == null)

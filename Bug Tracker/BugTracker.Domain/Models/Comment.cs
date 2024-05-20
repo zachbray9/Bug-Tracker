@@ -2,11 +2,11 @@
 {
     public class Comment
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Text { get; set; } = null!;
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; } = null!;
         public User Author { get; set; } = null!;
-        public int TicketId { get; set; }
+        public Guid TicketId { get; set; }
         public Ticket Ticket { get; set; } = null!;
         public DateTime DateSubmitted { get; set; }
     }

@@ -24,8 +24,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Projects/{projectId:int}/Users/{userId}")]
-        public async Task<IActionResult> GetById([FromRoute] int projectId, [FromRoute] string userId)
+        [Route("Projects/{projectId:guid}/Users/{userId}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid projectId, [FromRoute] string userId)
         {
             ProjectUser? projectUser = await DbContext.ProjectUsers.Include(pu => pu.Project).Include(pu => pu.User).FirstOrDefaultAsync(pu => pu.UserId.Equals(userId) && pu.ProjectId == projectId);
 
@@ -46,8 +46,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPost]
-        [Route("Projects/{projectId:int}/Users")]
-        public async Task<IActionResult> Create([FromRoute] int projectId, [FromBody] ProjectUserDTO projectUserDTO)
+        [Route("Projects/{projectId:guid}/Users")]
+        public async Task<IActionResult> Create([FromRoute] Guid projectId, [FromBody] ProjectUserDTO projectUserDTO)
         {
             if (!await DbContext.Projects.AnyAsync(p => p.Id == projectId))
                 return NotFound("No project with that project id exists.");
@@ -63,8 +63,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("Projects/{projectId:int}/Users/{userId}")]
-        public async Task<IActionResult> Update([FromRoute] int projectId, [FromRoute] string userId, [FromBody] ProjectUserDTO projectUserDTO)
+        [Route("Projects/{projectId:guid}/Users/{userId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid projectId, [FromRoute] string userId, [FromBody] ProjectUserDTO projectUserDTO)
         {
             ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId.Equals(userId));
             if (projectUser == null)
@@ -77,8 +77,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("Projects/{projectId:int}/Users/{userId}")]
-        public async Task<IActionResult> Delete([FromRoute] int projectId, [FromRoute] string userId)
+        [Route("Projects/{projectId:guid}/Users/{userId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid projectId, [FromRoute] string userId)
         {
             ProjectUser? projectUser = await DbContext.ProjectUsers.FirstOrDefaultAsync(pu => pu.ProjectId == projectId && pu.UserId.Equals(userId));
             if (projectUser == null)

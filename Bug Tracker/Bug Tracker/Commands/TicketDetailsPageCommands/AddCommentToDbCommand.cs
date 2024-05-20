@@ -13,7 +13,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
     public class AddCommentToDbCommand : CommandBase
     {
         private readonly IAuthenticator Authenticator;
-        private readonly IApiService<CommentDTO> CommentApiService;
+        private readonly ICommentApiService CommentApiService;
         private readonly TicketDetailsPageViewModel ViewModel;
         private readonly IProjectContainer ProjectContainer;
         private readonly ITicketContainer TicketContainer;
@@ -21,7 +21,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
         private UserDTO CurrentUser { get => Authenticator.CurrentUser; }
         private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
-        public AddCommentToDbCommand(IAuthenticator authenticator, IApiService<CommentDTO> commentApiService, TicketDetailsPageViewModel viewModel, IProjectContainer projectContainer, ITicketContainer ticketContainer)
+        public AddCommentToDbCommand(IAuthenticator authenticator, ICommentApiService commentApiService, TicketDetailsPageViewModel viewModel, IProjectContainer projectContainer, ITicketContainer ticketContainer)
         {
             Authenticator = authenticator;
             CommentApiService = commentApiService;
@@ -42,7 +42,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
                 DateSubmitted = DateTime.Now,
             };
 
-            newComment = await CommentApiService.Create(newComment);
+            newComment = await CommentApiService.CreateAsync(newComment);
             TicketContainer.CurrentCommentsOnTicket.Add(newComment);
             ViewModel.Comments = new ObservableCollection<CommentDTO>(TicketContainer.CurrentCommentsOnTicket.OrderByDescending(i => i.DateSubmitted));
             ViewModel.CommentTextBoxText = String.Empty;

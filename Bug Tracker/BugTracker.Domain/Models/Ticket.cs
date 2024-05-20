@@ -5,18 +5,18 @@ namespace BugTracker.Domain.Models
 {
     public class Ticket
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public Project Project { get; set; } = null!;
-        public int AuthorId { get; set; }
+        public string AuthorId { get; set; } = null!;
         public User Author { get; set; } = null!;
         [NotMapped]
         public string AuthorFirstName { get => Author.FirstName; }
         [NotMapped]
         public string AuthorLastName { get => Author.LastName; }
-        public int? AssigneeId { get; set; }
+        public string? AssigneeId { get; set; }
         public User? Assignee { get; set; }
         [NotMapped]
         public string AssigneeFirstName { get => Assignee != null ? Assignee.FirstName : string.Empty; }

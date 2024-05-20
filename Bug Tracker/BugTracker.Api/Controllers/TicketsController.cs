@@ -25,8 +25,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id  == id);
 
@@ -49,8 +49,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{ticketId:int}/Comments")]
-        public async Task<IActionResult> GetAllCommentsOnTicket([FromRoute] int ticketId)
+        [Route("{ticketId:guid}/Comments")]
+        public async Task<IActionResult> GetAllCommentsOnTicket([FromRoute] Guid ticketId)
         {
             Ticket? ticket = await DbContext.Tickets.Include(t => t.Comments).ThenInclude(c => c.Author).FirstOrDefaultAsync(t => t.Id == ticketId);
             if(ticket == null)
@@ -78,8 +78,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("{ticketId:int}")]
-        public async Task<IActionResult> Update([FromRoute] int ticketId, [FromBody] TicketDTO ticketDTO)
+        [Route("{ticketId:guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid ticketId, [FromBody] TicketDTO ticketDTO)
         {
             Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
             if (ticket == null)
@@ -96,8 +96,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             Ticket? ticket = await DbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             if (ticket == null)

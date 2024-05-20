@@ -10,12 +10,12 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
 {
     public class DeleteCommentFromDbCommand : CommandBase
     {
-        private readonly IApiService<CommentDTO> CommentApiService;
+        private readonly ICommentApiService CommentApiService;
         private readonly TicketDetailsPageViewModel ViewModel;
         private readonly ITicketContainer TicketContainer;
         private TicketDTO CurrentTicket { get => ViewModel.CurrentTicket; }
 
-        public DeleteCommentFromDbCommand(IApiService<CommentDTO> commentApiService, TicketDetailsPageViewModel viewModel, ITicketContainer ticketContainer)
+        public DeleteCommentFromDbCommand(ICommentApiService commentApiService, TicketDetailsPageViewModel viewModel, ITicketContainer ticketContainer)
         {
             CommentApiService = commentApiService;
             ViewModel = viewModel;
@@ -28,7 +28,7 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             if (result == MessageBoxResult.Yes)
             {
                 CommentDTO commentToDelete = (CommentDTO)parameter;
-                await CommentApiService.DeleteById(commentToDelete.Id);
+                await CommentApiService.DeleteAsync(commentToDelete.Id);
                 TicketContainer.CurrentCommentsOnTicket.Remove(commentToDelete);
                 ViewModel.Comments = new ObservableCollection<CommentDTO>(TicketContainer.CurrentCommentsOnTicket.OrderByDescending(i => i.DateSubmitted));
             }

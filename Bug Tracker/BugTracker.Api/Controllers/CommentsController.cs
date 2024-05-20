@@ -5,10 +5,6 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics.Eventing.Reader;
-using BugTracker.Domain.Models.Auth;
-using Azure;
 using BugTracker.Api.Attributes;
 
 namespace BugTracker.Api.Controllers
@@ -30,8 +26,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
 
             Comment? comment = await DbContext.Comments.Include(c => c.Author).FirstOrDefaultAsync(c => c.Id == id);
@@ -70,8 +66,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("commentId:int")]
-        public async Task<IActionResult> Update([FromRoute] int commentId, [FromBody] CommentDTO commentDTO)
+        [Route("commentId:guid")]
+        public async Task<IActionResult> Update([FromRoute] Guid commentId, [FromBody] CommentDTO commentDTO)
         {
             Comment? comment = await DbContext.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
             if (comment == null)
@@ -87,8 +83,8 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:int}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [Route("{id:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             Comment? comment = await DbContext.Comments.FirstOrDefaultAsync(c => c.Id == id);
             if (comment == null)
@@ -99,26 +95,5 @@ namespace BugTracker.Api.Controllers
 
             return Ok("Comment was successfully deleted.");
         }
-
-        //helpers
-        private async Task<bool> Authorize()
-        {
-            var sessionId = HttpContext.Request.Cookies["sessionId"];
-            if (string.IsNullOrEmpty(sessionId))
-            {
-                return false;
-            }
-
-            AgileSession? session = await DbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
-            if (session == null)
-                return false;
-
-            if (session.ExpirationDate <= DateTime.Now)
-                return false;
-
-            return true;
-
-        }
-
     }
 }

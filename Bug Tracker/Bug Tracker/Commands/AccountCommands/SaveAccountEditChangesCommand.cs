@@ -1,8 +1,5 @@
-﻿using Bug_Tracker.Services.Api;
-using Bug_Tracker.ViewModels;
-using BugTracker.Domain.Models;
+﻿using Bug_Tracker.ViewModels;
 using BugTracker.Domain.Models.DTOs;
-using BugTracker.Domain.Services;
 using BugTracker.Domain.Services.Api;
 using System;
 using System.Net.Mail;
@@ -79,7 +76,7 @@ namespace Bug_Tracker.Commands.AccountCommands
 
             try
             {
-                await UserApiService.Update(CurrentUser.Id, CurrentUser);
+                await UserApiService.UpdateAsync(CurrentUser.Id, CurrentUser);
                 CancelChanges();
             }
             catch (Exception ex)

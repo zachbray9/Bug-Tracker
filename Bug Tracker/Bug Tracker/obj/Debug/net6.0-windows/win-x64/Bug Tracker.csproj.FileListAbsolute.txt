@@ -12,6 +12,14 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Xceed.Wpf.Toolkit.NET5.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\FontAwesome.WPF.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNet.Identity.Core.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Configuration.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Configuration.Binder.dll
@@ -30,6 +38,8 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Hosting.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Http.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Identity.Core.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Logging.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Logging.Configuration.dll
@@ -602,13 +612,3 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\Bug Tracker.pdb
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\Bug Tracker.genruntimeconfig.cache
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\ref\Bug Tracker.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Cryptography.Internal.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Caching.Memory.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Identity.Core.dll
-C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\bin\Debug\net6.0-windows\win-x64\Microsoft.Extensions.Identity.Stores.dll

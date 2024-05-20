@@ -36,7 +36,7 @@ namespace Bug_Tracker.Commands.ProjectsPage_Commands
         {
             ProjectUserDTO projectUser = ProjectContainer.CurrentProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
 
-            TicketContainer.CurrentTicket = await TicketApiService.Create(new TicketDTO 
+            TicketContainer.CurrentTicket = await TicketApiService.CreateAsync(new TicketDTO 
             { 
                 Title = CreateTicketViewModel.TicketTitle, 
                 Description = CreateTicketViewModel.TicketDescription, 

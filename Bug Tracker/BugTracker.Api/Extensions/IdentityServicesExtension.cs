@@ -9,7 +9,10 @@ namespace BugTracker.Api.Extensions
         {
             services.AddIdentityCore<User>(options =>
             {
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<BugTrackerDbContext>();
 

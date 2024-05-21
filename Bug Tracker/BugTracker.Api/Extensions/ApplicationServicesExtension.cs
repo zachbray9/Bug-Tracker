@@ -1,11 +1,10 @@
 ﻿using BugTracker.Api.Services.SessionServices;
 using BugTracker.EntityFramework;
-using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Api.Extensions
 {
-    public static class ApplicationServicesExtenstion
+    public static class ApplicationServicesExtension
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
@@ -22,7 +21,6 @@ namespace BugTracker.Api.Extensions
                 //options.UseInMemoryDatabase("BugTrackerTestDb");
             });
             services.AddHttpContextAccessor();
-            services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddScoped<SessionDbService>();
             services.AddAutoMapper(typeof(Program));
 

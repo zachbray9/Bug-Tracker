@@ -1,6 +1,7 @@
-using BugTracker.Api.Middleware;
 using BugTracker.Api.Extensions;
 using Azure.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers(options =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
+
 builder.Services.AddApplicationServices(builder.Configuration);           //extension method that adds application services
 builder.Services.AddIdentityServices(builder.Configuration);              //extension method that adds microsoft identity services
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,7 +33,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseMiddleware<AuthenticationMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

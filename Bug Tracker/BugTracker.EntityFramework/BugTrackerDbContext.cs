@@ -1,5 +1,4 @@
 ﻿using BugTracker.Domain.Models;
-using BugTracker.Domain.Models.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,6 @@ namespace BugTracker.EntityFramework
         public DbSet<ProjectUser> ProjectUsers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<AgileSession> Sessions { get; set; }
 
         public BugTrackerDbContext(DbContextOptions options) : base(options) {}
 

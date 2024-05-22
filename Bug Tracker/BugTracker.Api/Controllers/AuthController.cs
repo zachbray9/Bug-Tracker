@@ -1,29 +1,28 @@
-﻿using BugTracker.Api.Attributes;
-using BugTracker.Api.Models.Requests;
-using BugTracker.Api.Services.SessionServices;
+﻿using BugTracker.Api.Models.Requests;
+using BugTracker.Api.Services.TokenServices;
 using BugTracker.Domain.Models;
-using BugTracker.Domain.Models.Auth;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly BugTrackerDbContext DbContext;
         private readonly UserManager<User> UserManager;
-        private readonly SessionDbService SessionService;
+        private readonly AuthTokenService AuthTokenService;
 
-        public AuthController(BugTrackerDbContext dbContext, UserManager<User> userManager, SessionDbService sessionService)
+        public AuthController(BugTrackerDbContext dbContext, UserManager<User> userManager, AuthTokenService authTokenService)
         {
             DbContext = dbContext;
             UserManager = userManager;
-            SessionService = sessionService;
+            AuthTokenService = authTokenService;
         }
 
         [HttpPost("[action]")]
@@ -45,7 +44,7 @@ namespace BugTracker.Api.Controllers
                 LastName = registerRequest.LastName,
                 Email = registerRequest.Email,
                 UserName = registerRequest.Email,
-                DateJoined = DateTime.UtcNow
+                DateJoined = DateTime.UtcNow,
             };
 
             var result = await UserManager.CreateAsync(newUser, registerRequest.Password);
@@ -77,42 +76,22 @@ namespace BugTracker.Api.Controllers
                 return Unauthorized("Incorrect password.");
             }
 
-            //AgileSession session = await SessionService.CreateSession(user);
-            //Response.Cookies.Append("AgileSessionId", session.Id.ToString(), new CookieOptions
-            //{
-            //    HttpOnly = true,
-            //    Secure = true,
-            //    Expires = DateTime.UtcNow.AddDays(30),
-            //    //SameSite = SameSiteMode.Strict,
-            //    //Domain = ".localhost:7226"
-            //});
-
             UserDTO userDTO = new UserDTO
             {
                 Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DateJoined = user.DateJoined
+                DateJoined = user.DateJoined,
+                AuthToken = AuthTokenService.CreateToken(user)
             };
 
             return Ok(userDTO);
         }
 
-        [CheckAuthorization]
         [HttpDelete("[action]")]
         public async Task<IActionResult> Logout()
         {
-            string? sessionId = HttpContext.Request.Cookies["AgileSessionId"];
-            if (sessionId == null)
-                return Unauthorized();
-
-            AgileSession? session = await DbContext.Sessions.FirstOrDefaultAsync(s => s.Id.ToString() == sessionId);
-            if (session == null)
-                return Unauthorized();
-
-            await SessionService.DeleteSession(sessionId);
-            HttpContext.Response.Cookies.Delete("AgileSessionId");
             return Ok("User has successfully logged out.");
         }
     }

@@ -1,5 +1,9 @@
-﻿using BugTracker.Domain.Models;
+﻿using BugTracker.Api.Services.TokenServices;
+using BugTracker.Domain.Models;
 using BugTracker.EntityFramework;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BugTracker.Api.Extensions
 {
@@ -16,7 +20,20 @@ namespace BugTracker.Api.Extensions
             })
                 .AddEntityFrameworkStores<BugTrackerDbContext>();
 
-            services.AddAuthentication();
+            services.AddScoped<AuthTokenService>();
+
+            var jwtAuthTokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtAuthTokenKey"]));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = jwtAuthTokenKey,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                });
 
             return services;
         }

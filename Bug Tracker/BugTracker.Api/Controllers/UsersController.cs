@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BugTracker.Api.Attributes;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
@@ -10,7 +9,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BugTracker.Api.Controllers
 {
-    [CheckAuthorization]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller

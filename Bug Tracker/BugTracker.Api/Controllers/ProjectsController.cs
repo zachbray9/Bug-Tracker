@@ -5,12 +5,9 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using BugTracker.Api.Attributes;
 
 namespace BugTracker.Api.Controllers
 {
-    [CheckAuthorization]
     [ApiController]
     [Route("api/[controller]")]
     public class ProjectsController : Controller

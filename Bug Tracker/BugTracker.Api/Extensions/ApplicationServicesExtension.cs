@@ -1,5 +1,4 @@
-﻿using BugTracker.Api.Services.SessionServices;
-using BugTracker.EntityFramework;
+﻿using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Api.Extensions
@@ -21,7 +20,6 @@ namespace BugTracker.Api.Extensions
                 //options.UseInMemoryDatabase("BugTrackerTestDb");
             });
             services.AddHttpContextAccessor();
-            services.AddScoped<SessionDbService>();
             services.AddAutoMapper(typeof(Program));
 
             return services;

@@ -1,36 +1,12 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, Image, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react"
-import { FaUser } from "react-icons/fa"
-import { FaLock } from "react-icons/fa6"
+import { Card, CardBody, CardFooter, CardHeader, Heading, Image, Text } from "@chakra-ui/react"
 import { NavLink } from "react-router-dom"
 import Image1 from "../assets/AgileProLoginPageImage1.png";
 import Image2 from "../assets/AgileProLoginPageImage2.png";
 import "../styles/login.css";
-import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { observer } from "mobx-react-lite";
+import LoginForm from "../components/LoginForm";
 
-const Login = () => {
-    const [show, setShow] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        if (show === false)
-            setShow(true);
-        else
-            setShow(false);
-    }
-
-    const { register, handleSubmit } = useForm();
-
-    const onSubmit = async(data: FieldValues) => {
-        setIsLoading(true);
-        console.log(data);
-
-        //authenticate user here
-
-        setIsLoading(false);
-    }
-
-
+export default observer(function Login() {
 
     return (
         <div className='login-main-wrapper'>
@@ -42,37 +18,7 @@ const Login = () => {
                     <Heading size='lg'>Login</Heading>
                 </CardHeader>
                 <CardBody>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack>
-                            <Text size='xs' fontWeight='400' marginBottom='0px'>Email</Text>
-                            <InputGroup>
-                                <InputLeftElement>
-                                    <FaUser color='#d3d3d3' />
-                                </InputLeftElement>
-
-                                <Input {...register('email')} type='email' size='md' mb={4} placeholder='Email'></Input>
-                            </InputGroup>
-                        </Stack>
-                        <Stack>
-                            <Text size='xs' marginBottom='0px'>Password</Text>
-                            <InputGroup>
-                                <InputLeftElement>
-                                    <FaLock color='#d3d3d3' />
-                                </InputLeftElement>
-
-                                <InputRightElement width='4.5rem'>
-                                    <Button h='1.75rem' size='sm' onClick={togglePasswordVisibility}>
-                                        {show ? 'Hide' : 'Show'}
-                                    </Button>
-                                </InputRightElement>
-                                <Input {...register('password')} type={show ? 'text' : 'password'} size='md' mb={4} placeholder='Password'></Input>
-
-                            </InputGroup>
-                        </Stack>
-                        <Flex width='100%' justify='center' align='center'>
-                            <Button type='submit' colorScheme='messenger' width='100%' color='white' isLoading={isLoading} loadingText='Logging in'>Login</Button>
-                        </Flex>
-                    </form>
+                    <LoginForm/>
                 </CardBody>
                 <CardFooter>
                     <NavLink to='/signup'>
@@ -83,6 +29,4 @@ const Login = () => {
             
         </div>
     )
-}
-
-export default Login
+})

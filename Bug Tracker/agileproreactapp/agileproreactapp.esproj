@@ -11,9 +11,10 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\components\" />
     <Folder Include="src\api\" />
+    <Folder Include="src\components\common\form\" />
     <Folder Include="src\hooks\" />
+    <Folder Include="src\models\" />
     <Folder Include="src\stores\" />
     <Folder Include="src\routing\" />
     <Folder Include="src\pages\" />

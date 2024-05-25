@@ -25,13 +25,13 @@ export default function MyTextInput(props: Props) {
 
     return (
         <FormControl isInvalid={meta.touched && !!meta.error}>
-            <FormLabel>{props.label}</FormLabel>
+            <FormLabel htmlFor={props.name}>{props.label}</FormLabel>
             <InputGroup>
                 {props.leftIcon && <InputLeftElement color="#d3d3d3">
                     <Icon as={props.leftIcon}></Icon>
                 </InputLeftElement> }
 
-                <Input {...field} {...props} id={props.name} type={show ? "text" : "password"} />
+                <Input {...field} id={props.name} type={props.hideable ? (show ? "text" : "password") : "text"} placeholder={props.placeholder} />
 
                 {/*If input is Hideable, provides a show/hide button. If not, displays a right icon if there is one*/}
                 {props.hideable ? (

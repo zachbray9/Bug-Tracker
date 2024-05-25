@@ -10,14 +10,14 @@ export default function LoginForm() {
 
     return (
         <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={values => console.log(values)}
+            initialValues={{ Email: '', Password: '' }}
+            onSubmit={values => userStore.login(values)}
         >
             {({ handleSubmit, isSubmitting }) => (
-                <Form>
+                <Form onSubmit={handleSubmit} autoComplete="off">
                     <Stack spacing={8} >
-                        <MyTextInput name="email" placeholder="Email" label="Email" leftIcon={MdEmail} />
-                        <MyTextInput name="password" placeholder="Password" label="Password" leftIcon={FaLock} hideable />
+                        <MyTextInput name="Email" placeholder="Email" label="Email" leftIcon={MdEmail} />
+                        <MyTextInput name="Password" placeholder="Password" label="Password" leftIcon={FaLock} hideable />
 
                         <Center>
                             <Button type='submit' isLoading={isSubmitting} colorScheme="messenger" w="100%">Login</Button>

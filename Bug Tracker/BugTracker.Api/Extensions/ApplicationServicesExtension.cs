@@ -13,12 +13,20 @@ namespace BugTracker.Api.Extensions
                 throw new InvalidOperationException("Connection string is null or empty.");
             }
            
-
             services.AddDbContext<BugTrackerDbContext>(options =>
             {
                 options.UseSqlServer(ConnectionString);
                 //options.UseInMemoryDatabase("BugTrackerTestDb");
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"); //must change url for production
+                });
+            });
+
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Program));
 

@@ -14,13 +14,11 @@ namespace BugTracker.Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly BugTrackerDbContext DbContext;
         private readonly UserManager<User> UserManager;
         private readonly AuthTokenService AuthTokenService;
 
-        public AuthController(BugTrackerDbContext dbContext, UserManager<User> userManager, AuthTokenService authTokenService)
+        public AuthController(UserManager<User> userManager, AuthTokenService authTokenService)
         {
-            DbContext = dbContext;
             UserManager = userManager;
             AuthTokenService = authTokenService;
         }
@@ -53,7 +51,16 @@ namespace BugTracker.Api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return Ok();
+            UserDTO userDTO = new UserDTO
+            {
+                Email = registerRequest.Email,
+                FirstName = registerRequest.FirstName,
+                LastName = registerRequest.LastName,
+                DateJoined = newUser.DateJoined,
+                AuthToken = AuthTokenService.CreateToken(newUser)
+            };
+
+            return Ok(userDTO);
         }
 
         [HttpPost("[action]")]
@@ -78,7 +85,6 @@ namespace BugTracker.Api.Controllers
 
             UserDTO userDTO = new UserDTO
             {
-                Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,

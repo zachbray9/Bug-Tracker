@@ -1,15 +1,14 @@
-import { Card, CardBody, CardFooter, CardHeader, Heading, Image, Text } from "@chakra-ui/react"
+import { Card, CardBody, CardFooter, CardHeader, Center, Heading, Image, Text, calc } from "@chakra-ui/react"
 import { NavLink } from "react-router-dom"
 import Image1 from "../assets/AgileProLoginPageImage1.png";
 import Image2 from "../assets/AgileProLoginPageImage2.png";
-import "../styles/login.css";
 import { observer } from "mobx-react-lite";
 import LoginForm from "../components/LoginForm";
 
 export default observer(function Login() {
 
     return (
-        <div className='login-main-wrapper'>
+        <Center pos="relative" height="calc(100vh - 60px)">
             <Image src={Image1} pos='absolute' bottom='0' left='3rem' boxSize={[0, 200, 300, 400]} />
             <Image src={Image2} pos='absolute' bottom='0' right='3rem' boxSize={[0, 200, 300, 400]} />
 
@@ -27,6 +26,6 @@ export default observer(function Login() {
                 </CardFooter>
             </Card>
             
-        </div>
+       </Center>
     )
 })

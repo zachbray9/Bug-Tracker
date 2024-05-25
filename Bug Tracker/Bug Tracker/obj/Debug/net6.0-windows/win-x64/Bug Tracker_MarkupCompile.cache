@@ -1,0 +1,20 @@
+﻿Bug Tracker
+
+
+winexe
+C#
+.cs
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\obj\Debug\net6.0-windows\win-x64\
+Bug_Tracker
+none
+false
+TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker\App.xaml
+16-1765013061
+11386669462
+71-2062769158
+241268594039
+Controls\HomePageNavigationBar.xaml;Controls\HomePageTopNavigationBar.xaml;MainWindow.xaml;Styles\General.xaml;Styles\NavigationBar.xaml;Views\AccountPageView.xaml;Views\AddUserToProjectPopupView.xaml;Views\CreateAccountView.xaml;Views\CreateNewProjectPageView.xaml;Views\CreateTicketView.xaml;Views\HomePageView.xaml;Views\LoginPageView.xaml;Views\ProjectDetailsPageView.xaml;Views\ProjectsPageView.xaml;Views\TicketDetailsPageView.xaml;Views\TicketsPageView.xaml;
+
+False
+

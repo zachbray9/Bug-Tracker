@@ -18,4 +18,9 @@ export default class UserStore {
         const user = await agent.Auth.login(creds);
         console.log(user);
     }
+
+    register = async (creds: UserFormValues) => {
+        const user = await agent.Auth.register(creds);
+        console.log(user);
+    }
 }

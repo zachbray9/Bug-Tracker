@@ -4,14 +4,21 @@ import { Button, Center, Stack } from "@chakra-ui/react";
 import MyTextInput from "./common/form/MyTextInput";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+import * as Yup from "yup";
 
 export default function LoginForm() {
     const { userStore } = useStore();
+
+    const validationSchema = Yup.object({
+        Email: Yup.string().required("Email field is required.").email("The email you entered is not a valid email."),
+        Password: Yup.string().required("Password field is required.")
+    });
 
     return (
         <Formik
             initialValues={{ Email: '', Password: '' }}
             onSubmit={values => userStore.login(values)}
+            validationSchema={validationSchema}
         >
             {({ handleSubmit, isSubmitting }) => (
                 <Form onSubmit={handleSubmit} autoComplete="off">

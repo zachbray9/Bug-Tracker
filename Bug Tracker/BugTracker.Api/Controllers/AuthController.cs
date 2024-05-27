@@ -2,14 +2,13 @@
 using BugTracker.Api.Services.TokenServices;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
-using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : Controller
@@ -23,6 +22,7 @@ namespace BugTracker.Api.Controllers
             AuthTokenService = authTokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
@@ -51,18 +51,12 @@ namespace BugTracker.Api.Controllers
                 return BadRequest(result.Errors);
             }
 
-            UserDTO userDTO = new UserDTO
-            {
-                Email = registerRequest.Email,
-                FirstName = registerRequest.FirstName,
-                LastName = registerRequest.LastName,
-                DateJoined = newUser.DateJoined,
-                AuthToken = AuthTokenService.CreateToken(newUser)
-            };
+            UserDTO userDTO = CreateUserDTO(newUser);
 
             return Ok(userDTO);
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
@@ -83,7 +77,33 @@ namespace BugTracker.Api.Controllers
                 return Unauthorized("Incorrect password.");
             }
 
-            UserDTO userDTO = new UserDTO
+            UserDTO userDTO = CreateUserDTO(user);
+
+            return Ok(userDTO);
+        }
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> CurrentUser()
+        {
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+            UserDTO userDTO = CreateUserDTO(user);
+
+            return Ok(userDTO);
+        }
+
+        [Authorize]
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> Logout()
+        {
+            return Ok("User has successfully logged out.");
+        }
+
+        //helpers
+        private UserDTO CreateUserDTO(User user)
+        {
+            return new UserDTO
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
@@ -91,14 +111,6 @@ namespace BugTracker.Api.Controllers
                 DateJoined = user.DateJoined,
                 AuthToken = AuthTokenService.CreateToken(user)
             };
-
-            return Ok(userDTO);
-        }
-
-        [HttpDelete("[action]")]
-        public async Task<IActionResult> Logout()
-        {
-            return Ok("User has successfully logged out.");
         }
     }
 }

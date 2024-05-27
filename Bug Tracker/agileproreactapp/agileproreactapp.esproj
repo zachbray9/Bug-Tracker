@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="src\api\" />
     <Folder Include="src\components\common\form\" />
+    <Folder Include="src\components\common\Loading\" />
     <Folder Include="src\hooks\" />
     <Folder Include="src\models\" />
     <Folder Include="src\stores\" />

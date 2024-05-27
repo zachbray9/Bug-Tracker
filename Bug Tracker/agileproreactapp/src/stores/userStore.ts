@@ -31,8 +31,19 @@ export default class UserStore {
 
     logout = () => {
         store.commonStore.setAuthToken(null);
-        localStorage.removeItem("authToken");
         this.user = null;
         router.navigate('/');
+    }
+
+    getCurrentUser = async () => {
+        try {
+            const user = await agent.Auth.getCurrentUser();
+            runInAction(() => this.user = user);
+
+            if (user)
+                router.navigate("dashboard");
+        } catch (error) {
+            throw error;
+        }
     }
 }

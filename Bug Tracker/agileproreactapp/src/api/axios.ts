@@ -1,10 +1,20 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { User } from "../models/User";
 import { UserFormValues } from "../models/UserFormValues";
+import { store } from "../stores/store";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
 const ResponseBody = <T>(response: AxiosResponse<T>) => response.data;
+
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+})
 
 axios.interceptors.response.use(async response => {
     return response;
@@ -33,7 +43,8 @@ const requests = {
 
 const Auth = {
     login: (user: UserFormValues) => requests.post<User>("/Auth/Login", user),
-    register: (user: UserFormValues) => requests.post<User>("/Auth/Register", user)
+    register: (user: UserFormValues) => requests.post<User>("/Auth/Register", user),
+    getCurrentUser: () => requests.get<User>("/Auth/CurrentUser")
 };
 
 const agent = {

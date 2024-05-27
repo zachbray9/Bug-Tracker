@@ -1,9 +1,9 @@
 export interface User {
-    Email: string;
-    FirstName: string,
-    LastName: string,
-    FullName: string,
-    Initials: string,
-    DateJoined: Date,
-    AuthToken: string
+    email: string;
+    firstName: string,
+    lastName: string,
+    fullName: string,
+    initials: string,
+    dateJoined: Date,
+    authToken: string
 }

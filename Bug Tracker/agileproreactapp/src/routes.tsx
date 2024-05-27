@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./pages/Layout";
 import PrivateRoutes from "./routing/PrivateRoutes";
+import Dashboard from "./pages/Dashboard";
 /*import Error from "./pages/Error";*/
 
 const router = createBrowserRouter([
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
         children: [
             { path: '', element: <Home />},
             { path: 'login', element: <Login /> },
-            { path: 'signup', element: <Signup /> }
+            { path: 'signup', element: <Signup /> },
+            { path: 'dashboard', element: <Dashboard /> }
         ],
         /*errorElement: <Error/>*/
     },

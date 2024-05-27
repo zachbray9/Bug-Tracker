@@ -11,29 +11,29 @@ export default function () {
     const { userStore } = useStore();
 
     const validationSchema = Yup.object({
-        Email: Yup.string().required("Email field is required.").email("Must enter a valid email."),
-        FirstName: Yup.string().required("First name field is required."),
-        LastName: Yup.string().required("Last name field is required."),
-        Password: Yup.string().required("Password field is required."),
-        ConfirmPassword: Yup.string().required("Confirm password field is required.").oneOf([Yup.ref("Password")], "Passwords do not match.")
+        email: Yup.string().required("Email field is required.").email("Must enter a valid email."),
+        firstName: Yup.string().required("First name field is required."),
+        lastName: Yup.string().required("Last name field is required."),
+        password: Yup.string().required("Password field is required.").min(6, "Password must be at least 6 characters."),
+        confirmPassword: Yup.string().required("Confirm password field is required.").oneOf([Yup.ref("Password")], "Passwords do not match.")
     })
 
     return (
         <Formik
-            initialValues={{ Email: "", FirstName: "", LastName: "", Password: "", ConfirmPassword: "", error: null }}
+            initialValues={{ email: "", firstName: "", lastName: "", password: "", confirmPassword: "", error: null }}
             onSubmit={(values, { setErrors }) => userStore.register(values).catch(() => { setErrors({ error: "Some of the information you entered was invalid." }) })}
             validationSchema={validationSchema}
         >
             {({ handleSubmit, isSubmitting, errors }) => (
                 <Form onSubmit={handleSubmit} autoComplete="off">
                     <Stack spacing={8}>
-                        <MyTextInput name="Email" placeholder="Email" label="Email" leftIcon={MdEmail} />
+                        <MyTextInput name="email" placeholder="Email" label="Email" leftIcon={MdEmail} />
                         <Flex gap={4}>
-                            <MyTextInput name="FirstName" placeholder="First Name" label="First Name" leftIcon={FaUser} />
-                            <MyTextInput name="LastName" placeholder="Last Name" label="Last Name" leftIcon={FaUser} />
+                            <MyTextInput name="firstName" placeholder="First Name" label="First Name" leftIcon={FaUser} />
+                            <MyTextInput name="lastName" placeholder="Last Name" label="Last Name" leftIcon={FaUser} />
                         </Flex>
-                        <MyTextInput name="Password" placeholder="Password" label="Password" leftIcon={FaLock} hideable />
-                        <MyTextInput name="ConfirmPassword" placeholder="Confirm Password" label="Confirm Password" leftIcon={FaLock} hideable />
+                        <MyTextInput name="password" placeholder="Password" label="Password" leftIcon={FaLock} hideable />
+                        <MyTextInput name="confirmPassword" placeholder="Confirm Password" label="Confirm Password" leftIcon={FaLock} hideable />
                         {errors.error && <Text color="red">{errors.error}</Text>}
 
                         <Center>

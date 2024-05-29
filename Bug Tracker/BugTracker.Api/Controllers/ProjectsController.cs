@@ -5,6 +5,7 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugTracker.Api.Controllers
 {
@@ -93,6 +94,7 @@ namespace BugTracker.Api.Controllers
             return Created($"~/api/Projects/{projectDTO.Id}", Mapper.Map<ProjectDTO>(newProject.Entity));
         }
 
+        [Authorize("IsProjectAdmin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ProjectDTO projectDTO)
         {

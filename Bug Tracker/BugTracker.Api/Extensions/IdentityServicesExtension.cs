@@ -1,7 +1,9 @@
-﻿using BugTracker.Api.Services.TokenServices;
+﻿using BugTracker.Api.Security;
+using BugTracker.Api.Services.TokenServices;
 using BugTracker.Domain.Models;
 using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -34,6 +36,16 @@ namespace BugTracker.Api.Extensions
                         ValidateAudience = false,
                     };
                 });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("IsProjectAdmin", policy =>
+                {
+                    policy.Requirements.Add(new ProjectAdminRequirement());
+                });
+            });
+
+            services.AddTransient<IAuthorizationHandler, ProjectAdminRequirementHandler>();
 
             return services;
         }

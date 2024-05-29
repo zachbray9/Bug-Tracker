@@ -18,6 +18,5 @@
     <Folder Include="src\models\" />
     <Folder Include="src\stores\" />
     <Folder Include="src\routing\" />
-    <Folder Include="src\pages\" />
   </ItemGroup>
 </Project>

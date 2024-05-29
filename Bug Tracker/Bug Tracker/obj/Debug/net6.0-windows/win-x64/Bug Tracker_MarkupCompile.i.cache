@@ -16,5 +16,5 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\Bug Tracker
 241268594039
 Controls\HomePageNavigationBar.xaml;Controls\HomePageTopNavigationBar.xaml;MainWindow.xaml;Styles\General.xaml;Styles\NavigationBar.xaml;Views\AccountPageView.xaml;Views\AddUserToProjectPopupView.xaml;Views\CreateAccountView.xaml;Views\CreateNewProjectPageView.xaml;Views\CreateTicketView.xaml;Views\HomePageView.xaml;Views\LoginPageView.xaml;Views\ProjectDetailsPageView.xaml;Views\ProjectsPageView.xaml;Views\TicketDetailsPageView.xaml;Views\TicketsPageView.xaml;
 
-True
+False
 

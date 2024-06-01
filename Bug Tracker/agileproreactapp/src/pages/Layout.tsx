@@ -18,7 +18,7 @@ function Layout() {
     }, [commonStore, userStore]);
 
     if (!commonStore.appLoaded) {
-        return <LoadingComponent text="Loading app..." />;
+        return <LoadingComponent text="Authenticating..." />;
     }
 
     return (

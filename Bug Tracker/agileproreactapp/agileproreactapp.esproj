@@ -14,7 +14,7 @@
     <Folder Include="src\api\" />
     <Folder Include="src\components\common\form\" />
     <Folder Include="src\components\common\Loading\" />
-    <Folder Include="src\models\" />
+    <Folder Include="src\components\common\Empty\" />
     <Folder Include="src\stores\" />
   </ItemGroup>
 </Project>

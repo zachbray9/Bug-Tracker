@@ -2,13 +2,16 @@
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -53,20 +56,6 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route ("byName/{fullName}")]
-        public async Task<IActionResult> GetByFullName([FromRoute] string fullName)
-        {
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.FirstName + u.LastName == fullName);
-
-            if(user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(Mapper.Map<UserDTO>(user));
-        }
-
-        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             List<User>? users = await DbContext.Users.ToListAsync();
@@ -74,17 +63,17 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/Projects")]
-        public async Task<IActionResult> GetAllProjectsFromUserById([FromRoute] string id)
+        [Route("Projects")]
+        public async Task<IActionResult> GetAllProjectsFromUser()
         {
-            User? user = await UserManager.FindByIdAsync(id);
-            if(user == null)
+            var user = await UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (user == null)
             {
-                return NotFound($"No user with an id of {id} exists.");
+                return Unauthorized();
             }
 
             List<ProjectDTO?> projects = await DbContext.Projects
-                .Where(p => p.Users.Any(pu => pu.UserId.Equals(id)))
+                .Where(p => p.Users.Any(pu => pu.UserId.Equals(user.Id)))
                 .Select(p => Mapper.Map<ProjectDTO>(p))
                 .ToListAsync();
 

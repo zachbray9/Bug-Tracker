@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { User } from "../models/User";
 import { UserFormValues } from "../models/UserFormValues";
 import { store } from "../stores/store";
+import { Project } from "../models/Project";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -52,8 +53,13 @@ const Auth = {
     getCurrentUser: () => requests.get<User>("/Auth/CurrentUser")
 };
 
+const Projects = {
+    getCurrentUserProjects: () => requests.get<Project[]>("/Users/Projects")
+}
+
 const agent = {
-    Auth
+    Auth,
+    Projects
 };
 
 export default agent;

@@ -1,6 +1,5 @@
 import { Box, Button, Card, CardBody, CardHeader, Flex, Heading, Image, Square, Text } from "@chakra-ui/react";
 import HeroImage from "../assets/AgileProLandingPageImage.png";
-import DemoImage from "../assets/Bug Tracker Project Details Page Screenshot.png";
 import { NavLink } from "react-router-dom";
 import { FaFolder, FaTasks } from "react-icons/fa";
 import { BiSolidMegaphone } from "react-icons/bi";
@@ -22,13 +21,7 @@ const Home = () => {
                     <Image src={HeroImage} boxSize={ [300, 400, 450, 550, 600] } objectFit='cover' />
                 </Flex>
             </section>
-            {/*<section className='info-section'>*/}
-            {/*    <Flex direction='column' maxWidth={[540, 720, 960, 1140]}>*/}
-            {/*        <Text fontSize='4xl' fontWeight='500'>Increase your productivity</Text>*/}
-            {/*        <Text fontSize='2xl'>Easy to use, navigate, and manage. All it takes are boards, lists, and cards to give a clear picture of an entire team's work flow.</Text>*/}
-            {/*        <Image src={DemoImage} boxSize={[400, 500, 600, 700]} objectFit='contain' />*/}
-            {/*    </Flex>*/}
-            {/*</section>*/}
+            
             <section className='usecase-section'>
                 <Flex maxWidth={[540, 720, 960, 1140]} width='100%'>
                     <Flex direction='column' gap='1rem'>

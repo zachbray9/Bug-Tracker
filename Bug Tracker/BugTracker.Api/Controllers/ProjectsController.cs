@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using BugTracker.Api.Models.Requests;
+using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProjectsController : Controller
@@ -48,7 +51,7 @@ namespace BugTracker.Api.Controllers
 
         [HttpGet]
         [Route("{projectId:guid}/Users")]
-        public async Task<IActionResult> GetAllUsersOnProject([FromRoute] Guid projectId)
+        public async Task<IActionResult> GetAllParticipantsOnProject([FromRoute] Guid projectId)
         {
             Project? project = await DbContext.Projects.Include(p => p.Users).ThenInclude(pu => pu.User).FirstOrDefaultAsync(p => p.Id.Equals(projectId));
             if(project == null)
@@ -83,15 +86,29 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProjectDTO projectDTO)
+        public async Task<IActionResult> Create([FromBody] CreateProjectRequest createProjectRequest)
         {
-            Project? project = new Project();
-            project = Mapper.Map<Project>(projectDTO);
+            Project? project = new Project
+            {
+                Name = createProjectRequest.Name,
+                Description = createProjectRequest.Description,
+                DateStarted = DateTime.UtcNow,
+            };
             
             EntityEntry<Project> newProject = await DbContext.Projects.AddAsync(project);
+
+            ProjectUser projectCreator = new ProjectUser
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                ProjectId = newProject.Entity.Id,
+                Role = Domain.Enumerables.ProjectRole.Administrator
+            };
+
+            await DbContext.ProjectUsers.AddAsync(projectCreator);
+
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Projects/{projectDTO.Id}", Mapper.Map<ProjectDTO>(newProject.Entity));
+            return Created($"~/api/Projects/{newProject.Entity.Id}", Mapper.Map<ProjectDTO>(newProject.Entity));
         }
 
         [Authorize("IsProjectAdmin")]

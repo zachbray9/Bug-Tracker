@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import { UserFormValues } from "../models/UserFormValues";
 import { store } from "../stores/store";
 import { Project } from "../models/Project";
+import { ProjectFormValues } from "../models/ProjectFormValues";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -54,7 +55,8 @@ const Auth = {
 };
 
 const Projects = {
-    getCurrentUserProjects: () => requests.get<Project[]>("/Users/Projects")
+    getCurrentUserProjects: () => requests.get<Project[]>("/Users/Projects"),
+    createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project)
 }
 
 const agent = {

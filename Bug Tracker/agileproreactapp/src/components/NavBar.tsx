@@ -28,7 +28,7 @@ export default observer(function NavBar() {
                         <MenuButton as={Button} variant="ghost" rightIcon={<ChevronDownIcon />}>Projects</MenuButton>
 
                         <MenuList>
-                            <MenuItem onClick={() => router.navigate("dashboard")}>View all projects</MenuItem>
+                            <MenuItem onClick={() => router.navigate('dashboard')}>View all projects</MenuItem>
                             <MenuItem onClick={onOpen}>Create project</MenuItem>
                             <CreateProjectModal isOpen={isOpen} onClose={onClose} />
                         </MenuList>

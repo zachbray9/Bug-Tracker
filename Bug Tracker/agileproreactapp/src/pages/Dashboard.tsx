@@ -12,7 +12,6 @@ export default function Dashboard() {
                 <Spacer />
                 <Button colorScheme="messenger" onClick={onOpen}>Create project</Button>
                 <CreateProjectModal isOpen={isOpen} onClose={onClose} />
-
             </Flex>
 
             <ProjectsTable />

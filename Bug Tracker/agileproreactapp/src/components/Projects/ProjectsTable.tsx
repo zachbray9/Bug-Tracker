@@ -1,4 +1,4 @@
-import { Box, IconButton, Menu, MenuButton, MenuItem, MenuList, Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, IconButton, Menu, MenuButton, MenuItem, MenuList, Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
@@ -42,7 +42,9 @@ export default observer(function ProjectsTable() {
                             ) : (
                                 projectStore.projects.map((project) => (
                                     <Tr key={project.id}>
-                                        <Td>{project.name}</Td>
+                                        <Td>
+                                            <Button onClick={() => projectStore.setSelectedProject(project)} variant="link">{project.name}</Button>
+                                        </Td>
                                         <Td>
                                             <Menu>
                                                 <MenuButton as={IconButton} icon={<FiMoreHorizontal />} aria-label="More options">More options</MenuButton>

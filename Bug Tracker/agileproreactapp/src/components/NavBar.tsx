@@ -1,15 +1,18 @@
-import { Avatar, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text, useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import AgileProLogo from "../assets/AgileProLogoCropped.png";
 import "../styles/navbar.css";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
+import router from "../routes";
+import CreateProjectModal from "./Projects/CreateProjectModal";
 
 
 
 export default observer(function NavBar() { 
     const { userStore } = useStore();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <>
@@ -25,8 +28,9 @@ export default observer(function NavBar() {
                         <MenuButton as={Button} variant="ghost" rightIcon={<ChevronDownIcon />}>Projects</MenuButton>
 
                         <MenuList>
-                            <MenuItem>View all projects</MenuItem>
-                            <MenuItem>Create project</MenuItem>
+                            <MenuItem onClick={() => router.navigate("dashboard")}>View all projects</MenuItem>
+                            <MenuItem onClick={onOpen}>Create project</MenuItem>
+                            <CreateProjectModal isOpen={isOpen} onClose={onClose} />
                         </MenuList>
                     </Menu>
                     <Spacer />

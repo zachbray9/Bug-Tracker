@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { Project } from "../models/Project";
 import agent from "../api/axios";
 import { ProjectFormValues } from "../models/ProjectFormValues";
+import router from "../routes";
 
 export default class ProjectStore {
     projects: Project[] = [];
@@ -37,7 +38,7 @@ export default class ProjectStore {
             });
             
             this.setIsLoading(false);
-            //navigate to that projects task board
+            router.navigate("projectBoard");
         } catch (error) {
             console.log(error);
             this.setIsLoading(false);

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
-import { Box, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 
 export default observer(function ProjectBoard() {
@@ -14,7 +14,13 @@ export default observer(function ProjectBoard() {
 
     return (
         <Box>
-            <Text>{projectStore.selectedProject?.name}</Text>
+            <HStack gap={2}>
+                {projectStore.selectedProject.users.map((user => (
+                    <Button key={user.email} variant="ghost" borderRadius="full" padding={0}>
+                        <Avatar name={user.firstName + " " + user.lastName} size="sm"/>
+                    </Button>
+                )))}
+            </HStack>
         </Box>
     )
 })

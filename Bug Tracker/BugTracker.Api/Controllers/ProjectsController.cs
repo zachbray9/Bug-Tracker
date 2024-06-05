@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using BugTracker.Api.Models.Requests;
 using System.Security.Claims;
+using AutoMapper.QueryableExtensions;
+using BugTracker.Api.Helpers;
 
 namespace BugTracker.Api.Controllers
 {
@@ -42,11 +44,14 @@ namespace BugTracker.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Project>? projects = await DbContext.Projects.ToListAsync();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            List<ProjectDTO> projectDTOs = projects.Select(p => Mapper.Map<ProjectDTO>(p)!).ToList();
+            List<ProjectDTO>? projectDtos = await DbContext.Projects
+                .Where(p => p.Users.Any(pu => pu.UserId.Equals(userId)))
+                .ProjectTo<ProjectDTO>(Mapper.ConfigurationProvider)
+                .ToListAsync();
 
-            return Ok(projectDTOs);
+            return Ok(projectDtos);
         }
 
         [HttpGet]

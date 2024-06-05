@@ -62,25 +62,6 @@ namespace BugTracker.Api.Controllers
             return Ok(Mapper.Map<List<UserDTO>>(users));
         }
 
-        [HttpGet]
-        [Route("Projects")]
-        public async Task<IActionResult> GetAllProjectsFromUser()
-        {
-            var user = await UserManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            if (user == null)
-            {
-                return Unauthorized();
-            }
-
-            List<ProjectDTO?> projects = await DbContext.Projects
-                .Where(p => p.Users.Any(pu => pu.UserId.Equals(user.Id)))
-                .Select(p => Mapper.Map<ProjectDTO>(p))
-                .ToListAsync();
-
-            return Ok(projects);
-        }
-
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserDTO userDTO)
         {

@@ -20,6 +20,11 @@ namespace BugTracker.Api.Helpers
 
             CreateMap<Project, ProjectDTO>().ReverseMap();
 
+            CreateMap<ProjectUser, ProjectParticipant>()
+                .ForMember(dest => dest.Email, o => o.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.FirstName, o => o.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.LastName, o => o.MapFrom(src => src.User.LastName));
+
             CreateMap<Ticket, TicketDTO>()
                 .ForMember(dest => dest.AuthorFirstName, opt => opt.MapFrom(src => src.Author.FirstName))
                 .ForMember(dest => dest.AuthorLastName, opt => opt.MapFrom(src => src.Author.LastName))

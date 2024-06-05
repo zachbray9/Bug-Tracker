@@ -55,7 +55,7 @@ const Auth = {
 };
 
 const Projects = {
-    getCurrentUserProjects: () => requests.get<Project[]>("/Users/Projects"),
+    getCurrentUserProjects: () => requests.get<Project[]>("/Projects"),
     createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project)
 }
 

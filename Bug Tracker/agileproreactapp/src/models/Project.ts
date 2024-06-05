@@ -1,6 +1,9 @@
+import { ProjectParticipant } from "./ProjectParticipant";
+
 export interface Project {
     id: string,
     name: string,
     description: string,
-    dateStarted: Date
+    dateStarted: Date,
+    users: ProjectParticipant[]
 }

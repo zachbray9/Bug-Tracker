@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text, useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import AgileProLogo from "../assets/AgileProLogoCropped.png";
@@ -15,7 +15,7 @@ export default observer(function NavBar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <>
+        <Box borderWidth="0px 0px 1px 0px" padding={1}>
             {userStore.user ?  (
                 <Flex align="center" gap={4} paddingX={4}>
                     <NavLink to='' className='logo-link'>
@@ -62,6 +62,6 @@ export default observer(function NavBar() {
                     </NavLink>
                 </Flex>
             )}
-        </>
+        </Box>
     ) 
 });

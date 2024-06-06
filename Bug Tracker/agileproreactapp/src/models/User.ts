@@ -4,6 +4,7 @@ export interface User {
     lastName: string,
     fullName: string,
     initials: string,
+    profilePictureUrl:string,
     dateJoined: Date,
     authToken: string
 }

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
-import { Avatar, Box, Button, HStack, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, HStack } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 
 export default observer(function ProjectBoard() {

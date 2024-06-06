@@ -6,6 +6,7 @@ namespace BugTracker.Domain.Models
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
+        public string? ProfilePictureUrl { get; set; }
         public DateTime DateJoined { get; set; }
         public ICollection<ProjectUser> Projects { get; set; }
         public ICollection<Ticket> AuthoredTickets { get; set; }

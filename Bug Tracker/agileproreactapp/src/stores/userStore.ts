@@ -7,6 +7,7 @@ import router from "../routes";
 
 export default class UserStore {
     user: User | null = null
+    isUploading = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -45,5 +46,31 @@ export default class UserStore {
         } catch (error) {
             throw error;
         }
+    }
+
+    uploadPhoto = async (file: Blob) => {
+        this.setIsUploading(true);
+
+        try {
+            const response = await agent.Profiles.uploadPhoto(file);
+            const photoUrl = response.data;
+            this.setProfilePhoto(photoUrl);
+            console.log(this.user?.profilePictureUrl);
+            this.setIsUploading(false);
+        } catch (error) {
+            console.log(error);
+            this.setIsUploading(false);
+        }
+    }
+
+    //helpers
+
+    setProfilePhoto = (url: string) => {
+        if (this.user)
+            this.user.profilePictureUrl = url;
+    }
+
+    setIsUploading = (state: boolean) => {
+        this.isUploading = state;
     }
 }

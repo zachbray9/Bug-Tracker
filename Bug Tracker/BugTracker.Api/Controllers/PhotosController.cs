@@ -23,7 +23,7 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<IActionResult> Upload([FromForm]IFormFile file)
         {
             //checks if the file is empty
             if(file == null || file.Length == 0)
@@ -36,12 +36,17 @@ namespace BugTracker.Api.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             User user = await UserManager.FindByIdAsync(userId);
 
+            if(user.ProfilePictureUrl != null)
+            {
+                await BlobStorageService.Delete(user.ProfilePictureUrl);
+            }
+
             string imageUrl = await BlobStorageService.Upload(file);
 
             user.ProfilePictureUrl = imageUrl;
 
             var result = await UserManager.UpdateAsync(user);
-            if(result.Succeeded)
+            if(!result.Succeeded)
                 return BadRequest();
 
             return Ok(imageUrl);

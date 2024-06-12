@@ -10,6 +10,7 @@
         public string Initials { get => $"{FirstName?.FirstOrDefault()}{LastName?.FirstOrDefault()}".ToUpper(); }
         public string PasswordHash { get; set; } = null!;                                                              //Will be removed
         public string AuthToken { get; set; } = null!;
+        public string? ProfilePictureUrl { get; set; }
         public DateTime DateJoined { get; set; }
 
         public override string ToString()

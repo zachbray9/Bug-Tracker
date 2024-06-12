@@ -4,6 +4,7 @@ import { UserFormValues } from "../models/UserFormValues";
 import { store } from "../stores/store";
 import { Project } from "../models/Project";
 import { ProjectFormValues } from "../models/ProjectFormValues";
+import { v4 as uuidv4 } from "uuid";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -59,9 +60,21 @@ const Projects = {
     createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project)
 }
 
+const Profiles = {
+    uploadPhoto: (file: Blob) => {
+        const uniqueFileName = uuidv4();
+        let formData = new FormData();
+        formData.append("file", file, `${uniqueFileName}.${file.type.split("/")[1]}`);
+        return axios.post<string>("/Photos", formData, {
+            headers: { "Content-Type": "multipart/form-data"}
+        })
+    }
+}
+
 const agent = {
     Auth,
-    Projects
+    Projects,
+    Profiles
 };
 
 export default agent;

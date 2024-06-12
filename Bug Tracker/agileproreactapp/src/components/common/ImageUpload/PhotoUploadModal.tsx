@@ -3,19 +3,28 @@ import PhotoDropzone from "./PhotoDropzone";
 import { useEffect, useRef, useState } from "react";
 import PhotoCropper from "./PhotoCropper";
 import AvatarEditor from "react-avatar-editor";
+import { useStore } from "../../../stores/store";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     isOpen: boolean,
     onClose: () => void
 }
 
-export default function PhotoUploadModal(props: Props) {
+export default observer(function PhotoUploadModal(props: Props) {
+    const { userStore } = useStore();
     const [files, setFiles] = useState<any>([]);
     const editorRef = useRef<AvatarEditor>(null);
 
-    function onCrop() {
+    const handleUploadPhoto = async () => {
         if (editorRef.current) {
-            editorRef.current.getImageScaledToCanvas().toBlob(blob => console.log(blob));
+            const canvas = editorRef.current.getImageScaledToCanvas();
+            const croppedImageData = canvas.toDataURL();
+
+            const blob = await fetch(croppedImageData).then((res) => res.blob())
+            userStore.uploadPhoto(blob);
+            setFiles([]);
+            props.onClose();
         }
     }
 
@@ -46,9 +55,9 @@ export default function PhotoUploadModal(props: Props) {
                 </ModalBody>
                 <ModalFooter gap={4}>
                     <Button variant="ghost" onClick={() => cancelUpload()} >Close</Button>
-                    <Button colorScheme="messenger" onClick={() => onCrop()} disabled={files[0]}>Upload</Button>
+                    <Button colorScheme="messenger" onClick={() => handleUploadPhoto()} isLoading={userStore.isUploading} isDisabled={!files.length}>Upload</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
     )
-}
+})

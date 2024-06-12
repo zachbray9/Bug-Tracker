@@ -109,7 +109,8 @@ namespace BugTracker.Api.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 DateJoined = user.DateJoined,
-                AuthToken = AuthTokenService.CreateToken(user)
+                AuthToken = AuthTokenService.CreateToken(user),
+                ProfilePictureUrl = user.ProfilePictureUrl,
             };
         }
     }

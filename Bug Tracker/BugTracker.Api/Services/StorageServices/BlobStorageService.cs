@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BugTracker.Api.Services.StorageServices
 {
@@ -13,7 +14,7 @@ namespace BugTracker.Api.Services.StorageServices
             BlobContainerClient = BlobServiceClient.GetBlobContainerClient("user-profile-picture-container");
         }
 
-        public async Task<string> Upload(IFormFile file)
+        public async Task<string> Upload([FromForm] IFormFile file)
         {
             var blobClient = BlobContainerClient.GetBlobClient(file.FileName);
 

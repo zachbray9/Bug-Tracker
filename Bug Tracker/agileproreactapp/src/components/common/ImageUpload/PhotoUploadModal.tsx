@@ -1,10 +1,11 @@
-import { Button, Center, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { Button, Center, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text } from "@chakra-ui/react";
 import PhotoDropzone from "./PhotoDropzone";
 import { useEffect, useRef, useState } from "react";
 import PhotoCropper from "./PhotoCropper";
 import AvatarEditor from "react-avatar-editor";
 import { useStore } from "../../../stores/store";
 import { observer } from "mobx-react-lite";
+import PhotoInputButton from "./PhotoInputButton";
 
 interface Props {
     isOpen: boolean,
@@ -48,8 +49,12 @@ export default observer(function PhotoUploadModal(props: Props) {
                     {
                         files[0] ? (
                             <PhotoCropper image={files[0].preview} editorRef={editorRef} />
-                        ): (
-                            <PhotoDropzone setFiles={setFiles} />
+                        ) : (
+                                <Center as={Stack} gap={4}>
+                                    <PhotoDropzone setFiles={setFiles} />
+                                    <Text>or</Text>
+                                    <PhotoInputButton setFiles={setFiles} />
+                                </Center>
                         )
                     }
                 </ModalBody>

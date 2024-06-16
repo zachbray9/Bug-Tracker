@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using BugTracker.Api.Models.Requests;
 using System.Security.Claims;
 using AutoMapper.QueryableExtensions;
-using BugTracker.Api.Helpers;
 
 namespace BugTracker.Api.Controllers
 {

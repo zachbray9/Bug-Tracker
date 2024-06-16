@@ -1,5 +1,4 @@
 ﻿using BugTracker.Domain.Enumerables;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BugTracker.Domain.Models
 {
@@ -12,26 +11,15 @@ namespace BugTracker.Domain.Models
         public Project Project { get; set; } = null!;
         public string AuthorId { get; set; } = null!;
         public User Author { get; set; } = null!;
-        [NotMapped]
-        public string AuthorFirstName { get => Author.FirstName; }
-        [NotMapped]
-        public string AuthorLastName { get => Author.LastName; }
         public string? AssigneeId { get; set; }
         public User? Assignee { get; set; }
-        [NotMapped]
-        public string AssigneeFirstName { get => Assignee != null ? Assignee.FirstName : string.Empty; }
-        [NotMapped]
-        public string AssigneeLastName { get => Assignee != null ? Assignee.LastName : string.Empty; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
         public TicketType TicketType { get; set; }
         public DateTime DateSubmitted { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-        public Ticket()
-        {
-            Comments = new List<Comment>();
-        }
+        
 
     }
 }

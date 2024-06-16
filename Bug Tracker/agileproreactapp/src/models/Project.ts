@@ -5,5 +5,6 @@ export interface Project {
     name: string,
     description: string,
     dateStarted: Date,
-    users: ProjectParticipant[]
+    users: ProjectParticipant[],
+    tickets: Ticket[]
 }

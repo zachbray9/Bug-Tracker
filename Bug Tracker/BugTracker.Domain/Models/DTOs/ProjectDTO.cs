@@ -7,5 +7,6 @@
         public string Description { get; set; } = null!;
         public DateTime DateStarted { get; set; }
         public ICollection<ProjectParticipant> Users { get; set; } = new List<ProjectParticipant>();
+        public ICollection<TicketDTO> Tickets { get; set; } = new List<TicketDTO>();
     }
 }

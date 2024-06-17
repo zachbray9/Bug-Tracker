@@ -60,6 +60,10 @@ const Projects = {
     createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project)
 }
 
+const Tickets = {
+    createTicket: (ticket: TicketFormValues) => requests.post<Ticket>("/Tickets", ticket)
+}
+
 const Profiles = {
     uploadPhoto: (file: Blob) => {
         const uniqueFileName = uuidv4();
@@ -74,6 +78,7 @@ const Profiles = {
 const agent = {
     Auth,
     Projects,
+    Tickets,
     Profiles
 };
 

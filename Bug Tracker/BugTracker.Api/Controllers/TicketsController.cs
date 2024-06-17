@@ -5,9 +5,14 @@ using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
+using BugTracker.Api.Models.Requests;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper.QueryableExtensions;
 
 namespace BugTracker.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TicketsController : Controller
@@ -61,17 +66,21 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TicketDTO ticketDTO)
+        public async Task<IActionResult> Create([FromBody] CreateTicketRequest newTicketRequest)
         {
-            Ticket? ticket = Mapper.Map<Ticket>(ticketDTO);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            EntityEntry<Ticket> updatedTicket = await DbContext.Tickets.AddAsync(ticket);
+            Ticket? ticket = Mapper.Map<Ticket>(newTicketRequest);
+            ticket!.Id = Guid.NewGuid();
+            ticket.AuthorId = userId;
+            ticket.DateSubmitted = DateTime.UtcNow;
+
+            EntityEntry<Ticket> updatedTicket = await DbContext.Tickets.AddAsync(ticket!);
             await DbContext.SaveChangesAsync();
 
-            ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == updatedTicket.Entity.Id);
-            TicketDTO? newTicketDTO = Mapper.Map<TicketDTO>(ticket);
+            TicketDTO? ticketDto = await DbContext.Tickets.ProjectTo<TicketDTO>(Mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == updatedTicket.Entity.Id);
             
-            return Created($"~/api/Tickets/{updatedTicket.Entity.Id}", newTicketDTO);
+            return Created($"~/api/Tickets/{updatedTicket.Entity.Id}", ticketDto);
         }
 
         [HttpPut]

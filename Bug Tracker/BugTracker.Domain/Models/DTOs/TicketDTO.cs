@@ -5,8 +5,9 @@ namespace BugTracker.Domain.Models.DTOs
     public class TicketDTO
     {
         public Guid Id { get; set; }
+        public Guid ProjectId { get; set; }
         public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
         public string AuthorId { get; set; } = null!;
         public string AuthorFirstName { get; set; } = null!;
         public string AuthorLastName { get; set; } = null!;

@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, CardHeader, Center, Heading, Image, Text, calc } from "@chakra-ui/react"
+import { Card, CardBody, CardFooter, CardHeader, Center, Heading, Image, Text } from "@chakra-ui/react"
 import { NavLink } from "react-router-dom"
 import Image1 from "../assets/AgileProLoginPageImage1.png";
 import Image2 from "../assets/AgileProLoginPageImage2.png";

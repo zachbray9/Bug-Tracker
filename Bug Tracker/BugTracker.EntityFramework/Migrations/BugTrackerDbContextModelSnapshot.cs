@@ -108,7 +108,6 @@ namespace BugTracker.EntityFramework.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Priority")
@@ -118,9 +117,6 @@ namespace BugTracker.EntityFramework.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketType")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

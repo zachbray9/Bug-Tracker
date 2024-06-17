@@ -41,6 +41,20 @@ export default class ProjectStore {
         }
     }
 
+    createTicket = async (creds: TicketFormValues) => {
+        this.setIsLoading(true)
+
+        try {
+            var ticket = await agent.Tickets.createTicket(creds);
+            console.log(ticket);
+            runInAction(() => { this.selectedProject?.tickets.push(ticket) });
+            this.setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            this.setIsLoading(false);
+        }
+    }
+
     setSelectedProject = (project: Project) => {
         this.selectedProject = project;
         router.navigate("projectBoard");

@@ -28,7 +28,7 @@ export default observer(function ProjectBoard() {
                 <IconButton aria-label="add user" icon={<IoPersonAdd />} isRound={true} />
             </HStack>
 
-            <HStack gap={4}>
+            <HStack gap={4} alignItems="start">
                 <TicketColumn Title="To do" />
                 <TicketColumn Title="In progress" />
                 <TicketColumn Title="Done" />

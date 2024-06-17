@@ -1,7 +1,7 @@
 interface Ticket {
     id: string,
     title: string,
-    description: string,
+    description: string | null,
     authorId: string,
     authorFirstName: string,
     authorLastName: string,

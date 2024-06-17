@@ -1,6 +1,7 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text, Textarea, useOutsideClick } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
+import { useRef, useState } from "react";
 
 interface Props {
     Title: string
@@ -8,6 +9,32 @@ interface Props {
 
 export default observer(function TicketColumn({ Title }: Props) {
     const { projectStore } = useStore();
+    const [isCreatingTask, setIsCreatingTask] = useState(false);
+    const [newTaskTitle, setNewTaskTitle] = useState("");
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleSubmit = () => {
+        if (newTaskTitle.trim() !== "") {
+            projectStore.createTicket({
+                title: newTaskTitle,
+                status: Title,
+                priority: "low",
+                projectId: projectStore.selectedProject!.id
+            })
+            setNewTaskTitle("");
+            setIsCreatingTask(false);
+        }
+    }
+
+    const handleCancel = () => {
+        setNewTaskTitle("");
+        setIsCreatingTask(false);
+    }
+
+    useOutsideClick ({
+        ref: textAreaRef,
+        handler: handleCancel
+    })
 
     return (
         <Card width="sm" variant="filled">
@@ -17,14 +44,30 @@ export default observer(function TicketColumn({ Title }: Props) {
 
             <CardBody>
                 <Stack>
-                    {projectStore.selectedProject?.tickets.map((ticket) => (
+                    {projectStore.selectedProject?.tickets
+                        .filter(ticket => ticket.status === Title)
+                        .map((ticket) => (
                         <Text width="100%">{ticket.title}</Text>
                     ))}
                 </Stack>
             </CardBody>
 
             <CardFooter>
-                <Button width="100%" justifyContent="start">+ Add task</Button>
+                {isCreatingTask ? (
+                    <Textarea
+                        ref={textAreaRef}
+                        onChange={(e) => setNewTaskTitle(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit()
+                            }
+                        } }
+                        placeholder="What needs to be done?"
+                        autoFocus />
+                ) : (
+                    <Button onClick={() => setIsCreatingTask(true)} width="100%" justifyContent="start">+ Add task</Button>
+                )}
             </CardFooter>
         </Card>
     )

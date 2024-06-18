@@ -8,18 +8,9 @@ namespace BugTracker.Domain.Models
         public string LastName { get; set; } = null!;
         public string? ProfilePictureUrl { get; set; }
         public DateTime DateJoined { get; set; }
-        public ICollection<ProjectUser> Projects { get; set; }
-        public ICollection<Ticket> AuthoredTickets { get; set; }
-        public ICollection<Ticket> AssignedTickets { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-
-        public User()
-        {
-            Projects = new List<ProjectUser>();
-            AuthoredTickets = new List<Ticket>();
-            AssignedTickets = new List<Ticket>();
-            Comments = new List<Comment>();
-        }
-
+        public ICollection<ProjectUser> Projects { get; set; } = new List<ProjectUser>();
+        public ICollection<Ticket> AuthoredTickets { get; set; } = new List<Ticket>();
+        public ICollection<Ticket> AssignedTickets { get; set; } = new List<Ticket>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

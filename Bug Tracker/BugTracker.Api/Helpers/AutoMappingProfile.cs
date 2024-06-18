@@ -28,11 +28,10 @@ namespace BugTracker.Api.Helpers
                 .ForMember(dest => dest.LastName, o => o.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.ProfilePictureUrl, o => o.MapFrom(src => src.User.ProfilePictureUrl));
 
-            CreateMap<Ticket, TicketDTO>()
-                .ForMember(dest => dest.AuthorFirstName, opt => opt.MapFrom(src => src.Author.FirstName))
-                .ForMember(dest => dest.AuthorLastName, opt => opt.MapFrom(src => src.Author.LastName))
-                .ForMember(dest => dest.AssigneeFirstName, opt => opt.MapFrom(src => src.Assignee != null ? src.Assignee.FirstName : null))
-                .ForMember(dest => dest.AssigneeLastName, opt => opt.MapFrom(src => src.Assignee != null ? src.Assignee.LastName : null));
+            CreateMap<User, ProjectParticipant>();
+
+            CreateMap<Ticket, TicketDTO>();
+                
             CreateMap<TicketDTO, Ticket>()
                 .ForMember(dest => dest.Author, opt => opt.Ignore())
                 .ForMember(dest => dest.Assignee, opt => opt.Ignore());

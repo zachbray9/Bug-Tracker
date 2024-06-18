@@ -1,7 +1,8 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text, Textarea, useOutsideClick } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Textarea, useOutsideClick } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { useRef, useState } from "react";
+import TicketCard from "./TicketCard";
 
 interface Props {
     Title: string
@@ -47,7 +48,7 @@ export default observer(function TicketColumn({ Title }: Props) {
                     {projectStore.selectedProject?.tickets
                         .filter(ticket => ticket.status === Title)
                         .map((ticket) => (
-                        <Text width="100%">{ticket.title}</Text>
+                            <TicketCard key={ticket.title} ticket={ticket} />
                     ))}
                 </Stack>
             </CardBody>

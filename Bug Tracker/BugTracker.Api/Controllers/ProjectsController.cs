@@ -105,7 +105,7 @@ namespace BugTracker.Api.Controllers
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 ProjectId = newProject.Entity.Id,
-                Role = Domain.Enumerables.ProjectRole.Administrator
+                Role = Domain.Enumerables.ProjectRole.Owner
             };
 
             await DbContext.ProjectUsers.AddAsync(projectCreator);

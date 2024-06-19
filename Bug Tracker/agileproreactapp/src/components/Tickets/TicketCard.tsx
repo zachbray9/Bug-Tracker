@@ -1,12 +1,15 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from "@chakra-ui/react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Ticket } from "../../models/Ticket";
+import TicketDetailsModal from "./TicketDetailsModal";
 
 interface Props {
     ticket: Ticket
 }
 
 export default function TicketCard({ ticket }: Props) {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     const priorityColorMap = (priority: string) => {
         switch (priority) {
             case "low":
@@ -21,7 +24,8 @@ export default function TicketCard({ ticket }: Props) {
     }
 
     return (
-        <Card cursor="pointer">
+        <Card cursor="pointer" onClick={onOpen}>
+            <TicketDetailsModal isOpen={isOpen} onClose={onClose} ticket={ticket} />
             <CardBody>
                 <Flex width="100%" justifyContent="space-between" alignItems="start">
                     <Button variant="link">{ticket.title}</Button>

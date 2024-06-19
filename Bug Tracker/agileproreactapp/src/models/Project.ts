@@ -1,4 +1,5 @@
 import { ProjectParticipant } from "./ProjectParticipant";
+import { Ticket } from "./Ticket";
 
 export interface Project {
     id: string,

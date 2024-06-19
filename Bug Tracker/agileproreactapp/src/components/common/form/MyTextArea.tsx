@@ -1,19 +1,29 @@
-import { FormControl, FormErrorMessage, FormLabel, Textarea } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, Textarea, TextareaProps } from "@chakra-ui/react";
 import { useField } from "formik";
 
-interface Props {
+interface Props extends TextareaProps{
     name: string,
-    label: string,
-    placeholder: string
+    label?: string,
+    initialValue?: string
 }
 
-export default function MyTextArea(props: Props) {
-    const [field, meta] = useField(props.name);
+export default function MyTextArea({ name, label, initialValue, ...props }: Props) {
+    const [field, meta] = useField(name);
 
     return (
         <FormControl isInvalid={meta.touched && !!meta.error}>
-            <FormLabel htmlFor={props.name}>{props.label}</FormLabel>
-            <Textarea {...field} id={props.name} placeholder={props.placeholder} resize="vertical" />
+            {label &&
+                < FormLabel htmlFor={name}>{label}</FormLabel>
+            }
+
+            <Textarea
+                {...field}
+                {...props}
+                id={name}
+                placeholder={props.placeholder}
+            >
+                {initialValue}
+            </Textarea>
 
             {meta.touched && meta.error && (
                 <FormErrorMessage>{meta.error}</FormErrorMessage>

@@ -1,4 +1,6 @@
-﻿namespace BugTracker.Domain.Models.DTOs
+﻿using BugTracker.Domain.Enumerables;
+
+namespace BugTracker.Domain.Models.DTOs
 {
     public class ProjectParticipant
     {
@@ -6,5 +8,6 @@
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string? ProfilePictureUrl { get; set; }
+        public ProjectRole Role { get; set; }
     }
 }

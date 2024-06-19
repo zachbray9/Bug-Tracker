@@ -5,6 +5,7 @@ import { store } from "../stores/store";
 import { Project } from "../models/Project";
 import { ProjectFormValues } from "../models/ProjectFormValues";
 import { v4 as uuidv4 } from "uuid";
+import { Ticket } from "../models/Ticket";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 

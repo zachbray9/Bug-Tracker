@@ -95,7 +95,7 @@ namespace BugTracker.Api.Controllers
 
         [Authorize]
         [HttpDelete("[action]")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             return Ok("User has successfully logged out.");
         }

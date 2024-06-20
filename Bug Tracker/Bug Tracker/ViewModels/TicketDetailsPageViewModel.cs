@@ -70,8 +70,8 @@ namespace Bug_Tracker.ViewModels
                 ProjectUsers = new ObservableCollection<ProjectUserDTO>();
             }
 
-            Assignee = TicketContainer.Assignee != null ? ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AssigneeId) : null;
-            Reporter = ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AuthorId);
+            //Assignee = TicketContainer.Assignee != null ? ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AssigneeId) : null;
+            //Reporter = ProjectUsers.FirstOrDefault(pu => pu.UserId == TicketContainer.CurrentTicket.AuthorId);
 
             CurrentProjectUser = ProjectUsers.FirstOrDefault(pu => pu.UserId == CurrentUser.Id);
             UserInputIsEnabled = true;
@@ -150,13 +150,13 @@ namespace Bug_Tracker.ViewModels
             {
                 if(Assignee == null)
                 {
-                    if(CurrentTicket.AssigneeId != null)
-                        return true;
+                    //if(CurrentTicket.AssigneeId != null)
+                    //    return true;
                 }
                 else
                 {
-                    if(Assignee.UserId != CurrentTicket.AssigneeId) 
-                        return true;
+                    //if(Assignee.UserId != CurrentTicket.AssigneeId) 
+                    //    return true;
                 }
                 
                 return false;
@@ -167,8 +167,8 @@ namespace Bug_Tracker.ViewModels
         {
             get
             {
-                if (Reporter.UserId != CurrentTicket.AuthorId)
-                    return true;
+                //if (Reporter.UserId != CurrentTicket.AuthorId)
+                //    return true;
 
                 return false;
             }

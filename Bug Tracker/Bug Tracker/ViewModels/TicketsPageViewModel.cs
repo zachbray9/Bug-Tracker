@@ -88,8 +88,8 @@ namespace Bug_Tracker.ViewModels
                 List<TicketDTO> allTicketsWithDuplicates = new List<TicketDTO>();
                 foreach(ProjectUserDTO projectUser in ProjectContainer.CurrentProjectUsers)
                 {
-                    allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AuthorId == CurrentUser.Id));
-                    allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AssigneeId == CurrentUser.Id));
+                    //allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AuthorId == CurrentUser.Id));
+                    //allTicketsWithDuplicates.AddRange(ProjectContainer.CurrentTicketsOnProject.Where(t => t.AssigneeId == CurrentUser.Id));
                 }
 
                 //Creates a new list and checks if the new list already contains each ticket. If it doesn't contain the ticket, then the ticket is added.

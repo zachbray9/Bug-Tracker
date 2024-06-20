@@ -25,7 +25,9 @@ namespace Bug_Tracker.Utility_Classes.Converters
 
             //checks if parameter is a ticket or comment
             if (values[1] is TicketDTO ticket)
-                isAuthor = projectUser.UserId == ticket.AuthorId;
+            {
+                //isAuthor = projectUser.UserId == ticket.AuthorId;
+            }
             else if (values[1] is CommentDTO comment)
                 isAuthor = projectUser.UserId == comment.AuthorId;
             else

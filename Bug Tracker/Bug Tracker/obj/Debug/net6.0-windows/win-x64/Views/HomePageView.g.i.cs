@@ -53,7 +53,7 @@ namespace Bug_Tracker.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Bug Tracker;V1.0.0.0;component/views/homepageview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Bug Tracker;component/views/homepageview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\HomePageView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

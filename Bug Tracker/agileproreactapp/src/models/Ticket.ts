@@ -3,7 +3,7 @@ import { ProjectParticipant } from "./ProjectParticipant"
 export interface Ticket {
     id: string,
     title: string,
-    description: string | null,
+    description: string,
     author: ProjectParticipant
     assignee: ProjectParticipant | null
     status: string,

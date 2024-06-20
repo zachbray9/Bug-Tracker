@@ -1,5 +1,6 @@
 import { FormControl, FormErrorMessage, FormLabel, Textarea, TextareaProps } from "@chakra-ui/react";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
+import { ChangeEvent, useState } from "react";
 
 interface Props extends TextareaProps{
     name: string,
@@ -9,6 +10,14 @@ interface Props extends TextareaProps{
 
 export default function MyTextArea({ name, label, initialValue, ...props }: Props) {
     const [field, meta] = useField(name);
+    const {setFieldValue} = useFormikContext();
+    const [value, setValue] = useState(initialValue);
+
+    const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let inputValue = e.target.value;
+        setValue(inputValue);
+        setFieldValue(name, inputValue);
+    }
 
     return (
         <FormControl isInvalid={meta.touched && !!meta.error}>
@@ -20,10 +29,12 @@ export default function MyTextArea({ name, label, initialValue, ...props }: Prop
                 {...field}
                 {...props}
                 id={name}
+                value={value}
                 placeholder={props.placeholder}
-            >
-                {initialValue}
-            </Textarea>
+                onChange={handleInputChange}
+            />
+                
+            
 
             {meta.touched && meta.error && (
                 <FormErrorMessage>{meta.error}</FormErrorMessage>

@@ -39,8 +39,8 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             ViewModel.UserInputIsEnabled = false;
             CurrentTicket.Title = ViewModel.TicketTitle;
             CurrentTicket.Description = ViewModel.TicketDescription;
-            CurrentTicket.AssigneeId = ViewModel.Assignee != null ? ViewModel.Assignee.UserId : null;
-            CurrentTicket.AuthorId = ViewModel.Reporter.UserId;
+            //CurrentTicket.AssigneeId = ViewModel.Assignee != null ? ViewModel.Assignee.UserId : null;
+            //CurrentTicket.AuthorId = ViewModel.Reporter.UserId;
             CurrentTicket.Status = StatusOptionsRetriever.ConvertStatusStringToEnum(ViewModel.TicketStatus);
 
             try
@@ -51,8 +51,8 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
                 ViewModel.TicketTitle = CurrentTicket.Title;
                 ViewModel.TicketDescription = CurrentTicket.Description;
 
-                ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId) : null;
-                ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AuthorId);
+                //ViewModel.Assignee = !string.IsNullOrEmpty(CurrentTicket.AssigneeId) ? await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AssigneeId) : null;
+                //ViewModel.Reporter = await ProjectUserApiService.GetByProjectAndUserIdAsync(ProjectContainer.CurrentProject.Id, CurrentTicket.AuthorId);
 
                 ViewModel.SetTicketStatusWithoutExecutingSaveCommand(StatusOptionsRetriever.ConvertStatusEnumToString(CurrentTicket.Status));
             }

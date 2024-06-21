@@ -4,6 +4,9 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import MyTextArea from "../common/form/MyTextArea";
 import MyDropdown from "../common/form/MyDropdown";
+import UserDropdown from "../common/form/UserDropdown";
+import { useStore } from "../../stores/store";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     isOpen: boolean
@@ -11,7 +14,8 @@ interface Props {
     ticket: Ticket
 }
 
-export default function TicketDetailsModal({ isOpen, onClose, ticket }: Props) {
+export default observer(function TicketDetailsModal({ isOpen, onClose, ticket }: Props) {
+    const { projectStore } = useStore();
 
     const validationSchema = Yup.object({
         title: Yup.string().required("Title field is required.").max(255)
@@ -37,6 +41,7 @@ export default function TicketDetailsModal({ isOpen, onClose, ticket }: Props) {
                                 <MyTextArea name="description" initialValue={ticket.description} placeholder="Enter a description..." label="Description" variant="outline" resize="none" />
                                 <MyDropdown name="status" options={["To do", "In progress", "Done"]} currentSelection={ticket.status} />
                                 <MyDropdown name="priority" options={["low", "medium", "high"]} currentSelection={ticket.priority} />
+                                <UserDropdown name="assignee" options={projectStore.selectedProject!.users} currentSelection={ticket.assignee} allowNull />
                             </ModalBody>
 
                             <ModalFooter>
@@ -48,4 +53,4 @@ export default function TicketDetailsModal({ isOpen, onClose, ticket }: Props) {
             )}
         </Formik>
     )
-}
+})

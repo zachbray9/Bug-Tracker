@@ -28,21 +28,21 @@ namespace BugTracker.Api.Helpers
                 .ForMember(dest => dest.LastName, o => o.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.ProfilePictureUrl, o => o.MapFrom(src => src.User.ProfilePictureUrl));
 
-            CreateMap<User, ProjectParticipant>();
-
             CreateMap<Ticket, TicketDTO>();
                 
             CreateMap<TicketDTO, Ticket>()
                 .ForMember(dest => dest.Author, opt => opt.Ignore())
                 .ForMember(dest => dest.Assignee, opt => opt.Ignore());
+
             CreateMap<CreateTicketRequest, Ticket>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.ProjectId)))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => StatusExtensions.ParseStatus(src.Status)))
                 .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => PriorityExtensions.ParsePriority(src.Priority)));
 
             CreateMap<Comment, CommentDTO>()
-                .ForMember(dest => dest.AuthorFirstName, opt => opt.MapFrom(src => src.Author.FirstName))
-                .ForMember(dest => dest.AuthorLastName, opt => opt.MapFrom(src => src.Author.LastName));
+                .ForMember(dest => dest.AuthorFirstName, opt => opt.MapFrom(src => src.Author.User.FirstName))
+                .ForMember(dest => dest.AuthorLastName, opt => opt.MapFrom(src => src.Author.User.LastName));
+
             CreateMap<CommentDTO, Comment>()
                 .ForMember(dest => dest.Author, opt => opt.Ignore());
                 

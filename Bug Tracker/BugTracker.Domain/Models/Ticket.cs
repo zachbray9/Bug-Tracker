@@ -10,9 +10,10 @@ namespace BugTracker.Domain.Models
         public Guid ProjectId { get; set; }
         public Project Project { get; set; } = null!;
         public string AuthorId { get; set; } = null!;
-        public User Author { get; set; } = null!;
+        public ProjectUser Author { get; set; } = null!;
         public string? AssigneeId { get; set; }
-        public User? Assignee { get; set; }
+        public Guid? AssigneeProjectId { get; set; }
+        public ProjectUser? Assignee { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
         public DateTime DateSubmitted { get; set; }

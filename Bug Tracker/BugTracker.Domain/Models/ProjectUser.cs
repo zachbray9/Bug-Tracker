@@ -9,5 +9,8 @@ namespace BugTracker.Domain.Models
         public Guid ProjectId { get; set; }
         public Project Project { get; set; } = null!;
         public ProjectRole Role { get; set; }
+        public ICollection<Ticket> AuthoredTickets { get; set; } = new List<Ticket>();
+        public ICollection<Ticket> AssignedTickets { get; set; } = new List<Ticket>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

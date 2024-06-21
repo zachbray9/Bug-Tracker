@@ -38,24 +38,29 @@ namespace BugTracker.EntityFramework
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Author)
                 .WithMany(u => u.AuthoredTickets)
-                .HasForeignKey(t => t.AuthorId);
+                .HasForeignKey(t => new { t.AuthorId, t.ProjectId })
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.Assignee)
                 .WithMany(u => u.AssignedTickets)
-                .HasForeignKey(t => t.AssigneeId)
-                .IsRequired(false);
+                .HasForeignKey(t => new { t.AssigneeId, t.AssigneeProjectId })
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Author)
                 .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.AuthorId)
+                .HasForeignKey(c => new { c.AuthorId, c.ProjectId })
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Ticket)
                 .WithMany(t => t.Comments)
                 .HasForeignKey(c => c.TicketId);
+
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.ProjectId)
+                .IsRequired();
         }
     }
 }

@@ -9,8 +9,5 @@ namespace BugTracker.Domain.Models
         public string? ProfilePictureUrl { get; set; }
         public DateTime DateJoined { get; set; }
         public ICollection<ProjectUser> Projects { get; set; } = new List<ProjectUser>();
-        public ICollection<Ticket> AuthoredTickets { get; set; } = new List<Ticket>();
-        public ICollection<Ticket> AssignedTickets { get; set; } = new List<Ticket>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

@@ -23,7 +23,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose, ticket }:
 
     return (
         <Formik
-            initialValues={{ title: ticket.title, description: ticket.description, status: ticket.status, priority: ticket.priority, assignee: ticket.assignee }}
+            initialValues={{ title: ticket.title, description: ticket.description, status: ticket.status, priority: ticket.priority, assignee: ticket.assignee, author: ticket.author }}
             onSubmit={(values) => console.log(values)}
             validationSchema={validationSchema}
         >
@@ -42,6 +42,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose, ticket }:
                                 <MyDropdown name="status" options={["To do", "In progress", "Done"]} currentSelection={ticket.status} />
                                 <MyDropdown name="priority" options={["low", "medium", "high"]} currentSelection={ticket.priority} />
                                 <UserDropdown name="assignee" options={projectStore.selectedProject!.users} currentSelection={ticket.assignee} allowNull />
+                                <UserDropdown name="author" options={projectStore.selectedProject!.users} currentSelection={ticket.author} />
                             </ModalBody>
 
                             <ModalFooter>

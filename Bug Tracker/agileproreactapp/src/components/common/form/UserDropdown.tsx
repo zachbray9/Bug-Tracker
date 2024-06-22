@@ -1,4 +1,4 @@
-import { Avatar, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { ProjectParticipant } from "../../../models/ProjectParticipant";
 import { useFormikContext } from "formik";
 import { useState } from "react";
@@ -24,16 +24,23 @@ export default function UserDropdown({ name, options, currentSelection, allowNul
     return (
         <FormControl>
             <Menu>
-                <MenuButton>
-                    <Flex align="center" gap={4}>
-                        <Avatar name={selectedValue ? `${selectedValue.firstName} ${selectedValue.lastName}` : undefined} src={selectedValue?.profilePictureUrl} size="sm" />
-                        <Text>{selectedValue ? `${selectedValue.firstName} ${selectedValue.lastName}` : "Unassigned"}</Text>
-                    </Flex>
+                <MenuButton as={Button} variant="unstyled">
+                    {selectedValue ? (
+                        <Flex align="center" gap={4}>
+                            <Avatar name={`${selectedValue.firstName} ${selectedValue.lastName}`} src={selectedValue.profilePictureUrl} size="sm" />
+                            <Text>{`${selectedValue.firstName} ${selectedValue.lastName}`}</Text>
+                        </Flex>
+                    ): (
+                            <Flex align="center" gap={4}>
+                                <Avatar size="sm" bg="gray.400" />
+                                <Text>Unassigned</Text>
+                            </Flex>
+                    )}
                 </MenuButton>
 
                 <MenuList>
                     {filteredOptions.map((option) => (
-                        <MenuItem onClick={() => handleSelectionChange(option)}>
+                        <MenuItem key={option.email} onClick={() => handleSelectionChange(option)}>
                             <Flex align="center" gap={4}>
                                 <Avatar name={ `${option.firstName} ${option.lastName}` } src={option.profilePictureUrl} size="sm" />
                                 <Text>{`${option.firstName} ${option.lastName}`}</Text>
@@ -41,9 +48,9 @@ export default function UserDropdown({ name, options, currentSelection, allowNul
                         </MenuItem>
                     ))}
                     {allowNull && (
-                        <MenuItem onClick={() => handleSelectionChange(null)}>
+                        <MenuItem key="Unassigned" onClick={() => handleSelectionChange(null)}>
                             <Flex align="center" gap={4}>
-                                <Avatar size="sm" />
+                                <Avatar size="sm" bg="gray.400" />
                                 <Text>Unassigned</Text>
                             </Flex>
                         </MenuItem>

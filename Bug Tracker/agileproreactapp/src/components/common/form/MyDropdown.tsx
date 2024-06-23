@@ -22,7 +22,7 @@ export default function MyDropdown({ name, options, currentSelection }: Props) {
     }
 
     return (
-        <FormControl>
+        <FormControl width="fit-content">
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>{selectedValue}</MenuButton>
                 <MenuList>

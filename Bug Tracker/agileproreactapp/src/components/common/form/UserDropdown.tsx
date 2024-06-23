@@ -22,7 +22,7 @@ export default function UserDropdown({ name, options, currentSelection, allowNul
     }
 
     return (
-        <FormControl>
+        <FormControl width="fit-content">
             <Menu>
                 <MenuButton as={Button} variant="unstyled">
                     {selectedValue ? (

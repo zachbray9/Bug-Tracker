@@ -1,14 +1,15 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Card, CardBody, CardFooter, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Ticket } from "../../models/Ticket";
-import TicketDetailsModal from "./TicketDetailsModal";
+import { useStore } from "../../stores/store";
+import { observer } from "mobx-react-lite";
 
 interface Props {
     ticket: Ticket
 }
 
-export default function TicketCard({ ticket }: Props) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+export default observer(function TicketCard({ ticket }: Props) {
+    const { ticketStore } = useStore();
 
     const priorityColorMap = (priority: string) => {
         switch (priority) {
@@ -24,8 +25,7 @@ export default function TicketCard({ ticket }: Props) {
     }
 
     return (
-        <Card cursor="pointer" onClick={onOpen}>
-            <TicketDetailsModal isOpen={isOpen} onClose={onClose} ticket={ticket} />
+        <Card cursor="pointer" onClick={() => { ticketStore.setSelectedTicket(ticket); }}>
             <CardBody>
                 <Flex width="100%" justifyContent="space-between" alignItems="start">
                     <Button variant="link">{ticket.title}</Button>
@@ -47,4 +47,4 @@ export default function TicketCard({ ticket }: Props) {
             </CardFooter>
         </Card>
     )
-}
+})

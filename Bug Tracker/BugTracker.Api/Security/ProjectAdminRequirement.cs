@@ -1,6 +1,5 @@
 ﻿using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BugTracker.Api.Security
@@ -34,7 +33,7 @@ namespace BugTracker.Api.Security
                 return Task.CompletedTask;
             
 
-            if (projectUser.Role == Domain.Enumerables.ProjectRole.Administrator)
+            if (projectUser.Role == Domain.Enumerables.ProjectRole.Owner || projectUser.Role == Domain.Enumerables.ProjectRole.Administrator)
                 context.Succeed(requirement);
 
             return Task.CompletedTask;

@@ -4,9 +4,10 @@ import { Avatar, Button, HStack, Heading, IconButton, Stack } from "@chakra-ui/r
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 import TicketColumn from "../components/Tickets/TicketColumn";
 import { IoPersonAdd } from "react-icons/io5";
+import TicketDetailsModal from "../components/Tickets/TicketDetailsModal";
 
 export default observer(function ProjectBoard() {
-    const { projectStore } = useStore();
+    const { projectStore, ticketStore } = useStore();
 
     if (projectStore.selectedProject === null) {
         return (
@@ -33,6 +34,8 @@ export default observer(function ProjectBoard() {
                 <TicketColumn Title="In progress" />
                 <TicketColumn Title="Done" />
             </HStack>
+
+            {ticketStore.selectedTicket && <TicketDetailsModal isOpen={ticketStore.isModalOpen} onClose={ticketStore.clearSelectedTicket} />}
         </Stack>
     )
 })

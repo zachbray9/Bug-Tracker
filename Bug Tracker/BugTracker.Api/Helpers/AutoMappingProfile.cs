@@ -28,6 +28,8 @@ namespace BugTracker.Api.Helpers
                 .ForMember(dest => dest.LastName, o => o.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.ProfilePictureUrl, o => o.MapFrom(src => src.User.ProfilePictureUrl));
 
+            CreateMap<ProjectParticipant, ProjectUser>();
+
             CreateMap<Ticket, TicketDTO>();
                 
             CreateMap<TicketDTO, Ticket>()
@@ -38,6 +40,13 @@ namespace BugTracker.Api.Helpers
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.ProjectId)))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => StatusExtensions.ParseStatus(src.Status)))
                 .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => PriorityExtensions.ParsePriority(src.Priority)));
+
+            CreateMap<UpdateTicketRequest, Ticket>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => StatusExtensions.ParseStatus(src.Status)))
+                .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => PriorityExtensions.ParsePriority(src.Priority)))
+                .ForMember(dest => dest.AssigneeProjectId, opt => opt.MapFrom(src => src.Assignee != null ? src.ProjectId : null))
+                .ForMember(dest => dest.AssigneeId, opt => opt.MapFrom(src => src.Assignee != null ? src.Assignee.UserId : null))
+                .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.Author.UserId));
 
             CreateMap<Comment, CommentDTO>()
                 .ForMember(dest => dest.AuthorFirstName, opt => opt.MapFrom(src => src.Author.User.FirstName))

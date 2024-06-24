@@ -6,6 +6,7 @@ import { Project } from "../models/Project";
 import { ProjectFormValues } from "../models/ProjectFormValues";
 import { v4 as uuidv4 } from "uuid";
 import { Ticket } from "../models/Ticket";
+import { TicketFormValues } from "../models/TicketFormValues";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -62,7 +63,8 @@ const Projects = {
 }
 
 const Tickets = {
-    createTicket: (ticket: TicketFormValues) => requests.post<Ticket>("/Tickets", ticket)
+    createTicket: (ticket: TicketFormValues) => requests.post<Ticket>("/Tickets", ticket),
+    updateTicket: (ticket: TicketFormValues) => requests.put<Ticket>(`/Tickets/${ticket.id}`, ticket)
 }
 
 const Profiles = {

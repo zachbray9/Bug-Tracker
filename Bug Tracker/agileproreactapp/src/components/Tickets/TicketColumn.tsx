@@ -9,14 +9,14 @@ interface Props {
 }
 
 export default observer(function TicketColumn({ Title }: Props) {
-    const { projectStore } = useStore();
+    const { projectStore, ticketStore } = useStore();
     const [isCreatingTask, setIsCreatingTask] = useState(false);
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = () => {
         if (newTaskTitle.trim() !== "") {
-            projectStore.createTicket({
+            ticketStore.createTicket({
                 title: newTaskTitle,
                 status: Title,
                 priority: "low",

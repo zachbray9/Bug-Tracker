@@ -22,7 +22,7 @@ export default function MyDropdown({ name, options, currentSelection }: Props) {
     }
 
     return (
-        <FormControl width="fit-content">
+        <FormControl width="fit-content" isInvalid={meta.error ? true : false}>
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>{selectedValue}</MenuButton>
                 <MenuList>

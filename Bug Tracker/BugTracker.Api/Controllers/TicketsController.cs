@@ -84,19 +84,17 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpPut]
-        [Route("{ticketId:guid}")]
-        public async Task<IActionResult> Update([FromRoute] Guid ticketId, [FromBody] TicketDTO ticketDTO)
+        [Route("{ticketId}")]
+        public async Task<IActionResult> Update([FromRoute] string ticketId, [FromBody] UpdateTicketRequest ticketDTO)
         {
-            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == Guid.Parse(ticketId));
             if (ticket == null)
                 return NotFound();
 
             Mapper.Map(ticketDTO, ticket);
             await DbContext.SaveChangesAsync();
 
-            ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
-
-            TicketDTO? updatedTicket = Mapper.Map<TicketDTO>(ticket);
+            TicketDTO? updatedTicket = await DbContext.Tickets.ProjectTo<TicketDTO>(Mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == Guid.Parse(ticketId));
 
             return Ok(updatedTicket);
         }

@@ -24,15 +24,20 @@ export default observer(function TicketCard({ ticket }: Props) {
         }
     }
 
+    const handlePreventModalOpen = (event: React.MouseEvent) => {
+        event.stopPropagation();
+    }
+
     return (
         <Card cursor="pointer" onClick={() => { ticketStore.setSelectedTicket(ticket); }}>
             <CardBody>
-                <Flex width="100%" justifyContent="space-between" alignItems="start">
-                    <Button variant="link">{ticket.title}</Button>
+                <Flex width="100%" justifyContent="space-between" alignItems="start" gap={2}>
+                    <Button variant="link" whiteSpace="normal" wordBreak="break-word" textAlign="left">{ticket.title}</Button>
+  
                     <Menu>
-                        <MenuButton as={IconButton} aria-label="options" icon={<FiMoreHorizontal fontSize="24px" />} />
+                        <MenuButton as={IconButton} aria-label="options" onClick={handlePreventModalOpen} icon={<FiMoreHorizontal fontSize="24px" />} />
                         <MenuList>
-                            <MenuItem>Delete</MenuItem>
+                            <MenuItem onClick={(e) => { handlePreventModalOpen(e); ticketStore.deleteTicket(ticket.id) }}>Delete</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

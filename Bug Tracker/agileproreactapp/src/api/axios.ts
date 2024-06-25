@@ -64,7 +64,8 @@ const Projects = {
 
 const Tickets = {
     createTicket: (ticket: TicketFormValues) => requests.post<Ticket>("/Tickets", ticket),
-    updateTicket: (ticket: TicketFormValues) => requests.put<Ticket>(`/Tickets/${ticket.id}`, ticket)
+    updateTicket: (ticket: TicketFormValues) => requests.put<Ticket>(`/Tickets/${ticket.id}`, ticket),
+    deleteTicket: (ticketId: string) => requests.delete<Ticket>(`/Tickets/${ticketId}`)
 }
 
 const Profiles = {

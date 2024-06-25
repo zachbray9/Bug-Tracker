@@ -60,6 +60,22 @@ export default class TicketStore {
         }
     }
 
+    deleteTicket = async (ticketId: string) => {
+        this.setIsLoading(true);
+
+        try {
+            agent.Tickets.deleteTicket(ticketId);
+            runInAction(() => {
+                if (store.projectStore.selectedProject) {
+                    store.projectStore.selectedProject.tickets = store.projectStore.selectedProject.tickets.filter(ticket => ticket.id !== ticketId);
+                }
+            });
+      
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     setIsLoading = (value: boolean) => {
         this.isLoading = value;
     }

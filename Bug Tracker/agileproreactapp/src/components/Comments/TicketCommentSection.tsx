@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Heading, Stack } from "@chakra-ui/react";
 import { useStore } from "../../stores/store";
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
@@ -50,9 +50,11 @@ export default observer(function TicketCommentSection({ ticketId }: Props) {
                 )}
             </Formik>
 
-            {commentStore.comments.map(comment => (
-                <CommentContainer key={comment.id} comment={comment} />
-            ))}
+            <Stack gap={4}>
+                {commentStore.comments.map(comment => (
+                    <CommentContainer key={comment.id} comment={comment} />
+                ))}
+            </Stack>
         </Stack>
     )
 })

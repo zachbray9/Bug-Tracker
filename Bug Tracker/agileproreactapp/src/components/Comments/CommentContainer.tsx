@@ -10,12 +10,12 @@ export default function CommentContainer({ comment }: Props) {
     const formattedDate = format(new Date(comment.dateSubmitted), "MMMM d, yyyy 'at' h:mm a")
 
     return (
-        <Flex gap={2} align="start">
+        <Flex gap={4} align="start">
             <Avatar name={`${comment.author.firstName} ${comment.author.lastName}`} src={comment.author.profilePictureUrl} size="sm" />
             <Stack>
                 <Flex gap={4}>
-                    <Text>{`${comment.author.firstName} ${comment.author.lastName}`}</Text>
-                    <Text>{formattedDate}</Text>
+                    <Text as="b">{`${comment.author.firstName} ${comment.author.lastName}`}</Text>
+                    <Text fontSize="sm" color="#44546f">{formattedDate}</Text>
                 </Flex>
                 <Text>{comment.text}</Text>
             </Stack>

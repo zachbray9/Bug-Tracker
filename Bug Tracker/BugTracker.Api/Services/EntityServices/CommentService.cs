@@ -50,7 +50,7 @@ namespace BugTracker.Api.Services.EntityServices
         {
             var comments = await DbContext.Comments
                 .Where(c => c.TicketId == ticketId)
-                .OrderBy(c => c.DateSubmitted)
+                .OrderByDescending(c => c.DateSubmitted)
                 .ProjectTo<CommentDTO>(Mapper.ConfigurationProvider)
                 .ToListAsync();
 

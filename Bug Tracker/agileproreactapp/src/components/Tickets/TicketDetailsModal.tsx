@@ -60,7 +60,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
 
                             <ModalBody>
                                 <Grid templateColumns="2fr 1fr" gap={8}>
-                                    <Stack gap={4}>
+                                    <Stack gap={4} maxH="75vh" overflowY="auto">
                                         <MyTextArea name="title" initialValue={selectedTicket!.title} variant="unstyled" colorScheme="messenger" fontSize="24" fontWeight="600" whiteSpace="pre-wrap" resize="none" overflow="hidden" _focus={{ border: "2px solid #0c66e4" }} />
                                         <MyTextArea name="description" initialValue={selectedTicket!.description} placeholder="Enter a description..." label="Description" variant="outline" resize="none" overflow="hidden" />
                                         <TicketCommentSection ticketId={selectedTicket!.id} />

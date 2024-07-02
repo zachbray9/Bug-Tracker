@@ -29,7 +29,7 @@ export default observer(function TicketCommentSection({ ticketId }: Props) {
     })
 
     return (
-        <Stack>
+        <Stack gap={4}>
             <Heading size="md">{commentStore.comments.length} Comments</Heading>
 
             <Formik
@@ -37,12 +37,12 @@ export default observer(function TicketCommentSection({ ticketId }: Props) {
                 onSubmit={(values, { resetForm }) => commentStore.addComment(values).then(() => resetForm())}
                 validationSchema={validationSchema}
             >
-                {({ isSubmitting, isValid, dirty }) => (
+                {({ isSubmitting, values, isValid, dirty }) => (
                     <Form>
                         <Stack>
                             <Flex align="start" gap={2}>
                                 <Avatar name={`${userStore.user!.firstName} ${userStore.user!.lastName}`} src={userStore.user!.profilePictureUrl} size="sm" />
-                                <MyTextArea name="text" placeholder="Add a comment..." resize="none" overflow="hidden" whiteSpace="pre-wrap" />
+                                <MyTextArea name="text" placeholder="Add a comment..." initialValue={values.text } resize="none" overflow="hidden" whiteSpace="pre-wrap" />
                             </Flex>
                             <Button type="submit" isLoading={isSubmitting} isDisabled={!dirty} alignSelf="end">Comment</Button>
                         </Stack>
@@ -50,7 +50,7 @@ export default observer(function TicketCommentSection({ ticketId }: Props) {
                 )}
             </Formik>
 
-            <Stack gap={4}>
+            <Stack gap={6}>
                 {commentStore.comments.map(comment => (
                     <CommentContainer key={comment.id} comment={comment} />
                 ))}

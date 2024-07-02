@@ -24,11 +24,19 @@ export default class CommentStore {
             this.hubConnection.start().catch(error => console.log(`Error establishing chathub connection: ${error}`));
 
             this.hubConnection.on('LoadComments', (comments: Comment[]) => {
-                runInAction(() => this.comments = comments);
+                runInAction(() => {
+                    comments.forEach(comment => {
+                        comment.dateSubmitted = new Date(comment.dateSubmitted + 'Z');
+                    })
+                    this.comments = comments;
+                });
             })
 
             this.hubConnection.on('ReceiveComment', (comment: Comment) => {
-                runInAction(() => this.comments.push(comment));
+                runInAction(() => {
+                    comment.dateSubmitted = new Date(comment.dateSubmitted + 'Z');
+                    this.comments.unshift(comment);
+                });
             })
         }
     }

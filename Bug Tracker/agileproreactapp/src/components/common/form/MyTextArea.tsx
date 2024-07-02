@@ -19,7 +19,7 @@ export default function MyTextArea({ name, label, initialValue, ...props }: Prop
             textAreaRef.current.style.height = "auto";
             textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
         }
-    }, [initialValue]);
+    }, [textAreaRef]);
 
     const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let inputValue = e.target.value;

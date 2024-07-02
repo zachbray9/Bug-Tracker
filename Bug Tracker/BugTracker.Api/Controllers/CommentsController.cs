@@ -24,23 +24,6 @@ namespace BugTracker.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
-        {
-
-            Comment? comment = await DbContext.Comments.Include(c => c.Author).FirstOrDefaultAsync(c => c.Id == id);
-
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            CommentDTO? commentDTO = Mapper.Map<CommentDTO>(comment);
-
-            return Ok(commentDTO);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             List<Comment>? comments = await DbContext.Comments.Include(c => c.Author).Include(c => c.Ticket).ToListAsync();

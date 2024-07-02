@@ -1,8 +1,8 @@
 ﻿using Azure.Storage.Blobs;
+using BugTracker.Api.Services.EntityServices;
 using BugTracker.Api.Services.StorageServices;
 using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Azure;
 
 namespace BugTracker.Api.Extensions
 {
@@ -28,12 +28,18 @@ namespace BugTracker.Api.Extensions
             {
                 options.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5173"); //must change url for production
+                    policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:5173"); //must change url for production
                 });
             });
 
+            services.AddSignalR();
             services.AddSingleton(x => new BlobServiceClient(config["AzureBlobConnectionString"]));
             services.AddScoped<BlobStorageService>();
+            services.AddScoped<CommentService>();
 
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Program));

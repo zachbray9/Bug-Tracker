@@ -41,30 +41,6 @@ namespace BugTracker.Api.Controllers
             return Ok(ticketDTO);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            List<Ticket>? tickets = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).ToListAsync();
-            List<TicketDTO>? ticketDTOs = Mapper.Map<List<TicketDTO>>(tickets);
-
-            return Ok(ticketDTOs);
-        }
-
-        [HttpGet]
-        [Route("{ticketId:guid}/Comments")]
-        public async Task<IActionResult> GetAllCommentsOnTicket([FromRoute] Guid ticketId)
-        {
-            Ticket? ticket = await DbContext.Tickets.Include(t => t.Comments).ThenInclude(c => c.Author).FirstOrDefaultAsync(t => t.Id == ticketId);
-            if(ticket == null)
-            {
-                return NotFound("No ticket with this id was found.");
-            }
-
-            List<CommentDTO>? comments = Mapper.Map<List<CommentDTO>>(ticket.Comments);
-
-            return Ok(comments);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTicketRequest newTicketRequest)
         {

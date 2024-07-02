@@ -16,6 +16,8 @@
     <Folder Include="src\components\common\Loading\" />
     <Folder Include="src\components\common\Empty\" />
     <Folder Include="src\components\common\ImageUpload\" />
+    <Folder Include="src\components\common\Options\" />
+    <Folder Include="src\components\Comments\" />
     <Folder Include="src\components\Tickets\" />
     <Folder Include="src\stores\" />
   </ItemGroup>

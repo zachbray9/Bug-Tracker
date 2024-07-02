@@ -53,42 +53,6 @@ namespace BugTracker.Api.Controllers
             return Ok(projectDtos);
         }
 
-        [HttpGet]
-        [Route("{projectId:guid}/Users")]
-        public async Task<IActionResult> GetAllParticipantsOnProject([FromRoute] Guid projectId)
-        {
-            Project? project = await DbContext.Projects.Include(p => p.Users).ThenInclude(pu => pu.User).FirstOrDefaultAsync(p => p.Id.Equals(projectId));
-            if(project == null)
-            {
-                return NotFound($"No project with an id of {projectId} exists.");
-            }
-
-            List<ProjectUserDTO>? users = Mapper.Map<List<ProjectUserDTO>>(project.Users);
-            
-            return Ok(users);
-
-        }
-
-        [HttpGet]
-        [Route("{projectId:guid}/Tickets")]
-        public async Task<IActionResult> GetAllTicketsOnProject([FromRoute] Guid projectId)
-        {
-            Project? project = await DbContext.Projects
-                .Include(p => p.Tickets)
-                    .ThenInclude(t => t.Author)
-                .Include(p => p.Tickets)
-                    .ThenInclude(t => t.Assignee)
-                .FirstOrDefaultAsync(p => p.Id == projectId);
-
-            if (project == null)
-            {
-                return NotFound($"No project with the id {projectId} exists.");
-            }
-         
-            List<TicketDTO>? ticketDTOs = Mapper.Map<List<TicketDTO>>(project.Tickets);
-            return Ok(ticketDTOs);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProjectRequest createProjectRequest)
         {

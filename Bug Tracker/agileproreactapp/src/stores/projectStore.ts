@@ -3,7 +3,6 @@ import { Project } from "../models/Project";
 import agent from "../api/axios";
 import { ProjectFormValues } from "../models/ProjectFormValues";
 import router from "../routes";
-import { TicketFormValues } from "../models/TicketFormValues";
 
 export default class ProjectStore {
     projects: Project[] = [];
@@ -35,29 +34,6 @@ export default class ProjectStore {
             console.log(project);
             runInAction(() => { this.projects.push(project) });
             this.setSelectedProject(project);
-            this.setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-            this.setIsLoading(false);
-        }
-    }
-
-    updateTicket = async (creds: TicketFormValues) => {
-        this.setIsLoading(true);
-
-        try {
-            var updatedTicket = await agent.Tickets.updateTicket(creds);
-            console.log(updatedTicket);
-
-            runInAction(() => {
-                if (this.selectedProject) {
-                    const index = this.selectedProject.tickets.findIndex(ticket => ticket.id === updatedTicket.id);
-                    if (index !== -1) {
-                        this.selectedProject.tickets[index] = updatedTicket;
-                    }
-                }
-            });
-
             this.setIsLoading(false);
         } catch (error) {
             console.log(error);

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using System.Text.Json.Serialization;
 using BugTracker.Api.Helpers;
 using BugTracker.Domain.Enumerables;
+using BugTracker.Api.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,5 +46,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chat");
 
 app.Run();

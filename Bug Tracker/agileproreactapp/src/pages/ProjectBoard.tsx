@@ -3,7 +3,7 @@ import { useStore } from "../stores/store";
 import { Avatar, Button, HStack, Heading, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 import TicketColumn from "../components/Tickets/TicketColumn";
-import { IoPersonAdd } from "react-icons/io5";
+import { IoPersonAdd, IoPersonAddSharp } from "react-icons/io5";
 import TicketDetailsModal from "../components/Tickets/TicketDetailsModal";
 import AddUserModal from "../components/Projects/AddUserModal";
 
@@ -29,7 +29,7 @@ export default observer(function ProjectBoard() {
                 )))}
 
                 {projectStore.isAdmin && (
-                    <IconButton aria-label="add user" icon={<IoPersonAdd />} isRound={true} onClick={() => onOpen()} />
+                    <IconButton aria-label="add user" icon={<IoPersonAddSharp />} isRound={true} onClick={() => onOpen()} />
                 )}
             </HStack>
 

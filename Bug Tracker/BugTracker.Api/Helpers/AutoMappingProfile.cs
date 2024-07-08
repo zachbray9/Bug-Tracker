@@ -46,7 +46,9 @@ namespace BugTracker.Api.Helpers
                 .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => PriorityExtensions.ParsePriority(src.Priority)))
                 .ForMember(dest => dest.AssigneeProjectId, opt => opt.MapFrom(src => src.Assignee != null ? src.ProjectId : null))
                 .ForMember(dest => dest.AssigneeId, opt => opt.MapFrom(src => src.Assignee != null ? src.Assignee.UserId : null))
-                .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.Author.UserId));
+                .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.Author.UserId))
+                .ForMember(dest => dest.Assignee, opt => opt.Ignore())
+                .ForMember(dest => dest.Author, opt => opt.Ignore());
 
             CreateMap<Comment, CommentDTO>();
 

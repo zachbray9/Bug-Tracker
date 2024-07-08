@@ -27,37 +27,37 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
     const formattedDate = format(new Date(ticketStore.selectedTicket!.dateSubmitted), "MMMM d, yyyy 'at' h:mm a")
 
     return (
-        <Formik
-            initialValues={{
-                id: selectedTicket!.id,
-                projectId: projectStore.selectedProject!.id,
-                title: selectedTicket!.title,
-                description: selectedTicket!.description,
-                status: selectedTicket!.status,
-                priority: selectedTicket!.priority,
-                assignee: selectedTicket!.assignee,
-                author: selectedTicket!.author,
-                error: null
-            }}
-            onSubmit={(values, { setErrors }) => {
-                try {
-                    ticketStore.updateTicket(values);
-                    onClose();
-                } catch (error) {
-                    setErrors({ error: "Something went wrong. Please try again." });
-                }
-            }}
-            validationSchema={validationSchema}
-        >
-            {({ handleSubmit, isSubmitting, errors, dirty, resetForm, values }) => (
-                <Form id="updateTicketForm" onSubmit={handleSubmit} autoComplete="off">
-                    <Modal size="xl" isOpen={isOpen} onClose={() => { onClose(); resetForm(); }}>
-                        <ModalOverlay />
-                        <ModalContent maxW="65vw">
-                            <ModalCloseButton />
+        <Modal size="xl" isOpen={isOpen} onClose={() => { onClose(); }}>
+            <ModalOverlay />
+            <ModalContent maxW="65vw">
+                <ModalCloseButton />
 
-                            <ModalHeader></ModalHeader>
+                <ModalHeader></ModalHeader>
 
+                <Formik
+                    initialValues={{
+                        id: selectedTicket!.id,
+                        projectId: projectStore.selectedProject!.id,
+                        title: selectedTicket!.title,
+                        description: selectedTicket!.description,
+                        status: selectedTicket!.status,
+                        priority: selectedTicket!.priority,
+                        assignee: selectedTicket!.assignee,
+                        author: selectedTicket!.author,
+                        error: null
+                    }}
+                    onSubmit={async (values, { setErrors, resetForm }) => {
+                        try {
+                            await ticketStore.updateTicket(values);
+                            resetForm({ values });
+                        } catch {
+                            setErrors({ error: "Something went wrong. Please try again." })
+                        }
+                    }}
+                    validationSchema={validationSchema}
+                >
+                    {({ handleSubmit, isSubmitting, errors, dirty, values }) => (
+                        <Form onSubmit={handleSubmit} autoComplete="off">
                             <ModalBody>
                                 <Grid templateColumns="2fr 1fr" gap={8}>
                                     <Stack gap={16} maxH="75vh" overflowY="auto">
@@ -78,12 +78,12 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                         <Stack gap={4} width="100%" padding={4} border="1px solid #c8c8c8">
                                             <Flex align="center" gap={24} width="100%">
                                                 <Heading size="xs">Assignee</Heading>
-                                                <UserDropdown name="assignee" options={projectStore.selectedProject!.users} currentSelection={values.assignee} allowNull />
+                                                <UserDropdown name="assignee" options={projectStore.selectedProject!.users} allowNull />
                                             </Flex>
 
                                             <Flex align="center" gap={24} width="100%">
                                                 <Heading size="xs">Reporter</Heading>
-                                                <UserDropdown name="author" options={projectStore.selectedProject!.users} currentSelection={values.author} />
+                                                <UserDropdown name="author" options={projectStore.selectedProject!.users} />
                                             </Flex>
                                         </Stack>
 
@@ -92,14 +92,14 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                 </Grid>
                             </ModalBody>
 
-                            <ModalFooter>
+                            <ModalFooter flexDir="column" alignItems="end" gap={2}>
                                 {errors.error && < Text color="red">{errors.error}</Text>}
-                                {dirty && <Button type="submit" isLoading={isSubmitting} form="updateTicketForm">Save changes</Button>}
+                                {dirty && <Button type="submit" isLoading={isSubmitting} >Save changes</Button>}
                             </ModalFooter>
-                        </ModalContent>
-                    </Modal>
-                </Form>
-            )}
-        </Formik>
+                        </Form>
+                    )}
+                </Formik>
+            </ModalContent>
+        </Modal>
     )
 })

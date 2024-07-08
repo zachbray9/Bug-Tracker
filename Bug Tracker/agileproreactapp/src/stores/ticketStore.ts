@@ -38,26 +38,16 @@ export default class TicketStore {
     }
 
     updateTicket = async (creds: TicketFormValues) => {
-        this.setIsLoading(true);
+        var updatedTicket = await agent.Tickets.updateTicket(creds);
 
-        try {
-            var updatedTicket = await agent.Tickets.updateTicket(creds);
-            console.log(updatedTicket);
-
-            runInAction(() => {
-                if (store.projectStore.selectedProject) {
-                    const index = store.projectStore.selectedProject.tickets.findIndex(ticket => ticket.id === updatedTicket.id);
-                    if (index !== -1) {
-                        store.projectStore.selectedProject.tickets[index] = updatedTicket;
-                    }
+        runInAction(() => {
+            if (store.projectStore.selectedProject) {
+                const index = store.projectStore.selectedProject.tickets.findIndex(ticket => ticket.id === updatedTicket.id);
+                if (index !== -1) {
+                    store.projectStore.selectedProject.tickets[index] = updatedTicket;
                 }
-            });
-
-            this.setIsLoading(false);
-        } catch (error) {
-            console.log(error);
-            this.setIsLoading(false);
-        }
+            }
+        });
     }
 
     deleteTicket = async (ticketId: string) => {

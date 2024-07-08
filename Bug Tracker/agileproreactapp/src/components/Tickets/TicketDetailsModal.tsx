@@ -40,7 +40,6 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                 error: null
             }}
             onSubmit={(values, { setErrors }) => {
-                console.log(values);
                 try {
                     ticketStore.updateTicket(values);
                     onClose();
@@ -61,16 +60,19 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
 
                             <ModalBody>
                                 <Grid templateColumns="2fr 1fr" gap={8}>
-                                    <Stack gap={4} maxH="75vh" overflowY="auto">
-                                        <MyTextArea name="title" initialValue={values.title} variant="unstyled" colorScheme="messenger" fontSize="24" fontWeight="600" whiteSpace="pre-wrap" resize="none" overflow="hidden" _focus={{ border: "2px solid #0c66e4" }} />
-                                        <MyTextArea name="description" initialValue={values.description} placeholder="Enter a description..." label="Description" variant="outline" resize="none" overflow="hidden" />
+                                    <Stack gap={16} maxH="75vh" overflowY="auto">
+                                        <Stack gap={4}>
+                                            <MyTextArea name="title" initialValue={values.title} variant="unstyled" colorScheme="messenger" fontSize="24" fontWeight="600" whiteSpace="pre-wrap" resize="none" overflow="hidden" _focus={{ border: "2px solid #0c66e4" }} />
+                                            <MyTextArea name="description" initialValue={values.description} placeholder="Enter a description..." label="Description" variant="outline" resize="none" overflow="hidden" />
+                                        </Stack>
+
                                         <TicketCommentSection ticketId={selectedTicket!.id} />
                                     </Stack>
 
                                     <Stack width="100%" gap={4}>
                                         <Flex justify="start" gap={4}>
-                                            <MyDropdown name="status" options={StatusOptions} currentSelection={values.status} />
-                                            <MyDropdown name="priority" options={PriorityOptions} currentSelection={values.priority} />
+                                            <MyDropdown name="status" options={StatusOptions} />
+                                            <MyDropdown name="priority" options={PriorityOptions} />
                                         </Flex>
 
                                         <Stack gap={4} width="100%" padding={4} border="1px solid #c8c8c8">

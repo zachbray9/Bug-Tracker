@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using BugTracker.Api.Models.Requests;
 using System.Security.Claims;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
+using BugTracker.Domain.Enumerables;
 
 namespace BugTracker.Api.Controllers
 {
@@ -18,26 +20,14 @@ namespace BugTracker.Api.Controllers
     public class ProjectsController : Controller
     {
         private readonly BugTrackerDbContext DbContext;
+        private readonly UserManager<User> UserManager;
         private readonly IMapper Mapper;
 
-        public ProjectsController(BugTrackerDbContext dbContext, IMapper mapper)
+        public ProjectsController(BugTrackerDbContext dbContext, UserManager<User> userManager, IMapper mapper)
         {
             DbContext = dbContext;
+            UserManager = userManager;
             Mapper = mapper;
-        }
-
-        [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
-        {
-            Project? project = await DbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
-
-            if (project == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(Mapper.Map<ProjectDTO>(project));
         }
 
         [HttpGet]
@@ -77,6 +67,42 @@ namespace BugTracker.Api.Controllers
             await DbContext.SaveChangesAsync();
 
             return Created($"~/api/Projects/{newProject.Entity.Id}", Mapper.Map<ProjectDTO>(newProject.Entity));
+        }
+
+        [Authorize("IsProjectAdmin")]
+        [HttpPost("{projectId:guid}/[action]")]
+        public async Task<IActionResult> AddUser([FromRoute] Guid projectId, [FromBody] AddUserToProjectRequest request)
+        {
+            //checks if the user that is being added exists
+            User user = await UserManager.FindByEmailAsync(request.Email);
+            if(user == null)
+            {
+                return NotFound("A user with this email could not be found.");
+            }
+
+            //checks if the project that you are trying to add someone to exists
+            Project? project = await DbContext.Projects.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == projectId);
+            if(project == null)
+            {
+                return NotFound("A project with this id could not be found.");
+            }
+
+            //checks if the user that is being added is already on this project
+            if(project.Users.Any(pu => pu.UserId == user.Id))
+            {
+                return Conflict("This user is already a member of this project");
+            }
+
+            project.Users.Add(new ProjectUser
+            {
+                UserId = user.Id,
+                ProjectId = project.Id,
+                Role = ProjectRoleExtensions.ParseProjectRole(request.Role)
+            });
+
+            await DbContext.SaveChangesAsync();
+
+            return Ok(await DbContext.ProjectUsers.ProjectTo<ProjectParticipant>(Mapper.ConfigurationProvider).SingleOrDefaultAsync(pu => pu.ProjectId == project.Id && pu.UserId == user.Id));
         }
 
         [Authorize("IsProjectAdmin")]

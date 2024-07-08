@@ -37,12 +37,12 @@ export default observer(function TicketCommentSection({ ticketId }: Props) {
                 onSubmit={(values, { resetForm }) => commentStore.addComment(values).then(() => resetForm())}
                 validationSchema={validationSchema}
             >
-                {({ isSubmitting, values, isValid, dirty }) => (
+                {({ isSubmitting, values, dirty }) => (
                     <Form>
                         <Stack>
                             <Flex align="start" gap={2}>
                                 <Avatar name={`${userStore.user!.firstName} ${userStore.user!.lastName}`} src={userStore.user!.profilePictureUrl} size="sm" />
-                                <MyTextArea name="text" placeholder="Add a comment..." resize="none" overflow="hidden" whiteSpace="pre-wrap" />
+                                <MyTextArea name="text" placeholder="Add a comment..." initialValue={values.text} resize="none" overflow="hidden" whiteSpace="pre-wrap" />
                             </Flex>
                             <Button type="submit" isLoading={isSubmitting} isDisabled={!dirty} alignSelf="end">Comment</Button>
                         </Stack>

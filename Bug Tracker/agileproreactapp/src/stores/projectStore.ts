@@ -3,11 +3,14 @@ import { Project } from "../models/Project";
 import agent from "../api/axios";
 import { ProjectFormValues } from "../models/ProjectFormValues";
 import router from "../routes";
+import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
+import { store } from "./store";
 
 export default class ProjectStore {
     projects: Project[] = [];
     selectedProject: Project | null = null;
-    isLoading = false;
+    isLoading = false; 
+    isAdmin = false;
 
     constructor(){
         makeAutoObservable(this);
@@ -26,6 +29,16 @@ export default class ProjectStore {
         }
     }
 
+    setIsAdmin = () => {
+        const user = this.selectedProject?.users.find(u => u.email === store.userStore.user?.email);
+        if (user && (user.role === "Owner" || user.role === "Administrator")) {
+            this.isAdmin = true;
+        }
+        else {
+            this.isAdmin = false;
+        }
+    }
+
     createProject = async (creds: ProjectFormValues) => {
         this.setIsLoading(true);
 
@@ -41,8 +54,14 @@ export default class ProjectStore {
         }
     }
 
+    addUser = async (creds: AddUserFormValues) => {
+        var user = await agent.Projects.addUser(creds);
+        runInAction(() => { this.selectedProject!.users.push(user) })
+    }
+
     setSelectedProject = (project: Project) => {
         this.selectedProject = project;
+        this.setIsAdmin();
         router.navigate("projectBoard");
     }
 

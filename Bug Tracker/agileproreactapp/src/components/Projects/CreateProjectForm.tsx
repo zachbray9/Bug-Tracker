@@ -10,7 +10,6 @@ export default function CreateProjectForm() {
 
     const validationSchema = Yup.object({
         name: Yup.string().required("Title field is required."),
-        description: Yup.string().required("Description field is required.")
     });
 
     return (

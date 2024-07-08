@@ -25,7 +25,7 @@ namespace BugTracker.Api.Security
             if (userId == null)
                 return Task.CompletedTask;
 
-            var projectId = Guid.Parse(HttpContextAccessor.HttpContext?.Request.RouteValues.SingleOrDefault(x => x.Key == "id").Value?.ToString());
+            var projectId = Guid.Parse(HttpContextAccessor.HttpContext?.Request.RouteValues.SingleOrDefault(x => x.Key == "projectId").Value?.ToString());
 
             var projectUser = DbContext.ProjectUsers.FindAsync(userId, projectId).Result;
 

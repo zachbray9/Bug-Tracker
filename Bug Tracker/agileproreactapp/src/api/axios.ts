@@ -7,6 +7,8 @@ import { ProjectFormValues } from "../models/ProjectFormValues";
 import { v4 as uuidv4 } from "uuid";
 import { Ticket } from "../models/Ticket";
 import { TicketFormValues } from "../models/TicketFormValues";
+import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
+import { ProjectParticipant } from "../models/ProjectParticipant";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -59,7 +61,8 @@ const Auth = {
 
 const Projects = {
     getCurrentUserProjects: () => requests.get<Project[]>("/Projects"),
-    createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project)
+    createProject: (project: ProjectFormValues) => requests.post<Project>("/Projects", project),
+    addUser: (addUserForm: AddUserFormValues) => requests.post<ProjectParticipant>(`/Projects/${addUserForm.projectId}/AddUser`, addUserForm)
 }
 
 const Tickets = {

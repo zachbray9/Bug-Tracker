@@ -21,6 +21,7 @@ builder.Services.AddControllers(options =>
 }).AddJsonOptions(options => {
     options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<Status>());
     options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<Priority>());
+    options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<ProjectRole>());
 });
 
 builder.Services.AddApplicationServices(builder.Configuration);           //extension method that adds application services

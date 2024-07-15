@@ -28,5 +28,21 @@ namespace BugTracker.Domain.Enumerables
                         
             }
         }
+
+        public static string ParseStatus(Status status)
+        {
+            switch(status)
+            {
+                case Status.ToDo:
+                    return "To do";
+                case Status.InProgress:
+                    return "In progress";
+                case Status.Done:
+                    return "Done";
+                default:
+                    throw new ArgumentException($"Invalid status: {status}");
+
+            }
+        }
     }
 }

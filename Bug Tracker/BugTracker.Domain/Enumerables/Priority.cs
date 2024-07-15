@@ -28,5 +28,20 @@ namespace BugTracker.Domain.Enumerables
                     throw new ArgumentException($"Invalid priority string: {priority}");
             }
         }
+
+        public static string ParsePriority(Priority priority)
+        {
+            switch (priority)
+            {
+                case Priority.Low:
+                    return "low";
+                case Priority.Medium:
+                    return "medium";
+                case Priority.High:
+                    return "high";
+                default:
+                    throw new ArgumentException($"Invalid priority: {priority}");
+            }
+        }
     }
 }

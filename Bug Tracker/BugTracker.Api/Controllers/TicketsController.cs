@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.JsonPatch;
+using BugTracker.Domain.Enumerables;
 
 namespace BugTracker.Api.Controllers
 {
@@ -73,10 +74,23 @@ namespace BugTracker.Api.Controllers
 
             TicketDTO? ticketToPatch = Mapper.Map<TicketDTO>(ticket);
 
+            foreach(var operation in patchDoc.Operations)
+            {
+                var path = operation.path.TrimStart('/');
+                if(path == "status")
+                {
+                    operation.value = StatusExtensions.ParseStatus(operation.value.ToString()!);
+                }
+                else if(path == "priority")
+                {
+                    operation.value = PriorityExtensions.ParsePriority(operation.value.ToString()!);
+                }
+            }
+
             patchDoc.ApplyTo(ticketToPatch!, ModelState);
 
             if (!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(ModelState);
 
             Mapper.Map(ticketToPatch, ticket);
 

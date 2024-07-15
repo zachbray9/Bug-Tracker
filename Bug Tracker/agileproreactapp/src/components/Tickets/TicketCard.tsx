@@ -47,7 +47,7 @@ export default observer(function TicketCard({ ticket }: Props) {
                     <Box bg={priorityColorMap(ticket.priority)} borderLeftRadius="full" borderRightRadius="full" padding="1px 8px" >
                         <Text fontSize="xs" color="whitesmoke">{ticket.priority}</Text>
                     </Box>
-                    <Avatar name={ticket.assignee ? ticket.assignee.firstName + " " + ticket.assignee.lastName : ""} src={ticket.assignee?.profilePictureUrl ? ticket.assignee.profilePictureUrl : undefined} size="sm" />
+                    <Avatar name={ticket.assignee ? `${ticket.assignee.firstName} ${ticket.assignee.lastName}` : undefined} src={ticket.assignee?.profilePictureUrl ? ticket.assignee.profilePictureUrl : undefined} size="sm" />
                 </Flex>
             </CardFooter>
         </Card>

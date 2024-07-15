@@ -116,7 +116,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                         }
                                     }} 
                                 >
-                                    {({ isSubmitting }) => (
+                                    {({  }) => (
                                         <Form>
                                             <MyDropdown name="status" options={StatusOptions} submitOnSelect />
                                         </Form>
@@ -133,7 +133,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                         }
                                     }}
                                 >
-                                    {({ isSubmitting }) => (
+                                    {({ }) => (
                                         <Form>
                                             <MyDropdown name="priority" options={PriorityOptions} submitOnSelect />
                                         </Form>
@@ -142,17 +142,48 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                 
                             </Flex>
 
-                            {/*<Stack gap={4} width="100%" padding={4} border="1px solid #c8c8c8">*/}
-                            {/*    <Flex align="center" gap={24} width="100%">*/}
-                            {/*        <Heading size="xs">Assignee</Heading>*/}
-                            {/*        <UserDropdown name="assignee" options={projectStore.selectedProject!.users} allowNull />*/}
-                            {/*    </Flex>*/}
+                            <Stack gap={4} width="100%" padding={4} border="1px solid #c8c8c8">
+                                <Flex align="center" gap={24} width="100%">
+                                    <Heading size="xs">Assignee</Heading>
+                                    <Formik
+                                        initialValues={{ assignee: ticketStore.selectedTicket!.assignee, error: null }}
+                                        onSubmit={async (values, { setErrors }) => {
+                                            try {
+                                                await ticketStore.updateTicket(ticketStore.selectedTicket!.id, "assignee", values.assignee)
+                                            } catch (error) {
+                                                setErrors({ error: "Something went wrong. Please try again." })
+                                            }
+                                        }}
+                                    >
+                                        {({ }) => (
+                                            <Form>
+                                                <UserDropdown name="assignee" options={projectStore.selectedProject!.users} allowNull submitOnSelect />
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </Flex>
 
-                            {/*    <Flex align="center" gap={24} width="100%">*/}
-                            {/*        <Heading size="xs">Reporter</Heading>*/}
-                            {/*        <UserDropdown name="author" options={projectStore.selectedProject!.users} />*/}
-                            {/*    </Flex>*/}
-                            {/*</Stack>*/}
+                                <Flex align="center" gap={24} width="100%">
+                                    <Heading size="xs">Reporter</Heading>
+                                    <Formik
+                                        initialValues={{ author: ticketStore.selectedTicket!.author, error: null }}
+                                        onSubmit={async (values, { setErrors }) => {
+                                            try {
+                                                await ticketStore.updateTicket(ticketStore.selectedTicket!.id, "author", values.author)
+                                            } catch (error) {
+                                                setErrors({ error: "Something went wrong. Please try again." })
+                                            }
+                                        }}
+                                    >
+                                        {({ }) => (
+                                            <Form>
+                                                <UserDropdown name="author" options={projectStore.selectedProject!.users} submitOnSelect />
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                   
+                                </Flex>
+                            </Stack>
 
                             <Text fontSize="smaller" color="#44546f">{`Created ${formattedDate}`}</Text>
                         </Stack>

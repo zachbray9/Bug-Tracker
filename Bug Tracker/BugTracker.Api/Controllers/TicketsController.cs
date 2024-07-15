@@ -74,14 +74,15 @@ namespace BugTracker.Api.Controllers
 
             TicketDTO? ticketToPatch = Mapper.Map<TicketDTO>(ticket);
 
-            foreach(var operation in patchDoc.Operations)
+            //converts status and priority from string to enum because client sends sends them up as a string, but they are stored in the database as enums.
+            foreach (var operation in patchDoc.Operations)
             {
                 var path = operation.path.TrimStart('/');
-                if(path == "status")
+                if (path == "status")
                 {
                     operation.value = StatusExtensions.ParseStatus(operation.value.ToString()!);
                 }
-                else if(path == "priority")
+                else if (path == "priority")
                 {
                     operation.value = PriorityExtensions.ParsePriority(operation.value.ToString()!);
                 }

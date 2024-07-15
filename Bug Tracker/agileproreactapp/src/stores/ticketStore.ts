@@ -3,6 +3,7 @@ import { Ticket } from "../models/Ticket";
 import { TicketFormValues } from "../models/TicketFormValues";
 import agent from "../api/axios";
 import { store } from "./store";
+import { PatchDoc } from "../models/Requests/PatchDoc";
 
 export default class TicketStore {
     selectedTicket: Ticket | null = null;
@@ -37,8 +38,9 @@ export default class TicketStore {
         }
     }
 
-    updateTicket = async (creds: TicketFormValues) => {
-        var updatedTicket = await agent.Tickets.updateTicket(creds);
+    updateTicket = async (id: string, fieldName: string, value: any) => {
+        const patchDocument: PatchDoc[] = [{ op: "replace", path: `/${fieldName}`, value: value }]
+        var updatedTicket = await agent.Tickets.updateTicket(id, patchDocument);
 
         runInAction(() => {
             if (store.projectStore.selectedProject) {

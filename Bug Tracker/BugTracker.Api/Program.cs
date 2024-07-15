@@ -2,7 +2,6 @@ using BugTracker.Api.Extensions;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using System.Text.Json.Serialization;
 using BugTracker.Api.Helpers;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Api.SignalR;
@@ -18,11 +17,13 @@ builder.Services.AddControllers(options =>
 {
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     options.Filters.Add(new AuthorizeFilter(policy));
-}).AddJsonOptions(options => {
-    options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<Status>());
-    options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<Priority>());
-    options.JsonSerializerOptions.Converters.Add(new EnumToDisplayNameConverter<ProjectRole>());
-});
+})
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new EnumToDisplayNameConverter<Status>());
+        options.SerializerSettings.Converters.Add(new EnumToDisplayNameConverter<Priority>());
+        options.SerializerSettings.Converters.Add(new EnumToDisplayNameConverter<ProjectRole>());
+    });
 
 builder.Services.AddApplicationServices(builder.Configuration);           //extension method that adds application services
 builder.Services.AddIdentityServices(builder.Configuration);              //extension method that adds microsoft identity services

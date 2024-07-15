@@ -9,6 +9,7 @@ using BugTracker.Api.Models.Requests;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace BugTracker.Api.Controllers
 {
@@ -59,18 +60,29 @@ namespace BugTracker.Api.Controllers
             return Created($"~/api/Tickets/{updatedTicket.Entity.Id}", ticketDto);
         }
 
-        [HttpPut]
-        [Route("{ticketId}")]
-        public async Task<IActionResult> Update([FromRoute] string ticketId, [FromBody] UpdateTicketRequest ticketDTO)
+        [HttpPatch]
+        [Route("{ticketId:guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid ticketId, [FromBody] JsonPatchDocument<TicketDTO> patchDoc )
         {
-            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == Guid.Parse(ticketId));
+            if(patchDoc == null)
+                return BadRequest(ModelState);
+
+            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id == ticketId);
             if (ticket == null)
                 return NotFound();
 
-            Mapper.Map(ticketDTO, ticket);
+            TicketDTO? ticketToPatch = Mapper.Map<TicketDTO>(ticket);
+
+            patchDoc.ApplyTo(ticketToPatch!, ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            Mapper.Map(ticketToPatch, ticket);
+
             await DbContext.SaveChangesAsync();
 
-            TicketDTO? updatedTicket = await DbContext.Tickets.ProjectTo<TicketDTO>(Mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == Guid.Parse(ticketId));
+            TicketDTO? updatedTicket = await DbContext.Tickets.ProjectTo<TicketDTO>(Mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == ticketId);
 
             return Ok(updatedTicket);
         }

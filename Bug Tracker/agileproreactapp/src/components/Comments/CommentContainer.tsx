@@ -11,7 +11,7 @@ export default function CommentContainer({ comment }: Props) {
 
     return (
         <Flex gap={2} align="start">
-            <Avatar name={`${comment.author.firstName} ${comment.author.lastName}`} src={comment.author.profilePictureUrl} size="sm" />
+            <Avatar name={`${comment.author.firstName} ${comment.author.lastName}`} src={comment.author.profilePictureUrl ? comment.author.profilePictureUrl : undefined} size="sm" />
             <Stack>
                 <Flex gap={4}>
                     <Text as="b">{`${comment.author.firstName} ${comment.author.lastName}`}</Text>

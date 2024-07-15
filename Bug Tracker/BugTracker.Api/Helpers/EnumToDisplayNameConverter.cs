@@ -1,44 +1,49 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace BugTracker.Api.Helpers
 {
     public class EnumToDisplayNameConverter <T> : JsonConverter<T> where T : struct, Enum
     {
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override T ReadJson(JsonReader reader, Type objectType, T existingValue, bool hasExistingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
-            var enumType = typeof(T);
-            var enumValues = Enum.GetValues(enumType).Cast<T>();
-
-            foreach (var enumValue in enumValues)
+            if (reader.TokenType == JsonToken.String)
             {
-                var displayAttribute = enumType.GetField(enumValue.ToString())
-                                               .GetCustomAttribute<DisplayAttribute>();
+                var enumString = reader.Value.ToString();
+                var enumType = typeof(T);
+                var enumValues = Enum.GetValues(enumType).Cast<T>();
 
-                if (displayAttribute != null && displayAttribute.Name == reader.GetString())
+                foreach (var enumValue in enumValues)
                 {
-                    return enumValue;
+                    var displayAttribute = enumType.GetField(enumValue.ToString())
+                                                   .GetCustomAttribute<DisplayAttribute>();
+
+                    if (displayAttribute != null && displayAttribute.Name == enumString)
+                    {
+                        return enumValue;
+                    }
                 }
+
+                throw new JsonSerializationException($"Unable to convert \"{enumString}\" to enum \"{enumType}\".");
             }
 
-            throw new JsonException($"Unable to convert \"{reader.GetString()}\" to enum \"{enumType}\".");
+            throw new JsonSerializationException("Expected string token.");
         }
 
-        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        public override void WriteJson(JsonWriter writer, T value, Newtonsoft.Json.JsonSerializer serializer)
         {
             var enumType = typeof(T);
             var displayAttribute = enumType.GetField(value.ToString())
-                                           .GetCustomAttribute<DisplayAttribute>();
+                                           ?.GetCustomAttribute<DisplayAttribute>();
 
             if (displayAttribute != null)
             {
-                writer.WriteStringValue(displayAttribute.Name);
+                writer.WriteValue(displayAttribute.Name);
             }
             else
             {
-                writer.WriteStringValue(value.ToString());
+                writer.WriteValue(value.ToString());
             }
         }
     }

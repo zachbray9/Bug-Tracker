@@ -3,7 +3,7 @@ import { useStore } from "../stores/store";
 import { Avatar, Button, HStack, Heading, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 import TicketColumn from "../components/Tickets/TicketColumn";
-import { IoPersonAdd, IoPersonAddSharp } from "react-icons/io5";
+import { IoPersonAddSharp } from "react-icons/io5";
 import TicketDetailsModal from "../components/Tickets/TicketDetailsModal";
 import AddUserModal from "../components/Projects/AddUserModal";
 
@@ -24,7 +24,7 @@ export default observer(function ProjectBoard() {
             <HStack gap={2}>
                 {projectStore.selectedProject.users.map((user => (
                     <Button key={user.email} variant="ghost" borderRadius="full" padding={0}>
-                        <Avatar name={user.firstName + " " + user.lastName} src={user.profilePictureUrl} size="sm" />
+                        <Avatar name={user.firstName + " " + user.lastName} src={user.profilePictureUrl ? user.profilePictureUrl : undefined} size="sm" />
                     </Button>
                 )))}
 

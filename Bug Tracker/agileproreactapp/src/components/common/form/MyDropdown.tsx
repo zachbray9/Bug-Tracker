@@ -6,16 +6,20 @@ interface Props {
     name: string
     options: any[]
     label?: string
+    submitOnSelect?: boolean
 }
 
-export default function MyDropdown({ name, options, label }: Props) {
-    const { setFieldValue } = useFormikContext();
+export default function MyDropdown({ name, options, label, submitOnSelect }: Props) {
+    const { setFieldValue, submitForm } = useFormikContext();
     const [field, meta] = useField(name);
 
     const filteredOptions = options.filter(option => option !== field.value);
 
     const handleSelectionChange = (newSelection: string) => {
         setFieldValue(name, newSelection);
+        if (submitOnSelect) {
+            submitForm();
+        }
     }
 
     return (

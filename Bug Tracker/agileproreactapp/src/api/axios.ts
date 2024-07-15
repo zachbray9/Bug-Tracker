@@ -9,6 +9,7 @@ import { Ticket } from "../models/Ticket";
 import { TicketFormValues } from "../models/TicketFormValues";
 import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
 import { ProjectParticipant } from "../models/ProjectParticipant";
+import { PatchDoc } from "../models/Requests/PatchDoc";
 
 axios.defaults.baseURL = 'https://localhost:7226/api';
 
@@ -50,6 +51,7 @@ const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(ResponseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(ResponseBody),
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(ResponseBody),
+    patch: <T>(url: string, body: {}) => axios.patch<T>(url, body).then(ResponseBody),
     delete: <T>(url: string) => axios.delete<T>(url).then(ResponseBody)
 };
 
@@ -67,7 +69,7 @@ const Projects = {
 
 const Tickets = {
     createTicket: (ticket: TicketFormValues) => requests.post<Ticket>("/Tickets", ticket),
-    updateTicket: (ticket: TicketFormValues) => requests.put<Ticket>(`/Tickets/${ticket.id}`, ticket),
+    updateTicket: (id: string, patchDoc: PatchDoc[]) => requests.patch<Ticket>(`/Tickets/${id}`, patchDoc),
     deleteTicket: (ticketId: string) => requests.delete<Ticket>(`/Tickets/${ticketId}`)
 }
 

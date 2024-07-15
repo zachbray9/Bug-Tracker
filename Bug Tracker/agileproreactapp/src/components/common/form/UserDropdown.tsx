@@ -1,22 +1,36 @@
 import { Avatar, Button, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { ProjectParticipant } from "../../../models/ProjectParticipant";
-import { useField, useFormikContext } from "formik";
+import { FieldInputProps, useField, useFormikContext } from "formik";
+import { useEffect } from "react";
 
 interface Props {
     name: string
     options: ProjectParticipant[]
     allowNull?: boolean
+    submitOnSelect?: boolean
 }
 
-export default function UserDropdown({ name, options, allowNull }: Props) {
+export default function UserDropdown({ name, options, allowNull, submitOnSelect }: Props) {
     const [field, meta] = useField(name);
-    const { setFieldValue } = useFormikContext();
+    const { setFieldValue, submitForm } = useFormikContext();
 
     const filteredOptions = options.filter(option => option.userId !== field.value?.userId);
 
+    const getValue = (field: FieldInputProps<any>, prop: string) => {
+        // Check if field.value is a proxy and access the property safely
+        return field.value && typeof field.value === 'object' && field.value[prop] ? field.value[prop] : '';
+    };
+
     const handleSelectionChange = (option: ProjectParticipant | null) => {
         setFieldValue(name, option);
+        if (submitOnSelect) {
+            submitForm();
+        }
     }
+
+    useEffect(() => {
+        console.log('field value:', field.value);
+    }, [field.value]);
 
     return (
         <FormControl width="fit-content" isInvalid={meta.error ? true : false}>
@@ -24,7 +38,7 @@ export default function UserDropdown({ name, options, allowNull }: Props) {
                 <MenuButton as={Button} variant="unstyled">
                     {field.value ? (
                         <Flex align="center" gap={4}>
-                            <Avatar name={`${field.value.firstName} ${field.value.lastName}`} src={field.value.profilePictureUrl} size="sm" />
+                            <Avatar size="sm" name={`${field.value.firstName} ${field.value.lastName}`} src={getValue(field, "profilePictureUrl")} />
                             <Text>{`${field.value.firstName} ${field.value.lastName}`}</Text>
                         </Flex>
                     ): (
@@ -39,7 +53,7 @@ export default function UserDropdown({ name, options, allowNull }: Props) {
                     {filteredOptions.map((option) => (
                         <MenuItem key={option.email} onClick={() => handleSelectionChange(option)}>
                             <Flex align="center" gap={4}>
-                                <Avatar name={`${option.firstName} ${option.lastName}`} src={option.profilePictureUrl} size="sm" />
+                                <Avatar name={`${option.firstName} ${option.lastName}`} src={option.profilePictureUrl || undefined} size="sm" />
                                 <Text>{`${option.firstName} ${option.lastName}`}</Text>
                             </Flex>
                         </MenuItem>

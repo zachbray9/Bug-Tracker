@@ -1,6 +1,6 @@
 import { Avatar, Button, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import { ProjectParticipant } from "../../../models/ProjectParticipant";
-import { FieldInputProps, useField, useFormikContext } from "formik";
+import { useField, useFormikContext } from "formik";
 import { useEffect } from "react";
 
 interface Props {
@@ -15,11 +15,6 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
     const { setFieldValue, submitForm } = useFormikContext();
 
     const filteredOptions = options.filter(option => option.userId !== field.value?.userId);
-
-    const getValue = (field: FieldInputProps<any>, prop: string) => {
-        // Check if field.value is a proxy and access the property safely
-        return field.value && typeof field.value === 'object' && field.value[prop] ? field.value[prop] : '';
-    };
 
     const handleSelectionChange = (option: ProjectParticipant | null) => {
         setFieldValue(name, option);
@@ -38,7 +33,7 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
                 <MenuButton as={Button} variant="unstyled">
                     {field.value ? (
                         <Flex align="center" gap={4}>
-                            <Avatar size="sm" name={`${field.value.firstName} ${field.value.lastName}`} src={getValue(field, "profilePictureUrl")} />
+                            <Avatar size="sm" name={`${field.value.firstName} ${field.value.lastName}`} src={field.value.profilePictureUrl ? field.value.profilePictureUrl : undefined} />
                             <Text>{`${field.value.firstName} ${field.value.lastName}`}</Text>
                         </Flex>
                     ): (

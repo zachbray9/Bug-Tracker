@@ -41,7 +41,7 @@ export default observer(function NavBar() {
 
                         <MenuList>
                             <MenuItem onClick={() => router.navigate('profile')}>Manage account</MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={() => userStore.logout()}>Logout</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

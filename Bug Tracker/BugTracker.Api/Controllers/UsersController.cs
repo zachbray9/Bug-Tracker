@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BugTracker.Domain.Models;
 using BugTracker.Domain.Models.DTOs;
 using BugTracker.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
 {
@@ -27,71 +27,38 @@ namespace BugTracker.Api.Controllers
             Mapper = mapper;
         }
 
-        [HttpGet]
-        [Route ("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        [HttpPatch]
+        [Route("{userId}")]
+        public async Task<IActionResult> Update([FromRoute] string userId, [FromBody] JsonPatchDocument<UserDTO> patchDoc)
         {
-            User? user = await UserManager.FindByIdAsync(id);
-                    
-            if(user == null)
-            {
-                return NotFound();
-            }
+            if (patchDoc == null)
+                return BadRequest();
 
-            return Ok(Mapper.Map<UserDTO>(user));
-        }
-
-        [HttpGet]
-        [Route ("byEmail/{email}")]
-        public async Task<IActionResult> GetByEmail([FromRoute] string email)
-        {
-            User? user = await UserManager.FindByEmailAsync(email);
-
+            User user = await UserManager.FindByIdAsync(userId);
             if (user == null)
-            {
                 return NotFound();
+
+            UserDTO? userToUpdate = Mapper.Map<UserDTO>(user);
+
+            patchDoc.ApplyTo(userToUpdate!, ModelState);
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Mapper.Map(userToUpdate, user);
+
+            foreach(var operation in patchDoc.Operations)
+            {
+                var path = operation.path.TrimStart('/');
+                if (path == "email")
+                    user.UserName = user.Email;
             }
 
-            return Ok(Mapper.Map<UserDTO>(user));
-        }
+            var result = await UserManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            List<User>? users = await DbContext.Users.ToListAsync();
-            return Ok(Mapper.Map<List<UserDTO>>(users));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserDTO userDTO)
-        {
-            if(await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email))
-                return Conflict("A user with this email already exists.");
-
-            User? newUser = new User();
-            newUser = Mapper.Map<User>(userDTO);
-
-            EntityEntry<User> newUserEntity = await DbContext.Users.AddAsync(newUser);
-            await DbContext.SaveChangesAsync();
-
-            return Created($"~/api/Users/{userDTO.Id}", Mapper.Map<UserDTO>(newUserEntity.Entity));
-        }
-
-        [HttpPut]
-        [Route("{userId:guid}")]
-        public async Task<IActionResult> Update([FromRoute] int userId, [FromBody] UserDTO userDTO)
-        {
-            if (await DbContext.Users.AnyAsync(u => u.Email == userDTO.Email && !u.Id.Equals(userId)))
-                return Conflict("A user with this email already exists.");
-
-            User? user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
-            if(user == null)
-                return NotFound();
-
-            Mapper.Map(userDTO, user);
-            await DbContext.SaveChangesAsync();
-
-            return Ok(Mapper.Map<UserDTO>(user));
+            UserDTO? updatedUser = await DbContext.Users.ProjectTo<UserDTO>(Mapper.ConfigurationProvider).SingleOrDefaultAsync(u => u.Id == user.Id);
+            return Ok(updatedUser);
         }
 
         [HttpDelete]

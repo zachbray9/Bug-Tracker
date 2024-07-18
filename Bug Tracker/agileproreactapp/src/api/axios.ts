@@ -81,7 +81,8 @@ const Profiles = {
         return axios.post<string>("/Photos", formData, {
             headers: { "Content-Type": "multipart/form-data"}
         })
-    }
+    },
+    updateUser: (id: string, patchDoc: PatchDoc[]) => requests.patch<User>(`/Users/${id}`, patchDoc)
 }
 
 const agent = {

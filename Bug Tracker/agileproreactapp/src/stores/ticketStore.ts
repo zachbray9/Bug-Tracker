@@ -38,7 +38,7 @@ export default class TicketStore {
         }
     }
 
-    updateTicket = async (id: string, fieldName: string, value: any) => {
+    updateTicket = async (id: string, fieldName: keyof Ticket, value: any) => {
         const patchDocument: PatchDoc[] = [{ op: "replace", path: `/${fieldName}`, value: value }]
         var updatedTicket = await agent.Tickets.updateTicket(id, patchDocument);
 

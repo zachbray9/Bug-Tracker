@@ -1,7 +1,6 @@
-import { Avatar, Button, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, FormControl, Menu, MenuButton, MenuItem, MenuList, Spinner, Text } from "@chakra-ui/react";
 import { ProjectParticipant } from "../../../models/ProjectParticipant";
 import { useField, useFormikContext } from "formik";
-import { useEffect } from "react";
 
 interface Props {
     name: string
@@ -12,7 +11,7 @@ interface Props {
 
 export default function UserDropdown({ name, options, allowNull, submitOnSelect }: Props) {
     const [field, meta] = useField(name);
-    const { setFieldValue, submitForm } = useFormikContext();
+    const { setFieldValue, submitForm, isSubmitting } = useFormikContext();
 
     const filteredOptions = options.filter(option => option.userId !== field.value?.userId);
 
@@ -23,32 +22,29 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
         }
     }
 
-    useEffect(() => {
-        console.log('field value:', field.value);
-    }, [field.value]);
-
     return (
         <FormControl width="fit-content" isInvalid={meta.error ? true : false}>
             <Menu>
-                <MenuButton as={Button} variant="unstyled">
-                    {field.value ? (
-                        <Flex align="center" gap={4}>
-                            <Avatar size="sm" name={`${field.value.firstName} ${field.value.lastName}`} src={field.value.profilePictureUrl ? field.value.profilePictureUrl : undefined} />
-                            <Text>{`${field.value.firstName} ${field.value.lastName}`}</Text>
-                        </Flex>
-                    ): (
-                            <Flex align="center" gap={4}>
-                                <Avatar size="sm" bg="gray.400" />
-                                <Text>Unassigned</Text>
-                            </Flex>
-                    )}
+                <MenuButton as={Button} variant="unstyled" isDisabled={isSubmitting}>
+                    
+                    <Flex align="center" gap={4}>
+                        <Avatar
+                            size="sm"
+                            key={field.value ? `${field.value.firstName} ${field.value.lastName}` : "unassigned"}
+                            name={field.value ? `${field.value.firstName} ${field.value.lastName}` : undefined}
+                            src={field.value?.profilePictureUrl || undefined}
+                        />
+                        <Text>{field.value ? `${field.value.firstName} ${field.value.lastName}` : "Unassigned"}</Text>
+                        {isSubmitting && <Spinner size="sm" />}
+                    </Flex>
+                    
                 </MenuButton>
 
                 <MenuList>
                     {filteredOptions.map((option) => (
                         <MenuItem key={option.email} onClick={() => handleSelectionChange(option)}>
                             <Flex align="center" gap={4}>
-                                <Avatar name={`${option.firstName} ${option.lastName}`} src={option.profilePictureUrl || undefined} size="sm" />
+                                <Avatar name={`${option.firstName} ${option.lastName}`} src={option.profilePictureUrl || undefined} key={`${option.firstName} ${option.lastName}`} size="sm" />
                                 <Text>{`${option.firstName} ${option.lastName}`}</Text>
                             </Flex>
                         </MenuItem>
@@ -56,7 +52,7 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
                     {allowNull && (
                         <MenuItem key="Unassigned" onClick={() => handleSelectionChange(null)}>
                             <Flex align="center" gap={4}>
-                                <Avatar size="sm" bg="gray.400" />
+                                <Avatar size="sm" key="unassigned" />
                                 <Text>Unassigned</Text>
                             </Flex>
                         </MenuItem>

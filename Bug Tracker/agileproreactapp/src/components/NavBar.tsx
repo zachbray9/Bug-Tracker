@@ -36,7 +36,7 @@ export default observer(function NavBar() {
                     <Spacer />
                     <Menu>
                         <MenuButton as={Button} variant="ghost" borderRadius="full" padding="0px">
-                            <Avatar name={userStore.user.fullName} src={userStore.user.profilePictureUrl} size="sm"></Avatar>
+                            <Avatar name={userStore.user.fullName} src={userStore.user.profilePictureUrl} key={userStore.user.fullName} size="sm"></Avatar>
                         </MenuButton >
 
                         <MenuList>

@@ -24,7 +24,7 @@ export default observer(function ProjectBoard() {
             <HStack gap={2}>
                 {projectStore.selectedProject.users.map((user => (
                     <Button key={user.email} variant="ghost" borderRadius="full" padding={0}>
-                        <Avatar name={user.firstName + " " + user.lastName} src={user.profilePictureUrl ? user.profilePictureUrl : undefined} size="sm" />
+                        <Avatar name={`${user.firstName} ${user.lastName}`} src={user.profilePictureUrl || undefined} key={`${user.firstName} ${user.lastName}`} size="sm" />
                     </Button>
                 )))}
 

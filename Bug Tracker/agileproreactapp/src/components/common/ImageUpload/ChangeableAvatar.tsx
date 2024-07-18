@@ -31,8 +31,10 @@ export default observer(function ChangeableAvatar() {
                 setIsHovered(false)
             }}
         >
-            <Avatar name={userStore.user?.firstName + " " + userStore.user?.lastName}
-                src={userStore.user?.profilePictureUrl}
+            <Avatar
+                name={`${userStore.user!.firstName} ${userStore.user!.lastName}`}
+                src={userStore.user!.profilePictureUrl || undefined}
+                key={`${userStore.user!.firstName} ${userStore.user!.lastName}`}
                 size="2xl"
                 filter={isHovered ? "brightness(0.8)" : "brighness(1)"}
                 transition="all 0.2s ease-in-out"

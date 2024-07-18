@@ -49,7 +49,7 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
                             </Flex>
                         </MenuItem>
                     ))}
-                    {allowNull && (
+                    {allowNull && field.value && (
                         <MenuItem key="Unassigned" onClick={() => handleSelectionChange(null)}>
                             <Flex align="center" gap={4}>
                                 <Avatar size="sm" key="unassigned" />

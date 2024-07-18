@@ -28,21 +28,6 @@ namespace BugTracker.Api.Controllers
             Mapper = mapper;
         }
 
-        [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
-        {
-            Ticket? ticket = await DbContext.Tickets.Include(t => t.Author).Include(t => t.Assignee).FirstOrDefaultAsync(t => t.Id  == id);
-
-            if (ticket == null)
-            {
-                return NotFound("No ticket with this id was found.");
-            }
-
-            TicketDTO? ticketDTO = Mapper.Map<TicketDTO>(ticket);
-            return Ok(ticketDTO);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTicketRequest newTicketRequest)
         {

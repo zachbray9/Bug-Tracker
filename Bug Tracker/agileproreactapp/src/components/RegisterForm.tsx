@@ -10,12 +10,14 @@ import { FaLock } from "react-icons/fa6";
 export default function () {
     const { userStore } = useStore();
 
+    const nameRegex = /^[a-zA-Z\s'-]+$/;
+
     const validationSchema = Yup.object({
-        email: Yup.string().required("Email field is required.").email("Must enter a valid email."),
-        firstName: Yup.string().required("First name field is required."),
-        lastName: Yup.string().required("Last name field is required."),
-        password: Yup.string().required("Password field is required.").min(6, "Password must be at least 6 characters."),
-        confirmPassword: Yup.string().required("Confirm password field is required.").oneOf([Yup.ref("Password")], "Passwords do not match.")
+        email: Yup.string().required("Email is required.").email("Must enter a valid email.").max(320, "Email cannot exceed 320 characters.").trim(),
+        firstName: Yup.string().required("First name is required.").max(50, "First name cannot exceed 50 characters.").matches(nameRegex, "First name can only contain letters, spaces, hyphens, and apostrophes.").trim(),
+        lastName: Yup.string().required("Last name is required.").max(50, "Last name cannot exceed 50 characters.").matches(nameRegex, "Last name can only contain letters, spaces, hyphens, and apostrophes.").trim(),
+        password: Yup.string().required("Password is required.").min(6, "Password must be at least 6 characters.").trim(),
+        confirmPassword: Yup.string().required("Confirm password is required.").oneOf([Yup.ref("Password")], "Passwords do not match.")
     })
 
     return (

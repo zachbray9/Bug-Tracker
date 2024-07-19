@@ -5,13 +5,16 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
 import MyTextInput from "../components/common/form/MyTextInput";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import * as Yup from "yup";
 
 export default observer(function Profile() {
     const { userStore } = useStore();
     const { user } = userStore;
 
+    const nameRegex = /^[a-zA-Z\s'-]+$/;
+
     return (
-        <Center flexDir="column" gap={8}>
+        <Center flexDir="column" gap={8} justifyContent="start" height="100dvh">
             <ChangeableAvatar />
 
             {/*First Name form*/}
@@ -25,6 +28,9 @@ export default observer(function Profile() {
                         setErrors({ error: "Something went wrong, please try again." })
                     }
                 }}
+                validationSchema={Yup.object({
+                    firstName: Yup.string().required("First name is required.").max(50, "First name cannot be longer than 50 characters.").matches(nameRegex, "First name can only contain letters, spaces, hyphens, and apostrophes.").trim()
+                })}
             >
                 {({ handleSubmit, dirty, resetForm }) => (
                     <Form onSubmit={handleSubmit} autoComplete="off">
@@ -52,6 +58,9 @@ export default observer(function Profile() {
                         setErrors({ error: "Something went wrong, please try again." })
                     }
                 }}
+                validationSchema={Yup.object({
+                    lastName: Yup.string().required("Last name is required.").max(50, "Last name cannot be longer than 50 characters.").matches(nameRegex, "Last name can only contain letters, spaces, hyphens, and apostrophes.").trim()
+                })}
             >
                 {({ handleSubmit, dirty, resetForm }) => (
                     <Form onSubmit={handleSubmit} autoComplete="off">
@@ -79,6 +88,9 @@ export default observer(function Profile() {
                         setErrors({ error: "Something went wrong, please try again." })
                     }
                 }}
+                validationSchema={Yup.object({
+                    email: Yup.string().required("Email is required.").email("Invalid email format.").max(320, "Email cannot exceed 320 characters.").trim()
+                })}
             >
                 {({ handleSubmit, dirty, resetForm }) => (
                     <Form onSubmit={handleSubmit} autoComplete="off">

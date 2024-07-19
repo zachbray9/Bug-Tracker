@@ -1,4 +1,4 @@
-import { Center, Flex, IconButton, Stack } from "@chakra-ui/react";
+import { Flex, Grid, Heading, IconButton, Stack, Text } from "@chakra-ui/react";
 import ChangeableAvatar from "../components/common/ImageUpload/ChangeableAvatar";
 import { Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
@@ -14,98 +14,123 @@ export default observer(function Profile() {
     const nameRegex = /^[a-zA-Z\s'-]+$/;
 
     return (
-        <Center flexDir="column" gap={8} justifyContent="start" height="100dvh">
-            <ChangeableAvatar />
+        <Stack gap={16} align="start" justify="start" paddingX="4rem">
+            <Heading as="h3" size="lg">Account settings</Heading>
 
-            {/*First Name form*/}
-            <Formik
-                initialValues={{ firstName: user!.firstName, error: null }}
-                onSubmit={(values, { setErrors, resetForm }) => {
-                    try {
-                        userStore.updateUser(user!.id, "firstName", values.firstName)
-                        resetForm({ values });
-                    } catch (error) {
-                        setErrors({ error: "Something went wrong, please try again." })
-                    }
-                }}
-                validationSchema={Yup.object({
-                    firstName: Yup.string().required("First name is required.").max(50, "First name cannot be longer than 50 characters.").matches(nameRegex, "First name can only contain letters, spaces, hyphens, and apostrophes.").trim()
-                })}
-            >
-                {({ handleSubmit, dirty, resetForm }) => (
-                    <Form onSubmit={handleSubmit} autoComplete="off">
-                        <Stack align="end">
-                            <MyTextInput name="firstName" placeholder="First name" label="First name" />
-                            {dirty &&
-                                <Flex gap={2}>
-                                    <IconButton aria-label="confirm-first-name-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
-                                    <IconButton aria-label="cancel-first-name-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
-                                </Flex>
-                            }
-                        </Stack>
-                    </Form>
-                )}
-            </Formik>
+            <Stack>
+                <Heading as="h5" size="sm">Personal Information</Heading>
+                <Grid templateColumns="1fr 2fr" gap={16}>
+                    <Text >This is how other users see your profile. Anything you change here will be saved and
+                        represent how other users see you.
+                    </Text>
+                    <Stack gap={4} width="fit-content" align="center">
+                        <ChangeableAvatar />
+                        {/*First Name form*/}
+                        <Formik
+                            initialValues={{ firstName: user!.firstName, error: null }}
+                            onSubmit={(values, { setErrors, resetForm }) => {
+                                try {
+                                    userStore.updateUser(user!.id, "firstName", values.firstName)
+                                    resetForm({ values });
+                                } catch (error) {
+                                    setErrors({ error: "Something went wrong, please try again." })
+                                }
+                            }}
+                            validationSchema={Yup.object({
+                                firstName: Yup.string().required("First name is required.").max(50, "First name cannot be longer than 50 characters.").matches(nameRegex, "First name can only contain letters, spaces, hyphens, and apostrophes.").trim()
+                            })}
+                        >
+                            {({ handleSubmit, dirty, resetForm }) => (
+                                <Form onSubmit={handleSubmit} autoComplete="off">
+                                    <Stack align="end">
+                                        <MyTextInput name="firstName" placeholder="First name" label="First name" />
+                                        {dirty &&
+                                            <Flex gap={2}>
+                                                <IconButton aria-label="confirm-first-name-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
+                                                <IconButton aria-label="cancel-first-name-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
+                                            </Flex>
+                                        }
+                                    </Stack>
+                                </Form>
+                            )}
+                        </Formik>
 
-            {/*Last Name form*/}
-            <Formik
-                initialValues={{ lastName: user!.lastName, error: null }}
-                onSubmit={(values, { setErrors, resetForm }) => {
-                    try {
-                        userStore.updateUser(user!.id, "lastName", values.lastName)
-                        resetForm({ values });
-                    } catch (error) {
-                        setErrors({ error: "Something went wrong, please try again." })
-                    }
-                }}
-                validationSchema={Yup.object({
-                    lastName: Yup.string().required("Last name is required.").max(50, "Last name cannot be longer than 50 characters.").matches(nameRegex, "Last name can only contain letters, spaces, hyphens, and apostrophes.").trim()
-                })}
-            >
-                {({ handleSubmit, dirty, resetForm }) => (
-                    <Form onSubmit={handleSubmit} autoComplete="off">
-                        <Stack align="end">
-                            <MyTextInput name="lastName" placeholder="Last name" label="Last name" />
-                            {dirty &&
-                                <Flex gap={2}>
-                                    <IconButton aria-label="confirm-last-name-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
-                                    <IconButton aria-label="cancel-last-name-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
-                                </Flex>    
-                            }
-                        </Stack>
-                    </Form>
-                )}
-            </Formik>
+                        {/*Last Name form*/}
+                        <Formik
+                            initialValues={{ lastName: user!.lastName, error: null }}
+                            onSubmit={(values, { setErrors, resetForm }) => {
+                                try {
+                                    userStore.updateUser(user!.id, "lastName", values.lastName)
+                                    resetForm({ values });
+                                } catch (error) {
+                                    setErrors({ error: "Something went wrong, please try again." })
+                                }
+                            }}
+                            validationSchema={Yup.object({
+                                lastName: Yup.string().required("Last name is required.").max(50, "Last name cannot be longer than 50 characters.").matches(nameRegex, "Last name can only contain letters, spaces, hyphens, and apostrophes.").trim()
+                            })}
+                        >
+                            {({ handleSubmit, dirty, resetForm }) => (
+                                <Form onSubmit={handleSubmit} autoComplete="off">
+                                    <Stack align="end">
+                                        <MyTextInput name="lastName" placeholder="Last name" label="Last name" />
+                                        {dirty &&
+                                            <Flex gap={2}>
+                                                <IconButton aria-label="confirm-last-name-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
+                                                <IconButton aria-label="cancel-last-name-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
+                                            </Flex>    
+                                        }
+                                    </Stack>
+                                </Form>
+                            )}
+                        </Formik>
 
-            {/*Email form*/}
-            <Formik
-                initialValues={{ email: user!.email, error: null }}
-                onSubmit={(values, { setErrors, resetForm }) => {
-                    try {
-                        userStore.updateUser(user!.id, "email", values.email)
-                        resetForm({ values });
-                    } catch (error) {
-                        setErrors({ error: "Something went wrong, please try again." })
-                    }
-                }}
-                validationSchema={Yup.object({
-                    email: Yup.string().required("Email is required.").email("Invalid email format.").max(320, "Email cannot exceed 320 characters.").trim()
-                })}
-            >
-                {({ handleSubmit, dirty, resetForm }) => (
-                    <Form onSubmit={handleSubmit} autoComplete="off">
-                        <Stack align="end">
-                            <MyTextInput name="email" placeholder="Email" label="Email" />
-                            {dirty &&
-                                <Flex gap={2}>
-                                    <IconButton aria-label="confirm-email-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
-                                    <IconButton aria-label="cancel-email-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
-                                </Flex>
-                            }
-                        </Stack>
-                    </Form>
-                )}
-            </Formik>
-        </Center>
+                    </Stack>
+                </Grid>
+            </Stack>
+
+            <Stack>
+                <Heading as="h5" size="sm">Email address</Heading>
+                <Grid templateColumns="1fr 2fr" gap={16}>
+                    <Text>This is the email address that we will use to send email notifications. It also doubles
+                        as your Username to login to your account. Any changes made to your email here will be reflected to
+                        your login credentials as well.
+                    </Text>
+
+                    <Stack width="fit-content" align="center">
+                        {/*Email form*/}
+                        <Formik
+                            initialValues={{ email: user!.email, error: null }}
+                            onSubmit={(values, { setErrors, resetForm }) => {
+                                try {
+                                    userStore.updateUser(user!.id, "email", values.email)
+                                    resetForm({ values });
+                                } catch (error) {
+                                    setErrors({ error: "Something went wrong, please try again." })
+                                }
+                            }}
+                            validationSchema={Yup.object({
+                                email: Yup.string().required("Email is required.").email("Invalid email format.").max(320, "Email cannot exceed 320 characters.").trim()
+                            })}
+                        >
+                            {({ handleSubmit, dirty, resetForm }) => (
+                                <Form onSubmit={handleSubmit} autoComplete="off">
+                                    <Stack align="end">
+                                        <MyTextInput name="email" placeholder="Email" label="Email" />
+                                        {dirty &&
+                                            <Flex gap={2}>
+                                                <IconButton aria-label="confirm-email-button" icon={<CheckIcon />} type="submit" size="sm"></IconButton>
+                                                <IconButton aria-label="cancel-email-button" icon={<CloseIcon />} size="sm" onClick={() => resetForm()}></IconButton>
+                                            </Flex>
+                                        }
+                                    </Stack>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Stack>
+                </Grid>
+            </Stack>
+
+        </Stack>
     )
 })

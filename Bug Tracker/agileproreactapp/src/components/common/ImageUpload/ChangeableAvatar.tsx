@@ -21,6 +21,7 @@ export default observer(function ChangeableAvatar() {
         <Box
             position="relative"
             display="inline-block"
+            width="fit-content"
             borderRadius="50%"
             onMouseEnter={() => {
                 setIsVisible(true)

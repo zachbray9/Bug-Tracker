@@ -40,7 +40,7 @@ export default observer(function NavBar() {
                         </MenuButton >
 
                         <MenuList>
-                            <MenuItem onClick={() => router.navigate('profile')}>Manage account</MenuItem>
+                            <MenuItem onClick={() => router.navigate('accountSettings')}>Manage account</MenuItem>
                             <MenuItem onClick={() => userStore.logout()}>Logout</MenuItem>
                         </MenuList>
                     </Menu>

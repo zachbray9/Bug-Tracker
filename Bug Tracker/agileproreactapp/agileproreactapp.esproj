@@ -18,6 +18,7 @@
     <Folder Include="src\components\common\ImageUpload\" />
     <Folder Include="src\components\common\Options\" />
     <Folder Include="src\components\Comments\" />
+    <Folder Include="src\components\Account\" />
     <Folder Include="src\components\Tickets\" />
     <Folder Include="src\models\Requests\" />
     <Folder Include="src\stores\" />

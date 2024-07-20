@@ -67,7 +67,7 @@ export default observer(function TicketColumn({ Title }: Props) {
                         placeholder="What needs to be done?"
                         autoFocus />
                 ) : (
-                    <Button onClick={() => setIsCreatingTask(true)} width="100%" justifyContent="start">+ Add task</Button>
+                    <Button onClick={() => setIsCreatingTask(true)} variant="ghost" width="100%" justifyContent="start">+ Add task</Button>
                 )}
             </CardFooter>
         </Card>

@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading, Stack, Text } from "@chakra-ui/react";
+import { Grid, Heading, Stack, Text } from "@chakra-ui/react";
 import ColorModeSwitch from "../ColorModeSwitch";
 
 export default function Preferences() {

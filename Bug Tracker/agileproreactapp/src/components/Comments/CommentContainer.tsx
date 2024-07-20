@@ -15,7 +15,7 @@ export default function CommentContainer({ comment }: Props) {
             <Stack>
                 <Flex gap={4}>
                     <Text as="b">{`${comment.author.firstName} ${comment.author.lastName}`}</Text>
-                    <Text fontSize="sm" color="#44546f">{`${formattedDate} ago`}</Text>
+                    <Text fontSize="sm" color="text.subtle">{`${formattedDate} ago`}</Text>
                 </Flex>
                 <Text>{comment.text}</Text>
             </Stack>

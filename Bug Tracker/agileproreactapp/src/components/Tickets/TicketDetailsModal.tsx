@@ -185,7 +185,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                 </Flex>
                             </Stack>
 
-                            <Text fontSize="smaller" color="#44546f">{`Created ${formattedDate}`}</Text>
+                            <Text fontSize="smaller" color="text.subtle">{`Created ${formattedDate}`}</Text>
                         </Stack>
                     </Grid>
                 </ModalBody>

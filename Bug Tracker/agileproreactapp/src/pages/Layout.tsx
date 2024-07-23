@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom"
 import NavBar from "../components/NavBar"
-import Footer from "../components/Footer"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../stores/store";
 import { useEffect } from "react";
@@ -26,8 +25,7 @@ function Layout() {
             <NavBar />
             <div id='main'>
                 <Outlet/>
-            </div>
-            <Footer/>
+            </div>     
         </>
     )
 }

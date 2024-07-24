@@ -26,10 +26,13 @@ namespace Bug_Tracker.Utility_Classes.Converters
             //checks if parameter is a ticket or comment
             if (values[1] is TicketDTO ticket)
             {
+                Console.WriteLine();
                 //isAuthor = projectUser.UserId == ticket.AuthorId;
             }
             else if (values[1] is CommentDTO comment)
-                isAuthor = projectUser.UserId == comment.AuthorId;
+            {
+                //isAuthor = projectUser.UserId == comment.AuthorId;
+            }
             else
                 throw new Exception("values[1] is not an expected type.");
 

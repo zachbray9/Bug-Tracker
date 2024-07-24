@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "secrets2": {
+      "restored": true,
+      "restoreTime": "2024-07-24T05:48:36.8390904Z"
+    }
+  },
+  "parameters": {
+    "secrets2.resourceGroupName": {
+      "Name": "secrets2.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "AgilePro-group"
+    },
+    "secrets2.subscriptionId": {
+      "Name": "secrets2.subscriptionId",
+      "Type": "subscription",
+      "Value": "7070e8d4-9acd-475e-b722-21b3be47ae22"
+    }
+  }
+}

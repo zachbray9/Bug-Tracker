@@ -1,0 +1,81 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\AgileProLoginPageImage1-CVoEZugY.png",
+      "PackagePath": "staticwebassets\\assets\\AgileProLoginPageImage1-CVoEZugY.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\AgileProLoginPageImage2-Ok2X38wm.png",
+      "PackagePath": "staticwebassets\\assets\\AgileProLoginPageImage2-Ok2X38wm.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\AgileProLogoCropped-CgNOVVFb.png",
+      "PackagePath": "staticwebassets\\assets\\AgileProLogoCropped-CgNOVVFb.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\AppleLogo-C9NApPJc.png",
+      "PackagePath": "staticwebassets\\assets\\AppleLogo-C9NApPJc.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\BluePaint-BXzdNtTS.png",
+      "PackagePath": "staticwebassets\\assets\\BluePaint-BXzdNtTS.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\LandingPageHeroImage-B8yBj6Af.png",
+      "PackagePath": "staticwebassets\\assets\\LandingPageHeroImage-B8yBj6Af.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\LandingPageSecurityImage-gJyuAANL.png",
+      "PackagePath": "staticwebassets\\assets\\LandingPageSecurityImage-gJyuAANL.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\MetaLogo-C426NEpq.png",
+      "PackagePath": "staticwebassets\\assets\\MetaLogo-C426NEpq.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\MicrosoftLogo-D5BG_CIs.png",
+      "PackagePath": "staticwebassets\\assets\\MicrosoftLogo-D5BG_CIs.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\NvidiaLogo-Cp6Q1PRB.png",
+      "PackagePath": "staticwebassets\\assets\\NvidiaLogo-Cp6Q1PRB.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\TeslaLogo-DizbF75C.png",
+      "PackagePath": "staticwebassets\\assets\\TeslaLogo-DizbF75C.png"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\index-2mVclcDI.css",
+      "PackagePath": "staticwebassets\\assets\\index-2mVclcDI.css"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\index-BMmXL6xC.js",
+      "PackagePath": "staticwebassets\\assets\\index-BMmXL6xC.js"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\vite.svg",
+      "PackagePath": "staticwebassets\\vite.svg"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.BugTracker.Api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.build.BugTracker.Api.props",
+      "PackagePath": "build\\BugTracker.Api.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.BugTracker.Api.props",
+      "PackagePath": "buildMultiTargeting\\BugTracker.Api.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildTransitive.BugTracker.Api.props",
+      "PackagePath": "buildTransitive\\BugTracker.Api.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

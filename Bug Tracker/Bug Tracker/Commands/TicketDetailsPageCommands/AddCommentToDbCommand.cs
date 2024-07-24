@@ -35,10 +35,10 @@ namespace Bug_Tracker.Commands.TicketDetailsPageCommands
             CommentDTO newComment = new CommentDTO
             {
                 Text = ViewModel.CommentTextBoxText,
-                AuthorId = CurrentUser.Id,
-                AuthorFirstName = CurrentUser.FirstName,
-                AuthorLastName = CurrentUser.LastName,
-                TicketId = CurrentTicket.Id,
+                //AuthorId = CurrentUser.Id,
+                //AuthorFirstName = CurrentUser.FirstName,
+                //AuthorLastName = CurrentUser.LastName,
+                //TicketId = CurrentTicket.Id,
                 DateSubmitted = DateTime.Now,
             };
 

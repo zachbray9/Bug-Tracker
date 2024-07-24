@@ -11,7 +11,7 @@ import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
 import { ProjectParticipant } from "../models/ProjectParticipant";
 import { PatchDoc } from "../models/Requests/PatchDoc";
 
-axios.defaults.baseURL = 'https://localhost:7226/api';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 const ResponseBody = <T>(response: AxiosResponse<T>) => response.data;
 

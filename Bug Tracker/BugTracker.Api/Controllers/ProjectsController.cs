@@ -66,7 +66,9 @@ namespace BugTracker.Api.Controllers
 
             await DbContext.SaveChangesAsync();
 
-            return Created($"~/api/Projects/{newProject.Entity.Id}", Mapper.Map<ProjectDTO>(newProject.Entity));
+            ProjectDTO? projectDto = await DbContext.Projects.ProjectTo<ProjectDTO>(Mapper.ConfigurationProvider).SingleOrDefaultAsync(p => p.Id == newProject.Entity.Id);
+
+            return Created($"~/api/Projects/{newProject.Entity.Id}", projectDto);
         }
 
         [Authorize("IsProjectAdmin")]

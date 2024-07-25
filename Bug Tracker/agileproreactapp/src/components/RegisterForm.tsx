@@ -17,7 +17,7 @@ export default function () {
         firstName: Yup.string().required("First name is required.").max(50, "First name cannot exceed 50 characters.").matches(nameRegex, "First name can only contain letters, spaces, hyphens, and apostrophes.").trim(),
         lastName: Yup.string().required("Last name is required.").max(50, "Last name cannot exceed 50 characters.").matches(nameRegex, "Last name can only contain letters, spaces, hyphens, and apostrophes.").trim(),
         password: Yup.string().required("Password is required.").min(6, "Password must be at least 6 characters.").trim(),
-        confirmPassword: Yup.string().required("Confirm password is required.").oneOf([Yup.ref("Password")], "Passwords do not match.")
+        confirmPassword: Yup.string().required("Confirm password is required.").oneOf([Yup.ref("password")], "Passwords do not match.")
     })
 
     return (

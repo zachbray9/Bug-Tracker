@@ -1,6 +1,6 @@
 import { Button, FormControl, FormErrorMessage, FormLabel, Icon, Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-ui/react";
-import { useField } from "formik";
-import { useState } from "react";
+import { useField, useFormikContext } from "formik";
+import { ChangeEvent, useState } from "react";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -13,8 +13,14 @@ interface Props {
 }
 
 export default function MyTextInput(props: Props) {
+    const { setFieldValue } = useFormikContext();
     const [field, meta] = useField(props.name);
     const [show, setShow] = useState(false);
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        let inputValue = e.target.value;
+        setFieldValue(props.name, inputValue)
+    }
 
     const toggleVisibility = () => { 
         if (show === false)
@@ -31,7 +37,7 @@ export default function MyTextInput(props: Props) {
                     <Icon as={props.leftIcon}></Icon>
                 </InputLeftElement> }
 
-                <Input {...field} id={props.name} type={props.hideable ? (show ? "text" : "password") : "text"} placeholder={props.placeholder} />
+                <Input {...field} id={props.name} type={props.hideable ? (show ? "text" : "password") : "text"} placeholder={props.placeholder} value={field.value} onChange={handleInputChange} />
 
                 {/*If input is Hideable, provides a show/hide button. If not, displays a right icon if there is one*/}
                 {props.hideable ? (

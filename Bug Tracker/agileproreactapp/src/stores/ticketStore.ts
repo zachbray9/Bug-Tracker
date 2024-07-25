@@ -29,7 +29,6 @@ export default class TicketStore {
 
         try {
             var ticket = await agent.Tickets.createTicket(creds);
-            console.log(ticket);
             runInAction(() => { store.projectStore.selectedProject?.tickets.push(ticket) });
             this.setIsLoading(false);
         } catch (error) {

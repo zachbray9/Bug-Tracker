@@ -87,6 +87,8 @@ namespace BugTracker.Api.Controllers
         public async Task<IActionResult> CurrentUser()
         {
             User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            if(user == null)
+                return BadRequest("User does not exist.");
 
             UserDTO userDTO = CreateUserDTO(user);
 

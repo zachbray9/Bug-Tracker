@@ -20,7 +20,6 @@ export default class UserStore {
 
     login = async (creds: UserFormValues) => {
         const user = await agent.Auth.login(creds);
-        console.log(user);
         store.commonStore.setAuthToken(user.authToken);
         runInAction(() => this.user = user);
         router.navigate('dashboard');
@@ -28,7 +27,9 @@ export default class UserStore {
 
     register = async (creds: UserFormValues) => {
         const user = await agent.Auth.register(creds);
-        console.log(user);
+        store.commonStore.setAuthToken(user.authToken);
+        runInAction(() => this.user = user);
+        router.navigate('dashboard');
     }
 
     logout = () => {
@@ -69,7 +70,6 @@ export default class UserStore {
             const response = await agent.Profiles.uploadPhoto(file);
             const photoUrl = response.data;
             this.setProfilePhoto(photoUrl);
-            console.log(this.user?.profilePictureUrl);
             this.setIsUploading(false);
         } catch (error) {
             console.log(error);

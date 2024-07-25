@@ -44,7 +44,6 @@ export default class ProjectStore {
 
         try {
             var project = await agent.Projects.createProject(creds);
-            console.log(project);
             runInAction(() => { this.projects.push(project) });
             this.setSelectedProject(project);
             this.setIsLoading(false);

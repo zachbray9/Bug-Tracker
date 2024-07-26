@@ -10,8 +10,8 @@ namespace BugTracker.Api.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            string? ConnectionString = config["ConnectionString"];
-            string? AzureBlobConnectionString = config["AzureBlobConnectionString"];
+            string? ConnectionString = config.GetConnectionString("DefaultConnection");
+            string? AzureBlobConnectionString = config.GetConnectionString("AzureBlobStorageConnectionString");
 
             if(string.IsNullOrEmpty(ConnectionString))
             {

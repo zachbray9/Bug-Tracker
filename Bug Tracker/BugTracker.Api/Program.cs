@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using BugTracker.Api.Helpers;
 using BugTracker.Domain.Enumerables;
 using BugTracker.Api.SignalR;
+using BugTracker.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,5 +56,19 @@ app.MapControllers();
 
 app.MapHub<ChatHub>("/chat");
 app.MapFallbackToController("Index", "Fallback");
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+try
+{
+    var context = services.GetRequiredService<BugTrackerDbContext>();
+    context.Database.Migrate();
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger>();
+    logger.LogError(ex, "An error occurred during migration.");
+}
 
 app.Run();

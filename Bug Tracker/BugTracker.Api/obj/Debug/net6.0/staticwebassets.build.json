@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GSsiXLkfL3Q48I/4ouXtvOg63l0377yL1y4r9QCd/XI=",
+  "Hash": "KIgGCsQZeZVNZvngrb3TZgifOU7zJFov6H9+7hHDJvU=",
   "Source": "BugTracker.Api",
   "BasePath": "_content/BugTracker.Api",
   "Mode": "Default",
@@ -134,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\index-BMmXL6xC.js"
+    },
+    {
+      "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\index-DxEfszg3.js",
+      "SourceId": "BugTracker.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\",
+      "BasePath": "_content/BugTracker.Api",
+      "RelativePath": "assets/index-DxEfszg3.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\index-DxEfszg3.js"
     },
     {
       "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\LandingPageHeroImage-B8yBj6Af.png",

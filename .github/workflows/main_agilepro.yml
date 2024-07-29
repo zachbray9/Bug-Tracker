@@ -23,7 +23,7 @@ jobs:
 
       - name: Install deps and build react app
         run: |
-          cd agileproreactapp
+          cd 'Bug Tracker'/agileproreactapp
           npm install
           npm run build
 

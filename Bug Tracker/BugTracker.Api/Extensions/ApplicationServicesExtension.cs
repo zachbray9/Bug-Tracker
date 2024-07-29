@@ -17,6 +17,11 @@ namespace BugTracker.Api.Extensions
             {
                 throw new InvalidOperationException("Connection string is null or empty.");
             }
+
+            if(string.IsNullOrEmpty(AzureBlobConnectionString))
+            {
+                throw new InvalidOperationException("Azure Blob Storage connection string is null or empty.");
+            }
            
             services.AddDbContext<BugTrackerDbContext>(options =>
             {
@@ -37,7 +42,7 @@ namespace BugTracker.Api.Extensions
             });
 
             services.AddSignalR();
-            services.AddSingleton(x => new BlobServiceClient(config["AzureBlobConnectionString"]));
+            services.AddSingleton(x => new BlobServiceClient(AzureBlobConnectionString));
             services.AddScoped<BlobStorageService>();
             services.AddScoped<CommentService>();
 

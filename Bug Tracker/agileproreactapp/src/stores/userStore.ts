@@ -3,7 +3,7 @@ import { User } from "../models/User";
 import { UserFormValues } from "../models/UserFormValues";
 import agent from "../api/axios";
 import { store } from "./store";
-import router from "../routes";
+import router from "../Router/routes";
 import { PatchDoc } from "../models/Requests/PatchDoc";
 
 export default class UserStore {

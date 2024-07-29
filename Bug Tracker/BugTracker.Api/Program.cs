@@ -1,5 +1,4 @@
 using BugTracker.Api.Extensions;
-using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using BugTracker.Api.Helpers;
@@ -9,9 +8,6 @@ using BugTracker.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("AgileProKeyVaultUri"));
-//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 
@@ -35,11 +31,33 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opt => opt.NoReferrer());
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+app.UseXfo(opt => opt.Deny());
+app.UseCsp(opt => opt
+    .BlockAllMixedContent()
+    .StyleSources(s => s.Self())
+    .FontSources(s => s.Self())
+    .FormActions(s => s.Self())
+    .FrameAncestors(s => s.Self())
+    .ImageSources(s => s.Self().CustomSources("blob:", "https://agileproblobstorage.blob.core.windows.net"))
+    .ScriptSources(s => s.Self())
+);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+        await next.Invoke();
+    });
 }
 
 app.UseHttpsRedirection();
@@ -69,7 +87,6 @@ catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger>();
     logger.LogError(ex, "An error occurred during migration.");
-    Console.WriteLine(ex.Message);
 }
 
 app.Run();

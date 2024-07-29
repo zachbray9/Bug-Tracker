@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { Project } from "../models/Project";
 import agent from "../api/axios";
 import { ProjectFormValues } from "../models/ProjectFormValues";
-import router from "../routes";
+import router from "../Router/routes";
 import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
 import { store } from "./store";
 

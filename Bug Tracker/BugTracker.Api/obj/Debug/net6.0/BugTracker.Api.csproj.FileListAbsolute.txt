@@ -140,3 +140,5 @@ C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\BugTracker.Api.staticwebassets.runtime.json
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\NWebsec.AspNetCore.Core.dll
+C:\Users\zachb\Documents\Github Repositories\Bug-Tracker\Bug Tracker\BugTracker.Api\bin\Debug\net6.0\NWebsec.AspNetCore.Middleware.dll

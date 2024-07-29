@@ -3,7 +3,7 @@ import React from 'react';
 import theme from './theme'
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import router from './routes.tsx';
+import router from './Router/routes.tsx';
 import './styles/global.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

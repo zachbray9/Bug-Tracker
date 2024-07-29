@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Layout from "./pages/Layout";
-import Dashboard from "./pages/Dashboard";
-import ProjectBoard from "./pages/ProjectBoard";
-import AccountSettings from "./pages/AccountSettings";
-import RequireAuth from "./Router/RequireAuth";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import Layout from "../pages/Layout";
+import Dashboard from "../pages/Dashboard";
+import ProjectBoard from "../pages/ProjectBoard";
+import AccountSettings from "../pages/AccountSettings";
+import RequireAuth from "../Router/RequireAuth";
 /*import Error from "./pages/Error";*/
 
 const router = createBrowserRouter([

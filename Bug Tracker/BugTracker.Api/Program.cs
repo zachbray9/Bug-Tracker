@@ -37,7 +37,7 @@ app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
 app.UseXfo(opt => opt.Deny());
 app.UseCsp(opt => opt
     .BlockAllMixedContent()
-    .StyleSources(s => s.Self())
+    .StyleSources(s => s.Self().UnsafeInline())
     .FontSources(s => s.Self())
     .FormActions(s => s.Self())
     .FrameAncestors(s => s.Self())

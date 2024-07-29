@@ -5,7 +5,7 @@ import AgileProLogo from "../assets/AgileProLogoCropped.png";
 import "../styles/navbar.css";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
-import router from "../routes";
+import router from "../Router/routes";
 import CreateProjectModal from "./Projects/CreateProjectModal";
 
 
@@ -54,11 +54,11 @@ export default observer(function NavBar() {
                         </Flex>
                     </NavLink>
                     <Spacer />
-                    <NavLink to='/Signup'>
-                        <Button colorScheme='messenger' variant='outline'>Sign Up</Button>
+                        <NavLink to='/Signup'>
+                            <Button colorScheme='messenger' variant='outline' size={{base: "sm", md: "md"} }>Sign Up</Button>
                     </NavLink>
                     <NavLink to='/Login'>
-                        <Button colorScheme='messenger'>Login</Button>
+                            <Button colorScheme='messenger' size={{ base: "sm", md: "md" }}>Login</Button>
                     </NavLink>
                 </Flex>
             )}

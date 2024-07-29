@@ -8,7 +8,7 @@ import LoginForm from "../components/LoginForm";
 export default observer(function Login() {
 
     return (
-        <Center pos="relative" height="calc(100vh - 60px)">
+        <Center pos="relative" height="calc(100vh - 60px)" paddingX="1rem">
             <Image src={Image1} pos='absolute' bottom='0' left='3rem' boxSize={[0, 200, 300, 400]} />
             <Image src={Image2} pos='absolute' bottom='0' right='3rem' boxSize={[0, 200, 300, 400]} />
 

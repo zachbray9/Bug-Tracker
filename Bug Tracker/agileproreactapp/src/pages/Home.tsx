@@ -8,7 +8,7 @@ import NvidiaLogo from "../assets/NvidiaLogo.png";
 import TeslaLogo from "../assets/TeslaLogo.png";
 import Footer from "../components/Footer";
 import { useStore } from "../stores/store";
-import router from "../routes";
+import router from "../Router/routes";
 
 export default function Home() {
     const { userStore } = useStore();
@@ -29,7 +29,7 @@ export default function Home() {
                                 Customize workflows, track progress, and boost productivity with our intuitive and powerful platform.
                             </Text>
                             <Flex gap={4}>
-                                <Button colorScheme="messenger">Get Started</Button>
+                                <Button colorScheme="messenger" onClick={() => router.navigate('signup')}>Get Started</Button>
                                 <Button variant="outline">See how it works</Button>
                             </Flex>
                         </Stack>
@@ -42,15 +42,15 @@ export default function Home() {
             </Stack>
 
             <Stack align="center" padding="4rem" maxWidth="1200px" width="100%">
-                <Text color="text.subtle">Trusted by individuals and teams all over the world</Text>
-                <Flex align="center" wrap="wrap" gap={8}>
-                    <Image src={MicrosoftLogo} maxWidth="150px" maxHeight="70px" objectFit="contain" />
-                    <Image src={MetaLogo} maxWidth="150px" maxHeight="70px" objectFit="contain" />
-                    <Image src={AppleLogo} maxWidth="150px" maxHeight="70px" objectFit="contain" />
-                    <Image src={NvidiaLogo} maxWidth="150px" maxHeight="70px" objectFit="contain" />
-                    <Image src={TeslaLogo} maxWidth="150px" maxHeight="70px" objectFit="contain" />
+                <Text color="text.subtle" textAlign="center">Trusted by individuals and teams all over the world</Text>
+                <Flex align="center" justify="center" wrap="wrap" gap={{ base: 6, md:8 }}>
+                    <Image src={MicrosoftLogo} maxWidth={{ base: "107px", md: "150px" }} maxHeight={{ base: "50px", md: "70px" }} objectFit="contain" />
+                    <Image src={MetaLogo} maxWidth={{base: "107px", md: "150px"}} maxHeight={{base: "50px", md: "70px"}} objectFit="contain" />
+                    <Image src={AppleLogo} maxWidth={{ base: "107px", md: "150px" }} maxHeight={{ base: "50px", md: "70px" }} objectFit="contain" />
+                    <Image src={NvidiaLogo} maxWidth={{ base: "107px", md: "150px" }} maxHeight={{ base: "50px", md: "70px" }} objectFit="contain" />
+                    <Image src={TeslaLogo} maxWidth={{ base: "107px", md: "150px" }} maxHeight={{ base: "50px", md: "70px" }} objectFit="contain" />
                 </Flex>
-                <Text color="text.subtle" fontSize="xs">*Logos used are for demonstration purposes only and do not imply endorsement
+                <Text color="text.subtle" fontSize="xs" textAlign="center">*Logos used are for demonstration purposes only and do not imply endorsement
                     by the respective companies.
                 </Text>
             </Stack>
@@ -70,7 +70,7 @@ export default function Home() {
                                 secure with us.
                             </Text>
                             <Flex gap={4}>
-                                <Button variant="outline">Try now</Button>
+                                <Button variant="outline" onClick={() => router.navigate('signup')} >Try now</Button>
                             </Flex>
                         </Stack>
                     </GridItem>

@@ -21,7 +21,6 @@
     <Folder Include="src\components\Account\" />
     <Folder Include="src\components\Tickets\" />
     <Folder Include="src\models\Requests\" />
-    <Folder Include="src\Router\" />
     <Folder Include="src\stores\" />
   </ItemGroup>
 </Project>

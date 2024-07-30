@@ -5,6 +5,7 @@ using BugTracker.Domain.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BugTracker.Api.Controllers
@@ -41,8 +42,7 @@ namespace BugTracker.Api.Controllers
                 FirstName = registerRequest.FirstName,
                 LastName = registerRequest.LastName,
                 Email = registerRequest.Email,
-                UserName = registerRequest.Email,
-                DateJoined = DateTime.UtcNow,
+                UserName = registerRequest.Email
             };
 
             var result = await UserManager.CreateAsync(newUser, registerRequest.Password);
@@ -53,6 +53,7 @@ namespace BugTracker.Api.Controllers
 
             UserDTO userDTO = CreateUserDTO(newUser);
 
+            await SetRefreshToken(newUser);
             return Ok(userDTO);
         }
 
@@ -79,6 +80,7 @@ namespace BugTracker.Api.Controllers
 
             UserDTO userDTO = CreateUserDTO(user);
 
+            await SetRefreshToken(user);
             return Ok(userDTO);
         }
 
@@ -96,6 +98,28 @@ namespace BugTracker.Api.Controllers
         }
 
         [Authorize]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Refresh()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var user = await UserManager.Users.Include(u => u.RefreshTokens)
+                .FirstOrDefaultAsync(u => u.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (user == null)
+                return Unauthorized();
+
+            var oldToken = user.RefreshTokens.SingleOrDefault(u => u.Token == refreshToken);
+            if (oldToken != null && !oldToken.IsActive)
+                return Unauthorized();
+
+            if (oldToken != null)
+                oldToken.Revoked = DateTime.UtcNow;
+
+            return Ok(CreateUserDTO(user));
+
+        }
+
+        [Authorize]
         [HttpDelete("[action]")]
         public IActionResult Logout()
         {
@@ -103,6 +127,22 @@ namespace BugTracker.Api.Controllers
         }
 
         //helpers
+        private async Task SetRefreshToken(User user)
+        {
+            var refreshToken = AuthTokenService.GenerateRefreshToken();
+            user.RefreshTokens.Add(refreshToken);
+
+            await UserManager.UpdateAsync(user);
+
+            var cookieOption = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOption);
+        }
+
         private UserDTO CreateUserDTO(User user)
         {
             return new UserDTO

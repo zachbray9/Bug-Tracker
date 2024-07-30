@@ -37,6 +37,7 @@ namespace BugTracker.Api.Extensions
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
+                    .WithExposedHeaders("WWW-Authenticate")
                     .WithOrigins("http://localhost:5173"); //must change url for production
                 });
             });

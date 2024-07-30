@@ -10,6 +10,9 @@ import { TicketFormValues } from "../models/TicketFormValues";
 import { AddUserFormValues } from "../models/Requests/AddUserFormValues";
 import { ProjectParticipant } from "../models/ProjectParticipant";
 import { PatchDoc } from "../models/Requests/PatchDoc";
+import { createStandaloneToast } from "@chakra-ui/react";
+
+const { toast } = createStandaloneToast();
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
@@ -27,12 +30,24 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
-    const { data, status } = error.response as AxiosResponse;
+    const { data, status, headers } = error.response as AxiosResponse;
     switch (status) {
         case 400:
             console.log(data)
             break;
         case 401:
+            if (status === 401 && headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')) {
+                store.userStore.logout();
+                toast({
+                    title: "Session expired",
+                    description: "Please login again.",
+                    status: "error",
+                    position: "top",
+                    isClosable: true
+                })
+            } else {
+
+            }
             console.log(data)
             break;
         case 403:
@@ -58,7 +73,8 @@ const requests = {
 const Auth = {
     login: (user: UserFormValues) => requests.post<User>("/Auth/Login", user),
     register: (user: UserFormValues) => requests.post<User>("/Auth/Register", user),
-    getCurrentUser: () => requests.get<User>("/Auth/CurrentUser")
+    getCurrentUser: () => requests.get<User>("/Auth/CurrentUser"),
+    refresh: () => requests.post<User>("/Auth/Refresh", {})
 };
 
 const Projects = {

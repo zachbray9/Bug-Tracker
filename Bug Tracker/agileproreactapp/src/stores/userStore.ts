@@ -9,6 +9,7 @@ import { PatchDoc } from "../models/Requests/PatchDoc";
 export default class UserStore {
     user: User | null = null
     isUploading = false;
+    refreshTokenTimeout?: number
 
     constructor() {
         makeAutoObservable(this)
@@ -21,6 +22,7 @@ export default class UserStore {
     login = async (creds: UserFormValues) => {
         const user = await agent.Auth.login(creds);
         store.commonStore.setAuthToken(user.authToken);
+        this.startRefreshTokenTimer(user);
         runInAction(() => this.user = user);
         router.navigate('dashboard');
     }
@@ -28,6 +30,7 @@ export default class UserStore {
     register = async (creds: UserFormValues) => {
         const user = await agent.Auth.register(creds);
         store.commonStore.setAuthToken(user.authToken);
+        this.startRefreshTokenTimer(user);
         runInAction(() => this.user = user);
         router.navigate('dashboard');
     }
@@ -41,6 +44,8 @@ export default class UserStore {
     getCurrentUser = async () => {
         try {
             const user = await agent.Auth.getCurrentUser();
+            store.commonStore.setAuthToken(user.authToken);
+            this.startRefreshTokenTimer(user);
             runInAction(() => this.user = user);
 
             if (user)
@@ -77,6 +82,19 @@ export default class UserStore {
         }
     }
 
+    refreshToken = async () => {
+        this.stopRefreshTokenTimer();
+
+        try {
+            const user = await agent.Auth.refresh();
+            runInAction(() => this.user = user);
+            store.commonStore.setAuthToken(user.authToken);
+            this.startRefreshTokenTimer(user);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     //helpers
 
     setProfilePhoto = (url: string) => {
@@ -86,5 +104,17 @@ export default class UserStore {
 
     setIsUploading = (state: boolean) => {
         this.isUploading = state;
+    }
+
+    private startRefreshTokenTimer(user: User) {
+        const jwtToken = JSON.parse(atob(user.authToken.split('.')[1]));
+        const expires = new Date(jwtToken.exp * 1000);
+        const timeout = expires.getTime() - Date.now() - (60 * 1000);
+        this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
+        console.log({ refreshTimeout: this.refreshTokenTimeout });
+    }
+
+    private stopRefreshTokenTimer() {
+        clearTimeout(this.refreshTokenTimeout);
     }
 }

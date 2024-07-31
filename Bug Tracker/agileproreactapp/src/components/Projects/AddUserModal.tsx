@@ -21,7 +21,7 @@ export default observer(function AddUserModal({ isOpen, onClose }: Props) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent marginX='1rem'>
                 <ModalCloseButton />
 
                 <ModalHeader>

@@ -35,7 +35,7 @@ export default observer(function TicketCard({ ticket }: Props) {
                     <Button variant="link" whiteSpace="normal" wordBreak="break-word" textAlign="left">{ticket.title}</Button>
   
                     <Menu>
-                        <MenuButton as={IconButton} aria-label="options" onClick={handlePreventModalOpen} icon={<FiMoreHorizontal fontSize="24px" />} />
+                        <MenuButton as={IconButton} aria-label="options" onClick={handlePreventModalOpen} fontSize={{base: '16px', md: '24px'}} icon={<FiMoreHorizontal />} />
                         <MenuList>
                             <MenuItem onClick={(e) => { handlePreventModalOpen(e); ticketStore.deleteTicket(ticket.id) }}>Delete</MenuItem>
                         </MenuList>

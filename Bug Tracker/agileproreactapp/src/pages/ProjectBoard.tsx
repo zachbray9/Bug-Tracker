@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
-import { Avatar, Button, HStack, Heading, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, HStack, Heading, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 import TicketColumn from "../components/Tickets/TicketColumn";
 import { IoPersonAddSharp } from "react-icons/io5";
@@ -18,8 +18,8 @@ export default observer(function ProjectBoard() {
     }
 
     return (
-        <Stack padding={8} gap={8} minH="100vh">
-            <Heading>Task board</Heading>
+        <Stack padding={8} gap={8}>
+            <Heading fontSize={{ base: 'xl', md: '3xl' }}>Task board</Heading>
 
             <HStack gap={2}>
                 {projectStore.selectedProject.users.map((user => (
@@ -33,11 +33,13 @@ export default observer(function ProjectBoard() {
                 )}
             </HStack>
 
-            <HStack gap={4} alignItems="start">
-                <TicketColumn Title="To do" />
-                <TicketColumn Title="In progress" />
-                <TicketColumn Title="Done" />
-            </HStack>
+            <Box overflowX='auto' whiteSpace='nowrap'>
+                <HStack gap={4} alignItems="start">
+                    <TicketColumn Title="To do" />
+                    <TicketColumn Title="In progress" />
+                    <TicketColumn Title="Done" />
+                </HStack>
+            </Box>
 
             {ticketStore.selectedTicket && <TicketDetailsModal isOpen={ticketStore.isModalOpen} onClose={ticketStore.clearSelectedTicket} />}
             <AddUserModal isOpen={isOpen} onClose={onClose} />

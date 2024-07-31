@@ -42,7 +42,7 @@ const semanticTokens = {
         },
         variants: {
             filled: {
-                default: "#edf2f7",
+                default: "gray.100",
                 _dark: "#242424"
             }
         }
@@ -86,7 +86,8 @@ const components = {
                 }
             }
         }
-    }
+    },
+    
 }
 
 const theme = extendTheme({ config, styles, semanticTokens, components });

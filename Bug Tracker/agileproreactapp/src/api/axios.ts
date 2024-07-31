@@ -40,7 +40,7 @@ axios.interceptors.response.use(async response => {
                 store.userStore.logout();
                 toast({
                     title: "Session expired",
-                    description: "Please login again.",
+                    description: "Your session has expired. Please login again.",
                     status: "error",
                     position: "top",
                     isClosable: true

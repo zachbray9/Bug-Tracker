@@ -12,7 +12,7 @@ export default function CreateProjectModal(props: Props) {
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered scrollBehavior="inside">
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent marginX='1rem'>
                 <ModalHeader>Create a project</ModalHeader>
                 <ModalBody>
                     <CreateProjectForm />

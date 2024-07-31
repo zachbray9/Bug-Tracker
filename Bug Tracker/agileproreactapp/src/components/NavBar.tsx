@@ -1,12 +1,12 @@
-import { Avatar, Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Spacer, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Menu, MenuButton, MenuItem, MenuList, Spacer, useDisclosure } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-import AgileProLogo from "../assets/AgileProLogoCropped.png";
 import "../styles/navbar.css";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 import router from "../Router/routes";
 import CreateProjectModal from "./Projects/CreateProjectModal";
+import AgileProLogo from "./AgileProLogo";
 
 
 
@@ -19,10 +19,7 @@ export default observer(function NavBar() {
             {userStore.user ?  (
                 <Flex align="center" gap={4} paddingX={4}>
                     <NavLink to='' className='logo-link'>
-                        <Flex justify='center' align='center' gap={1} >
-                            <Image src={AgileProLogo} alt='Logo' boxSize='45px' objectFit='contain'></Image>
-                            <Text fontSize='xl' fontWeight='500' marginBottom='0px'>AgilePro</Text>
-                        </Flex>
+                        <AgileProLogo />
                     </NavLink>
                     <Menu>
                         <MenuButton as={Button} variant="ghost" rightIcon={<ChevronDownIcon />}>Projects</MenuButton>
@@ -48,10 +45,7 @@ export default observer(function NavBar() {
             ) : (
                 <Flex align="center" gap={4} paddingX={4}>
                     <NavLink to='' className='logo-link'>
-                            <Flex justify='center' align='center' gap={1}>
-                            <Image src={AgileProLogo} alt='Logo' boxSize='45px' objectFit='contain'></Image>
-                            <Text fontSize='xl' fontWeight='500' marginBottom='0px'>AgilePro</Text>
-                        </Flex>
+                        <AgileProLogo />
                     </NavLink>
                     <Spacer />
                         <NavLink to='/Signup'>

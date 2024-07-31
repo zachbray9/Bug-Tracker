@@ -5,7 +5,7 @@ import { useStore } from "../stores/store";
 import { useEffect } from "react";
 import LoadingComponent from "../components/common/Loading/LoadingComponent";
 
-function Layout() {
+export default observer(function Layout() {
     const { commonStore, userStore } = useStore();
 
     useEffect(() => {
@@ -28,6 +28,4 @@ function Layout() {
             </div>     
         </>
     )
-}
-
-export default observer(Layout)
+})

@@ -6,5 +6,7 @@ export default defineConfig({
     build: {
         outDir: '../BugTracker.Api/wwwroot'
     },
-    plugins: [react()],
+    plugins: [
+        react(),
+    ],
 })

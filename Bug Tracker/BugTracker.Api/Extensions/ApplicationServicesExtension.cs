@@ -26,7 +26,6 @@ namespace BugTracker.Api.Extensions
             services.AddDbContext<BugTrackerDbContext>(options =>
             {
                 options.UseSqlServer(ConnectionString);
-                //options.UseInMemoryDatabase("BugTrackerTestDb");
             });
 
             services.AddCors(options =>

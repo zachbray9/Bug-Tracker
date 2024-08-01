@@ -14,15 +14,16 @@ export default observer(function Profile() {
     const nameRegex = /^[a-zA-Z\s'-]+$/;
 
     return (
-        <Stack gap={16} align="start" justify="start" paddingX="4rem">
-            <Heading as="h3" size="lg">Account settings</Heading>
+        <Stack gap={16} align="start" justify="start" paddingLeft={{ base: '1rem', md: '4rem' }} >
+            <Heading size={{base: 'md', md: 'lg'}}>Account settings</Heading>
 
             <Stack>
                 <Heading as="h5" size="sm">Personal Information</Heading>
-                <Grid templateColumns="1fr 2fr" gap={16}>
+                <Grid templateColumns={{ base: '1fr', md: '1fr 2fr' }} gap={{ base: 12, md: 16 } }>
                     <Text >This is how other users see your profile. Anything you change here will be saved and
                         represent how other users see you.
                     </Text>
+
                     <Stack gap={4} width="fit-content" align="center">
                         <ChangeableAvatar />
                         {/*First Name form*/}
@@ -91,7 +92,7 @@ export default observer(function Profile() {
 
             <Stack>
                 <Heading as="h5" size="sm">Email address</Heading>
-                <Grid templateColumns="1fr 2fr" gap={16}>
+                <Grid templateColumns={{ base: '1fr', md: '1fr 2fr' }} gap={{base: 12, md: 16}}>
                     <Text>This is the email address that we will use to send email notifications. It also doubles
                         as your Username to login to your account. Any changes made to your email here will be reflected to
                         your login credentials as well.

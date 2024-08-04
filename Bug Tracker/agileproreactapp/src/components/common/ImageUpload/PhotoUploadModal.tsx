@@ -43,7 +43,7 @@ export default observer(function PhotoUploadModal(props: Props) {
     return (
         <Modal isOpen={props.isOpen} onClose={props.onClose}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent marginX='1rem'>
                 <ModalHeader>Add a profile photo</ModalHeader>
                 <ModalBody as={Center}>
                     {

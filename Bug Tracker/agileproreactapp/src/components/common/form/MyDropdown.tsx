@@ -29,7 +29,7 @@ export default function MyDropdown({ name, options, label, submitOnSelect }: Pro
             }
 
             <Menu id={name}>
-                <MenuButton id={name} as={Button} rightIcon={<ChevronDownIcon />} >{field.value}</MenuButton>
+                <MenuButton id={name} as={Button} size={{base: 'sm', md: 'md'}} rightIcon={<ChevronDownIcon />} >{field.value}</MenuButton>
                 <MenuList>
                     {filteredOptions.map((option) => (
                         <MenuItem key={option} onClick={() => handleSelectionChange(option)} >{option}</MenuItem>

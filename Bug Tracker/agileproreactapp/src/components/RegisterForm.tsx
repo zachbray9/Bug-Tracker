@@ -39,7 +39,7 @@ export default function () {
                         {errors.error && <Text color="red">{errors.error}</Text>}
 
                         <Center>
-                            <Button type="submit" isLoading={isSubmitting} colorScheme="messenger" w="100%">Register</Button>
+                            <Button type="submit" isLoading={isSubmitting} colorScheme="messenger" w="100%" >Register</Button>
                         </Center>
                     </Stack>
                 </Form>

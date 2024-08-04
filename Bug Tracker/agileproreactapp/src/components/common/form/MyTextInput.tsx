@@ -1,10 +1,9 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Icon, Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-ui/react";
+import { Button, FormControl, FormErrorMessage, FormLabel, Icon, Input, InputGroup, InputLeftElement, InputProps, InputRightElement } from "@chakra-ui/react";
 import { useField, useFormikContext } from "formik";
 import { ChangeEvent, useState } from "react";
 import { IconType } from "react-icons";
 
-interface Props {
-    placeholder: string;
+interface Props extends InputProps {
     name: string;
     label?: string;
     leftIcon?: IconType,
@@ -12,14 +11,14 @@ interface Props {
     hideable?: boolean
 }
 
-export default function MyTextInput(props: Props) {
+export default function MyTextInput({ name, label, leftIcon, rightIcon, hideable, ...props }: Props) {
     const { setFieldValue } = useFormikContext();
-    const [field, meta] = useField(props.name);
+    const [field, meta] = useField(name);
     const [show, setShow] = useState(false);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         let inputValue = e.target.value;
-        setFieldValue(props.name, inputValue)
+        setFieldValue(name, inputValue)
     }
 
     const toggleVisibility = () => { 
@@ -31,25 +30,32 @@ export default function MyTextInput(props: Props) {
 
     return (
         <FormControl isInvalid={meta.touched && !!meta.error}>
-            <FormLabel htmlFor={props.name}>{props.label}</FormLabel>
-            <InputGroup>
-                {props.leftIcon && <InputLeftElement color="#d3d3d3">
-                    <Icon as={props.leftIcon}></Icon>
+            <FormLabel htmlFor={name}>{label}</FormLabel>
+            <InputGroup alignItems='center'>
+                {leftIcon && <InputLeftElement color="#d3d3d3">
+                    <Icon as={leftIcon} fontSize='1em'></Icon>
                 </InputLeftElement> }
 
-                <Input {...field} id={props.name} type={props.hideable ? (show ? "text" : "password") : "text"} placeholder={props.placeholder} value={field.value} onChange={handleInputChange} />
+                <Input
+                    {...field}
+                    {...props}
+                    id={name}
+                    type={hideable ? (show ? "text" : "password") : "text"}
+                    value={field.value}
+                    onChange={handleInputChange}
+                />
 
                 {/*If input is Hideable, provides a show/hide button. If not, displays a right icon if there is one*/}
-                {props.hideable ? (
+                {hideable ? (
                     <InputRightElement color="#d3d3d3" w="4.5rem">
-                        <Button onClick={toggleVisibility} size="sm">
+                        <Button onClick={toggleVisibility} size={{base: 'xs', md: 'sm'}} >
                             {show ? "Hide" : "Show" }
                         </Button>
                     </InputRightElement>
                 ) : (
-                        props.rightIcon && (
+                        rightIcon && (
                             <InputRightElement>
-                                <Icon as={props.rightIcon}></Icon>
+                                <Icon as={rightIcon} fontSize='1em'></Icon>
                             </InputRightElement>
                         )
                 )}

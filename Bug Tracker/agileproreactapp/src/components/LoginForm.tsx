@@ -28,7 +28,7 @@ export default function LoginForm() {
                         <MyTextInput name="password" placeholder="Password" label="Password" leftIcon={FaLock} hideable />
                         {errors.error && <Text color="red">{errors.error}</Text>}
                         <Center>
-                            <Button type='submit' isLoading={isSubmitting} colorScheme="messenger" w="100%">Login</Button>
+                            <Button type='submit' isLoading={isSubmitting} colorScheme="messenger" w="100%" >Login</Button>
                         </Center>
                     </Stack>
                 </Form>

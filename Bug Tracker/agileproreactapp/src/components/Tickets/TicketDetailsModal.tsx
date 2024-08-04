@@ -151,7 +151,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                 </Flex>
 
                                 <Stack gap={4} width="100%" padding={4} border="1px solid #c8c8c8">
-                                    <Grid templateColumns='1fr 2fr' width='100%' gap={4} alignItems='center'>
+                                    <Grid templateColumns={{ base: '1fr', md: '1fr 2fr'}} width='100%' gap={4} alignItems='center'>
                                         <GridItem>
                                             <Heading size="xs">Assignee</Heading>
                                         </GridItem>
@@ -176,7 +176,7 @@ export default observer(function TicketDetailsModal({ isOpen, onClose }: Props) 
                                         </GridItem>
                                     </Grid>
 
-                                    <Grid templateColumns='1fr 2fr' width='100%' gap={4} alignItems='center'>
+                                    <Grid templateColumns={{ base: '1fr', md: '1fr 2fr' }} width='100%' gap={4} alignItems='center'>
                                         <GridItem>
                                             <Heading size="xs">Reporter</Heading>
                                         </GridItem>

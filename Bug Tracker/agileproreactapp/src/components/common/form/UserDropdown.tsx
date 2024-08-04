@@ -34,7 +34,7 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
                             name={field.value ? `${field.value.firstName} ${field.value.lastName}` : undefined}
                             src={field.value?.profilePictureUrl || undefined}
                         />
-                        <Text>{field.value ? `${field.value.firstName} ${field.value.lastName}` : "Unassigned"}</Text>
+                        <Text noOfLines={1} fontSize={{ base: 'sm', md: 'md' }}>{field.value ? `${field.value.firstName} ${field.value.lastName}` : "Unassigned"}</Text>
                         {isSubmitting && <Spinner size="sm" />}
                     </Flex>
                     
@@ -45,7 +45,7 @@ export default function UserDropdown({ name, options, allowNull, submitOnSelect 
                         <MenuItem key={option.email} onClick={() => handleSelectionChange(option)}>
                             <Flex align="center" gap={4}>
                                 <Avatar name={`${option.firstName} ${option.lastName}`} src={option.profilePictureUrl || undefined} key={`${option.firstName} ${option.lastName}`} size="sm" />
-                                <Text>{`${option.firstName} ${option.lastName}`}</Text>
+                                <Text noOfLines={1} fontSize={{ base: 'sm', md: 'md' }}>{`${option.firstName} ${option.lastName}`}</Text>
                             </Flex>
                         </MenuItem>
                     ))}

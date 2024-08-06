@@ -36,3 +36,10 @@
 * Used Microsoft's built in IdentityUser class for its built in properties and access to the UserManager.
 ### Real Time Chat Using Web Sockets
 * Implemented SignalR to create a chathub and allow users to chat with each other in real time using web sockets
+### Microsoft Azure
+* Used an Azure SQL Server Database for my production database.
+* Created an Azure Storage Account to store and fetch user profile pictures.
+* Deployed the app using an Azure App Service and used it's environment variables to store my app secrets such as connection strings.
+### Continuous Integration
+* Implemented a CI/CD pipeline that automatically deploys my appliation when I push changes to my main branch.
+* Created a development branch where I create features and use Pull Requests to merge commits into the main branch and update the production application.

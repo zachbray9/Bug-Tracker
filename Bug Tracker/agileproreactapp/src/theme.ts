@@ -42,7 +42,7 @@ const semanticTokens = {
         },
         variants: {
             filled: {
-                default: "gray.100",
+                default: "gray.200",
                 _dark: "#242424"
             }
         }

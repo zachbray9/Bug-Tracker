@@ -14,6 +14,10 @@ export default observer(function TicketColumn({ Title }: Props) {
     const [newTaskTitle, setNewTaskTitle] = useState("");
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
+    const filteredTickets = projectStore.selectedProject?.tickets.filter(
+        ticket => ticket.status === Title && ticket.title.toLowerCase().includes(ticketStore.filterQuery.toLowerCase())
+    )
+
     const handleSubmit = () => {
         if (newTaskTitle.trim() !== "") {
             ticketStore.createTicket({
@@ -45,9 +49,7 @@ export default observer(function TicketColumn({ Title }: Props) {
 
             <CardBody>
                 <Stack>
-                    {projectStore.selectedProject?.tickets
-                        .filter(ticket => ticket.status === Title)
-                        .map((ticket) => (
+                    {filteredTickets?.map((ticket) => (
                             <TicketCard key={ticket.title} ticket={ticket} />
                      ))}
 
@@ -65,7 +67,7 @@ export default observer(function TicketColumn({ Title }: Props) {
                             placeholder="What needs to be done?"
                             autoFocus />
                     ) : (
-                        <Button onClick={() => setIsCreatingTask(true)} variant="ghost" width="100%" justifyContent="start" _hover={{ _light: { bg: 'gray.200' }, _dark: { bg: 'whiteAlpha.200' } }} _active={{ _light: { bg: 'gray.300' }, _dark: { bg: 'whiteAlpha.300' } }}>+ Add task</Button>
+                        <Button onClick={() => setIsCreatingTask(true)} variant="ghost" width="100%" justifyContent="start" _hover={{ _light: { bg: 'gray.300' }, _dark: { bg: 'whiteAlpha.200' } }} _active={{ _light: { bg: 'gray.400' }, _dark: { bg: 'whiteAlpha.300' } }}>+ Add task</Button>
                     )}
                 </Stack>
             </CardBody>

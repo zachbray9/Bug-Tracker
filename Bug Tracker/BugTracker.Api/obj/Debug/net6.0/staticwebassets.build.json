@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kjxjfkPXW1GqU1bEDl46u1fMUBES07qK8HxyOUyZ8+c=",
+  "Hash": "TxSuYb2oSfP1LE2xutIO6SKpWN4qT2oZn5r91SP9Pkc=",
   "Source": "BugTracker.Api",
   "BasePath": "_content/BugTracker.Api",
   "Mode": "Default",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\index-BMmXL6xC.js"
+    },
+    {
+      "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\index-Cs8PQ1Ge.js",
+      "SourceId": "BugTracker.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\",
+      "BasePath": "_content/BugTracker.Api",
+      "RelativePath": "assets/index-Cs8PQ1Ge.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\index-Cs8PQ1Ge.js"
     },
     {
       "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\assets\\index-DKz7TC7v.js",

@@ -7,6 +7,7 @@ import { PatchDoc } from "../models/Requests/PatchDoc";
 
 export default class TicketStore {
     selectedTicket: Ticket | null = null;
+    filterQuery: string = '';
     isModalOpen = false;
     isLoading = false;
 
@@ -69,5 +70,13 @@ export default class TicketStore {
 
     setIsLoading = (value: boolean) => {
         this.isLoading = value;
+    }
+
+    setFilterQuery = (query: string) => {
+        this.filterQuery = query;
+    }
+
+    clearFilterQuery = () => {
+        this.filterQuery = '';
     }
 }

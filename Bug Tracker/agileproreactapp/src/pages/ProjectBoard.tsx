@@ -1,16 +1,24 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
-import { Avatar, Box, Button, HStack, Heading, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Box, Button, HStack, Heading, IconButton, Input, InputGroup, InputLeftElement, Stack, useDisclosure } from "@chakra-ui/react";
 import EmptyProjects from "../components/common/Empty/EmptyProjects";
 import TicketColumn from "../components/Tickets/TicketColumn";
 import { IoPersonAddSharp } from "react-icons/io5";
 import TicketDetailsModal from "../components/Tickets/TicketDetailsModal";
 import AddUserModal from "../components/Projects/AddUserModal";
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 export default observer(function ProjectBoard() {
     const { projectStore, ticketStore } = useStore();
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    useEffect(() => {
+        return (
+            ticketStore.clearFilterQuery()
+        )
+    }, [ticketStore]);
 
     if (projectStore.selectedProject === null) {
         return (
@@ -28,6 +36,14 @@ export default observer(function ProjectBoard() {
                 <Heading fontSize={{ base: 'xl', md: '3xl' }}>Task board</Heading>
 
                 <HStack gap={2}>
+                    <InputGroup width='fit-content'>
+                        <InputLeftElement>
+                            <SearchIcon color='text.subtle' />
+                        </InputLeftElement>
+
+                        <Input placeholder='Search' onChange={(e) => ticketStore.setFilterQuery(e.target.value)} />
+                    </InputGroup>
+
                     {projectStore.selectedProject.users.map((user => (
                         <Button key={user.email} variant="ghost" borderRadius="full" padding={0}>
                             <Avatar name={`${user.firstName} ${user.lastName}`} src={user.profilePictureUrl || undefined} key={`${user.firstName} ${user.lastName}`} size="sm" />

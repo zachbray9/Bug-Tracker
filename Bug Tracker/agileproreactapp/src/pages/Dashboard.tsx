@@ -17,11 +17,12 @@ export default function Dashboard() {
                     <Text fontSize={{base: 'xl', md: '3xl'}} >Projects</Text>
                     <Spacer />
                     <Button colorScheme="messenger" onClick={onOpen} size={{base: 'sm', md: 'md'}}>Create project</Button>
-                    <CreateProjectModal isOpen={isOpen} onClose={onClose} />
                 </Flex>
 
                 <ProjectsTable />
             </Stack>
+
+            <CreateProjectModal isOpen={isOpen} onClose={onClose} />
         </>
     )
 }

@@ -25,7 +25,7 @@ jobs:
         run: |
           cd 'Bug Tracker/agileproreactapp'
           npm install
-          npm run build
+          npm run build --emptyOutDir
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4

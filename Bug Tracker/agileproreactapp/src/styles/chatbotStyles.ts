@@ -1,6 +1,6 @@
-import { Styles, getDefaultStyles } from "react-chatbotify";
+import { Styles } from "react-chatbotify";
 
-export const ChatbotStyles: DefaultStyles = {
+export const ChatbotStyles: Styles = {
     headerStyle: {
 
     }

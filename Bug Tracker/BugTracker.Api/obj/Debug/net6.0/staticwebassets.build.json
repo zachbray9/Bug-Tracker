@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TxSuYb2oSfP1LE2xutIO6SKpWN4qT2oZn5r91SP9Pkc=",
+  "Hash": "fgEIpHfy4xYqO7xIzguwxeKOkju+P/wmpOOGg8uIhpE=",
   "Source": "BugTracker.Api",
   "BasePath": "_content/BugTracker.Api",
   "Mode": "Default",
@@ -357,6 +357,23 @@
       "OriginalItemSpec": "wwwroot\\browserconfig.xml"
     },
     {
+      "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\favicon.ico",
+      "SourceId": "BugTracker.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\",
+      "BasePath": "_content/BugTracker.Api",
+      "RelativePath": "favicon.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
       "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\favicon-16x16.png",
       "SourceId": "BugTracker.Api",
       "SourceType": "Discovered",
@@ -389,23 +406,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon-32x32.png"
-    },
-    {
-      "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\favicon.ico",
-      "SourceId": "BugTracker.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\",
-      "BasePath": "_content/BugTracker.Api",
-      "RelativePath": "favicon.ico",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
       "Identity": "C:\\Users\\zachb\\Documents\\Github Repositories\\Bug-Tracker\\Bug Tracker\\BugTracker.Api\\wwwroot\\index.html",

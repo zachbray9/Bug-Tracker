@@ -1,4 +1,4 @@
-import { Button, Flex, Grid, GridItem, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { Button, Flex, Grid, GridItem, Heading, Image, Link, Stack, Text } from "@chakra-ui/react";
 import Footer from "../components/Footer";
 import { useStore } from "../stores/store";
 import router from "../Router/routes";
@@ -29,7 +29,7 @@ export default function Home() {
                                 </Text>
                                 <Flex gap={4}>
                                     <Button colorScheme="messenger" onClick={() => router.navigate('signup')}>Get Started</Button>
-                                    <Button variant="outline">See how it works</Button>
+                                    <Button as={Link} href='https://youtu.be/nnRKnhd6yys' isExternal variant="outline" >See how it works</Button>
                                 </Flex>
                             </Stack>
                         </GridItem>

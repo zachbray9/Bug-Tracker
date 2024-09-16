@@ -4,6 +4,8 @@ import { observer } from "mobx-react-lite"
 import { useStore } from "../stores/store";
 import { useEffect } from "react";
 import LoadingComponent from "../components/common/Loading/LoadingComponent";
+import NotLoggedInChatbot from "../components/Chatbot/NotLoggedInChatbot";
+
 
 export default observer(function Layout() {
     const { commonStore, userStore } = useStore();
@@ -25,7 +27,9 @@ export default observer(function Layout() {
             <NavBar />
             <div id='main'>
                 <Outlet/>
-            </div>     
+            </div>
+            {!userStore.user && <NotLoggedInChatbot />}
+            
         </>
     )
 })

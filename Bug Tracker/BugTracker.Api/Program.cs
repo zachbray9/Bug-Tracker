@@ -85,7 +85,8 @@ try
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger>();
+    using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+    ILogger logger = factory.CreateLogger("Program");
     logger.LogError(ex, "An error occurred during migration.");
 }
 
